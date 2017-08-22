@@ -15,11 +15,19 @@ import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Toast;
 
+import com.congtyhai.model.api.AgencyInfo;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.sdsmdg.tastytoast.TastyToast;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by HAI on 8/10/2017.
@@ -77,6 +85,26 @@ public final class Commons {
             e.printStackTrace();
         }
     }
+
+    public BufferedReader readBufferedReader(String path) {
+        try {
+
+            File file = new File(
+                    Environment
+                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),
+                    "HAI");
+            BufferedReader br = new BufferedReader(
+                    new FileReader(file.getAbsoluteFile() +  path));
+
+            return  br;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
     public void startActivity(Activity activity, Class activityTo) {
         Intent intent = new Intent(activity, activityTo);

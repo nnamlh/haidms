@@ -1,38 +1,57 @@
 package com.congtyhai.haidms;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
+import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.Manifest;
+
 import com.congtyhai.app.AppController;
 import com.congtyhai.di.component.ActivityComponent;
 import com.congtyhai.di.component.DaggerActivityComponent;
 import com.congtyhai.di.module.ActivityModule;
 import com.congtyhai.di.scope.RetrofitUploadInfo;
+import com.congtyhai.model.api.AgencyInfo;
+import com.congtyhai.model.api.ProductCodeInfo;
+import com.congtyhai.model.api.ReceiveInfo;
+import com.congtyhai.model.app.HaiLocation;
+import com.congtyhai.service.GPSTracker;
 import com.congtyhai.util.AnimationHelper;
 import com.congtyhai.util.ApiInterface;
 import com.congtyhai.util.Commons;
+import com.congtyhai.util.HAIRes;
 import com.congtyhai.util.SharedPrefsHelper;
-import com.sdsmdg.tastytoast.TastyToast;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 import javax.inject.Inject;
+
 import retrofit2.Retrofit;
 
 /**
  * Created by HAI on 8/7/2017.
  */
 
-public class BaseActivity extends AppCompatActivity implements LocationListener {
+public class BaseActivity extends AppCompatActivity {
 
     @Inject
     protected Retrofit retrofit;
@@ -57,12 +76,10 @@ public class BaseActivity extends AppCompatActivity implements LocationListener 
 
     protected Toolbar toolbar;
 
-    private LocationManager locationManager;
+    // GPSTracker class
+    protected GPSTracker gps;
 
-    private String provider;
-
-    protected double lat = 0;
-    protected double lng = 0;
+    protected LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,30 +92,29 @@ public class BaseActivity extends AppCompatActivity implements LocationListener 
         pDialog = new ProgressDialog(BaseActivity.this);
         pDialog.setTitle("Đang xử lý...");
         pDialog.setCancelable(false);
-
-        if (!checkGPS()) {
-            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(intent);
-        }
-
-        // Get the location manager
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        provider = locationManager.getBestProvider(criteria, false);
+        //
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        } else {
-            Location location = locationManager.getLastKnownLocation(provider);
-            if (location != null) {
-                lat = location.getLatitude();
-                lng = location.getLongitude();
-                onLocationChanged(location);
-            } else {
-                commons.makeToast(getApplicationContext(), "Location not found", TastyToast.INFO).show();
-            }
-        }
+    }
+
+    protected void createLocation() {
+        gps = new GPSTracker(BaseActivity.this);
+        checkLocation();
+    }
+
+    protected boolean checkLocation() {
+        if (!isLocationEnabled())
+            showAlert();
+        return isLocationEnabled();
+    }
+
+    protected boolean isLocationEnabled() {
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    protected HaiLocation getCurrentLocation() {
+        return new HaiLocation(gps.getLatitude(), gps.getLongitude());
     }
 
     // dialog
@@ -112,12 +128,29 @@ public class BaseActivity extends AppCompatActivity implements LocationListener 
             pDialog.dismiss();
     }
 
+    protected void showAlert() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(BaseActivity.this);
+        dialog.setTitle("Enable Location")
+                .setMessage("Cho phép lấy thông tin GPS từ điện thoại.")
+                .setPositiveButton("Location Settings", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(myIntent);
+                    }
+                })
+                .setNegativeButton("Đóng", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    }
+                });
+        dialog.show();
+    }
 
     // api
     protected ApiInterface apiInterface() {
         return retrofit.create(ApiInterface.class);
     }
-
 
     protected ApiInterface apiInterfaceUpload() {
         return retrofitUpload.create(ApiInterface.class);
@@ -135,56 +168,89 @@ public class BaseActivity extends AppCompatActivity implements LocationListener 
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-    }
-
-    private boolean checkGPS() {
-        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-        boolean enabled = service
-                .isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-        return enabled;
     }
 
 
-    /* Request updates at startup */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-        } else {
-            locationManager.requestLocationUpdates(provider, 400, 1, this);
+    protected int needUpdateDaily() {
+        String timeStamp = new SimpleDateFormat("ddMMyyyy",
+                Locale.getDefault()).format(new Date());
+        String data = prefsHelper.get(HAIRes.getInstance().PREF_KEY_UPDATE_DAILY, "");
+        if (timeStamp.equals(data))
+            return 0;
+        else
+            return 1;
+    }
+
+    protected void saveListAgency(AgencyInfo[] agencies) {
+        Gson gson = new Gson();
+        commons.writeFile(gson.toJson(agencies), HAIRes.getInstance().PATH_AGENCY_JSON);
+    }
+
+    protected List<ReceiveInfo> getListReceive() {
+        Gson gson = new Gson();
+        try {
+
+            File file = new File(
+                    Environment
+                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),
+                    "HAI");
+            BufferedReader br = new BufferedReader(
+                    new FileReader(file.getAbsoluteFile() + HAIRes.getInstance().PATH_RECEIVE_JSON));
+
+            Type listType = new TypeToken<List<ReceiveInfo>>() {
+            }.getType();
+            return gson.fromJson(br, listType);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
+        return new ArrayList<>();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        locationManager.removeUpdates(this);
+    protected List<AgencyInfo> getListAgency() {
+
+        Gson gson = new Gson();
+        try {
+
+            BufferedReader reader = commons.readBufferedReader(HAIRes.getInstance().PATH_AGENCY_JSON);
+
+            if (reader != null) {
+                Type listType = new TypeToken<List<AgencyInfo>>() {
+                }.getType();
+                List<AgencyInfo> agencyInfos = gson.fromJson(reader, listType);
+
+                return agencyInfos;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
-
-    @Override
-    public void onLocationChanged(Location location) {
-        lat = location.getLatitude();
-        lng = location.getLongitude();
+    protected void saveListReceive(ReceiveInfo[] receiveInfo) {
+        Gson gson = new Gson();
+        commons.writeFile(gson.toJson(receiveInfo), HAIRes.getInstance().PATH_RECEIVE_JSON);
     }
 
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-
+    protected void saveListProduct(final ProductCodeInfo[] productCodeInfos) {
+        Gson gson = new Gson();
+        commons.writeFile(gson.toJson(productCodeInfos), HAIRes.getInstance().PATH_PRODUCT_JSON);
     }
 
-    @Override
-    public void onProviderEnabled(String s) {
-        // Toast.makeText(this, "Enabled new provider " + provider, Toast.LENGTH_SHORT).show();
+    protected void updateDaily() {
+        String timeStamp = new SimpleDateFormat("ddMMyyyy",
+                Locale.getDefault()).format(new Date());
+        prefsHelper.put(HAIRes.getInstance().PREF_KEY_UPDATE_DAILY, timeStamp);
     }
 
-    @Override
-    public void onProviderDisabled(String s) {
-        // Toast.makeText(this, "Disabled provider " + provider, Toast.LENGTH_SHORT).show();
+    protected void setListMainFunction(String funcs) {
+        prefsHelper.put(HAIRes.getInstance().PREF_KEY_FUNCTION, funcs);
+    }
+
+    protected String getListMainFunction() {
+        return prefsHelper.get(HAIRes.getInstance().PREF_KEY_FUNCTION, "");
     }
 
 }

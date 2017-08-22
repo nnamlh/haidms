@@ -3,33 +3,49 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_customer"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="Quản lý khách hàng" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_staffcalendar"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Lịch công tác" />
+        <item
+            android:id="@+id/nav_checkstaff"
+            android:icon="@drawable/ic_menu_camera"
+            android:visible="false"
+            android:title="Kiểm tra nhân viên" />
+        <item
+            android:id="@+id/nav_product"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:visible="false"
+            android:title="Quản lý sản phẩm" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_promotion"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:visible="false"
+            android:title="Khuyến mãi" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_notice"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:visible="false"
+            android:title="Thông báo" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Hổ trợ">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_callcenter"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="Giọi tổng đài" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_branch"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="Hệ thống chi nhánh" />
+            <item
+                android:id="@+id/nav_messenge"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Nhắn tin hổ trợ" />
         </menu>
     </item>
 

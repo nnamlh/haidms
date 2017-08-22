@@ -1,5 +1,6 @@
 package com.congtyhai.haidms;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
@@ -7,22 +8,49 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+
 import com.congtyhai.adapter.CheckinFunctionAdapter;
+import com.congtyhai.haidms.Agency.ShowAgencyActivity;
+import com.congtyhai.model.api.AgencyInfo;
+import com.congtyhai.model.api.MainInfoResult;
+import com.congtyhai.model.api.MainInfoSend;
 import com.congtyhai.model.app.CheckInFunctionInfo;
+import com.congtyhai.model.app.HaiLocation;
+import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.NonScrollListView;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, AdapterView.OnItemClickListener {
 
     @BindView(R.id.fab)
     FloatingActionButton fab;
+    private GoogleMap mMap;
+    BottomSheetDialog mBottomSheetDialog;
+    List<CheckInFunctionInfo> checkInFunctionInfos;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +60,116 @@ public class MainActivity extends BaseActivity
         createToolbar();
         fabClick();
         createNavDraw();
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        createLocation();
+        createBottomSheet();
+        makeRequest();
 
+    }
+
+
+    private void makeRequest() {
+        showpDialog();
+        String tokenFirebase = prefsHelper.get(HAIRes.getInstance().PREF_KEY_FIREBASE, "");
+        String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
+        String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
+        final int needUpdate = 1;
+        MainInfoSend info = new MainInfoSend(user, token, tokenFirebase, needUpdate);
+        Call<MainInfoResult> call = apiInterface().updateReg(info);
+        call.enqueue(new Callback<MainInfoResult>() {
+            @Override
+            public void onResponse(Call<MainInfoResult> call, Response<MainInfoResult> response) {
+
+                if (response.body() != null) {
+                    if ("1".equals(response.body().getId())) {
+                        for (String topic : response.body().getTopics()) {
+                            //  FirebaseMessaging.getInstance().subscribeToTopic(topic);
+                        }
+                        //  storeTopicInPref(response.body().getTopics());
+                        setListMainFunction(response.body().getFunction());
+                        if (needUpdate == 1) {
+                            saveListAgency(response.body().getAgencies());
+                            saveListReceive(response.body().getRecivers());
+                            saveListProduct(response.body().getProducts());
+                            updateDaily();
+                        }
+                    }
+                }
+                initList();
+                hidepDialog();
+                new ReadDataTask().execute();
+            }
+
+            @Override
+            public void onFailure(Call<MainInfoResult> call, Throwable t) {
+                initList();
+                hidepDialog();
+            }
+        });
+    }
+
+    private void initList() {
+        String function = getListMainFunction();
+        Menu menu = navigationView.getMenu();
+        try {
+
+            JSONArray jsonArray = new JSONArray(function);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                String item = jsonArray.getString(i);
+                switch (item) {
+                    case "checkstaff":
+                        MenuItem checkStaffItem = menu.findItem(R.id.nav_checkstaff);
+                        checkStaffItem.setVisible(true);
+                        break;
+                    case "product":
+                        MenuItem productManage = menu.findItem(R.id.nav_product);
+                        productManage.setVisible(true);
+                        break;
+                    case "event":
+                        MenuItem event = menu.findItem(R.id.nav_promotion);
+                        event.setVisible(true);
+                        break;
+                    case "newfeed":
+                        MenuItem newFeed = menu.findItem(R.id.nav_notice);
+                        newFeed.setVisible(true);
+                        break;
+                }
+            }
+
+
+        } catch (Exception e) {
+
+        }
+
+    }
+
+
+    private void createBottomSheet() {
+        mBottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.MaterialDialogSheet);
+        View sheetView = MainActivity.this.getLayoutInflater().inflate(R.layout.checkin_bottom_menu, null);
+        ImageView imgClose = (ImageView) sheetView.findViewById(R.id.imgClose);
+        imgClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mBottomSheetDialog.dismiss();
+                fab.setVisibility(View.VISIBLE);
+            }
+        });
+
+        NonScrollListView listView = (NonScrollListView) sheetView.findViewById(R.id.list);
+        checkInFunctionInfos = new ArrayList<CheckInFunctionInfo>();
+        checkInFunctionInfos.add(new CheckInFunctionInfo(HAIRes.getInstance().CHECKIN_CHECK, R.drawable.ic_menu_send, "Ghé thăm", "30 phut"));
+        checkInFunctionInfos.add(new CheckInFunctionInfo(HAIRes.getInstance().CHECKIN_PICTURE, R.drawable.ic_menu_gallery, "Trưng bày", "30 phut"));
+        checkInFunctionInfos.add(new CheckInFunctionInfo(HAIRes.getInstance().CHECKIN_ORDER, R.drawable.ic_menu_gallery, "Đơn hàng", "10 phut"));
+        checkInFunctionInfos.add(new CheckInFunctionInfo(HAIRes.getInstance().CHECKIN_PRODUCT, R.drawable.ic_menu_send, "Sản phẩm", "30 phut"));
+        CheckinFunctionAdapter adapter = new CheckinFunctionAdapter(MainActivity.this, checkInFunctionInfos);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
+
+        mBottomSheetDialog.setContentView(sheetView);
+        mBottomSheetDialog.setCancelable(false);
     }
 
     @Override
@@ -45,31 +182,52 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    private void fabClick(){
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.setMinZoomPreference(6.0f);
+        mMap.setMaxZoomPreference(14.0f);
+        HaiLocation location = getCurrentLocation();
+        LatLng me = new LatLng(location.getLatitude(), location.getLongitude());
+        mMap.addMarker(new MarkerOptions().position(me).title("ME").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(me));
+
+    }
+
+    private class ReadDataTask extends AsyncTask<String, Integer, List<AgencyInfo>> {
+        protected List<AgencyInfo> doInBackground(String... urls) {
+
+            List<AgencyInfo> data = new ArrayList<>();
+            try {
+
+                data = getListAgency();
+
+            } catch (Exception e) {
+
+            }
+            return data;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            showpDialog();
+        }
+
+        protected void onPostExecute(List<AgencyInfo> result) {
+            for (AgencyInfo info : result) {
+                LatLng me = new LatLng(info.getLat(), info.getLng());
+                mMap.addMarker(new MarkerOptions().position(me).title(info.getName() + " - " + info.getCode()));
+            }
+
+
+            hidepDialog();
+        }
+    }
+
+    private void fabClick() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final BottomSheetDialog mBottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.MaterialDialogSheet);
-                View sheetView = MainActivity.this.getLayoutInflater().inflate(R.layout.checkin_bottom_menu, null);
-                ImageView imgClose = (ImageView) sheetView.findViewById(R.id.imgClose);
-                imgClose.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mBottomSheetDialog.dismiss();
-                        fab.setVisibility(View.VISIBLE);
-                    }
-                });
-
-                NonScrollListView listView = (NonScrollListView) sheetView.findViewById(R.id.list);
-                List<CheckInFunctionInfo> checkInFunctionInfos = new ArrayList<CheckInFunctionInfo>();
-                checkInFunctionInfos.add(new CheckInFunctionInfo(R.drawable.ic_menu_camera, "Check in", "30 phut"));
-                checkInFunctionInfos.add(new CheckInFunctionInfo(R.drawable.ic_menu_gallery, "Lập đơn hàng", "10 phut"));
-                checkInFunctionInfos.add(new CheckInFunctionInfo(R.drawable.ic_menu_send, "Kết thúc", "30 phut"));
-                CheckinFunctionAdapter adapter = new CheckinFunctionAdapter(MainActivity.this, checkInFunctionInfos);
-                listView.setAdapter(adapter);
-
-                mBottomSheetDialog.setContentView(sheetView);
-                mBottomSheetDialog.setCancelable (false);
                 mBottomSheetDialog.show();
                 fab.setVisibility(View.GONE);
             }
@@ -84,33 +242,30 @@ public class MainActivity extends BaseActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+
         int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.nav_customer) {
+            commons.startActivity(MainActivity.this, ShowAgencyActivity.class);
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        CheckInFunctionInfo info = checkInFunctionInfos.get(i);
+        if (info.getCode() == HAIRes.getInstance().CHECKIN_CHECK) {
+
+        }
     }
 }

@@ -8,11 +8,13 @@ public class CheckInFunctionInfo {
     private int icon;
     private String title;
     private String time;
+    private int code;
 
-    public CheckInFunctionInfo(int icon, String title, String time) {
+    public CheckInFunctionInfo(int code, int icon, String title, String time) {
         this.setIcon(icon);
         this.setTitle(title);
         this.setTime(time);
+        this.setCode(code);
     }
 
     public int getIcon() {
@@ -37,5 +39,13 @@ public class CheckInFunctionInfo {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 }

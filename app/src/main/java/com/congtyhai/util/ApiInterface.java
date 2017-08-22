@@ -1,9 +1,13 @@
 package com.congtyhai.util;
 
+import com.congtyhai.model.api.MainInfoResult;
+import com.congtyhai.model.api.MainInfoSend;
 import com.congtyhai.model.api.ResultInfo;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -16,4 +20,7 @@ public interface ApiInterface {
     Call<ResultInfo> checkSession(
             @Query("user") String user,
             @Query("token") String token);
+
+    @POST("rest/getmaininfo")
+    Call<MainInfoResult> updateReg(@Body MainInfoSend info);
 }
