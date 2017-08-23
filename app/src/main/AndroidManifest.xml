@@ -53,8 +53,15 @@
         <activity
             android:name=".Agency.ShowAgencyActivity"
             android:label="@string/title_activity_show_agency"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Agency.AddAgencyActivity"
+            android:label="@string/title_activity_add_agency"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Agency.FindAgencyC1Activity"
+            android:label="@string/title_activity_find_agency_c1"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

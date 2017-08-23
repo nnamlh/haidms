@@ -15,19 +15,11 @@ import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Toast;
 
-import com.congtyhai.model.api.AgencyInfo;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.sdsmdg.tastytoast.TastyToast;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by HAI on 8/10/2017.
@@ -39,9 +31,9 @@ public final class Commons {
         return Snackbar.make(view, message, Snackbar.LENGTH_SHORT);
     }
 
-    public Toast makeToast(final Context context, final String message, int type) {
-     //   return Toast.makeText(context, message, Toast.LENGTH_SHORT);
-        return TastyToast.makeText(context, message, TastyToast.LENGTH_LONG, type);
+    public Toast makeToast(final Context context, final String message) {
+        return Toast.makeText(context, message, Toast.LENGTH_SHORT);
+
     }
 
     public void showAlertCancel(Activity activity, String tile, String content, DialogInterface.OnClickListener listener) {

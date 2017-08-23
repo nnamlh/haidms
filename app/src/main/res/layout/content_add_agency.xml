@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="none"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.congtyhai.haidms.Agency.AddAgencyActivity"
+    tools:showIn="@layout/activity_add_agency">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:text="Thêm mới thông tin đại lý cấp 2, sau khi tạo cần thông báo người quản trị để xác nhận khách hàng"
+        android:textColor="#000000"
+        android:textSize="18dp" />
+
+    <!-- ten -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Tên khách hàng"
+        android:textSize="14dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/cardview_dark_background"
+        android:maxLines="1"
+        android:id="@+id/edeputy"
+        android:fontFamily="sans-serif-light"
+        android:inputType="textNoSuggestions"/>
+
+    <!--  cua hang -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Cửa hàng"
+        android:textSize="14dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/cardview_dark_background"
+        android:maxLines="1"
+        android:id="@+id/estore"
+        android:fontFamily="sans-serif-light"
+        android:inputType="textNoSuggestions"/>
+
+    <!--  cap 1-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Mã cấp 1"
+        android:textSize="14dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@mipmap/ic_search"
+            android:layout_alignParentRight="true"
+            android:id="@+id/imgSearch"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/cardview_dark_background"
+            android:maxLines="1"
+            android:layout_toLeftOf="@id/imgSearch"
+            android:id="@+id/ec1"
+            android:layout_centerHorizontal="true"
+            android:enabled="false"
+            android:fontFamily="sans-serif-light"
+            android:inputType="textNoSuggestions"/>
+
+    </RelativeLayout>
+
+
+    <!--  cmnd -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Chứng minh nhân dân"
+        android:textSize="14dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/cardview_dark_background"
+        android:maxLines="1"
+        android:id="@+id/eidentitycard"
+        android:fontFamily="sans-serif-light"
+        android:inputType="textNoSuggestions"/>
+
+
+    <!--  dien thoai -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Điện thoại"
+        android:textSize="14dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/cardview_dark_background"
+        android:maxLines="1"
+        android:id="@+id/ephone"
+        android:fontFamily="sans-serif-light"
+        android:inputType="phone"/>
+
+    <!--  business licence -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Giấy phép kinh doanh"
+        android:textSize="14dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/cardview_dark_background"
+        android:maxLines="1"
+        android:id="@+id/ebusinesslicene"
+        android:fontFamily="sans-serif-light"
+        android:inputType="textNoSuggestions"/>
+
+
+    <!--  business licence -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Mã số thuế"
+        android:textSize="14dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/cardview_dark_background"
+        android:maxLines="1"
+        android:id="@+id/etax"
+        android:fontFamily="sans-serif-light"
+        android:inputType="textNoSuggestions"/>
+
+    <!--  Địa chi -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Địa chỉ"
+        android:textSize="14dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/cardview_dark_background"
+        android:maxLines="1"
+        android:id="@+id/eaddress"
+        android:fontFamily="sans-serif-light"
+        android:inputType="textNoSuggestions"/>
+
+    <!--  Thanh pho -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Quốc gia"
+        android:textSize="14dp" />
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+       <ImageView
+           android:layout_width="32dp"
+           android:layout_height="32dp"
+           android:src="@mipmap/ic_address"
+           android:layout_alignParentRight="true"
+           android:id="@+id/imgAddress"/>
+
+       <EditText
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           android:textColor="@color/cardview_dark_background"
+           android:maxLines="1"
+           android:layout_toLeftOf="@id/imgAddress"
+           android:id="@+id/ecountry"
+           android:layout_centerHorizontal="true"
+           android:enabled="false"
+           android:fontFamily="sans-serif-light"
+           android:inputType="textNoSuggestions"/>
+
+   </RelativeLayout>
+
+    <!--  Thành phố/tỉnh -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Thành phố/tỉnh"
+        android:textSize="14dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/cardview_dark_background"
+        android:maxLines="1"
+        android:id="@+id/eprovince"
+        android:enabled="false"
+        android:fontFamily="sans-serif-light"
+        android:inputType="textNoSuggestions"/>
+
+    <!--  Quận/huyện -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Quận/huyện"
+        android:textSize="14dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/cardview_dark_background"
+        android:maxLines="1"
+        android:id="@+id/edistrict"
+        android:enabled="false"
+        android:fontFamily="sans-serif-light"
+        android:inputType="textNoSuggestions"/>
+
+    <!--  Quận/huyện -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Phường/xã"
+        android:textSize="14dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/cardview_dark_background"
+        android:maxLines="1"
+        android:id="@+id/eward"
+        android:enabled="false"
+        android:fontFamily="sans-serif-light"
+        android:inputType="textNoSuggestions"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:text="Thêm mới"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/btnAdd"
+        android:background="@drawable/button_login"/>
+
+
+</LinearLayout>
+
+</ScrollView>

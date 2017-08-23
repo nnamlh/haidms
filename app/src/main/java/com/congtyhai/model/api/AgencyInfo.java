@@ -8,27 +8,63 @@ import com.google.gson.annotations.SerializedName;
 
 public class AgencyInfo {
     @SerializedName("code")
-    private String code ;
+    private String code;
     @SerializedName("name")
-    private String name ;
+    private String name;
 
     @SerializedName("type")
     private String type;
 
     @SerializedName("id")
-    private String id ;
+    private String id;
 
     @SerializedName("lat")
-    private double lat ;
+    private double lat;
 
     @SerializedName("lng")
-    private double lng ;
+    private double lng;
 
     @SerializedName("address")
-    private String address ;
+    private String address;
 
     @SerializedName("phone")
-    private String phone ;
+    private String phone;
+
+    @SerializedName("c1Id")
+    private String c1Id;
+
+    @SerializedName("rank")
+    private String rank;
+
+    @SerializedName("group")
+    private int group;
+
+    @SerializedName("deputy")
+    private String deputy;
+
+    public String getC1Id() {
+        return c1Id;
+    }
+
+    public void setC1Id(String c1Id) {
+        this.c1Id = c1Id;
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
+    public int getGroup() {
+        return group;
+    }
+
+    public void setGroup(int group) {
+        this.group = group;
+    }
 
     public String getCode() {
         return code;
@@ -92,5 +128,14 @@ public class AgencyInfo {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+
+    public String getDeputy() {
+        return deputy;
+    }
+
+    public void setDeputy(String deputy) {
+        this.deputy = deputy;
     }
 }

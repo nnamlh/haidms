@@ -19,6 +19,7 @@ import com.congtyhai.di.component.ActivityComponent;
 import com.congtyhai.di.component.DaggerActivityComponent;
 import com.congtyhai.di.module.ActivityModule;
 import com.congtyhai.di.scope.RetrofitUploadInfo;
+import com.congtyhai.model.api.AgencyC1Info;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.model.api.ReceiveInfo;
@@ -186,6 +187,11 @@ public class BaseActivity extends AppCompatActivity {
         commons.writeFile(gson.toJson(agencies), HAIRes.getInstance().PATH_AGENCY_JSON);
     }
 
+    protected void saveListAgencyC1(AgencyC1Info[] agencies) {
+        Gson gson = new Gson();
+        commons.writeFile(gson.toJson(agencies), HAIRes.getInstance().PATH_AGENCY_C1_JSON);
+    }
+
     protected List<ReceiveInfo> getListReceive() {
         Gson gson = new Gson();
         try {
@@ -219,6 +225,28 @@ public class BaseActivity extends AppCompatActivity {
                 Type listType = new TypeToken<List<AgencyInfo>>() {
                 }.getType();
                 List<AgencyInfo> agencyInfos = gson.fromJson(reader, listType);
+
+                return agencyInfos;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+
+    protected List<AgencyC1Info> getListAgencyC1() {
+
+        Gson gson = new Gson();
+        try {
+
+            BufferedReader reader = commons.readBufferedReader(HAIRes.getInstance().PATH_AGENCY_C1_JSON);
+
+            if (reader != null) {
+                Type listType = new TypeToken<List<AgencyC1Info>>() {
+                }.getType();
+                List<AgencyC1Info> agencyInfos = gson.fromJson(reader, listType);
 
                 return agencyInfos;
             }

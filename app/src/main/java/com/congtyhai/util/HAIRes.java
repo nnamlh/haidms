@@ -31,6 +31,7 @@ public class HAIRes {
 
     // save file path
     public final String PATH_AGENCY_JSON = "/agency.json";
+    public final String PATH_AGENCY_C1_JSON = "/agencyc1.json";
     public final String PATH_RECEIVE_JSON = "/receive.json";
     public final String PATH_PRODUCT_JSON = "/product.json";
 

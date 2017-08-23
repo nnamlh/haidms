@@ -16,7 +16,6 @@ import com.congtyhai.model.api.LoginResult;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.util.LoginService;
 import com.congtyhai.util.ServiceGenerator;
-import com.sdsmdg.tastytoast.TastyToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,7 +49,7 @@ public class LoginPassActivity extends LoginActivity {
     public void loginClick(View view) {
         String pass = ePass.getText().toString();
         if (TextUtils.isEmpty(pass)) {
-            commons.makeToast(getApplicationContext(),"Nhập mật khẩu", TastyToast.INFO).show();
+            commons.makeToast(getApplicationContext(),"Nhập mật khẩu").show();
         } else {
             loginCheck(user, pass);
         }
@@ -73,7 +72,7 @@ public class LoginPassActivity extends LoginActivity {
                     if ("1".equals(response.body().getId())) {
                         loginSuccess(user, response.body().getToken());
                     } else {
-                        commons.makeToast(getApplicationContext(), response.body().getMsg(), TastyToast.INFO).show();
+                        commons.makeToast(getApplicationContext(), response.body().getMsg()).show();
                     }
                 }
             }

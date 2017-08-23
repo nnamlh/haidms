@@ -93,6 +93,7 @@ public class MainActivity extends BaseActivity
                             saveListAgency(response.body().getAgencies());
                             saveListReceive(response.body().getRecivers());
                             saveListProduct(response.body().getProducts());
+                            saveListAgencyC1(response.body().getAgencyc1());
                             updateDaily();
                         }
                     }

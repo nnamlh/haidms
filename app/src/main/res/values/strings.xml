@@ -4,4 +4,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_show_agency">Khách hàng</string>
+    <string name="title_activity_add_agency">Thêm khách hàng</string>
+    <string name="title_activity_find_agency_c1">FindAgencyC1Activity</string>
 </resources>

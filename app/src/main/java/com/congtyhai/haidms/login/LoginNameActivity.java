@@ -10,7 +10,6 @@ import com.congtyhai.model.api.CheckUserLoginResult;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.util.LoginService;
 import com.congtyhai.util.ServiceGenerator;
-import com.sdsmdg.tastytoast.TastyToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +37,7 @@ public class LoginNameActivity extends LoginActivity {
         String name = eName.getText().toString();
         String phone = commons.getPhone(LoginNameActivity.this);
         if (TextUtils.isEmpty(name)) {
-            commons.makeToast(LoginNameActivity.this, "Nhập tên tài khoản", TastyToast.ERROR);
+            commons.makeToast(LoginNameActivity.this, "Nhập tên tài khoản");
         } else {
             makeRequest(name, phone);
         }
@@ -57,7 +56,7 @@ public class LoginNameActivity extends LoginActivity {
 
                 if (response.body() != null) {
                     if (response.body().getId().equals("0")) {
-                        commons.makeToast(LoginNameActivity.this,response.body().getMsg(), TastyToast.ERROR);
+                        commons.makeToast(LoginNameActivity.this,response.body().getMsg());
                     } else if (response.body().getId().equals("1")) {
                         Intent intent = commons.createIntent(LoginNameActivity.this, LoginPassActivity.class);
                         intent.putExtra(HAIRes.getInstance().KEY_INTENT_USER, user);
