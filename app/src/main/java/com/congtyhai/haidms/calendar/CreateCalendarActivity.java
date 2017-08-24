@@ -34,6 +34,7 @@ import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.CalendarCreateSend;
 import com.congtyhai.model.api.CalendarDayCreate;
+import com.congtyhai.model.api.ResultInfo;
 import com.congtyhai.model.app.CalendarAgencyInfo;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.DividerItemDecoration;
@@ -49,6 +50,9 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CreateCalendarActivity extends BaseActivity {
 
@@ -213,6 +217,40 @@ public class CreateCalendarActivity extends BaseActivity {
     }
 
 
+    private void makeRequest(CalendarCreateSend calendarCreateSend) {
+        showpDialog();
+        Call<ResultInfo> call = apiInterface().calendarCreate(calendarCreateSend);
+        call.enqueue(new Callback<ResultInfo>() {
+            @Override
+            public void onResponse(Call<ResultInfo> call, Response<ResultInfo> response) {
+                hidepDialog();
+                if (response.body().getId().equals("1")) {
+                    commons.showAlertInfo(CreateCalendarActivity.this, "Cảnh báo", "Đã tạo lịch", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    });
+                } else {
+                    commons.showAlertInfo(CreateCalendarActivity.this, "Cảnh báo", response.body().getMsg(), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResultInfo> call, Throwable t) {
+                hidepDialog();
+                commons.makeToast(CreateCalendarActivity.this, "Lỗi đường truyền");
+            }
+        });
+    }
+
     @Override
     public void onBackPressed() {
         commons.showAlertCancel(CreateCalendarActivity.this, "Cảnh báo", "Lịch sẽ không được lưu lại?", new DialogInterface.OnClickListener() {
@@ -339,12 +377,13 @@ public class CreateCalendarActivity extends BaseActivity {
                             // save
                             String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
                             String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
-                            HAIRes.getInstance().calendarCreateSend = new CalendarCreateSend();
-                            CalendarCreateSend calendarCreateSend = HAIRes.getInstance().calendarCreateSend;
+                           // HAIRes.getInstance().calendarCreateSend = new CalendarCreateSend();
+                            CalendarCreateSend calendarCreateSend = new CalendarCreateSend();
                             calendarCreateSend.setUser(user);
                             calendarCreateSend.setToken(token);
                             calendarCreateSend.setMonth(month);
                             calendarCreateSend.setYear(year);
+                            calendarCreateSend.setNotes("");
                             calendarCreateSend.setItems(new ArrayList<CalendarDayCreate>());
                             for (Map.Entry<Integer, CalendarDayCreate> entry : calendarDayMap.entrySet()) {
                                 // String key = entry.getKey();
@@ -359,8 +398,8 @@ public class CreateCalendarActivity extends BaseActivity {
                                 calendarCreateSend.getItems().add(value);
                             }
 
-                            commons.startActivity(CreateCalendarActivity.this, CalendarCreateReviewActivity.class);
-                            finish();
+                            makeRequest(calendarCreateSend);
+
                         }
                     });
                 } else  {

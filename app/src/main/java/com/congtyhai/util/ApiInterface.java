@@ -1,5 +1,6 @@
 package com.congtyhai.util;
 
+import com.congtyhai.model.api.CalendarCreateSend;
 import com.congtyhai.model.api.CheckCalendarResult;
 import com.congtyhai.model.api.MainInfoResult;
 import com.congtyhai.model.api.MainInfoSend;
@@ -28,6 +29,9 @@ public interface ApiInterface {
     @GET("restv2/CheckCalendarCreate")
     Call<CheckCalendarResult> checkCalendarCreate(
             @Query("user") String user);
+
+    @POST("restv2/CheckInCalendarCreate")
+    Call<ResultInfo> calendarCreate(@Body CalendarCreateSend info);
 
 
 }
