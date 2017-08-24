@@ -73,6 +73,10 @@
         <activity
             android:name=".calendar.CreateCalendarActivity"
             android:label="@string/title_activity_create_calendar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".calendar.CalendarCreateReviewActivity"
+            android:label="@string/title_activity_calendar_create_review"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -1,5 +1,6 @@
 package com.congtyhai.util;
 
+import com.congtyhai.model.api.CalendarCreateSend;
 import com.congtyhai.model.api.StatusInfo;
 
 import java.util.ArrayList;
@@ -56,6 +57,7 @@ public class HAIRes {
 
     // data
     public List<StatusInfo> statusInfos = new ArrayList<>();
+    public CalendarCreateSend calendarCreateSend = new CalendarCreateSend();
 
     public String[] GetListStatusName() {
         String[] statusTemp = new String[statusInfos.size()];
@@ -75,4 +77,18 @@ public class HAIRes {
 
         return 0;
     }
+
+    public String findStatusName(String status) {
+        for(int i=0; i< statusInfos.size(); i++) {
+            if (status.equals(statusInfos.get(i).code)){
+                return statusInfos.get(i).name;
+            }
+        }
+
+        return "";
+    }
+
+    // status
+    public final String CALENDAR_CSKH = "CSKH";
+    public final String CALENDAR_OTHER = "OTHER";
 }

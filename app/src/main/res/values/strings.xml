@@ -19,4 +19,5 @@
     </string-array>
     <string name="title_activity_staff_calendar">Lịch công tác</string>
     <string name="title_activity_create_calendar">Tạo kế hoạch</string>
+    <string name="title_activity_calendar_create_review">CalendarCreateReviewActivity</string>
 </resources>

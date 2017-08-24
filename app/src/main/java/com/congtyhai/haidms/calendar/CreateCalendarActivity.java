@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,7 @@ import com.congtyhai.haidms.Agency.ShowAgencyDetailActivity;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.AgencyInfo;
+import com.congtyhai.model.api.CalendarCreateSend;
 import com.congtyhai.model.api.CalendarDayCreate;
 import com.congtyhai.model.app.CalendarAgencyInfo;
 import com.congtyhai.util.HAIRes;
@@ -43,6 +45,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -124,6 +127,7 @@ public class CreateCalendarActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 calendarDayMap.get(daySelect).setNotes(eNotes.getText().toString());
+                commons.makeToast(CreateCalendarActivity.this, "Đã lưu").show();
             }
         });
 
@@ -134,7 +138,7 @@ public class CreateCalendarActivity extends BaseActivity {
     private void createListStatus() {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, HAIRes.getInstance().GetListStatusName());
         eStatus.setAdapter(adapter);
-        eStatus.setSelection(HAIRes.getInstance().findPostitionStatus("CSKH"));
+        eStatus.setSelection(HAIRes.getInstance().findPostitionStatus(HAIRes.getInstance().CALENDAR_CSKH));
 
         eStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -156,13 +160,13 @@ public class CreateCalendarActivity extends BaseActivity {
 
     private void changeStatus(String code) {
 
-        if (code.equals("CSKH")) {
+        if (code.equals(HAIRes.getInstance().CALENDAR_CSKH)) {
             eNotes.setVisibility(View.GONE);
             txtNote.setVisibility(View.GONE);
             btnSaveNote.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             txtcus.setVisibility(View.VISIBLE);
-        } else if ("OTHER".equals(code)) {
+        } else if (HAIRes.getInstance().CALENDAR_OTHER.equals(code)) {
             eNotes.setVisibility(View.VISIBLE);
             txtNote.setVisibility(View.VISIBLE);
             btnSaveNote.setVisibility(View.VISIBLE);
@@ -266,7 +270,7 @@ public class CreateCalendarActivity extends BaseActivity {
             calendarDayCreate.setAgencies(new ArrayList<String>());
             calendarDayCreate.setDay(i);
             calendarDayCreate.setNotes("");
-            calendarDayCreate.setStatus("CSKH");
+            calendarDayCreate.setStatus(HAIRes.getInstance().CALENDAR_CSKH);
             calendarDayMap.put(i, calendarDayCreate);
         }
 
@@ -308,17 +312,65 @@ public class CreateCalendarActivity extends BaseActivity {
         return true;
     }
 
+    private boolean checkPolicy() {
+        for(Map.Entry<Integer, CalendarDayCreate> entry : calendarDayMap.entrySet()) {
+            // String key = entry.getKey();
+            CalendarDayCreate value = entry.getValue();
+
+            if(value.getStatus().equals(HAIRes.getInstance().CALENDAR_CSKH)) {
+              //  if (value.getAgencies().size() < 4)
+              //      return false;
+            }
+
+        }
+
+        return  true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.next_action:
-                commons.showAlertCancel(CreateCalendarActivity.this, "Cảnh báo", "Bạn không thể chỉnh sửa lại nếu tiếp tục ?", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // save
-                    }
-                });
+                if (checkPolicy()) {
+                    commons.showAlertCancel(CreateCalendarActivity.this, "Cảnh báo", "Bạn không thể chỉnh sửa lại nếu tiếp tục ?", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            // save
+                            String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
+                            String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
+                            HAIRes.getInstance().calendarCreateSend = new CalendarCreateSend();
+                            CalendarCreateSend calendarCreateSend = HAIRes.getInstance().calendarCreateSend;
+                            calendarCreateSend.setUser(user);
+                            calendarCreateSend.setToken(token);
+                            calendarCreateSend.setMonth(month);
+                            calendarCreateSend.setYear(year);
+                            calendarCreateSend.setItems(new ArrayList<CalendarDayCreate>());
+                            for (Map.Entry<Integer, CalendarDayCreate> entry : calendarDayMap.entrySet()) {
+                                // String key = entry.getKey();
+                                CalendarDayCreate value = entry.getValue();
+                                if (!HAIRes.getInstance().CALENDAR_CSKH.equals(value.getStatus())) {
+                                    value.setAgencies(new ArrayList<String>());
+                                }
+                                if (!HAIRes.getInstance().CALENDAR_OTHER.equals(value.getStatus())) {
+                                    value.setNotes("");
+                                }
+
+                                calendarCreateSend.getItems().add(value);
+                            }
+
+                            commons.startActivity(CreateCalendarActivity.this, CalendarCreateReviewActivity.class);
+                            finish();
+                        }
+                    });
+                } else  {
+                    commons.showAlertInfo(CreateCalendarActivity.this, "Cảnh báo", "Mỗi ngày phải thăm ít nhất 4 khách hàng", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
