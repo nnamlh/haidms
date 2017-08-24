@@ -18,4 +18,5 @@
         <item>F</item>
     </string-array>
     <string name="title_activity_staff_calendar">Lịch công tác</string>
+    <string name="title_activity_create_calendar">CreateCalendarActivity</string>
 </resources>

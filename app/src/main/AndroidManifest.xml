@@ -69,6 +69,10 @@
         <activity
             android:name=".calendar.StaffCalendarActivity"
             android:label="@string/title_activity_staff_calendar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".calendar.CreateCalendarActivity"
+            android:label="@string/title_activity_create_calendar"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

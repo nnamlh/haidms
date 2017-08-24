@@ -9,12 +9,20 @@ public class CheckInFunctionInfo {
     private String title;
     private String time;
     private int code;
+    private String codeStr;
 
     public CheckInFunctionInfo(int code, int icon, String title, String time) {
         this.setIcon(icon);
         this.setTitle(title);
         this.setTime(time);
         this.setCode(code);
+    }
+
+    public CheckInFunctionInfo(String codeStr, int icon, String title, String time) {
+        this.setIcon(icon);
+        this.setTitle(title);
+        this.setTime(time);
+        this.setCodeStr(codeStr);
     }
 
     public int getIcon() {
@@ -47,5 +55,13 @@ public class CheckInFunctionInfo {
 
     public void setCode(int code) {
         this.code = code;
+    }
+
+    public String getCodeStr() {
+        return codeStr;
+    }
+
+    public void setCodeStr(String codeStr) {
+        this.codeStr = codeStr;
     }
 }

@@ -1,5 +1,10 @@
 package com.congtyhai.util;
 
+import com.congtyhai.model.api.StatusInfo;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by HAI on 8/14/2017.
  */
@@ -9,6 +14,7 @@ public class HAIRes {
     public final String KEY_USER = "userlogin";
     public final String KEY_TOKEN = "tokenlogin";
     public final String KEY_INTENT_USER = "username";
+    public final String KEY_INTENT_CREATE_CALENDAR = "createcalendar";
 
     public final String baseUrl = "http://192.168.2.170:802/api/";
     public final String baseUrlUpload = "http://192.168.2.170:801/";
@@ -29,6 +35,10 @@ public class HAIRes {
     public final int CHECKIN_ORDER = 3;
     public final int CHECKIN_PRODUCT = 4;
 
+    // code menu bottom calendar
+    public final int CALENDAR_CREATE = 1;
+    public final int CALENDAR_MODIFY = 2;
+
     // save file path
     public final String PATH_AGENCY_JSON = "/agency.json";
     public final String PATH_AGENCY_C1_JSON = "/agencyc1.json";
@@ -43,6 +53,9 @@ public class HAIRes {
     public final String PREF_KEY_UPDATE_DAILY = "updatedatadaily";
     public final String PREF_KEY_FIREBASE = "regFBId";
     public final String PREF_KEY_FUNCTION = "functionlogin";
+
+    // data
+    public List<StatusInfo> statusInfos = new ArrayList<>();
 
 
 }
