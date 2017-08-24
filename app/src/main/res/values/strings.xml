@@ -5,5 +5,17 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_show_agency">Khách hàng</string>
     <string name="title_activity_add_agency">Thêm khách hàng</string>
-    <string name="title_activity_find_agency_c1">FindAgencyC1Activity</string>
+    <string name="title_activity_find_agency_c1">Danh sách cấp 1</string>
+    <string name="title_activity_show_agency_detail">Chi tiết khách hàng</string>
+
+
+    <string-array name="agency_rank">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+    </string-array>
+    <string name="title_activity_staff_calendar">Lịch công tác</string>
 </resources>

@@ -10,9 +10,12 @@ import android.os.Bundle;
 import android.support.annotation.BoolRes;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -72,6 +75,12 @@ public class AddAgencyActivity extends BaseActivity {
     @BindView(R.id.ec1)
     EditText eC1;
 
+    @BindView(R.id.erank)
+    Spinner eRank;
+
+    @BindView(R.id.egroup)
+    EditText eGroup;
+
     int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
 
     int C1_CODE = 2;
@@ -127,6 +136,15 @@ public class AddAgencyActivity extends BaseActivity {
             }
         });
 
+        initERank();
+
+    }
+
+    private void initERank() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.agency_rank, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        eRank.setAdapter(adapter);
     }
 
     private void makeRequest() {

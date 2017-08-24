@@ -63,6 +63,43 @@
         android:fontFamily="sans-serif-light"
         android:inputType="textNoSuggestions"/>
 
+    <!--  hang -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Hạng"
+        android:textSize="14dp" />
+
+    <Spinner
+        android:id="@+id/erank"
+        android:fontFamily="sans-serif-light"
+        android:layout_width="match_parent"
+        android:textColor="@color/cardview_dark_background"
+        android:layout_height="50dp" />
+    <!--  Cụm-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Cụm"
+        android:textSize="14dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/cardview_dark_background"
+        android:maxLines="1"
+        android:id="@+id/egroup"
+        android:fontFamily="sans-serif-light"
+        android:inputType="number"/>
+
     <!--  cap 1-->
     <TextView
         android:layout_width="wrap_content"
@@ -93,7 +130,6 @@
             android:layout_toLeftOf="@id/imgSearch"
             android:id="@+id/ec1"
             android:layout_centerHorizontal="true"
-            android:enabled="false"
             android:fontFamily="sans-serif-light"
             android:inputType="textNoSuggestions"/>
 

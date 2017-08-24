@@ -16,6 +16,7 @@ import android.widget.ImageView;
 
 import com.congtyhai.adapter.CheckinFunctionAdapter;
 import com.congtyhai.haidms.Agency.ShowAgencyActivity;
+import com.congtyhai.haidms.calendar.StaffCalendarActivity;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.MainInfoResult;
 import com.congtyhai.model.api.MainInfoSend;
@@ -256,6 +257,8 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
         if (id == R.id.nav_customer) {
             commons.startActivity(MainActivity.this, ShowAgencyActivity.class);
+        } else if (id == R.id.nav_staffcalendar) {
+            commons.startActivity(MainActivity.this, StaffCalendarActivity.class);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

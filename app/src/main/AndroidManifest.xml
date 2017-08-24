@@ -61,6 +61,14 @@
         <activity
             android:name=".Agency.FindAgencyC1Activity"
             android:label="@string/title_activity_find_agency_c1"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Agency.ShowAgencyDetailActivity"
+            android:label="@string/title_activity_show_agency_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".calendar.StaffCalendarActivity"
+            android:label="@string/title_activity_staff_calendar"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
