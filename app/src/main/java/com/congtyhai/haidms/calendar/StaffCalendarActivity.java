@@ -95,10 +95,13 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
     private void makeRequest() {
         showpDialog();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
+        HAIRes.getInstance().statusInfos.clear();
+        checkInFunctionInfos.clear();
         Call<CheckCalendarResult> call = apiInterface().checkCalendarCreate(user);
         call.enqueue(new Callback<CheckCalendarResult>() {
             @Override
             public void onResponse(Call<CheckCalendarResult> call, Response<CheckCalendarResult> response) {
+
                 for (String item : response.body().getMonth()) {
                     checkInFunctionInfos.add(new CheckInFunctionInfo(item, R.drawable.ic_menu_send, "Tạo lịch " + item, ""));
                 }

@@ -38,8 +38,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -279,6 +282,58 @@ public class BaseActivity extends AppCompatActivity {
 
     protected String getListMainFunction() {
         return prefsHelper.get(HAIRes.getInstance().PREF_KEY_FUNCTION, "");
+    }
+
+
+    protected int countDayInMonth(int year, int month) {
+        String startDateString = String.format("%d/01/%d", month, year);
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        Date startDate;
+        try {
+            startDate = df.parse(startDateString);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(startDate);
+
+            calendar.add(Calendar.MONTH, 1);
+            calendar.set(Calendar.DAY_OF_MONTH, 1);
+            calendar.add(Calendar.DATE, -1);
+
+            return calendar.get(Calendar.DAY_OF_MONTH);
+
+        } catch (ParseException e) {
+           return 1;
+        }
+    }
+
+    protected int getCalendarMonth(int month) {
+        switch (month) {
+            case 1:
+                return Calendar.JANUARY;
+            case 2:
+                return  Calendar.FEBRUARY;
+            case  3:
+                return Calendar.MARCH;
+            case  4:
+                return Calendar.APRIL;
+            case 5:
+                return Calendar.MAY;
+            case  6:
+                return Calendar.JUNE;
+            case 7:
+                return Calendar.JULY;
+            case  8:
+                return  Calendar.AUGUST;
+            case  9:
+                return  Calendar.SEPTEMBER;
+            case 10:
+                return Calendar.OCTOBER;
+            case 11:
+                return Calendar.NOVEMBER;
+            case 12:
+                return Calendar.DECEMBER;
+            default:
+                return 1;
+        }
     }
 
 }

@@ -57,5 +57,22 @@ public class HAIRes {
     // data
     public List<StatusInfo> statusInfos = new ArrayList<>();
 
+    public String[] GetListStatusName() {
+        String[] statusTemp = new String[statusInfos.size()];
+        for(int i=0; i< statusInfos.size(); i++) {
+            statusTemp[i] = statusInfos.get(i).name;
+        }
 
+        return statusTemp;
+    }
+
+    public int findPostitionStatus(String status) {
+        for(int i=0; i< statusInfos.size(); i++) {
+            if (status.equals(statusInfos.get(i).code)){
+                return  i;
+            }
+        }
+
+        return 0;
+    }
 }
