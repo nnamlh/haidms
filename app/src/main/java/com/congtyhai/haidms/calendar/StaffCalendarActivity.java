@@ -1,31 +1,39 @@
 package com.congtyhai.haidms.calendar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.congtyhai.adapter.CalendarShowAgencyAdapter;
 import com.congtyhai.adapter.CheckinFunctionAdapter;
 import com.congtyhai.haidateicker.DatePickerTimeline;
 import com.congtyhai.haidateicker.MonthView;
 import com.congtyhai.haidms.BaseActivity;
-import com.congtyhai.haidms.MainActivity;
 import com.congtyhai.haidms.R;
+import com.congtyhai.model.api.CalendarDayShow;
+import com.congtyhai.model.api.CalendarShowAgency;
+import com.congtyhai.model.api.CalendarShowResult;
+import com.congtyhai.model.api.CalendarShowSend;
 import com.congtyhai.model.api.CheckCalendarResult;
 import com.congtyhai.model.app.CheckInFunctionInfo;
 import com.congtyhai.util.HAIRes;
+import com.congtyhai.view.DividerItemDecoration;
 import com.congtyhai.view.NonScrollListView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,7 +47,6 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
     @BindView(R.id.timeline)
     DatePickerTimeline timeline;
 
-    Calendar calendar;
     BottomSheetDialog mBottomSheetDialog;
     List<CheckInFunctionInfo> checkInFunctionInfos;
     CheckinFunctionAdapter adapterBottom;
@@ -47,17 +54,42 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
+    HashMap<Integer, CalendarDayShow> calendarDayShowHashMap = new HashMap<>();
+
+
+    @BindView(R.id.txttitle)
+    TextView txtTitle;
+
+    @BindView(R.id.enotes)
+    EditText eNotes;
+
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+
+    @BindView(R.id.txtdetail)
+    TextView txtDetail;
+
+    List<CalendarShowAgency> calendarShowAgencies = new ArrayList<>();
+    CalendarShowAgencyAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_staff_calendar);
         createToolbar();
         ButterKnife.bind(this);
-
-        createTimeLine();
         createBottomSheet();
         fabClick();
 
+        adapter = new CalendarShowAgencyAdapter(calendarShowAgencies);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
+
+        makeRequestShowCalendar();
     }
 
     private void createBottomSheet() {
@@ -102,15 +134,24 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
             @Override
             public void onResponse(Call<CheckCalendarResult> call, Response<CheckCalendarResult> response) {
 
-                for (String item : response.body().getMonth()) {
-                    checkInFunctionInfos.add(new CheckInFunctionInfo(item, R.drawable.ic_menu_send, "Tạo lịch " + item, ""));
-                }
+               if ( response.body().getMonth() == null || response.body().getMonth().size() == 0) {
+                   commons.showAlertInfo(StaffCalendarActivity.this, "Thông báo", "Hiện tại bạn đã lên đủ kế hoạch", new DialogInterface.OnClickListener() {
+                       @Override
+                       public void onClick(DialogInterface dialogInterface, int i) {
 
-                HAIRes.getInstance().statusInfos.addAll(response.body().getStatus());
+                       }
+                   });
+               } else {
+                   for (String item : response.body().getMonth()) {
+                       checkInFunctionInfos.add(new CheckInFunctionInfo(item, R.drawable.ic_menu_send, "Tạo lịch " + item, ""));
+                   }
 
-                adapterBottom.notifyDataSetChanged();
-                mBottomSheetDialog.show();
-                fab.setVisibility(View.GONE);
+                   HAIRes.getInstance().statusInfos.addAll(response.body().getStatus());
+
+                   adapterBottom.notifyDataSetChanged();
+                   mBottomSheetDialog.show();
+                   fab.setVisibility(View.GONE);
+               }
                 hidepDialog();
             }
 
@@ -121,9 +162,98 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
         });
     }
 
-    private void createTimeLine() {
+
+    private void makeRequestShowCalendar() {
+        showpDialog();
+        String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
+        String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
+
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        CalendarShowSend info = new CalendarShowSend(calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR), user, token);
+
+        Call<CalendarShowResult> call = apiInterface().calendarShow(info);
+
+        call.enqueue(new Callback<CalendarShowResult>() {
+            @Override
+            public void onResponse(Call<CalendarShowResult> call, Response<CalendarShowResult> response) {
+
+                if (response.body() != null) {
+
+                    if (response.body().getId().equals("0")) {
+                        commons.showAlertInfo(StaffCalendarActivity.this, "Cảnh báo", response.body().getMsg(), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                timeline.setVisibility(View.GONE);
+                                txtTitle.setText("Không có dữ liệu");
+                            }
+                        });
+                    } else {
+                        //
+                        String title = "Lịch công tác " + response.body().getMonth() + "/" + response.body().getYear();
+                        if (response.body().getHasApprove() == 1) {
+                            title+= " ( đã xác nhận)";
+                        } else {
+                            title+= " ( chưa xác nhận)";
+                        }
+                        txtTitle.setText(title);
+
+                        eNotes.setText(response.body().getNotes());
+
+                        // set map
+                        if (response.body().getItems() != null) {
+                            for(CalendarDayShow calendar: response.body().getItems()) {
+                                calendarDayShowHashMap.put(calendar.getDay(), calendar);
+                            }
+
+                            createTimeLine(response.body().getYear(), response.body().getMonth());
+                        } else {
+                            timeline.setVisibility(View.GONE);
+                            txtTitle.setText("Không có dữ liệu");
+                        }
+                    }
+
+
+                } else {
+                    timeline.setVisibility(View.GONE);
+                    txtTitle.setText("Không có dữ liệu");
+                }
+
+                hidepDialog();
+            }
+
+            @Override
+            public void onFailure(Call<CalendarShowResult> call, Throwable t) {
+                hidepDialog();
+                commons.makeToast(StaffCalendarActivity.this, "Lỗi đường truyền");
+            }
+        });
+
+    }
+
+    private void createTimeLine(int year, int month) {
+        timeline.setVisibility(View.VISIBLE);
+        Date date = new Date();
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        int showMonth = calendar.get(Calendar.MONTH) + 1;
+        int showYear = calendar.get(Calendar.YEAR);
+        int showDay = calendar.get(Calendar.DATE);
+
+        if (showMonth != month || showYear != year) {
+            showMonth = month;
+            showYear = year;
+            showDay = 1;
+        }
+        int days = countDayInMonth(showYear, showMonth);
 
         timeline.getMonthView().setVisibility(View.GONE);
+
+        timeline.setFirstVisibleDate(showYear, getCalendarMonth(showMonth), 01);
+        timeline.setLastVisibleDate(showYear,  getCalendarMonth(showMonth), days);
 
         timeline.setDateLabelAdapter(new MonthView.DateLabelAdapter() {
             @Override
@@ -136,13 +266,49 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
         timeline.setOnDateSelectedListener(new DatePickerTimeline.OnDateSelectedListener() {
             @Override
             public void onDateSelected(int year, int month, int day, int index) {
+                CalendarDayShow calendarDayShow = calendarDayShowHashMap.get(day);
+                if (calendarDayShow != null) {
 
+                    if (HAIRes.getInstance().CALENDAR_CSKH.equals(calendarDayShow.getStatus())) {
+                        txtDetail.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        calendarShowAgencies.clear();
+
+                        if (calendarDayShow.getCalendar() != null) {
+                            calendarShowAgencies.addAll(calendarDayShow.getCalendar());
+                        }
+
+
+                        adapter.notifyDataSetChanged();
+                    } else if (HAIRes.getInstance().CALENDAR_OTHER.equals(calendarDayShow.getStatus())) {
+                        txtDetail.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                        calendarShowAgencies.clear();
+                        adapter.notifyDataSetChanged();
+
+                        txtDetail.setText(calendarDayShow.getStatusName() + " : " + calendarDayShow.getNotes());
+                    } else {
+                        txtDetail.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                        calendarShowAgencies.clear();
+                        adapter.notifyDataSetChanged();
+
+                        txtDetail.setText(calendarDayShow.getStatusName());
+                    }
+
+                } else {
+                    txtDetail.setVisibility(View.VISIBLE);
+                    txtDetail.setText("Không có dữ liệu");
+                    recyclerView.setVisibility(View.GONE);
+                    calendarShowAgencies.clear();
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 
-        timeline.setFirstVisibleDate(2017, Calendar.AUGUST, 01);
-        timeline.setLastVisibleDate(2017, Calendar.AUGUST, 31);
         timeline.setFollowScroll(false);
+
+        timeline.setSelectedDate(showYear, getCalendarMonth(showMonth), showDay);
     }
 
     @Override
