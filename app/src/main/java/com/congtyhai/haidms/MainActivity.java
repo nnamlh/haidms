@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import com.congtyhai.adapter.CheckinFunctionAdapter;
 import com.congtyhai.haidms.Agency.ShowAgencyActivity;
 import com.congtyhai.haidms.calendar.StaffCalendarActivity;
+import com.congtyhai.haidms.checkin.CheckInActivity;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.MainInfoResult;
 import com.congtyhai.model.api.MainInfoSend;
@@ -269,7 +270,7 @@ public class MainActivity extends BaseActivity
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         CheckInFunctionInfo info = checkInFunctionInfos.get(i);
         if (info.getCode() == HAIRes.getInstance().CHECKIN_CHECK) {
-
+            commons.startActivity(MainActivity.this, CheckInActivity.class);
         }
     }
 }

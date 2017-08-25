@@ -231,7 +231,7 @@ public class ShowAgencyDetailActivity extends BaseActivity {
                     commons.showAlertInfo(ShowAgencyDetailActivity.this, "Thông báo", "Đã cập nhật", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                       
+
                         }
                     });
                 } else {

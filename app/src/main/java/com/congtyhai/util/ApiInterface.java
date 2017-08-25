@@ -7,6 +7,10 @@ import com.congtyhai.model.api.CalendarCreateSend;
 import com.congtyhai.model.api.CalendarShowResult;
 import com.congtyhai.model.api.CalendarShowSend;
 import com.congtyhai.model.api.CheckCalendarResult;
+import com.congtyhai.model.api.CheckInGetPlanResult;
+import com.congtyhai.model.api.CheckInGetPlanSend;
+import com.congtyhai.model.api.CheckInResult;
+import com.congtyhai.model.api.CheckInSend;
 import com.congtyhai.model.api.MainInfoResult;
 import com.congtyhai.model.api.MainInfoSend;
 import com.congtyhai.model.api.ResultInfo;
@@ -52,4 +56,10 @@ public interface ApiInterface {
 
     @POST("restv2/modifyagencyc2")
     Call<ResultInfo> modifyAgencyC2(@Body AgencyModifySend info);
+
+    @POST("restv2/CheckInGetPlan")
+    Call<CheckInGetPlanResult> checkInGetPlan(@Body CheckInGetPlanSend info);
+
+    @POST("restv2/checkin")
+    Call<CheckInResult> checkIn(@Body CheckInSend info);
 }

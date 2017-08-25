@@ -60,6 +60,7 @@ public class HAIRes {
     public List<StatusInfo> statusInfos = new ArrayList<>();
     public CalendarCreateSend calendarCreateSend = new CalendarCreateSend();
     public AgencyInfo currentAgencySelect = new AgencyInfo();
+    public final double LIMIT_DISTANCE = 300;
 
     public String[] GetListStatusName() {
         String[] statusTemp = new String[statusInfos.size()];
