@@ -2,6 +2,7 @@ package com.congtyhai.util;
 
 import com.congtyhai.model.api.AgencyCreateSend;
 import com.congtyhai.model.api.AgencyInfo;
+import com.congtyhai.model.api.AgencyModifySend;
 import com.congtyhai.model.api.CalendarCreateSend;
 import com.congtyhai.model.api.CalendarShowResult;
 import com.congtyhai.model.api.CalendarShowSend;
@@ -48,4 +49,7 @@ public interface ApiInterface {
 
     @POST("restv2/CreateAgencyC2")
     Call<ResultInfo> createAgencyC2(@Body AgencyCreateSend info);
+
+    @POST("restv2/modifyagencyc2")
+    Call<ResultInfo> modifyAgencyC2(@Body AgencyModifySend info);
 }

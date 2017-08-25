@@ -1,5 +1,6 @@
 package com.congtyhai.util;
 
+import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.CalendarCreateSend;
 import com.congtyhai.model.api.StatusInfo;
 
@@ -58,6 +59,7 @@ public class HAIRes {
     // data
     public List<StatusInfo> statusInfos = new ArrayList<>();
     public CalendarCreateSend calendarCreateSend = new CalendarCreateSend();
+    public AgencyInfo currentAgencySelect = new AgencyInfo();
 
     public String[] GetListStatusName() {
         String[] statusTemp = new String[statusInfos.size()];

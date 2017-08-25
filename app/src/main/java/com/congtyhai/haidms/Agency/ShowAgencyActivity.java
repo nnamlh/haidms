@@ -69,6 +69,7 @@ public class ShowAgencyActivity extends BaseActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
+                HAIRes.getInstance().currentAgencySelect = agencyList.get(position);
                 commons.startActivity(ShowAgencyActivity.this, ShowAgencyDetailActivity.class);
             }
 

@@ -1,65 +1,51 @@
 package com.congtyhai.model.api;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
- * Created by HAI on 8/22/2017.
+ * Created by HAI on 8/25/2017.
  */
 
-public class AgencyInfo {
-    @SerializedName("code")
+public class AgencyModifySend {
+
+    private String user;
+    private String token;
+
     private String code;
-    @SerializedName("name")
+
     private String name;
 
-    @SerializedName("type")
     private String type;
 
-    @SerializedName("id")
     private String id;
 
-    @SerializedName("lat")
+
     private double lat;
 
-    @SerializedName("lng")
     private double lng;
 
-    @SerializedName("address")
     private String address;
 
-    @SerializedName("phone")
     private String phone;
 
-    @SerializedName("c1Id")
     private String c1Id;
 
-    @SerializedName("rank")
     private String rank;
 
-    @SerializedName("group")
     private int group;
 
-    @SerializedName("deputy")
     private String deputy;
 
-    @SerializedName("taxCode")
     private String taxCode;
 
-    @SerializedName("province")
     private String province ;
 
-    @SerializedName("district")
     private String district ;
 
-    @SerializedName("identityCard")
     private String identityCard ;
 
-    @SerializedName("businessLicense")
     private String businessLicense ;
-    @SerializedName("ward")
+
     private String ward;
 
-    @SerializedName("country")
     private String country;
 
     public String getTaxCode() {
@@ -212,5 +198,21 @@ public class AgencyInfo {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
