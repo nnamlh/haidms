@@ -8,6 +8,7 @@ import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.BoolRes;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -18,6 +19,9 @@ import android.widget.Spinner;
 
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
+import com.congtyhai.model.api.AgencyCreateSend;
+import com.congtyhai.model.api.ResultInfo;
+import com.congtyhai.util.HAIRes;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
@@ -29,9 +33,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddAgencyActivity extends BaseActivity {
-
 
     @BindView(R.id.estore)
     EditText eSotre;
@@ -80,6 +86,10 @@ public class AddAgencyActivity extends BaseActivity {
 
     @BindView(R.id.egroup)
     EditText eGroup;
+
+    @BindView(R.id.etax)
+    EditText eTax;
+
 
     int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
 
@@ -130,7 +140,7 @@ public class AddAgencyActivity extends BaseActivity {
                 commons.showAlertCancel(AddAgencyActivity.this, "Cảnh báo", "Bạn muốn thêm khách hàng mới ?", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        makeRequest();
                     }
                 });
             }
@@ -149,7 +159,96 @@ public class AddAgencyActivity extends BaseActivity {
 
     private void makeRequest() {
 
+        String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
+        String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
+
+        if (!checkRequire())
+            return;
+
+        showpDialog();
+        AgencyCreateSend info = new AgencyCreateSend();
+
+        info.setUser(user);
+        info.setToken(token);
+        info.setLat(lat);
+        info.setLng(lng);
+        info.setC1Id(eC1.getText().toString());
+        info.setDeputy(eDeputy.getText().toString());
+        info.setName(eSotre.getText().toString());
+        info.setBusinessLicense(eBusinessLicene.getText().toString());
+        info.setIdentityCard(eIdentityCard.getText().toString());
+        info.setAddress(eAddress.getText().toString());
+        info.setCountry(eCountry.getText().toString());
+        info.setProvince(eProvince.getText().toString());
+        info.setWard(eWard.getText().toString());
+        info.setGroup(Integer.parseInt(eGroup.getText().toString()));
+        info.setRank(eRank.getSelectedItem().toString());
+        info.setPhone(ePhone.getText().toString());
+        info.setTaxCode(eTax.getText().toString());
+
+        Call<ResultInfo> call = apiInterface().createAgencyC2(info);
+        call.enqueue(new Callback<ResultInfo>() {
+            @Override
+            public void onResponse(Call<ResultInfo> call, Response<ResultInfo> response) {
+                hidepDialog();
+                if (response.body().getId().equals("1")) {
+                    commons.showAlertInfo(AddAgencyActivity.this, "Thông báo", "Đã gửi thông tin khách hàng, liên hệ quản trị để kích hoặt khách hàng", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    });
+                } else {
+                    commons.showAlertInfo(AddAgencyActivity.this, "Cảnh báo", response.body().getMsg(), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultInfo> call, Throwable t) {
+                hidepDialog();
+                commons.makeToast(AddAgencyActivity.this, "Lỗi đường truyền");
+            }
+        });
+
     }
+
+    private boolean checkRequire() {
+        if (TextUtils.isEmpty(eDeputy.getText().toString())) {
+            eDeputy.setError("Không để trống tên khách hàng");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(eSotre.getText().toString())) {
+            eSotre.setError("Không để trống tên cửa hàng");
+            return false;
+        }
+        if (TextUtils.isEmpty(eGroup.getText().toString())) {
+            eGroup.setError("Không để trống cụm khách hàng");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(eC1.getText().toString())) {
+            eC1.setError("Không để trống cấp 1");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(ePhone.getText().toString())) {
+            ePhone.setError( "Không để trống số điện thoại");
+            return false;
+        }
+        if (TextUtils.isEmpty(eAddress.getText().toString())) {
+            eAddress.setError("Không để trống địa chỉ");
+            return false;
+        }
+
+        return true;
+    }
+
 
     private class ReadDataTask extends AsyncTask<String, Integer, Address> {
         protected Address doInBackground(String... urls) {
@@ -160,7 +259,7 @@ public class AddAgencyActivity extends BaseActivity {
 
             try {
                 addresses = geocoder.getFromLocation(lat,
-                       lng, 1);
+                        lng, 1);
 
             } catch (IOException e) {
                 return null;
@@ -179,16 +278,17 @@ public class AddAgencyActivity extends BaseActivity {
 
         protected void onPostExecute(Address result) {
 
-           if (result != null ) {
-               eAddress.setText(result.getAddressLine(0));
-               eProvince.setText(result.getAdminArea());
-               eDistrict.setText(result.getSubAdminArea());
-               eWard.setText(result.getSubLocality());
-               eCountry.setText(result.getCountryName());
-           }
+            if (result != null) {
+                eAddress.setText(result.getAddressLine(0));
+                eProvince.setText(result.getAdminArea());
+                eDistrict.setText(result.getSubAdminArea());
+                eWard.setText(result.getSubLocality());
+                eCountry.setText(result.getCountryCode());
+            }
 
             hidepDialog();
         }
+
     }
 
     @Override
@@ -212,8 +312,8 @@ public class AddAgencyActivity extends BaseActivity {
         }
 
         if (requestCode == C1_CODE) {
-            if(resultCode == Activity.RESULT_OK){
-                String result=data.getStringExtra("result");
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getStringExtra("result");
                 eC1.setText(result);
             }
             if (resultCode == Activity.RESULT_CANCELED) {

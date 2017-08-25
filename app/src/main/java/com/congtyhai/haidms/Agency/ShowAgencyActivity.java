@@ -11,12 +11,17 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.congtyhai.adapter.AgencyAdapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.AgencyInfo;
+import com.congtyhai.model.api.SendBasicInfo;
+import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.DividerItemDecoration;
 import com.congtyhai.view.RecyclerTouchListener;
 import com.google.android.gms.maps.model.LatLng;
@@ -27,6 +32,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ShowAgencyActivity extends BaseActivity {
 
@@ -34,9 +42,6 @@ public class ShowAgencyActivity extends BaseActivity {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private AgencyAdapter mAdapter;
-
-    @BindView(R.id.swiperefresh)
-    SwipeRefreshLayout refeshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,21 +78,31 @@ public class ShowAgencyActivity extends BaseActivity {
             }
         }));
 
-        refeshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        makeRequest();
-                    }
-                }
-        );
 
         new ReadDataTask().execute();
     }
 
 
     private void makeRequest() {
+        showpDialog();
+        String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
+        String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
+        Call<AgencyInfo[]> call = apiInterface().getAgencyC2(new SendBasicInfo(user, token));
+        call.enqueue(new Callback<AgencyInfo[]>() {
+            @Override
+            public void onResponse(Call<AgencyInfo[]> call, Response<AgencyInfo[]> response) {
+               if(response.body() != null) {
+                   saveListAgency(response.body());
+               }
+              hidepDialog();
+                new ReadDataTask().execute();
+            }
 
+            @Override
+            public void onFailure(Call<AgencyInfo[]> call, Throwable t) {
+                hidepDialog();
+            }
+        });
     }
 
     private class ReadDataTask extends AsyncTask<String, Integer, List<AgencyInfo>> {
@@ -110,13 +125,34 @@ public class ShowAgencyActivity extends BaseActivity {
         }
 
         protected void onPostExecute(List<AgencyInfo> result) {
+            agencyList = new ArrayList<>();
             for (AgencyInfo info : result) {
                 agencyList.add(info);
             }
 
+            mAdapter = new AgencyAdapter(agencyList);
+            recyclerView.setAdapter(mAdapter);
             mAdapter.notifyDataSetChanged();
 
             hidepDialog();
+        }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_agency_show, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.refesh_action:
+                makeRequest();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

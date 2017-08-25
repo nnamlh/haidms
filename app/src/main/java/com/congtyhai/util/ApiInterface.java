@@ -1,5 +1,7 @@
 package com.congtyhai.util;
 
+import com.congtyhai.model.api.AgencyCreateSend;
+import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.CalendarCreateSend;
 import com.congtyhai.model.api.CalendarShowResult;
 import com.congtyhai.model.api.CalendarShowSend;
@@ -7,6 +9,9 @@ import com.congtyhai.model.api.CheckCalendarResult;
 import com.congtyhai.model.api.MainInfoResult;
 import com.congtyhai.model.api.MainInfoSend;
 import com.congtyhai.model.api.ResultInfo;
+import com.congtyhai.model.api.SendBasicInfo;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -38,5 +43,9 @@ public interface ApiInterface {
     @POST("restv2/ShowStaffCalendar")
     Call<CalendarShowResult> calendarShow(@Body CalendarShowSend info);
 
+    @POST("restv2/GetStaffAgencyC2")
+    Call<AgencyInfo[]> getAgencyC2(@Body SendBasicInfo info);
 
+    @POST("restv2/CreateAgencyC2")
+    Call<ResultInfo> createAgencyC2(@Body AgencyCreateSend info);
 }

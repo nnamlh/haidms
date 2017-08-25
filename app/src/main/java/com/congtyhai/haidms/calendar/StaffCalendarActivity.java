@@ -1,5 +1,6 @@
 package com.congtyhai.haidms.calendar;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +9,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,20 +34,18 @@ import com.congtyhai.model.app.CheckInFunctionInfo;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.DividerItemDecoration;
 import com.congtyhai.view.NonScrollListView;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class StaffCalendarActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class StaffCalendarActivity extends BaseActivity implements AdapterView.OnItemClickListener , DatePickerDialog.OnDateSetListener{
 
     @BindView(R.id.timeline)
     DatePickerTimeline timeline;
@@ -72,6 +75,8 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
     List<CalendarShowAgency> calendarShowAgencies = new ArrayList<>();
     CalendarShowAgencyAdapter adapter;
 
+    DatePickerDialog datePickerDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +94,21 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
-        makeRequestShowCalendar();
+        createDateDialog();
+
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        makeRequestShowCalendar(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH) + 1);
+    }
+
+    private void createDateDialog() {
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        datePickerDialog = new DatePickerDialog(
+                StaffCalendarActivity.this, StaffCalendarActivity.this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
+
     }
 
     private void createBottomSheet() {
@@ -163,16 +182,11 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
     }
 
 
-    private void makeRequestShowCalendar() {
+    private void makeRequestShowCalendar(int year, int month) {
         showpDialog();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
-
-        Date date = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-
-        CalendarShowSend info = new CalendarShowSend(calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR), user, token);
+        CalendarShowSend info = new CalendarShowSend(month, year, user, token);
 
         Call<CalendarShowResult> call = apiInterface().calendarShow(info);
 
@@ -267,32 +281,24 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
             @Override
             public void onDateSelected(int year, int month, int day, int index) {
                 CalendarDayShow calendarDayShow = calendarDayShowHashMap.get(day);
+                calendarShowAgencies = new ArrayList<CalendarShowAgency>();
                 if (calendarDayShow != null) {
 
                     if (HAIRes.getInstance().CALENDAR_CSKH.equals(calendarDayShow.getStatus())) {
                         txtDetail.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
-                        calendarShowAgencies.clear();
 
                         if (calendarDayShow.getCalendar() != null) {
                             calendarShowAgencies.addAll(calendarDayShow.getCalendar());
                         }
 
-
-                        adapter.notifyDataSetChanged();
                     } else if (HAIRes.getInstance().CALENDAR_OTHER.equals(calendarDayShow.getStatus())) {
                         txtDetail.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
-                        calendarShowAgencies.clear();
-                        adapter.notifyDataSetChanged();
-
                         txtDetail.setText(calendarDayShow.getStatusName() + " : " + calendarDayShow.getNotes());
                     } else {
                         txtDetail.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
-                        calendarShowAgencies.clear();
-                        adapter.notifyDataSetChanged();
-
                         txtDetail.setText(calendarDayShow.getStatusName());
                     }
 
@@ -300,9 +306,10 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
                     txtDetail.setVisibility(View.VISIBLE);
                     txtDetail.setText("Không có dữ liệu");
                     recyclerView.setVisibility(View.GONE);
-                    calendarShowAgencies.clear();
-                    adapter.notifyDataSetChanged();
                 }
+                adapter = new CalendarShowAgencyAdapter(calendarShowAgencies);
+                recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -326,5 +333,28 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
         fab.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_calendar_show, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.date_action:
+                datePickerDialog.show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int i2) {
+        makeRequestShowCalendar(year, month+1);
+    }
 }
