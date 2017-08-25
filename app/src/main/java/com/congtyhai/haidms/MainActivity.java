@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity
         String tokenFirebase = prefsHelper.get(HAIRes.getInstance().PREF_KEY_FIREBASE, "");
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
-        final int needUpdate = 1;
+        final int needUpdate = needUpdateDaily();
         MainInfoSend info = new MainInfoSend(user, token, tokenFirebase, needUpdate);
         Call<MainInfoResult> call = apiInterface().updateReg(info);
         call.enqueue(new Callback<MainInfoResult>() {

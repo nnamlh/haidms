@@ -42,6 +42,57 @@ public class AgencyInfo {
     @SerializedName("deputy")
     private String deputy;
 
+    @SerializedName("taxCode")
+    private String taxCode;
+    @SerializedName("province")
+    private String province ;
+    @SerializedName("district")
+    private String district ;
+    @SerializedName("identityCard")
+    private String identityCard ;
+    @SerializedName("businessLicense")
+    private String businessLicense ;
+
+    public String getTaxCode() {
+        return taxCode;
+    }
+
+    public void setTaxCode(String taxCode) {
+        this.taxCode = taxCode;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getIdentityCard() {
+        return identityCard;
+    }
+
+    public void setIdentityCard(String identityCard) {
+        this.identityCard = identityCard;
+    }
+
+    public String getBusinessLicense() {
+        return businessLicense;
+    }
+
+    public void setBusinessLicense(String businessLicense) {
+        this.businessLicense = businessLicense;
+    }
+
     public String getC1Id() {
         return c1Id;
     }
@@ -129,7 +180,6 @@ public class AgencyInfo {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
 
     public String getDeputy() {
         return deputy;

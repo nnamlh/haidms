@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.congtyhai.haidms.R;
@@ -40,6 +41,14 @@ public class AgencyAdapter extends RecyclerView.Adapter<AgencyAdapter.MyViewHold
         holder.phone.setText(agency.getPhone());
         holder.group.setText("Thuộc cụm: " + agency.getGroup());
         holder.rank.setText("Hạng: " + agency.getRank());
+        if (agency.getLat() == 0 || agency.getLng() == 0) {
+            holder.location.setText("Chưa có tọa độ");
+            holder.location.setVisibility(View.VISIBLE);
+            holder.imgLocation.setVisibility(View.VISIBLE);
+        } else {
+            holder.location.setVisibility(View.GONE);
+            holder.imgLocation.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -48,7 +57,8 @@ public class AgencyAdapter extends RecyclerView.Adapter<AgencyAdapter.MyViewHold
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView store, deputy, address, phone, group, rank;
+        public TextView store, deputy, address, phone, group, rank, location;
+        public ImageView imgLocation;
 
         public MyViewHolder(View view) {
             super(view);
@@ -58,6 +68,8 @@ public class AgencyAdapter extends RecyclerView.Adapter<AgencyAdapter.MyViewHold
             phone = (TextView) view.findViewById(R.id.phone);
             group = (TextView) view.findViewById(R.id.group);
             rank = (TextView) view.findViewById(R.id.rank);
+            location = (TextView) view.findViewById(R.id.location);
+            imgLocation = (ImageView) view.findViewById(R.id.imglocation);
         }
     }
 

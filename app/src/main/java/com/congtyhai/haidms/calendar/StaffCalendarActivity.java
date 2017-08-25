@@ -289,7 +289,8 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
                         recyclerView.setVisibility(View.VISIBLE);
 
                         if (calendarDayShow.getCalendar() != null) {
-                            calendarShowAgencies.addAll(calendarDayShow.getCalendar());
+                            for (CalendarShowAgency item :calendarDayShow.getCalendar() )
+                            calendarShowAgencies.add(item);
                         }
 
                     } else if (HAIRes.getInstance().CALENDAR_OTHER.equals(calendarDayShow.getStatus())) {
