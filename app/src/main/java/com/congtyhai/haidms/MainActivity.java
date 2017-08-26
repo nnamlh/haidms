@@ -9,6 +9,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.AdapterView;
@@ -271,6 +272,26 @@ public class MainActivity extends BaseActivity
         CheckInFunctionInfo info = checkInFunctionInfos.get(i);
         if (info.getCode() == HAIRes.getInstance().CHECKIN_CHECK) {
             commons.startActivity(MainActivity.this, CheckInActivity.class);
+        }
+        mBottomSheetDialog.dismiss();
+        fab.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.notification_action:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

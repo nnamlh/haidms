@@ -9,6 +9,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -83,11 +86,13 @@ public class ShowAgencyDetailActivity extends BaseActivity {
     @BindView(R.id.imgAddress)
     ImageView imgLoatiom;
     int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
-    boolean isUpdateLocation;
     @BindView(R.id.btnAdd)
     Button btnAdd;
     double lat;
     double lng;
+    Menu menu;
+
+    boolean isUpdate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +100,7 @@ public class ShowAgencyDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_show_agency_detail);
         createToolbar();
         ButterKnife.bind(this);
-
+        createLocation();
         eCode.setText(HAIRes.getInstance().currentAgencySelect.getCode());
         eSotre.setText(HAIRes.getInstance().currentAgencySelect.getName());
         eDeputy.setText(HAIRes.getInstance().currentAgencySelect.getDeputy());
@@ -121,17 +126,13 @@ public class ShowAgencyDetailActivity extends BaseActivity {
                                     .build(ShowAgencyDetailActivity.this);
                     startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
                 } catch (GooglePlayServicesRepairableException e) {
-                    // TODO: Handle the error.
+
                 } catch (GooglePlayServicesNotAvailableException e) {
-                    // TODO: Handle the error.
+
                 }
             }
         });
 
-        if (HAIRes.getInstance().currentAgencySelect.getLng() == 0 || HAIRes.getInstance().currentAgencySelect.getLng() == 0) {
-            isUpdateLocation = true;
-            createLocation();
-        }
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +140,7 @@ public class ShowAgencyDetailActivity extends BaseActivity {
                 commons.showAlertCancel(ShowAgencyDetailActivity.this, "Cảnh báo", "Bạn muốn chỉnh sửa khách hàng ?", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        makeRequest();
+                        makeRequest(false);
                     }
                 });
             }
@@ -189,7 +190,7 @@ public class ShowAgencyDetailActivity extends BaseActivity {
 
     }
 
-    private void makeRequest() {
+    private void makeRequest(final boolean isUpdateLocation) {
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
         AgencyModifySend info = new AgencyModifySend();
@@ -214,12 +215,12 @@ public class ShowAgencyDetailActivity extends BaseActivity {
         info.setPhone(ePhone.getText().toString());
         info.setTaxCode(eTax.getText().toString());
 
-        if(isUpdateLocation) {
-            info.setLat(lat);
-            info.setLng(lng);
+        if (isUpdateLocation) {
+            info.setLat(getCurrentLocation().getLatitude());
+            info.setLng(getCurrentLocation().getLongitude());
         } else {
-            info.setLat(HAIRes.getInstance().currentAgencySelect.getLat());
-            info.setLng(HAIRes.getInstance().currentAgencySelect.getLng());
+            info.setLat(0);
+            info.setLng(0);
         }
 
         Call<ResultInfo> call = apiInterface().modifyAgencyC2(info);
@@ -228,10 +229,14 @@ public class ShowAgencyDetailActivity extends BaseActivity {
             public void onResponse(Call<ResultInfo> call, Response<ResultInfo> response) {
                 hidepDialog();
                 if (response.body().getId().equals("1")) {
+                    isUpdate = true;
                     commons.showAlertInfo(ShowAgencyDetailActivity.this, "Thông báo", "Đã cập nhật", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
+                            if (isUpdateLocation) {
+                                MenuItem menuItem = menu.findItem(R.id.location_action);
+                                menuItem.setVisible(false);
+                            }
                         }
                     });
                 } else {
@@ -252,6 +257,7 @@ public class ShowAgencyDetailActivity extends BaseActivity {
         });
 
     }
+
     private boolean checkRequire() {
         if (TextUtils.isEmpty(eDeputy.getText().toString())) {
             eDeputy.setError("Không để trống tên khách hàng");
@@ -273,7 +279,7 @@ public class ShowAgencyDetailActivity extends BaseActivity {
         }
 
         if (TextUtils.isEmpty(ePhone.getText().toString())) {
-            ePhone.setError( "Không để trống số điện thoại");
+            ePhone.setError("Không để trống số điện thoại");
             return false;
         }
         if (TextUtils.isEmpty(eAddress.getText().toString())) {
@@ -283,6 +289,7 @@ public class ShowAgencyDetailActivity extends BaseActivity {
 
         return true;
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
@@ -302,6 +309,44 @@ public class ShowAgencyDetailActivity extends BaseActivity {
                 // The user canceled the operation.
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_show_agency_detail, menu);
+        this.menu = menu;
+
+        if (HAIRes.getInstance().currentAgencySelect.getLng() != 0 && HAIRes.getInstance().currentAgencySelect.getLng() != 0) {
+            MenuItem menuItem = menu.findItem(R.id.location_action);
+            menuItem.setVisible(false);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.location_action:
+                makeRequest(true);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = new Intent();
+        if (isUpdate) {
+            setResult(Activity.RESULT_OK,returnIntent);
+        } else {
+            setResult(Activity.RESULT_CANCELED, returnIntent);
+        }
+        finish();
     }
 
 }

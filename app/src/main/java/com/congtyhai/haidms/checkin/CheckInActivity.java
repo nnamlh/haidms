@@ -1,5 +1,6 @@
 package com.congtyhai.haidms.checkin;
 
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -31,20 +32,24 @@ public class CheckInActivity extends BaseActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    public static List<String> inPlans = new ArrayList<>();
-    public static List<String> outPlans = new ArrayList<>();
-    private static List<AgencyInfo> agencyInfos = new ArrayList<>();
+    private List<String> inPlans ;
+    private List<String> outPlans;
+    private List<AgencyInfo> agencyInfos ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_in);
         createToolbar();
-        createLocation();
+
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
-
+        inPlans = new ArrayList<>();
+        outPlans = new ArrayList<>();
+        agencyInfos = new ArrayList<>();
         makeRequest();
+
+        createLocation();
 
     }
 
@@ -67,13 +72,23 @@ public class CheckInActivity extends BaseActivity {
             @Override
             public void onResponse(Call<CheckInGetPlanResult> call, Response<CheckInGetPlanResult> response) {
                 if (response.body() != null) {
-                    inPlans = response.body().getInplan();
-                    outPlans = response.body().getOutplan();
+                    if(response.body().getId().equals("0")) {
+                        commons.showAlertInfo(CheckInActivity.this, "Cảnh báo", response.body().getMsg(), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                    } else {
+                        inPlans = response.body().getInplan();
+                        outPlans = response.body().getOutplan();
+                        new ReadDataTask().execute();
+                    }
                 }
 
 
                 hidepDialog();
-                new ReadDataTask().execute();
+
             }
 
             @Override
@@ -107,7 +122,7 @@ public class CheckInActivity extends BaseActivity {
                     } else {
                         outPlans = response.body().getNewplan();
                     }
-
+                    commons.makeToast(CheckInActivity.this, "Đã check in");
                 }
                 action.onResult();
                 hidepDialog();
@@ -207,7 +222,7 @@ public class CheckInActivity extends BaseActivity {
 
         CheckInOtherFragment otherFragment = new CheckInOtherFragment();
         otherFragment.setActivityCheckIn(CheckInActivity.this);
-        adapter.addFragment(otherFragment, "KHÁC");
+        adapter.addFragment(otherFragment, "NGOÀI KẾ HOẠCH");
         viewPager.setAdapter(adapter);
     }
 

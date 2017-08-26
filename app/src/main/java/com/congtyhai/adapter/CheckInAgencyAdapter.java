@@ -1,9 +1,11 @@
 package com.congtyhai.adapter;
 
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.app.CheckInAgencyInfo;
@@ -36,11 +38,9 @@ public class CheckInAgencyAdapter  extends RecyclerView.Adapter<CheckInAgencyAda
         holder.distance.setText(info.getDistance() + " m");
 
         if (info.getDistance() <= HAIRes.getInstance().LIMIT_DISTANCE) {
-            holder.distance.setBackgroundResource(R.color.red);
-            holder.itemView.setEnabled(true);
+           holder.imgLocation.setImageResource(R.mipmap.ic_location_on);
         } else {
-            holder.distance.setBackgroundResource(R.color.gray_color);
-            holder.itemView.setEnabled(false);
+            holder.imgLocation.setImageResource(R.mipmap.ic_location_off);
         }
     }
 
@@ -51,12 +51,13 @@ public class CheckInAgencyAdapter  extends RecyclerView.Adapter<CheckInAgencyAda
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name, code, distance;
-
+        public ImageView imgLocation;
         public MyViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.txtname);
             code = (TextView) view.findViewById(R.id.txtcode);
             distance = (TextView) view.findViewById(R.id.txtdistance);
+            imgLocation =(ImageView) view.findViewById(R.id.imglocation);
         }
     }
 

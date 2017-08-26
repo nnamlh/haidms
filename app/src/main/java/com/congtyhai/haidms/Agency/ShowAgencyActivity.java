@@ -43,6 +43,8 @@ public class ShowAgencyActivity extends BaseActivity {
     RecyclerView recyclerView;
     private AgencyAdapter mAdapter;
 
+    int SHOW_DETAIL_AGENCY = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +72,8 @@ public class ShowAgencyActivity extends BaseActivity {
             @Override
             public void onClick(View view, int position) {
                 HAIRes.getInstance().currentAgencySelect = agencyList.get(position);
-                commons.startActivity(ShowAgencyActivity.this, ShowAgencyDetailActivity.class);
+                Intent intent = commons.createIntent(ShowAgencyActivity.this, ShowAgencyDetailActivity.class);
+                startActivityForResult(intent, SHOW_DETAIL_AGENCY);
             }
 
             @Override
@@ -154,6 +157,17 @@ public class ShowAgencyActivity extends BaseActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SHOW_DETAIL_AGENCY) {
+            if (resultCode == RESULT_OK) {
+                makeRequest();
+            } else if (resultCode == RESULT_CANCELED) {
+
+            }
         }
     }
 
