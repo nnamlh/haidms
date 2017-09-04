@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by HAI on 8/24/2017.
+ * Created by HAI on 9/4/2017.
  */
 
-public class CheckCalendarResult  {
+public class CalendarCheckResult {
 
     @SerializedName("id")
     private String id;
@@ -20,7 +20,8 @@ public class CheckCalendarResult  {
     private List<String> month;
 
     @SerializedName("status")
-    private List<StatusInfo> status;
+    private List<CalendarStatus> status;
+
 
     public String getId() {
         return id;
@@ -46,11 +47,12 @@ public class CheckCalendarResult  {
         this.month = month;
     }
 
-    public List<StatusInfo> getStatus() {
+
+    public List<CalendarStatus> getStatus() {
         return status;
     }
 
-    public void setStatus(List<StatusInfo> status) {
+    public void setStatus(List<CalendarStatus> status) {
         this.status = status;
     }
 }

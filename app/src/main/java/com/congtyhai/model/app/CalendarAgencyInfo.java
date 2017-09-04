@@ -1,5 +1,8 @@
 package com.congtyhai.model.app;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by HAI on 8/25/2017.
  */
@@ -10,6 +13,9 @@ public class CalendarAgencyInfo {
     private String code;
     private String name;
     private int check;
+    private List<Integer> dayChoose;
+    private String rank;
+    private String group;
 
     public String getDeputy() {
         return deputy;
@@ -50,4 +56,45 @@ public class CalendarAgencyInfo {
         this.check = check;
     }
 
+    public List<Integer> getDayChoose() {
+        return dayChoose;
+    }
+
+    public void setDayChoose(List<Integer> dayChoose) {
+        this.dayChoose = dayChoose;
+    }
+
+    public void addDayChoose(int daySelect) {
+        if (dayChoose == null)
+            dayChoose = new ArrayList<>();
+
+        if (!dayChoose.contains(daySelect))
+            dayChoose.add(daySelect);
+    }
+
+    public void removeDayChoose(int daySelect) {
+        if (dayChoose == null)
+            dayChoose = new ArrayList<>();
+
+        int postion = dayChoose.indexOf(daySelect);
+       if (postion != -1) {
+        dayChoose.remove(postion);
+       }
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
 }

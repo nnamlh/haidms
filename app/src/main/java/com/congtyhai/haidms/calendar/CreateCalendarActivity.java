@@ -25,6 +25,8 @@ import android.widget.TextView;
 
 import com.congtyhai.adapter.AgencyAdapter;
 import com.congtyhai.adapter.CalendarAgencyAdapter;
+import com.congtyhai.adapter.CalendarStatusAdapter;
+import com.congtyhai.adapter.CommonItemAdapter;
 import com.congtyhai.haidateicker.DatePickerTimeline;
 import com.congtyhai.haidateicker.MonthView;
 import com.congtyhai.haidms.Agency.ShowAgencyActivity;
@@ -34,8 +36,10 @@ import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.CalendarCreateSend;
 import com.congtyhai.model.api.CalendarDayCreate;
+import com.congtyhai.model.api.CalendarStatus;
 import com.congtyhai.model.api.ResultInfo;
 import com.congtyhai.model.app.CalendarAgencyInfo;
+import com.congtyhai.model.app.CommonItemInfo;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.DividerItemDecoration;
 import com.congtyhai.view.RecyclerTouchListener;
@@ -59,19 +63,15 @@ public class CreateCalendarActivity extends BaseActivity {
     int month;
     int year;
     int days;
+
     @BindView(R.id.timeline)
     DatePickerTimeline timeline;
-
-    HashMap<Integer,CalendarDayCreate> calendarDayMap = new HashMap<>();
-
-    @BindView(R.id.txtnote)
-    TextView txtNote;
 
     @BindView(R.id.estatus)
     Spinner eStatus;
 
-    @BindView(R.id.enotes)
-    EditText eNotes;
+    @BindView(R.id.egroup)
+    Spinner eGroups;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -79,13 +79,21 @@ public class CreateCalendarActivity extends BaseActivity {
     @BindView(R.id.txtcus)
     TextView txtcus;
 
-    List<CalendarAgencyInfo> agencyInfos = new ArrayList<>();
+    HashMap<Integer, List<CalendarAgencyInfo>> calendarAgencyMap;
+
     CalendarAgencyAdapter mAdapter;
 
-    int daySelect = 1;
+    List<CommonItemInfo> groups;
 
-    @BindView(R.id.btnsavenote)
-    Button btnSaveNote;
+    HashMap<Integer, CalendarDayCreate> calendarDayMap;
+
+    // danh sach nhom chon hien tai
+    HashMap<Integer, Integer> dayGroupAgencyChooseMap;
+
+    List<CalendarAgencyInfo> agencyInfos;
+
+    int daySelect = 1;
+    int groupSelect = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,31 +102,59 @@ public class CreateCalendarActivity extends BaseActivity {
         createToolbar();
         ButterKnife.bind(this);
 
+        calendarDayMap = new HashMap<>();
+        calendarAgencyMap = new HashMap<>();
+        dayGroupAgencyChooseMap = new HashMap<>();
+        agencyInfos = new ArrayList<>();
+        groups = new ArrayList<>();
+
         createTimeLine();
         // lisst status
         createListStatus();
 
-        mAdapter = new CalendarAgencyAdapter(agencyInfos);
+
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        mAdapter = new CalendarAgencyAdapter(agencyInfos, this);
         recyclerView.setAdapter(mAdapter);
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
+                // check group la group nao
                 CalendarAgencyInfo info = agencyInfos.get(position);
+                boolean isCheck = true;
                 if (info.getCheck() == 1) {
                     agencyInfos.get(position).setCheck(0);
+                    agencyInfos.get(position).removeDayChoose(daySelect);
                     configMapItem(true, info.getCode());
-
+                    isCheck = false;
                 } else {
+                    agencyInfos.get(position).addDayChoose(daySelect);
                     agencyInfos.get(position).setCheck(1);
                     configMapItem(false, info.getCode());
+                    isCheck = true;
                 }
                 mAdapter.notifyDataSetChanged();
+
+                for (Map.Entry<Integer, List<CalendarAgencyInfo>> entry : calendarAgencyMap.entrySet()) {
+                    List<CalendarAgencyInfo> values = entry.getValue();
+                    for (int i = 0; i < values.size(); i++) {
+                        if (info.getCode().equals(values.get(i).getCode())) {
+                            if (isCheck) {
+                                entry.getValue().get(i).addDayChoose(daySelect);
+                            } else {
+                                entry.getValue().get(i).removeDayChoose(daySelect);
+                            }
+                        }
+                    }
+                }
+
+
             }
 
             @Override
@@ -127,31 +163,25 @@ public class CreateCalendarActivity extends BaseActivity {
             }
         }));
 
-        btnSaveNote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calendarDayMap.get(daySelect).setNotes(eNotes.getText().toString());
-                commons.makeToast(CreateCalendarActivity.this, "Đã lưu").show();
-            }
-        });
-
         new ReadDataTask().execute();
 
     }
 
+    private void setStatusName() {
+        int count = calendarDayMap.get(daySelect).getAgencies().size();
+        txtcus.setText("Số khách hàng chọn: " + count);
+    }
+
     private void createListStatus() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, HAIRes.getInstance().GetListStatusName());
+        CalendarStatusAdapter adapter = new CalendarStatusAdapter(this, HAIRes.getInstance().statusInfos);
         eStatus.setAdapter(adapter);
         eStatus.setSelection(HAIRes.getInstance().findPostitionStatus(HAIRes.getInstance().CALENDAR_CSKH));
 
         eStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String code = HAIRes.getInstance().statusInfos.get(i).code;
-               // calendarDayMap.get(daySelect).setAgencies(new ArrayList<String>());
+                String code = HAIRes.getInstance().statusInfos.get(i).id;
                 calendarDayMap.get(daySelect).setStatus(code);
-               // calendarDayMap.get(daySelect).setNotes("");
-                changeStatus(code);
             }
 
             @Override
@@ -162,28 +192,30 @@ public class CreateCalendarActivity extends BaseActivity {
     }
 
 
-    private void changeStatus(String code) {
+    private void createListGroup() {
+        CommonItemAdapter commonItemAdapter = new CommonItemAdapter(CreateCalendarActivity.this, groups);
+        eGroups.setAdapter(commonItemAdapter);
+        eGroups.setSelection(findPostionGroup());
+        eGroups.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                CommonItemInfo commonItemInfo = groups.get(i);
+                groupSelect = Integer.parseInt(commonItemInfo.getCode());
 
-        if (code.equals(HAIRes.getInstance().CALENDAR_CSKH)) {
-            eNotes.setVisibility(View.GONE);
-            txtNote.setVisibility(View.GONE);
-            btnSaveNote.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-            txtcus.setVisibility(View.VISIBLE);
-        } else if (HAIRes.getInstance().CALENDAR_OTHER.equals(code)) {
-            eNotes.setVisibility(View.VISIBLE);
-            txtNote.setVisibility(View.VISIBLE);
-            btnSaveNote.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-            txtcus.setVisibility(View.GONE);
-        } else {
-            eNotes.setVisibility(View.GONE);
-            txtNote.setVisibility(View.GONE);
-            btnSaveNote.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.GONE);
-            txtcus.setVisibility(View.GONE);
-        }
+                if (dayGroupAgencyChooseMap.containsKey(daySelect)) {
+                    dayGroupAgencyChooseMap.remove(daySelect);
+                }
+                dayGroupAgencyChooseMap.put(daySelect, groupSelect);
+                refeshList();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
+
 
     private class ReadDataTask extends AsyncTask<String, Integer, List<AgencyInfo>> {
         protected List<AgencyInfo> doInBackground(String... urls) {
@@ -205,17 +237,34 @@ public class CreateCalendarActivity extends BaseActivity {
         }
 
         protected void onPostExecute(List<AgencyInfo> result) {
+            groups.add(new CommonItemInfo("Tất cả ", "-1"));
             for (AgencyInfo info : result) {
                 CalendarAgencyInfo calendarAgencyInfo = new CalendarAgencyInfo(info.getDeputy(), info.getCode(), info.getName(), 0);
-                agencyInfos.add(calendarAgencyInfo);
+                calendarAgencyInfo.setDayChoose(new ArrayList<Integer>());
+                calendarAgencyInfo.setGroup(info.getGroup() + "");
+                calendarAgencyInfo.setRank(info.getRank());
+                if (!calendarAgencyMap.containsKey(info.getGroup())) {
+                    calendarAgencyMap.put(info.getGroup(), new ArrayList<CalendarAgencyInfo>());
+                    groups.add(new CommonItemInfo("Cụm " + info.getGroup(), info.getGroup() + ""));
+                }
+                calendarAgencyMap.get(info.getGroup()).add(calendarAgencyInfo);
             }
 
-            mAdapter.notifyDataSetChanged();
-
+            refeshList();
+            createListGroup();
             hidepDialog();
         }
     }
 
+
+    private int findPostionGroup() {
+        for (int i = 0; i < groups.size(); i++) {
+            if (groups.get(i).getCode().equals(groupSelect + "")) {
+                return i;
+            }
+        }
+        return 0;
+    }
 
     private void makeRequest(CalendarCreateSend calendarCreateSend) {
         showpDialog();
@@ -291,9 +340,9 @@ public class CreateCalendarActivity extends BaseActivity {
             @Override
             public void onDateSelected(int year, int month, int day, int index) {
                 daySelect = day;
+                groupSelect = dayGroupAgencyChooseMap.get(daySelect);
                 eStatus.setSelection(HAIRes.getInstance().findPostitionStatus(calendarDayMap.get(daySelect).getStatus()));
-                changeStatus(calendarDayMap.get(daySelect).getStatus());
-                eNotes.setText(calendarDayMap.get(daySelect).getNotes());
+                eGroups.setSelection(findPostionGroup());
                 refeshList();
             }
         });
@@ -310,15 +359,31 @@ public class CreateCalendarActivity extends BaseActivity {
             calendarDayCreate.setNotes("");
             calendarDayCreate.setStatus(HAIRes.getInstance().CALENDAR_CSKH);
             calendarDayMap.put(i, calendarDayCreate);
+
+            // set tat ca group hien thi tat ca
+            dayGroupAgencyChooseMap.put(i, -1);
+
         }
 
     }
 
 
     private void refeshList() {
+
+        agencyInfos.clear();
+        if (groupSelect == -1) {
+            for (Map.Entry<Integer, List<CalendarAgencyInfo>> entry : calendarAgencyMap.entrySet()) {
+                List<CalendarAgencyInfo> values = entry.getValue();
+                agencyInfos.addAll(values);
+            }
+        } else {
+            List<CalendarAgencyInfo> values = calendarAgencyMap.get(groupSelect);
+            agencyInfos.addAll(values);
+        }
+
         CalendarDayCreate dayCreates = calendarDayMap.get(daySelect);
 
-        for (int i = 0; i< agencyInfos.size(); i++) {
+        for (int i = 0; i < agencyInfos.size(); i++) {
             if (dayCreates.getAgencies().contains(agencyInfos.get(i).getCode())) {
                 agencyInfos.get(i).setCheck(1);
             } else {
@@ -327,6 +392,8 @@ public class CreateCalendarActivity extends BaseActivity {
         }
 
         mAdapter.notifyDataSetChanged();
+
+        setStatusName();
 
     }
 
@@ -341,6 +408,8 @@ public class CreateCalendarActivity extends BaseActivity {
                 dayCreates.getAgencies().add(code);
             }
         }
+
+        setStatusName();
     }
 
     @Override
@@ -351,18 +420,66 @@ public class CreateCalendarActivity extends BaseActivity {
     }
 
     private boolean checkPolicy() {
-        for(Map.Entry<Integer, CalendarDayCreate> entry : calendarDayMap.entrySet()) {
-            // String key = entry.getKey();
+
+        // kiem tra moi khach hang phai duoc tham it nhat 1 lan
+        for (Map.Entry<Integer, List<CalendarAgencyInfo>> entry : calendarAgencyMap.entrySet()) {
+            List<CalendarAgencyInfo> values = entry.getValue();
+            for (CalendarAgencyInfo info : values) {
+                if (info.getDayChoose().size() == 0) {
+                    commons.showAlertInfo(CreateCalendarActivity.this, "Cảnh báo", "Khách hàng : " + info.getDeputy() + " ( " + info.getName() + ") chưa được thăm lần nào trong tháng", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    return false;
+                }
+            }
+        }
+
+        // cac khach hang co lich cskh thi phai dc tham
+        for (Map.Entry<Integer, CalendarDayCreate> entry : calendarDayMap.entrySet()) {
+            //  String key = entry.getKey().toString();
             CalendarDayCreate value = entry.getValue();
 
-            if(value.getStatus().equals(HAIRes.getInstance().CALENDAR_CSKH)) {
-              //  if (value.getAgencies().size() < 4)
-              //      return false;
+
+            CalendarStatus calendarStatus = findStatusById(value.getStatus());
+
+            if (calendarStatus == null) {
+                commons.showAlertInfo(CreateCalendarActivity.this, "Cảnh báo", "Sai thông tin", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                return false;
             }
+
+            if (calendarStatus.getCompel() == 1) {
+                if (value.getAgencies().size() < calendarStatus.getNumber()) {
+                    commons.showAlertInfo(CreateCalendarActivity.this, "Cảnh báo", calendarStatus.getName() + " phải đi thăm ít nhất " + calendarStatus.getNumber() + " /ngày", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    return false;
+                }
+            }
+
 
         }
 
-        return  true;
+        return true;
+    }
+
+    private CalendarStatus findStatusById(String id) {
+        for (CalendarStatus item : HAIRes.getInstance().statusInfos) {
+            if (item.getId().equals(id))
+                return item;
+        }
+
+        return null;
     }
 
     @Override
@@ -377,7 +494,7 @@ public class CreateCalendarActivity extends BaseActivity {
                             // save
                             String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
                             String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
-                           // HAIRes.getInstance().calendarCreateSend = new CalendarCreateSend();
+                            // HAIRes.getInstance().calendarCreateSend = new CalendarCreateSend();
                             CalendarCreateSend calendarCreateSend = new CalendarCreateSend();
                             calendarCreateSend.setUser(user);
                             calendarCreateSend.setToken(token);
@@ -402,13 +519,8 @@ public class CreateCalendarActivity extends BaseActivity {
 
                         }
                     });
-                } else  {
-                    commons.showAlertInfo(CreateCalendarActivity.this, "Cảnh báo", "Mỗi ngày phải thăm ít nhất 4 khách hàng", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
+                } else {
 
-                        }
-                    });
                 }
                 return true;
             default:

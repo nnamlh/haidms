@@ -3,10 +3,10 @@ package com.congtyhai.util;
 import com.congtyhai.model.api.AgencyCreateSend;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.AgencyModifySend;
+import com.congtyhai.model.api.CalendarCheckResult;
 import com.congtyhai.model.api.CalendarCreateSend;
 import com.congtyhai.model.api.CalendarShowResult;
 import com.congtyhai.model.api.CalendarShowSend;
-import com.congtyhai.model.api.CheckCalendarResult;
 import com.congtyhai.model.api.CheckInGetPlanResult;
 import com.congtyhai.model.api.CheckInGetPlanSend;
 import com.congtyhai.model.api.CheckInResult;
@@ -15,8 +15,6 @@ import com.congtyhai.model.api.MainInfoResult;
 import com.congtyhai.model.api.MainInfoSend;
 import com.congtyhai.model.api.ResultInfo;
 import com.congtyhai.model.api.SendBasicInfo;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -30,16 +28,19 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
-    @GET("rest/loginsession")
+    // check session
+    @GET("user/loginsession")
     Call<ResultInfo> checkSession(
             @Query("user") String user,
             @Query("token") String token);
 
-    @POST("rest/getmaininfo")
+    // main info
+    @POST("restmain/maininfo")
     Call<MainInfoResult> updateReg(@Body MainInfoSend info);
 
-    @GET("restv2/CheckCalendarCreate")
-    Call<CheckCalendarResult> checkCalendarCreate(
+    // calendar
+    @GET("checkin/calendarcheck")
+    Call<CalendarCheckResult> calendarCheck(
             @Query("user") String user);
 
     @POST("restv2/CheckInCalendarCreate")

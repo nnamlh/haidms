@@ -12,13 +12,13 @@ import retrofit2.http.Query;
  */
 
 public interface LoginService {
-    @GET("rest/login")
+    @GET("user/login")
     Call<LoginResult> basicLogin(@Query("imei") String imei);
 
-    @GET("rest/checkuserlogin")
+    @GET("user/checkuserlogin")
     Call<CheckUserLoginResult> checkUserLogin();
 
-    @GET("rest/loginactivaton")
+    @GET("user/loginactivaton")
     Call<LoginResult> loginActivaton();
 
 }

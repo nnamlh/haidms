@@ -25,11 +25,11 @@ import com.congtyhai.haidateicker.DatePickerTimeline;
 import com.congtyhai.haidateicker.MonthView;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
+import com.congtyhai.model.api.CalendarCheckResult;
 import com.congtyhai.model.api.CalendarDayShow;
 import com.congtyhai.model.api.CalendarShowAgency;
 import com.congtyhai.model.api.CalendarShowResult;
 import com.congtyhai.model.api.CalendarShowSend;
-import com.congtyhai.model.api.CheckCalendarResult;
 import com.congtyhai.model.app.CheckInFunctionInfo;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.DividerItemDecoration;
@@ -148,10 +148,10 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         HAIRes.getInstance().statusInfos.clear();
         checkInFunctionInfos.clear();
-        Call<CheckCalendarResult> call = apiInterface().checkCalendarCreate(user);
-        call.enqueue(new Callback<CheckCalendarResult>() {
+        Call<CalendarCheckResult> call = apiInterface().calendarCheck(user);
+        call.enqueue(new Callback<CalendarCheckResult>() {
             @Override
-            public void onResponse(Call<CheckCalendarResult> call, Response<CheckCalendarResult> response) {
+            public void onResponse(Call<CalendarCheckResult> call, Response<CalendarCheckResult> response) {
 
                if ( response.body().getMonth() == null || response.body().getMonth().size() == 0) {
                    commons.showAlertInfo(StaffCalendarActivity.this, "Thông báo", "Hiện tại bạn đã lên đủ kế hoạch", new DialogInterface.OnClickListener() {
@@ -175,7 +175,7 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
             }
 
             @Override
-            public void onFailure(Call<CheckCalendarResult> call, Throwable t) {
+            public void onFailure(Call<CalendarCheckResult> call, Throwable t) {
                 hidepDialog();
             }
         });

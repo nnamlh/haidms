@@ -1,13 +1,16 @@
 package com.congtyhai.adapter;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.CalendarShowAgency;
+import com.congtyhai.view.CircularTextView;
 
 import java.util.List;
 
@@ -48,6 +51,8 @@ public class CalendarShowAgencyAdapter  extends   RecyclerView.Adapter<CalendarS
         } else {
             holder.status.setText("Ngoài kế hoạch");
         }
+
+
     }
 
     @Override
@@ -58,12 +63,14 @@ public class CalendarShowAgencyAdapter  extends   RecyclerView.Adapter<CalendarS
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView deputy, name, status;
         public ImageView imgCheck;
+
         public MyViewHolder(View view) {
             super(view);
             deputy = (TextView) view.findViewById(R.id.deputy);
             name = (TextView) view.findViewById(R.id.name);
             status = (TextView) view.findViewById(R.id.status);
             imgCheck = (ImageView) view.findViewById(R.id.imgcheck);
+
         }
     }
 }

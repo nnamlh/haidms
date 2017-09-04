@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="10dp"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.congtyhai.haidms.calendar.CreateCalendarActivity"
     tools:showIn="@layout/activity_create_calendar">
@@ -14,69 +13,57 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textColor="#000000"
-        android:textStyle="bold"
         android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-light"
         android:text="Chọn loại công tác"
-        android:textSize="14dp" />
+        android:textColor="#000000"
+        android:textSize="14dp"
+        android:textStyle="bold" />
 
     <Spinner
         android:id="@+id/estatus"
-        android:fontFamily="sans-serif-light"
         android:layout_width="match_parent"
-        android:textColor="@color/cardview_dark_background"
+        android:layout_height="wrap_content"
         android:background="@drawable/input_text"
-        android:layout_height="50dp" />
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/cardview_dark_background" />
+
 
     <TextView
-        android:id="@+id/txtnote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:visibility="gone"
         android:layout_marginTop="10dp"
-        android:text="Ghi chú khác"
-        android:textSize="14dp" />
+        android:fontFamily="sans-serif-light"
+        android:text="Cụm khách hàng"
+        android:textColor="#000000"
+        android:textSize="14dp"
+        android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/enotes"
+    <Spinner
+        android:id="@+id/egroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/input_text"
-        android:gravity="top|left"
-        android:inputType="textMultiLine"
-        android:lines="8"
-        android:visibility="gone"
-        android:maxLines="10"
-        android:minLines="3"
-        android:padding="5dp" />
-
-    <Button
-        android:id="@+id/btnsavenote"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:text="lưu ghi chú" />
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/cardview_dark_background" />
 
     <TextView
         android:id="@+id/txtcus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textColor="#000000"
-        android:textStyle="bold"
         android:layout_marginTop="10dp"
-        android:text="Chọn khách hàng"
-        android:textSize="14dp" />
+        android:fontFamily="sans-serif-light"
+        android:text="Số khách hàng đã chọn: 4"
+        android:textColor="#000000"
+        android:textSize="14dp"
+        android:textStyle="bold" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical" />
 
 </LinearLayout>
+

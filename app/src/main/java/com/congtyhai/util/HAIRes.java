@@ -2,7 +2,7 @@ package com.congtyhai.util;
 
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.CalendarCreateSend;
-import com.congtyhai.model.api.StatusInfo;
+import com.congtyhai.model.api.CalendarStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +57,7 @@ public class HAIRes {
     public final String PREF_KEY_FUNCTION = "functionlogin";
 
     // data
-    public List<StatusInfo> statusInfos = new ArrayList<>();
+    public List<CalendarStatus> statusInfos = new ArrayList<>();
     public CalendarCreateSend calendarCreateSend = new CalendarCreateSend();
     public AgencyInfo currentAgencySelect = new AgencyInfo();
     public final double LIMIT_DISTANCE = 300;
@@ -73,7 +73,7 @@ public class HAIRes {
 
     public int findPostitionStatus(String status) {
         for(int i=0; i< statusInfos.size(); i++) {
-            if (status.equals(statusInfos.get(i).code)){
+            if (status.equals(statusInfos.get(i).id)){
                 return  i;
             }
         }
@@ -83,7 +83,7 @@ public class HAIRes {
 
     public String findStatusName(String status) {
         for(int i=0; i< statusInfos.size(); i++) {
-            if (status.equals(statusInfos.get(i).code)){
+            if (status.equals(statusInfos.get(i).id)){
                 return statusInfos.get(i).name;
             }
         }

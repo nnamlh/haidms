@@ -1,14 +1,17 @@
 package com.congtyhai.adapter;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.app.CalendarAgencyInfo;
+import com.congtyhai.view.CircularTextView;
 
 import java.util.List;
 
@@ -19,9 +22,11 @@ import java.util.List;
 public class CalendarAgencyAdapter  extends   RecyclerView.Adapter<CalendarAgencyAdapter.MyViewHolder> {
 
     List<CalendarAgencyInfo> agencyInfos;
+    Activity activity;
 
-    public CalendarAgencyAdapter(List<CalendarAgencyInfo> agencyInfos){
+    public CalendarAgencyAdapter(List<CalendarAgencyInfo> agencyInfos, Activity activity){
         this.agencyInfos = agencyInfos;
+        this.activity = activity;
     }
 
     @Override
@@ -42,6 +47,22 @@ public class CalendarAgencyAdapter  extends   RecyclerView.Adapter<CalendarAgenc
         } else {
             holder.imgCheck.setVisibility(View.GONE);
         }
+
+        holder.notes.setText("Hạng: " + agency.getRank() + "\t Cụm: " + agency.getGroup());
+
+        holder.lDay.removeAllViews();
+
+        for(int item : agency.getDayChoose()) {
+            CircularTextView circularTextView = new CircularTextView(activity);
+            circularTextView.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            circularTextView.setText("" + item);
+            circularTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            circularTextView.setStrokeWidth(1);
+            circularTextView.setStrokeColor("#00E676");
+            circularTextView.setSolidColor("#00E676");
+
+            holder.lDay.addView(circularTextView);
+        }
     }
 
     @Override
@@ -52,11 +73,15 @@ public class CalendarAgencyAdapter  extends   RecyclerView.Adapter<CalendarAgenc
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView  deputy, name;
         public ImageView imgCheck;
+        public LinearLayout lDay;
+        public TextView notes;
         public MyViewHolder(View view) {
             super(view);
             deputy = (TextView) view.findViewById(R.id.deputy);
             name = (TextView) view.findViewById(R.id.name);
             imgCheck = (ImageView) view.findViewById(R.id.imgcheck);
+            lDay = (LinearLayout) view.findViewById(R.id.lday);
+            notes = (TextView) view.findViewById(R.id.notes);
         }
     }
 }
