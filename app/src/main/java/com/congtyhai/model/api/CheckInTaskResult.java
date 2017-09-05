@@ -15,17 +15,17 @@ public class CheckInTaskResult {
     @SerializedName("msg")
     private String msg;
     @SerializedName("timeRemain")
-    public int timeRemain;
+    private int timeRemain;
     @SerializedName("tasks")
-    public List<TaskInfoResult> tasks;
+    private List<TaskInfoResult> tasks;
     @SerializedName("agencyCode")
-    public String agencyCode;
+    private String agencyCode;
     @SerializedName("agencyName")
-    public String agencyName;
+    private String agencyName;
     @SerializedName("agencyDeputy")
-    public String agencyDeputy;
+    private String agencyDeputy;
     @SerializedName("inPlan")
-    public int inPlan;
+    private int inPlan;
 
     public String getId() {
         return id;

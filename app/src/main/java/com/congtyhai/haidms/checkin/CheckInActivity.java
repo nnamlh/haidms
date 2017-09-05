@@ -14,11 +14,8 @@ import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.CheckInGetPlanResult;
 import com.congtyhai.model.api.CheckInGetPlanSend;
-import com.congtyhai.model.api.CheckInResult;
-import com.congtyhai.model.api.CheckInSend;
 import com.congtyhai.model.app.CheckInAgencyInfo;
 import com.congtyhai.util.HAIRes;
-import com.congtyhai.util.HaiActionInterface;
 import com.congtyhai.view.CheckInOtherFragment;
 import com.congtyhai.view.CheckInPlanFragment;
 import java.util.ArrayList;
@@ -36,6 +33,7 @@ public class CheckInActivity extends BaseActivity {
     private List<String> inPlans ;
     private List<String> outPlans;
     private List<AgencyInfo> agencyInfos ;
+    int SHOW_TASK = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +71,8 @@ public class CheckInActivity extends BaseActivity {
             @Override
             public void onResponse(Call<CheckInGetPlanResult> call, Response<CheckInGetPlanResult> response) {
                 if (response.body() != null) {
+                    inPlans.clear();
+                    outPlans.clear();
                     if(response.body().getId().equals("0")) {
                         commons.showAlertInfo(CheckInActivity.this, "Cảnh báo", response.body().getMsg(), new DialogInterface.OnClickListener() {
                             @Override
@@ -99,6 +99,18 @@ public class CheckInActivity extends BaseActivity {
         });
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SHOW_TASK) {
+            if (resultCode == RESULT_OK) {
+                makeRequest();
+            } else if (resultCode == RESULT_CANCELED) {
+
+            }
+        }
+    }
+
 /*
     public void makeUpdate(String code, long distance, final int inPlan, final HaiActionInterface action) {
         showpDialog();
@@ -138,14 +150,14 @@ public class CheckInActivity extends BaseActivity {
     }
 */
 
-    public void makeTask(final String agencyCode, final int inPlan) {
+    public void makeTask(final String agencyCode, final long distance) {
         commons.showAlertCancel(CheckInActivity.this, "Thông báo", "Bạn muốn ghé thăm khách hàng: " + agencyCode, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = commons.createIntent(CheckInActivity.this, CheckInTaskActivity.class);
                 intent.putExtra(HAIRes.getInstance().KEY_INTENT_AGENCY_CODE, agencyCode);
-                intent.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, inPlan);
-                startActivity(intent);
+                intent.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, distance);
+                startActivityForResult(intent, SHOW_TASK);
             }
         });
     }

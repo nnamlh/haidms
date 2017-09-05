@@ -8,7 +8,7 @@ public class CheckInSend {
     private String user;
     private String token;
 
-    private String code ;
+    private String agency ;
 
     private double lat ;
 
@@ -16,7 +16,6 @@ public class CheckInSend {
 
     private double distance;
 
-    private int inPlan;
 
     public String getUser() {
         return user;
@@ -32,14 +31,6 @@ public class CheckInSend {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public double getLat() {
@@ -66,11 +57,11 @@ public class CheckInSend {
         this.distance = distance;
     }
 
-    public int getInPlan() {
-        return inPlan;
+    public String getAgency() {
+        return agency;
     }
 
-    public void setInPlan(int inPlan) {
-        this.inPlan = inPlan;
+    public void setAgency(String agency) {
+        this.agency = agency;
     }
 }
