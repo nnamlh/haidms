@@ -12,14 +12,14 @@ public class CalendarDayShow {
 
     @SerializedName("day")
     private int day ;
-    @SerializedName("status")
+    @SerializedName("type")
     private String status;
-    @SerializedName("statusName")
+    @SerializedName("typeName")
     private String statusName ;
     @SerializedName("notes")
     private String notes ;
-    @SerializedName("calendar")
-    private List<CalendarShowAgency> calendar ;
+    @SerializedName("agences")
+    private List<CalendarShowAgency> agences ;
 
     public int getDay() {
         return day;
@@ -54,10 +54,10 @@ public class CalendarDayShow {
     }
 
     public List<CalendarShowAgency> getCalendar() {
-        return calendar;
+        return agences;
     }
 
-    public void setCalendar(List<CalendarShowAgency> calendar) {
-        this.calendar = calendar;
+    public void setCalendar(List<CalendarShowAgency> agences) {
+        this.agences = agences;
     }
 }

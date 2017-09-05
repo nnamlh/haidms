@@ -43,10 +43,10 @@ public interface ApiInterface {
     Call<CalendarCheckResult> calendarCheck(
             @Query("user") String user);
 
-    @POST("restv2/CheckInCalendarCreate")
+    @POST("checkin/calendarcreate")
     Call<ResultInfo> calendarCreate(@Body CalendarCreateSend info);
 
-    @POST("restv2/ShowStaffCalendar")
+    @POST("checkin/calendarshow")
     Call<CalendarShowResult> calendarShow(@Body CalendarShowSend info);
 
     @POST("restv2/GetStaffAgencyC2")

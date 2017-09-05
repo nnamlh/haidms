@@ -27,10 +27,10 @@ public class MainInfoResult {
     @SerializedName("function")
     private String[] function;
 
-    @SerializedName("agencies")
+    @SerializedName("c2")
     private AgencyInfo[] agencies;
 
-    @SerializedName("agencyc1")
+    @SerializedName("c1")
     private AgencyC1Info[] agencyc1;
 
     @SerializedName("recivers")

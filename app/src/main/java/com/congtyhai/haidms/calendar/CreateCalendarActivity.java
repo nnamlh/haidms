@@ -494,24 +494,15 @@ public class CreateCalendarActivity extends BaseActivity {
                             // save
                             String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
                             String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
-                            // HAIRes.getInstance().calendarCreateSend = new CalendarCreateSend();
                             CalendarCreateSend calendarCreateSend = new CalendarCreateSend();
                             calendarCreateSend.setUser(user);
                             calendarCreateSend.setToken(token);
                             calendarCreateSend.setMonth(month);
                             calendarCreateSend.setYear(year);
-                            calendarCreateSend.setNotes("");
                             calendarCreateSend.setItems(new ArrayList<CalendarDayCreate>());
                             for (Map.Entry<Integer, CalendarDayCreate> entry : calendarDayMap.entrySet()) {
                                 // String key = entry.getKey();
                                 CalendarDayCreate value = entry.getValue();
-                                if (!HAIRes.getInstance().CALENDAR_CSKH.equals(value.getStatus())) {
-                                    value.setAgencies(new ArrayList<String>());
-                                }
-                                if (!HAIRes.getInstance().CALENDAR_OTHER.equals(value.getStatus())) {
-                                    value.setNotes("");
-                                }
-
                                 calendarCreateSend.getItems().add(value);
                             }
 
@@ -519,9 +510,8 @@ public class CreateCalendarActivity extends BaseActivity {
 
                         }
                     });
-                } else {
-
                 }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

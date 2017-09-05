@@ -12,8 +12,6 @@ public class CalendarCreateSend {
 
     private String token;
 
-    private String notes ;
-
     private int month;
 
     private int year;
@@ -35,14 +33,6 @@ public class CalendarCreateSend {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 
     public int getMonth() {

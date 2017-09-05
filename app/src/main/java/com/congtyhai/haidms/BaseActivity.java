@@ -301,7 +301,7 @@ public class BaseActivity extends AppCompatActivity {
             return calendar.get(Calendar.DAY_OF_MONTH);
 
         } catch (ParseException e) {
-           return 1;
+            return 1;
         }
     }
 
@@ -310,21 +310,21 @@ public class BaseActivity extends AppCompatActivity {
             case 1:
                 return Calendar.JANUARY;
             case 2:
-                return  Calendar.FEBRUARY;
-            case  3:
+                return Calendar.FEBRUARY;
+            case 3:
                 return Calendar.MARCH;
-            case  4:
+            case 4:
                 return Calendar.APRIL;
             case 5:
                 return Calendar.MAY;
-            case  6:
+            case 6:
                 return Calendar.JUNE;
             case 7:
                 return Calendar.JULY;
-            case  8:
-                return  Calendar.AUGUST;
-            case  9:
-                return  Calendar.SEPTEMBER;
+            case 8:
+                return Calendar.AUGUST;
+            case 9:
+                return Calendar.SEPTEMBER;
             case 10:
                 return Calendar.OCTOBER;
             case 11:
