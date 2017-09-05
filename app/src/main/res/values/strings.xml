@@ -21,5 +21,6 @@
     <string name="title_activity_create_calendar">Tạo kế hoạch</string>
     <string name="title_activity_calendar_create_review">CalendarCreateReviewActivity</string>
     <string name="title_activity_check_in">Thăm khách hàng</string>
+    <string name="title_activity_check_in_task">CheckInTaskActivity</string>
 
 </resources>

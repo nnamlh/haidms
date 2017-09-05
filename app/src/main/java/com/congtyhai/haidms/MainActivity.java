@@ -164,10 +164,8 @@ public class MainActivity extends BaseActivity
 
         NonScrollListView listView = (NonScrollListView) sheetView.findViewById(R.id.list);
         checkInFunctionInfos = new ArrayList<CheckInFunctionInfo>();
-        checkInFunctionInfos.add(new CheckInFunctionInfo(HAIRes.getInstance().CHECKIN_CHECK, R.drawable.ic_menu_send, "Ghé thăm", "30 phut"));
-        checkInFunctionInfos.add(new CheckInFunctionInfo(HAIRes.getInstance().CHECKIN_PICTURE, R.drawable.ic_menu_gallery, "Trưng bày", "30 phut"));
-        checkInFunctionInfos.add(new CheckInFunctionInfo(HAIRes.getInstance().CHECKIN_ORDER, R.drawable.ic_menu_gallery, "Đơn hàng", "10 phut"));
-        checkInFunctionInfos.add(new CheckInFunctionInfo(HAIRes.getInstance().CHECKIN_PRODUCT, R.drawable.ic_menu_send, "Sản phẩm", "30 phut"));
+        checkInFunctionInfos.add(new CheckInFunctionInfo(HAIRes.getInstance().CHECKIN_CHECK, R.drawable.ic_menu_send, "Ghé thăm", ""));
+        checkInFunctionInfos.add(new CheckInFunctionInfo(HAIRes.getInstance().CHECKIN_PRODUCT, R.drawable.ic_menu_send, "Sản phẩm", ""));
         CheckinFunctionAdapter adapter = new CheckinFunctionAdapter(MainActivity.this, checkInFunctionInfos);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);

@@ -83,12 +83,7 @@ public class CheckInOtherFragment extends Fragment {
                 if (info.getDistance() > HAIRes.getInstance().LIMIT_DISTANCE) {
                     Toast.makeText(activity, "Chưa thể checkin", Toast.LENGTH_LONG).show();
                 }else {
-                    activity.makeUpdate(info.getCode(), info.getDistance(),0, new HaiActionInterface() {
-                        @Override
-                        public void onResult() {
-                            refeshList();
-                        }
-                    });
+                    activity.makeTask(info.getCode(), 0);
                 }
             }
 

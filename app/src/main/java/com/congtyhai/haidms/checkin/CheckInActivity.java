@@ -1,6 +1,7 @@
 package com.congtyhai.haidms.checkin;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -98,7 +99,7 @@ public class CheckInActivity extends BaseActivity {
         });
 
     }
-
+/*
     public void makeUpdate(String code, long distance, final int inPlan, final HaiActionInterface action) {
         showpDialog();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
@@ -135,7 +136,19 @@ public class CheckInActivity extends BaseActivity {
         });
 
     }
+*/
 
+    public void makeTask(final String agencyCode, final int inPlan) {
+        commons.showAlertCancel(CheckInActivity.this, "Thông báo", "Bạn muốn ghé thăm khách hàng: " + agencyCode, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = commons.createIntent(CheckInActivity.this, CheckInTaskActivity.class);
+                intent.putExtra(HAIRes.getInstance().KEY_INTENT_AGENCY_CODE, agencyCode);
+                intent.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, inPlan);
+                startActivity(intent);
+            }
+        });
+    }
     private class ReadDataTask extends AsyncTask<String, Integer, List<AgencyInfo>> {
         protected List<AgencyInfo> doInBackground(String... urls) {
 
