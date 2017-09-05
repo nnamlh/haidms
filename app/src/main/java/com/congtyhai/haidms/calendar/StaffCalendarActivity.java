@@ -30,6 +30,7 @@ import com.congtyhai.model.api.CalendarDayShow;
 import com.congtyhai.model.api.CalendarShowAgency;
 import com.congtyhai.model.api.CalendarShowResult;
 import com.congtyhai.model.api.CalendarShowSend;
+import com.congtyhai.model.api.CalendarShowStatusDetail;
 import com.congtyhai.model.app.CheckInFunctionInfo;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.DividerItemDecoration;
@@ -71,6 +72,9 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
 
     @BindView(R.id.txtdetail)
     TextView txtDetail;
+
+    @BindView(R.id.txtstatus)
+    TextView txtStatus;
 
     List<CalendarShowAgency> calendarShowAgencies = new ArrayList<>();
     CalendarShowAgencyAdapter adapter;
@@ -216,6 +220,13 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
 
                         eNotes.setText(response.body().getNotes());
 
+                        // show status
+                        String allStatus = "";
+                        for(CalendarShowStatusDetail statusDetail: response.body().getStatusDetails()) {
+                            allStatus += statusDetail.getStatusName() + " : " + statusDetail.getNumber() + " ngày\n";
+                        }
+                        txtStatus.setText(allStatus);
+
                         // set map
                         if (response.body().getItems() != null) {
                             for(CalendarDayShow calendar: response.body().getItems()) {
@@ -283,30 +294,13 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
                 CalendarDayShow calendarDayShow = calendarDayShowHashMap.get(day);
                 calendarShowAgencies = new ArrayList<CalendarShowAgency>();
                 if (calendarDayShow != null) {
-
-                    if (HAIRes.getInstance().CALENDAR_CSKH.equals(calendarDayShow.getStatus())) {
-                        txtDetail.setVisibility(View.GONE);
-                        recyclerView.setVisibility(View.VISIBLE);
-
-                        if (calendarDayShow.getCalendar() != null) {
-                            for (CalendarShowAgency item :calendarDayShow.getCalendar() )
+                    txtDetail.setText(calendarDayShow.getStatusName());
+                    if (calendarDayShow.getAgences() != null) {
+                        for (CalendarShowAgency item :calendarDayShow.getAgences() )
                             calendarShowAgencies.add(item);
-                        }
-
-                    } else if (HAIRes.getInstance().CALENDAR_OTHER.equals(calendarDayShow.getStatus())) {
-                        txtDetail.setVisibility(View.VISIBLE);
-                        recyclerView.setVisibility(View.GONE);
-                        txtDetail.setText(calendarDayShow.getStatusName() + " : " + calendarDayShow.getNotes());
-                    } else {
-                        txtDetail.setVisibility(View.VISIBLE);
-                        recyclerView.setVisibility(View.GONE);
-                        txtDetail.setText(calendarDayShow.getStatusName());
                     }
-
                 } else {
-                    txtDetail.setVisibility(View.VISIBLE);
                     txtDetail.setText("Không có dữ liệu");
-                    recyclerView.setVisibility(View.GONE);
                 }
                 adapter = new CalendarShowAgencyAdapter(calendarShowAgencies);
                 recyclerView.setAdapter(adapter);

@@ -53,11 +53,11 @@ public class CalendarDayShow {
         this.notes = notes;
     }
 
-    public List<CalendarShowAgency> getCalendar() {
+    public List<CalendarShowAgency> getAgences() {
         return agences;
     }
 
-    public void setCalendar(List<CalendarShowAgency> agences) {
+    public void setAgences(List<CalendarShowAgency> agences) {
         this.agences = agences;
     }
 }

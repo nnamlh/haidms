@@ -27,6 +27,9 @@ public class CalendarShowResult {
     @SerializedName("items")
     private List<CalendarDayShow> items ;
 
+    @SerializedName("typeDetail")
+    private List<CalendarShowStatusDetail> statusDetails;
+
     public int getHasApprove() {
         return hasApprove;
     }
@@ -81,5 +84,13 @@ public class CalendarShowResult {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public List<CalendarShowStatusDetail> getStatusDetails() {
+        return statusDetails;
+    }
+
+    public void setStatusDetails(List<CalendarShowStatusDetail> statusDetails) {
+        this.statusDetails = statusDetails;
     }
 }
