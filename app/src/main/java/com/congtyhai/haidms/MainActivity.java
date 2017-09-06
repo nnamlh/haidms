@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.congtyhai.adapter.CheckinFunctionAdapter;
 import com.congtyhai.haidms.Agency.ShowAgencyActivity;
@@ -32,6 +33,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -67,7 +69,7 @@ public class MainActivity extends BaseActivity
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         createLocation();
-        createBottomSheet();
+        //  createBottomSheet();
         makeRequest();
 
     }
@@ -187,11 +189,35 @@ public class MainActivity extends BaseActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMinZoomPreference(6.0f);
-        mMap.setMaxZoomPreference(14.0f);
+        mMap.setMinZoomPreference(5.0f);
+        mMap.setMaxZoomPreference(16.0f);
         HaiLocation location = getCurrentLocation();
         LatLng me = new LatLng(location.getLatitude(), location.getLongitude());
-        mMap.addMarker(new MarkerOptions().position(me).title("ME").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+                View v = getLayoutInflater().inflate(R.layout.infowindow_item, null);
+
+                TextView name = (TextView) v.findViewById(R.id.txtname);
+                name.setText(marker.getTitle());
+
+                TextView notes = (TextView) v.findViewById(R.id.txtcode);
+                notes.setText(marker.getSnippet());
+
+                TextView distance = (TextView) v.findViewById(R.id.txtdistance);
+
+                long d = commons.distance(getCurrentLocation().getLatitude(), getCurrentLocation().getLongitude(), marker.getPosition().latitude, marker.getPosition().longitude, "M");
+                distance.setText(d + " m");
+                return v;
+            }
+        });
+        //mMap.addMarker(new MarkerOptions().position(me).title("ME").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(me));
 
     }
@@ -218,7 +244,7 @@ public class MainActivity extends BaseActivity
         protected void onPostExecute(List<AgencyInfo> result) {
             for (AgencyInfo info : result) {
                 LatLng me = new LatLng(info.getLat(), info.getLng());
-                mMap.addMarker(new MarkerOptions().position(me).title(info.getName() + " - " + info.getCode()));
+                mMap.addMarker(new MarkerOptions().position(me).title(info.getDeputy() + " - " + info.getCode()).snippet(info.getName()));
             }
 
 
@@ -230,8 +256,9 @@ public class MainActivity extends BaseActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mBottomSheetDialog.show();
-                fab.setVisibility(View.GONE);
+                // mBottomSheetDialog.show();
+                // fab.setVisibility(View.GONE);
+                commons.startActivity(MainActivity.this, CheckInActivity.class);
             }
         });
     }

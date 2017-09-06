@@ -153,14 +153,13 @@ public class CheckInTaskActivity extends BaseActivity {
     }
 
     private void startTimer() {
-        timeRemain--;
         countDownTimer = new CountDownTimer(60 * 1000 * timeRemain, 60 * 1000) {
 
             public void onTick(long millisUntilFinished) {
                 for (int i = 0; i < taskInfos.size(); i++) {
                     if (taskInfos.get(i).getCode().equals("checkintask")) {
-                        timeRemain--;
                         taskInfos.get(i).setTimeRemain(timeRemain);
+                        timeRemain--;
                         break;
                     }
                 }
@@ -168,6 +167,13 @@ public class CheckInTaskActivity extends BaseActivity {
             }
 
             public void onFinish() {
+                for (int i = 0; i < taskInfos.size(); i++) {
+                    if (taskInfos.get(i).getCode().equals("checkintask")) {
+                        taskInfos.get(i).setTimeRemain(timeRemain);
+                        break;
+                    }
+                }
+                adapter.notifyDataSetChanged();
                 commons.makeToast(CheckInTaskActivity.this, "Bạn có thể Check In").show();
             }
         };

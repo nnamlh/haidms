@@ -50,17 +50,17 @@ public interface ApiInterface {
     @POST("checkin/calendarshow")
     Call<CalendarShowResult> calendarShow(@Body CalendarShowSend info);
 
-
     @POST("checkin/checkingetplan")
     Call<CheckInGetPlanResult> checkInGetPlan(@Body CheckInGetPlanSend info);
 
-    @POST("restv2/GetStaffAgencyC2")
+    // agency
+    @POST("agency/getagencyc2")
     Call<AgencyInfo[]> getAgencyC2(@Body SendBasicInfo info);
 
-    @POST("restv2/CreateAgencyC2")
+    @POST("agency/createagencyc2")
     Call<ResultInfo> createAgencyC2(@Body AgencyCreateSend info);
 
-    @POST("restv2/modifyagencyc2")
+    @POST("agency/modifyagencyc2")
     Call<ResultInfo> modifyAgencyC2(@Body AgencyModifySend info);
 
     @POST("checkin/checkin")

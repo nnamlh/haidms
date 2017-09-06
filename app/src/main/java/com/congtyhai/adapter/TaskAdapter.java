@@ -6,15 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.app.TaskInfo;
-
 import java.util.List;
-
-/**
- * Created by HAI on 9/5/2017.
- */
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder>{
 
@@ -39,8 +33,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder>{
         holder.notes.setText(taskInfo.getNotes());
         holder.time.setText(taskInfo.getTime() + " phút");
         holder.image.setBackgroundResource(taskInfo.getImage());
+        if(taskInfo.getTimeRemain() == 0) {
+            holder.notes.setText("Bạn có thể check in");
+        } else
         if(taskInfo.getTimeRemain() != -1) {
-            holder.notes.setText("Thời gian còn lại để check out: " + taskInfo.getTimeRemain() + " phút");
+            holder.notes.setText("Thời gian còn lại để check in: " + taskInfo.getTimeRemain() + " phút");
         }
     }
 

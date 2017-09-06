@@ -180,6 +180,7 @@ public class AddAgencyActivity extends BaseActivity {
         info.setAddress(eAddress.getText().toString());
         info.setCountry(eCountry.getText().toString());
         info.setProvince(eProvince.getText().toString());
+        info.setDistrict(eDistrict.getText().toString());
         info.setWard(eWard.getText().toString());
         info.setGroup(Integer.parseInt(eGroup.getText().toString()));
         info.setRank(eRank.getSelectedItem().toString());
