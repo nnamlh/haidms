@@ -71,7 +71,6 @@ public class MainActivity extends BaseActivity
         createLocation();
         //  createBottomSheet();
         makeRequest();
-
     }
 
 
@@ -96,7 +95,7 @@ public class MainActivity extends BaseActivity
                         setListMainFunction(response.body().getFunction());
                         if (needUpdate == 1) {
                             saveListAgency(response.body().getAgencies());
-                            saveListReceive(response.body().getRecivers());
+                          //  saveListReceive(response.body().getRecivers());
                             saveListProduct(response.body().getProducts());
                             saveListAgencyC1(response.body().getAgencyc1());
                             updateDaily();

@@ -58,7 +58,7 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
-    HashMap<Integer, CalendarDayShow> calendarDayShowHashMap = new HashMap<>();
+    HashMap<Integer, CalendarDayShow> calendarDayShowHashMap;
 
 
     @BindView(R.id.txttitle)
@@ -76,7 +76,7 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
     @BindView(R.id.txtstatus)
     TextView txtStatus;
 
-    List<CalendarShowAgency> calendarShowAgencies = new ArrayList<>();
+    List<CalendarShowAgency> calendarShowAgencies;
     CalendarShowAgencyAdapter adapter;
 
     DatePickerDialog datePickerDialog;
@@ -89,7 +89,8 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
         ButterKnife.bind(this);
         createBottomSheet();
         fabClick();
-
+        calendarDayShowHashMap  = new HashMap<>();
+        calendarShowAgencies  = new ArrayList<>();
         adapter = new CalendarShowAgencyAdapter(calendarShowAgencies);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());

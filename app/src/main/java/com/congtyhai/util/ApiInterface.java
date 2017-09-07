@@ -1,5 +1,6 @@
 package com.congtyhai.util;
 
+import com.congtyhai.model.api.AgencyC1Info;
 import com.congtyhai.model.api.AgencyCreateSend;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.AgencyModifySend;
@@ -62,6 +63,12 @@ public interface ApiInterface {
 
     @POST("agency/modifyagencyc2")
     Call<ResultInfo> modifyAgencyC2(@Body AgencyModifySend info);
+
+    // c1
+    @GET("agency/getagencyc1")
+    Call<AgencyC1Info[]> getAgencyC1(
+            @Query("user") String user,
+            @Query("token") String token);
 
     @POST("checkin/checkin")
     Call<ResultInfo> checkIn(@Body CheckInSend info);

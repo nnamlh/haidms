@@ -38,7 +38,7 @@ import retrofit2.Response;
 
 public class ShowAgencyActivity extends BaseActivity {
 
-    private List<AgencyInfo> agencyList = new ArrayList<>();
+    private List<AgencyInfo> agencyList ;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private AgencyAdapter mAdapter;
@@ -51,7 +51,7 @@ public class ShowAgencyActivity extends BaseActivity {
         setContentView(R.layout.activity_show_agency);
         ButterKnife.bind(this);
         createToolbar();
-
+        agencyList = new ArrayList<>();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

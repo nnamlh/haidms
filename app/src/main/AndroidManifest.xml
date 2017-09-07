@@ -75,10 +75,6 @@
             android:label="@string/title_activity_create_calendar"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".calendar.CalendarCreateReviewActivity"
-            android:label="@string/title_activity_calendar_create_review"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".checkin.CheckInActivity"
             android:label="@string/title_activity_check_in"
             android:theme="@style/AppTheme.NoActionBar" />
