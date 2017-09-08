@@ -22,5 +22,8 @@
     <string name="title_activity_check_in">Thăm khách hàng</string>
     <string name="title_activity_check_in_task">Check in</string>
     <string name="title_activity_show_product">Danh sách sản phẩm</string>
+    <string name="title_activity_show_product_detail">Chi tiết</string>
+    <string name="title_activity_decor">DecorActivity</string>
+    <string name="title_activity_decor_image">DecorImageActivity</string>
 
 </resources>

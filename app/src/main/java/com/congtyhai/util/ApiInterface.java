@@ -13,16 +13,26 @@ import com.congtyhai.model.api.CheckInGetPlanSend;
 import com.congtyhai.model.api.CheckInSend;
 import com.congtyhai.model.api.CheckInTaskResult;
 import com.congtyhai.model.api.CheckInTaskSend;
+import com.congtyhai.model.api.DecorFolder;
+import com.congtyhai.model.api.DecorImage;
+import com.congtyhai.model.api.DecorImageSend;
 import com.congtyhai.model.api.MainInfoResult;
 import com.congtyhai.model.api.MainInfoSend;
 import com.congtyhai.model.api.ProductCodeInfo;
+import com.congtyhai.model.api.ProductDetailResult;
 import com.congtyhai.model.api.ResultInfo;
 import com.congtyhai.model.api.SendBasicInfo;
 
+import java.util.List;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 /**
@@ -81,4 +91,23 @@ public interface ApiInterface {
 
     @POST("checkin/checkintask")
     Call<CheckInTaskResult> checkInTask(@Body CheckInTaskSend info);
+
+    @GET("showinfo/getproductdetail")
+    Call<ProductDetailResult> getProductDetail(
+            @Query("user") String user,
+            @Query("token") String token,
+            @Query("id") String id);
+
+    // decor
+    @GET("decor/getdecorfolder")
+    Call<List<DecorFolder>> getDecorFolder(
+            @Query("user") String user,
+            @Query("token") String token);
+
+    @POST("decor/getdecorimages")
+    Call<List<DecorImage>> getDecorImages(@Body DecorImageSend info);
+
+    @Multipart
+    @POST("upload/decor")
+    Call<ResultInfo> uploadImage(@Part MultipartBody.Part file, @Part("user") RequestBody user, @Part("token") RequestBody token, @Part("extension") RequestBody extension, @Part("agency") RequestBody agency,@Part("group") RequestBody group, @Part("lat") RequestBody lat, @Part("lng") RequestBody lng);
 }

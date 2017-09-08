@@ -1,5 +1,6 @@
 package com.congtyhai.adapter;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.ProductCodeInfo;
 
@@ -19,10 +21,12 @@ import java.util.List;
 public class ProductShowAdapter  extends  RecyclerView.Adapter<ProductShowAdapter.MyViewHolder>{
 
 
+    Activity activity;
     List<ProductCodeInfo> productCodeInfos;
 
-    public ProductShowAdapter(List<ProductCodeInfo> productCodeInfos) {
+    public ProductShowAdapter(List<ProductCodeInfo> productCodeInfos, Activity activity) {
         this.productCodeInfos = productCodeInfos;
+        this.activity = activity;
     }
 
     @Override
@@ -41,6 +45,10 @@ public class ProductShowAdapter  extends  RecyclerView.Adapter<ProductShowAdapte
         holder.group.setText("Nhóm: " + productCodeInfo.getGroupName());
         holder.producer.setText("Nhà sản xuất: " + productCodeInfo.getProducer());
         holder.active.setText("Hoặt tính: " + productCodeInfo.getActivce());
+
+        Glide.with(activity).load(productCodeInfo.getImage())
+                .thumbnail(0.5f)
+                .into(holder.image);
     }
 
     @Override

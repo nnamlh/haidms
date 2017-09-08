@@ -1,5 +1,6 @@
 package com.congtyhai.haidms.showinfo;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import com.congtyhai.adapter.ProductShowAdapter;
+import com.congtyhai.haidms.Agency.ShowAgencyDetailActivity;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.ProductCodeInfo;
@@ -43,7 +45,7 @@ public class ShowProductActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         productCodeInfos = new ArrayList<>();
-        mAdapter = new ProductShowAdapter(productCodeInfos);
+        mAdapter = new ProductShowAdapter(productCodeInfos,this);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -54,7 +56,10 @@ public class ShowProductActivity extends BaseActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-
+                Intent intent = commons.createIntent(ShowProductActivity.this, ShowProductDetailActivity.class);
+                ProductCodeInfo info = productCodeInfos.get(position);
+                intent.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, info.getId());
+                startActivity(intent);
             }
 
             @Override
@@ -98,7 +103,7 @@ public class ShowProductActivity extends BaseActivity {
                     productCodeInfos.add(info);
                 }
 
-                mAdapter = new ProductShowAdapter(productCodeInfos);
+                mAdapter = new ProductShowAdapter(productCodeInfos, ShowProductActivity.this);
                 recyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
             }

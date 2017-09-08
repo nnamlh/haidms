@@ -19,6 +19,7 @@ public class HAIRes {
     public final String KEY_INTENT_CREATE_CALENDAR = "createcalendar";
     public final String KEY_INTENT_AGENCY_CODE = "agencycode";
     public final String KEY_INTENT_TEMP = "temp";
+    public final String KEY_INTENT_TEMP2 = "temp2";
 
     public final String baseUrl = "http://192.168.2.170:802/api/";
     public final String baseUrlUpload = "http://192.168.2.170:801/";

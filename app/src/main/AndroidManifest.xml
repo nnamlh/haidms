@@ -85,6 +85,18 @@
         <activity
             android:name=".showinfo.ShowProductActivity"
             android:label="@string/title_activity_show_product"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".showinfo.ShowProductDetailActivity"
+            android:label="@string/title_activity_show_product_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".checkin.DecorActivity"
+            android:label="@string/title_activity_decor"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".checkin.DecorImageActivity"
+            android:label="@string/title_activity_decor_image"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

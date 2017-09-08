@@ -17,6 +17,7 @@ import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.CheckInSend;
 import com.congtyhai.model.api.CheckInTaskResult;
 import com.congtyhai.model.api.CheckInTaskSend;
+import com.congtyhai.model.api.DecorFolder;
 import com.congtyhai.model.api.ResultInfo;
 import com.congtyhai.model.api.TaskInfoResult;
 import com.congtyhai.model.app.TaskInfo;
@@ -77,6 +78,7 @@ public class CheckInTaskActivity extends BaseActivity {
         mapCodeImage = new HashMap<>();
         mapCodeImage.put("checkintask", R.mipmap.ic_checkin_task);
         mapCodeImage.put("ordertask", R.mipmap.ic_order_task);
+        mapCodeImage.put("decortask", R.mipmap.ic_decor_task);
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
@@ -93,6 +95,10 @@ public class CheckInTaskActivity extends BaseActivity {
                             }
                         });
                     }
+                } else if (taskInfo.getCode().equals("decortask")) {
+                    Intent intentDecor = commons.createIntent(CheckInTaskActivity.this, DecorActivity.class);
+                    intentDecor.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, agencyCode);
+                    startActivity(intentDecor);
                 }
             }
 

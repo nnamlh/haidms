@@ -200,7 +200,7 @@ public class BaseActivity extends AppCompatActivity {
 
         try {
             Gson gson = new Gson();
-            commons.writeFile(gson.toJson(groups), HAIRes.getInstance().PATH_AGENCY_JSON);
+            commons.writeFile(gson.toJson(groups), HAIRes.getInstance().PATH_PRODUCT_GROUP_JSON);
         } catch (Exception e) {
 
         }
