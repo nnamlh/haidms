@@ -21,6 +21,7 @@ import com.congtyhai.di.module.ActivityModule;
 import com.congtyhai.di.scope.RetrofitUploadInfo;
 import com.congtyhai.model.api.AgencyC1Info;
 import com.congtyhai.model.api.AgencyInfo;
+import com.congtyhai.model.api.GroupResultInfo;
 import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.model.api.ReceiveInfo;
 import com.congtyhai.model.app.HaiLocation;
@@ -186,13 +187,33 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void saveListAgency(AgencyInfo[] agencies) {
-        Gson gson = new Gson();
-        commons.writeFile(gson.toJson(agencies), HAIRes.getInstance().PATH_AGENCY_JSON);
+        try {
+            Gson gson = new Gson();
+            commons.writeFile(gson.toJson(agencies), HAIRes.getInstance().PATH_AGENCY_JSON);
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    protected void saveListProductGroup(GroupResultInfo[] groups) {
+
+        try {
+            Gson gson = new Gson();
+            commons.writeFile(gson.toJson(groups), HAIRes.getInstance().PATH_AGENCY_JSON);
+        } catch (Exception e) {
+
+        }
     }
 
     protected void saveListAgencyC1(AgencyC1Info[] agencies) {
-        Gson gson = new Gson();
-        commons.writeFile(gson.toJson(agencies), HAIRes.getInstance().PATH_AGENCY_C1_JSON);
+        try {
+            Gson gson = new Gson();
+            commons.writeFile(gson.toJson(agencies), HAIRes.getInstance().PATH_AGENCY_C1_JSON);
+        } catch (Exception e) {
+
+        }
+
     }
 
     protected List<ReceiveInfo> getListReceive() {
@@ -238,6 +259,46 @@ public class BaseActivity extends AppCompatActivity {
         return new ArrayList<>();
     }
 
+    protected List<GroupResultInfo> getListProductGroup() {
+
+        Gson gson = new Gson();
+        try {
+
+            BufferedReader reader = commons.readBufferedReader(HAIRes.getInstance().PATH_PRODUCT_GROUP_JSON);
+
+            if (reader != null) {
+                Type listType = new TypeToken<List<GroupResultInfo>>() {
+                }.getType();
+                List<GroupResultInfo> groups = gson.fromJson(reader, listType);
+
+                return groups;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+    protected List<ProductCodeInfo> getListProduct() {
+
+        Gson gson = new Gson();
+        try {
+
+            BufferedReader reader = commons.readBufferedReader(HAIRes.getInstance().PATH_PRODUCT_JSON);
+
+            if (reader != null) {
+                Type listType = new TypeToken<List<ProductCodeInfo>>() {
+                }.getType();
+                List<ProductCodeInfo> groups = gson.fromJson(reader, listType);
+
+                return groups;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
 
     protected List<AgencyC1Info> getListAgencyC1() {
 
@@ -261,8 +322,12 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void saveListReceive(ReceiveInfo[] receiveInfo) {
-        Gson gson = new Gson();
-        commons.writeFile(gson.toJson(receiveInfo), HAIRes.getInstance().PATH_RECEIVE_JSON);
+        try {
+            Gson gson = new Gson();
+            commons.writeFile(gson.toJson(receiveInfo), HAIRes.getInstance().PATH_RECEIVE_JSON);
+        } catch (Exception e) {
+
+        }
     }
 
     protected void saveListProduct(final ProductCodeInfo[] productCodeInfos) {

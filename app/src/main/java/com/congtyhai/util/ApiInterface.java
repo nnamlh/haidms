@@ -15,6 +15,7 @@ import com.congtyhai.model.api.CheckInTaskResult;
 import com.congtyhai.model.api.CheckInTaskSend;
 import com.congtyhai.model.api.MainInfoResult;
 import com.congtyhai.model.api.MainInfoSend;
+import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.model.api.ResultInfo;
 import com.congtyhai.model.api.SendBasicInfo;
 
@@ -67,6 +68,11 @@ public interface ApiInterface {
     // c1
     @GET("agency/getagencyc1")
     Call<AgencyC1Info[]> getAgencyC1(
+            @Query("user") String user,
+            @Query("token") String token);
+
+    @GET("showinfo/getproduct")
+    Call<ProductCodeInfo[]> getProduct(
             @Query("user") String user,
             @Query("token") String token);
 

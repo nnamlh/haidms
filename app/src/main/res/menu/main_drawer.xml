@@ -7,6 +7,11 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="Danh sách khách hàng" />
         <item
+            android:id="@+id/nav_product"
+            android:icon="@drawable/ic_menu_gallery"
+            android:visible="false"
+            android:title="Danh sách sản phẩm" />
+        <item
             android:id="@+id/nav_staffcalendar"
             android:icon="@drawable/ic_menu_camera"
             android:title="Lịch công tác" />
@@ -16,7 +21,7 @@
             android:visible="false"
             android:title="Kiểm tra nhân viên" />
         <item
-            android:id="@+id/nav_product"
+            android:id="@+id/nav_product_manage"
             android:icon="@drawable/ic_menu_gallery"
             android:visible="false"
             android:title="Quản lý sản phẩm" />

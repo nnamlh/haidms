@@ -39,6 +39,9 @@ public class MainInfoResult {
     @SerializedName("products")
     private ProductCodeInfo[] products;
 
+    @SerializedName("productGroups")
+    private  GroupResultInfo[] productGroups;
+
 
     public String getId() {
         return id;
@@ -112,5 +115,13 @@ public class MainInfoResult {
 
     public void setAgencyc1(AgencyC1Info[] agencyc1) {
         this.agencyc1 = agencyc1;
+    }
+
+    public GroupResultInfo[] getProductGroups() {
+        return productGroups;
+    }
+
+    public void setProductGroups(GroupResultInfo[] productGroups) {
+        this.productGroups = productGroups;
     }
 }

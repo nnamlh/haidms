@@ -81,6 +81,10 @@
         <activity
             android:name=".checkin.CheckInTaskActivity"
             android:label="@string/title_activity_check_in_task"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".showinfo.ShowProductActivity"
+            android:label="@string/title_activity_show_product"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

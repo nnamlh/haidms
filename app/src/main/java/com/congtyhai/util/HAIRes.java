@@ -44,6 +44,7 @@ public class HAIRes {
     public final int CALENDAR_MODIFY = 2;
 
     // save file path
+    public final String PATH_PRODUCT_GROUP_JSON = "/productgroup.json";
     public final String PATH_AGENCY_JSON = "/agency.json";
     public final String PATH_AGENCY_C1_JSON = "/agencyc1.json";
     public final String PATH_RECEIVE_JSON = "/receive.json";

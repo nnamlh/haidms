@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/ic_logo" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/image"
+        android:fontFamily="sans-serif-light"
+        android:text="THUỐC TRỪ SÂU TAKARE 2EC"
+        android:textColor="#000000"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/image"
+        android:fontFamily="sans-serif-light"
+        android:text="AZ00001223"
+        android:textColor="#000000"
+        android:textSize="14dp" />
+
+
+    <TextView
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/code"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/image"
+        android:fontFamily="sans-serif-light"
+        android:text="Nhóm: thuốc sâu"
+        android:textColor="#000000"
+        android:textSize="14dp" />
+
+
+    <TextView
+        android:id="@+id/producer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/group"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/image"
+        android:fontFamily="sans-serif-light"
+        android:text="Nơi sản xuất: abc"
+        android:textColor="#000000"
+        android:textSize="14dp" />
+
+
+    <TextView
+        android:id="@+id/active"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/producer"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/image"
+        android:fontFamily="sans-serif-light"
+        android:text="Hoặt chất: abc"
+        android:textColor="#000000"
+        android:textSize="14dp" />
+
+</RelativeLayout>

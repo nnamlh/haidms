@@ -20,6 +20,7 @@ import com.congtyhai.adapter.CheckinFunctionAdapter;
 import com.congtyhai.haidms.Agency.ShowAgencyActivity;
 import com.congtyhai.haidms.calendar.StaffCalendarActivity;
 import com.congtyhai.haidms.checkin.CheckInActivity;
+import com.congtyhai.haidms.showinfo.ShowProductActivity;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.MainInfoResult;
 import com.congtyhai.model.api.MainInfoSend;
@@ -97,6 +98,7 @@ public class MainActivity extends BaseActivity
                             saveListAgency(response.body().getAgencies());
                           //  saveListReceive(response.body().getRecivers());
                             saveListProduct(response.body().getProducts());
+                            saveListProductGroup(response.body().getProductGroups());
                             saveListAgencyC1(response.body().getAgencyc1());
                             updateDaily();
                         }
@@ -285,6 +287,8 @@ public class MainActivity extends BaseActivity
             commons.startActivity(MainActivity.this, ShowAgencyActivity.class);
         } else if (id == R.id.nav_staffcalendar) {
             commons.startActivity(MainActivity.this, StaffCalendarActivity.class);
+        } else if (id == R.id.nav_product){
+            commons.startActivity(MainActivity.this, ShowProductActivity.class);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
