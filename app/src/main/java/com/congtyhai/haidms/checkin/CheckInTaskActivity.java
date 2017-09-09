@@ -76,19 +76,21 @@ public class CheckInTaskActivity extends BaseActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
         mapCodeImage = new HashMap<>();
-        mapCodeImage.put("checkintask", R.mipmap.ic_checkin_task);
+        mapCodeImage.put("begintask", R.mipmap.ic_begin_task);
         mapCodeImage.put("ordertask", R.mipmap.ic_order_task);
         mapCodeImage.put("decortask", R.mipmap.ic_decor_task);
-
+        mapCodeImage.put("checkremaintask", R.mipmap.ic_remain_task);
+        mapCodeImage.put("collecttask", R.mipmap.ic_collect_task);
+        mapCodeImage.put("endtask", R.mipmap.ic_checkin_task);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 TaskInfo taskInfo = taskInfos.get(position);
-                if (taskInfo.getCode().equals("checkintask")) {
+                if (taskInfo.getCode().equals("endtask")) {
                     if (taskInfo.getTimeRemain() > 0) {
-                        commons.makeToast(CheckInTaskActivity.this, "Còn " + taskInfo.getTimeRemain() + " phút mới có thể check in").show();
+                        commons.makeToast(CheckInTaskActivity.this, "Còn " + taskInfo.getTimeRemain() + " phút mới có thể kết thúc").show();
                     } else {
-                        commons.showAlertCancel(CheckInTaskActivity.this, "Cảnh báo", "Hoàn thành checkin", new DialogInterface.OnClickListener() {
+                        commons.showAlertCancel(CheckInTaskActivity.this, "Cảnh báo", "Hoàn thành ghé thăm", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 makeCheckIn();
@@ -163,7 +165,7 @@ public class CheckInTaskActivity extends BaseActivity {
 
             public void onTick(long millisUntilFinished) {
                 for (int i = 0; i < taskInfos.size(); i++) {
-                    if (taskInfos.get(i).getCode().equals("checkintask")) {
+                    if (taskInfos.get(i).getCode().equals("endtask")) {
                         taskInfos.get(i).setTimeRemain(timeRemain);
                         timeRemain--;
                         break;
@@ -174,7 +176,7 @@ public class CheckInTaskActivity extends BaseActivity {
 
             public void onFinish() {
                 for (int i = 0; i < taskInfos.size(); i++) {
-                    if (taskInfos.get(i).getCode().equals("checkintask")) {
+                    if (taskInfos.get(i).getCode().equals("endtask")) {
                         taskInfos.get(i).setTimeRemain(timeRemain);
                         break;
                     }
@@ -215,7 +217,7 @@ public class CheckInTaskActivity extends BaseActivity {
                             taskInfo.setImage(R.mipmap.ic_checkin_task);
                         }
 
-                        if (taskInfo.getCode().equals("checkintask")) {
+                        if (taskInfo.getCode().equals("endtask")) {
                             taskInfo.setTimeRemain(response.body().getTimeRemain());
                         } else {
                             taskInfo.setTimeRemain(-1);

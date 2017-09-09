@@ -7,12 +7,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,15 +18,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Toast;
-
 import com.congtyhai.adapter.DecorImageAdapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
-import com.congtyhai.haidms.calendar.StaffCalendarActivity;
 import com.congtyhai.model.api.DecorImage;
 import com.congtyhai.model.api.DecorImageSend;
 import com.congtyhai.model.api.ResultInfo;
 import com.congtyhai.util.HAIRes;
+import com.congtyhai.view.RecyclerTouchListener;
+import com.congtyhai.view.SlideshowDialogFragment;
 import com.frosquivel.magicalcamera.MagicalCamera;
 import com.frosquivel.magicalcamera.MagicalPermissions;
 
@@ -68,7 +66,7 @@ public class DecorImageActivity extends BaseActivity implements DatePickerDialog
     };
     private MagicalPermissions magicalPermissions;
     MagicalCamera magicalCamera;
-    private int RESIZE_PHOTO_PIXELS_PERCENTAGE = 80;
+    private int RESIZE_PHOTO_PIXELS_PERCENTAGE = 50;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +94,22 @@ public class DecorImageActivity extends BaseActivity implements DatePickerDialog
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString("images", decorImages.get(position).getUrl());
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                SlideshowDialogFragment newFragment = SlideshowDialogFragment.newInstance();
+                newFragment.setArguments(bundle);
+                newFragment.show(ft, "show image");
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
 
         Date date = new Date();
         final Calendar calendar = Calendar.getInstance();
@@ -204,8 +218,8 @@ public class DecorImageActivity extends BaseActivity implements DatePickerDialog
 
 
     @Override
-    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-        makeRequest(i, i1, i2);
+    public void onDateSet(DatePicker datePicker,  int year, int month, int i2) {
+        makeRequest(i2, month + 1, year);
     }
 
     @Override

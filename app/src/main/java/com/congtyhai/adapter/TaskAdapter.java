@@ -33,11 +33,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder>{
         holder.notes.setText(taskInfo.getNotes());
         holder.time.setText(taskInfo.getTime() + " phút");
         holder.image.setBackgroundResource(taskInfo.getImage());
+
+        if (taskInfo.getCode().equals("begintask")){
+            holder.notes.setText("Bạn đã ghé thăm");
+        }
+
         if(taskInfo.getTimeRemain() == 0) {
-            holder.notes.setText("Bạn có thể check in");
+            holder.notes.setText("Kết thúc quy trình ghé thăm");
         } else
         if(taskInfo.getTimeRemain() != -1) {
-            holder.notes.setText("Thời gian còn lại để check in: " + taskInfo.getTimeRemain() + " phút");
+            holder.notes.setText("Thời gian còn lại để kết thúc: " + taskInfo.getTimeRemain() + " phút");
         }
     }
 

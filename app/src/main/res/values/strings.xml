@@ -25,5 +25,6 @@
     <string name="title_activity_show_product_detail">Chi tiết</string>
     <string name="title_activity_decor">DecorActivity</string>
     <string name="title_activity_decor_image">DecorImageActivity</string>
+    <string name="title_activity_search_results">SearchResultsActivity</string>
 
 </resources>
