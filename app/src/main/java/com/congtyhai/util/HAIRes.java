@@ -3,8 +3,10 @@ package com.congtyhai.util;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.CalendarCreateSend;
 import com.congtyhai.model.api.CalendarStatus;
+import com.congtyhai.model.api.ProductCodeInfo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -98,4 +100,65 @@ public class HAIRes {
     // status
     public final String CALENDAR_CSKH = "CSKH";
     public final String CALENDAR_OTHER = "OTHER";
+
+
+    // product
+    public String PRODUCT_IMPORT = "NK";
+    public String PRODUCT_EXPORT = "XK";
+    public String PRODUCT_TRANSPORT= "TRANSPORT";
+    public String PRODUCT_HELP_SCAN = "HELPSCAN";
+    public List<String> LIST_PRODUCT;
+    public void resetListProduct() {
+        LIST_PRODUCT = new ArrayList<>();
+    }
+
+    private HashMap<String, String> productCodeMap = new HashMap<>();
+    public void clearProductCodeMap() {
+        productCodeMap.clear();
+    }
+
+    public void addProductCodeMap(ProductCodeInfo info) {
+        productCodeMap.put(info.getCode(), info.getName());
+    }
+    public void addListProduct(String item) {
+        if (LIST_PRODUCT == null) {
+            LIST_PRODUCT = new ArrayList<>();
+        }
+
+        LIST_PRODUCT.add(0, item);
+    }
+
+    public int countListProduct() {
+        return getLIST_PRODUCT().size();
+    }
+
+    public List<String> getLIST_PRODUCT() {
+        if (LIST_PRODUCT == null) {
+            LIST_PRODUCT = new ArrayList<>();
+        }
+
+        return LIST_PRODUCT;
+    }
+
+    public String[] toProductArrays() {
+        String[] arrays = new String[HAIRes.getInstance().countListProduct()];
+
+        int i = 0;
+        for (String item : LIST_PRODUCT) {
+            arrays[i] = item;
+            i++;
+        }
+
+        return arrays;
+    }
+    public String  findProductNameByCode(String code) {
+
+        if (productCodeMap.containsKey(code)) {
+            return productCodeMap.get(code);
+        }
+
+        return "KHÔNG PHẢI SẢN PHẨM CỦA HAI";
+    }
+
+
 }

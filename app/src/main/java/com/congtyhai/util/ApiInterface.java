@@ -110,4 +110,10 @@ public interface ApiInterface {
     @Multipart
     @POST("upload/decor")
     Call<ResultInfo> uploadImage(@Part MultipartBody.Part file, @Part("user") RequestBody user, @Part("token") RequestBody token, @Part("extension") RequestBody extension, @Part("agency") RequestBody agency,@Part("group") RequestBody group, @Part("lat") RequestBody lat, @Part("lng") RequestBody lng);
+
+    //product
+    @GET("product/getproducttask")
+    Call<List<String>> getProductTask(
+            @Query("user") String user,
+            @Query("token") String token);
 }

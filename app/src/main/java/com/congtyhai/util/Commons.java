@@ -63,8 +63,8 @@ public final class Commons {
         try {
             File file = new File(
                     Environment
-                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),
-                    "HAI");
+                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
+                    "NONGDUOCHAI");
 
             if (!file.exists()) {
                 file.mkdirs();

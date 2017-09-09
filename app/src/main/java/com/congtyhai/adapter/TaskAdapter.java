@@ -31,7 +31,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder>{
         TaskInfo taskInfo = taskInfos.get(position);
         holder.name.setText(taskInfo.getName());
         holder.notes.setText(taskInfo.getNotes());
-        holder.time.setText(taskInfo.getTime() + " phút");
+
+        if (taskInfo.getTime() != -1) {
+            holder.time.setText( taskInfo.getTime() + " phút");
+        } else {
+            holder.time.setText("");
+        }
+
         holder.image.setBackgroundResource(taskInfo.getImage());
 
         if (taskInfo.getCode().equals("begintask")){

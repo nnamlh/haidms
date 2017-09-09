@@ -239,7 +239,7 @@ public class DecorImageActivity extends BaseActivity implements DatePickerDialog
         }
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
                 Locale.getDefault()).format(new Date());
-        String path = magicalCamera.savePhotoInMemoryDevice(magicalCamera.getPhoto(),timeStamp,mediaStorageDir.getAbsolutePath(), MagicalCamera.JPEG, true);
+        String path = magicalCamera.savePhotoInMemoryDevice(magicalCamera.getPhoto(),timeStamp, "NONGDUOCHAI", MagicalCamera.JPEG, true);
 
         uploadImage(path);
 

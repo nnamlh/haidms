@@ -109,9 +109,23 @@
         <activity
             android:name=".SearchResultsActivity"
             android:label="@string/title_activity_search_results"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".product.ProductTaskActivity"
+            android:label="@string/title_activity_product_task"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".product.ProductManageActivity"
+            android:label="@string/title_activity_product_manage"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Util.SimpleScanActivity"
+            android:label="HAI"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".product.ProductScanActivity"
+            android:label="@string/title_activity_product_scan"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

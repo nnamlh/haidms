@@ -20,6 +20,7 @@ import com.congtyhai.adapter.CheckinFunctionAdapter;
 import com.congtyhai.haidms.Agency.ShowAgencyActivity;
 import com.congtyhai.haidms.calendar.StaffCalendarActivity;
 import com.congtyhai.haidms.checkin.CheckInActivity;
+import com.congtyhai.haidms.product.ProductTaskActivity;
 import com.congtyhai.haidms.showinfo.ShowProductActivity;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.MainInfoResult;
@@ -131,7 +132,7 @@ public class MainActivity extends BaseActivity
                         checkStaffItem.setVisible(true);
                         break;
                     case "product":
-                        MenuItem productManage = menu.findItem(R.id.nav_product);
+                        MenuItem productManage = menu.findItem(R.id.nav_product_manage);
                         productManage.setVisible(true);
                         break;
                     case "event":
@@ -289,6 +290,8 @@ public class MainActivity extends BaseActivity
             commons.startActivity(MainActivity.this, StaffCalendarActivity.class);
         } else if (id == R.id.nav_product){
             commons.startActivity(MainActivity.this, ShowProductActivity.class);
+        } else if (id == R.id.nav_product_manage) {
+            commons.startActivity(MainActivity.this, ProductTaskActivity.class);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

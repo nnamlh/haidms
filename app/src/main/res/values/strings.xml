@@ -26,5 +26,8 @@
     <string name="title_activity_decor">DecorActivity</string>
     <string name="title_activity_decor_image">DecorImageActivity</string>
     <string name="title_activity_search_results">SearchResultsActivity</string>
+    <string name="title_activity_product_task">Quản lý sản phẩm</string>
+    <string name="title_activity_product_manage">ProductManageActivity</string>
+    <string name="title_activity_product_scan">ProductScanActivity</string>
 
 </resources>
