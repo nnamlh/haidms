@@ -70,7 +70,7 @@ public class LoginPassActivity extends LoginActivity {
 
                 if (response.body() != null){
                     if ("1".equals(response.body().getId())) {
-                        loginSuccess(user, response.body().getToken());
+                        loginSuccess(user, response.body().getToken(), response.body().getType());
                     } else {
                         commons.makeToast(getApplicationContext(), response.body().getMsg()).show();
                     }

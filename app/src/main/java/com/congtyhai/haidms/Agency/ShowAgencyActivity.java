@@ -91,7 +91,7 @@ public class ShowAgencyActivity extends BaseActivity {
         showpDialog();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
-        Call<AgencyInfo[]> call = apiInterface().getAgencyC2(new SendBasicInfo(user, token));
+        Call<AgencyInfo[]> call = apiInterface().getAgencyC2(user, token);
         call.enqueue(new Callback<AgencyInfo[]>() {
             @Override
             public void onResponse(Call<AgencyInfo[]> call, Response<AgencyInfo[]> response) {

@@ -23,9 +23,10 @@ public class HAIRes {
     public final String KEY_INTENT_TEMP = "temp";
     public final String KEY_INTENT_TEMP2 = "temp2";
 
-    public final String baseUrl = "http://192.168.2.170:802/api/";
-    public final String baseUrlUpload = "http://192.168.2.170:801/";
-
+  //  public final String baseUrl = "http://192.168.2.170:802/api/";
+   // public final String baseUrlUpload = "http://192.168.2.170:801/";
+  public final String baseUrl = "http://dmsapi.nongduochai.vn/api/";
+    public final String baseUrlUpload = "http://dms.nongduochai.vn/";
 
     private static HAIRes instance = null;
 
@@ -57,6 +58,7 @@ public class HAIRes {
 
     public final String PREF_KEY_USER = "HAIUSER";
     public final String PREF_KEY_TOKEN = "HAITOKEN";
+    public final String PREF_KEY_TYPE= "HAITYPE";
 
     public final String PREF_KEY_UPDATE_DAILY = "updatedatadaily";
     public final String PREF_KEY_FIREBASE = "regFBId";

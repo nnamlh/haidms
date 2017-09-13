@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.congtyhai.haidms.R;
 
-public class LoginCodeActivity extends AppCompatActivity {
+public class LoginCodeActivity extends LoginActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -24,6 +24,10 @@ public class CheckUserLoginResult {
     @SerializedName("token")
     private String token;
 
+    @SerializedName("type")
+    private String type;
+
+
     @SerializedName("role")
     private String role;
 
@@ -100,5 +104,13 @@ public class CheckUserLoginResult {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

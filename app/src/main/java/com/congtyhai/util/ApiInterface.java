@@ -66,8 +66,10 @@ public interface ApiInterface {
     Call<CheckInGetPlanResult> checkInGetPlan(@Body CheckInGetPlanSend info);
 
     // agency
-    @POST("agency/getagencyc2")
-    Call<AgencyInfo[]> getAgencyC2(@Body SendBasicInfo info);
+    @GET("agency/getagencyc2")
+    Call<AgencyInfo[]> getAgencyC2(
+            @Query("user") String user,
+            @Query("token") String token);
 
     @POST("agency/createagencyc2")
     Call<ResultInfo> createAgencyC2(@Body AgencyCreateSend info);

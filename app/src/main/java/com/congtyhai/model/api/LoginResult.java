@@ -30,6 +30,9 @@ public class LoginResult {
     @SerializedName("Role")
     private String Role;
 
+    @SerializedName("type")
+    private String type;
+
     public String getId() {
         return id;
     }
@@ -77,5 +80,13 @@ public class LoginResult {
 
     public void setRole(String role) {
         Role = role;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

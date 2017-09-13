@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HAIDMS</string>
+    <string name="app_name">DMS.HAI</string>
     <string name="main_name">NÔNG DƯỢC HAI</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -29,5 +29,6 @@
     <string name="title_activity_product_task">Quản lý sản phẩm</string>
     <string name="title_activity_product_manage">ProductManageActivity</string>
     <string name="title_activity_product_scan">ProductScanActivity</string>
+    <string name="title_activity_main_agency">MainAgencyActivity</string>
 
 </resources>

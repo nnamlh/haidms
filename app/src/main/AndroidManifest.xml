@@ -125,6 +125,10 @@
         <activity
             android:name=".product.ProductScanActivity"
             android:label="@string/title_activity_product_scan"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainAgencyActivity"
+            android:label="@string/title_activity_main_agency"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

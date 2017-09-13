@@ -59,6 +59,12 @@ public class MainActivity extends BaseActivity
     List<CheckInFunctionInfo> checkInFunctionInfos;
     NavigationView navigationView;
 
+    TextView txtName;
+
+    TextView txtCode;
+
+    TextView txtType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +80,6 @@ public class MainActivity extends BaseActivity
         //  createBottomSheet();
         makeRequest();
     }
-
 
     private void makeRequest() {
         showpDialog();
@@ -103,6 +108,10 @@ public class MainActivity extends BaseActivity
                         }
                         saveListProduct(response.body().getProducts());
                         saveListProductGroup(response.body().getProductGroups());
+
+                        txtName.setText(response.body().getName());
+                        txtCode.setText(response.body().getCode());
+                        txtType.setText(response.body().getType());
                     }
                 }
                 initList();
@@ -276,6 +285,11 @@ public class MainActivity extends BaseActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        View viewHeader = (View) navigationView.getHeaderView(0);
+        txtName = (TextView) viewHeader.findViewById(R.id.name);
+        txtCode = (TextView) viewHeader.findViewById(R.id.code);
+        txtType = (TextView) viewHeader.findViewById(R.id.type);
 
     }
 

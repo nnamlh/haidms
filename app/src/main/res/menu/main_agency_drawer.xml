@@ -3,18 +3,10 @@
 
     <group android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_customer"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Danh sách khách hàng" />
-        <item
             android:id="@+id/nav_product"
             android:icon="@drawable/ic_menu_gallery"
             android:visible="true"
             android:title="Danh sách sản phẩm" />
-        <item
-            android:id="@+id/nav_staffcalendar"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Lịch công tác" />
         <item
             android:id="@+id/nav_checkstaff"
             android:icon="@drawable/ic_menu_camera"
@@ -47,6 +39,10 @@
                 android:id="@+id/nav_branch"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Hệ thống chi nhánh" />
+            <item
+                android:id="@+id/nav_messenge"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Nhắn tin hổ trợ" />
         </menu>
     </item>
 

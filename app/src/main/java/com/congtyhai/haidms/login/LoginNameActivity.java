@@ -28,8 +28,6 @@ public class LoginNameActivity extends LoginActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_name);
         ButterKnife.bind(this);
-
-
     }
 
 
@@ -68,6 +66,7 @@ public class LoginNameActivity extends LoginActivity {
                         startActivity(intent);
                         finish();
                     } else if (response.body().getId().equals("3")) {
+                        //
 
                     }
                 }

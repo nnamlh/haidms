@@ -83,8 +83,8 @@ public final class Commons {
 
             File file = new File(
                     Environment
-                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),
-                    "HAI");
+                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
+                    "NONGDUOCHAI");
             BufferedReader br = new BufferedReader(
                     new FileReader(file.getAbsoluteFile() +  path));
 

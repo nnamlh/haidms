@@ -42,6 +42,12 @@ public class MainInfoResult {
     @SerializedName("productGroups")
     private  GroupResultInfo[] productGroups;
 
+    @SerializedName("name")
+    private String name ;
+    @SerializedName("code")
+    private String code ;
+    @SerializedName("type")
+    private String type ;
 
     public String getId() {
         return id;
@@ -123,5 +129,29 @@ public class MainInfoResult {
 
     public void setProductGroups(GroupResultInfo[] productGroups) {
         this.productGroups = productGroups;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
