@@ -81,7 +81,7 @@ public class NotificationUtils {
                 .setContentTitle(title)
                 .setContentIntent(resultPendingIntent)
                 .setSound(alarmSound)
-                .setSmallIcon(R.mipmap.ic_logo)
+                .setSmallIcon(R.mipmap.logohai)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
                 .setContentText(message)
                 .build();

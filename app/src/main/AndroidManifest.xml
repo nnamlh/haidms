@@ -135,7 +135,12 @@
         <activity
             android:name=".Util.NotificationActivity"
             android:label="@string/title_activity_notification"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_1" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <!-- Firebase Notifications -->
         <service android:name="com.congtyhai.service.MyFirebaseMessagingService">

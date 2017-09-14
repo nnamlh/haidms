@@ -37,6 +37,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
 
@@ -96,9 +97,8 @@ public class MainActivity extends BaseActivity
                 if (response.body() != null) {
                     if ("1".equals(response.body().getId())) {
                         for (String topic : response.body().getTopics()) {
-                            //  FirebaseMessaging.getInstance().subscribeToTopic(topic);
+                            FirebaseMessaging.getInstance().subscribeToTopic(topic);
                         }
-                        //  storeTopicInPref(response.body().getTopics());
                         setListMainFunction(response.body().getFunction());
                         if (needUpdate == 1) {
                             saveListAgency(response.body().getAgencies());
@@ -339,4 +339,5 @@ public class MainActivity extends BaseActivity
                 return super.onOptionsItemSelected(item);
         }
     }
+
 }
