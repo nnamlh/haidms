@@ -12,6 +12,7 @@ import retrofit2.http.Query;
  */
 
 public interface LoginService {
+
     @GET("user/login")
     Call<LoginResult> basicLogin(@Query("imei") String imei);
 

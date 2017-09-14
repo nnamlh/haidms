@@ -15,6 +15,15 @@ import java.util.List;
 
 public class HAIRes {
 
+    // broadcast receiver intent filters
+    public final String REGISTRATION_COMPLETE = "registrationComplete";
+    public final String PUSH_NOTIFICATION = "pushNotification";
+    // global topic to receive app wide push notifications
+    public final String TOPIC_GLOBAL = "global";
+    // id to handle the notification in the notification tray
+    public final int NOTIFICATION_ID = 100;
+    public final String SHARED_PREF = "ah_firebase";
+
     public final String KEY_USER = "userlogin";
     public final String KEY_TOKEN = "tokenlogin";
     public final String KEY_INTENT_USER = "username";

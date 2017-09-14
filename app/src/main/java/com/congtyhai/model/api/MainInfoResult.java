@@ -33,9 +33,6 @@ public class MainInfoResult {
     @SerializedName("c1")
     private AgencyC1Info[] agencyc1;
 
-    @SerializedName("recivers")
-    private ReceiveInfo[] recivers;
-
     @SerializedName("products")
     private ProductCodeInfo[] products;
 
@@ -95,16 +92,8 @@ public class MainInfoResult {
         this.agencies = agencies;
     }
 
-    public void setRecivers(ReceiveInfo[] recivers) {
-        this.recivers = recivers;
-    }
-
     public AgencyInfo[] getAgencies() {
         return agencies;
-    }
-
-    public ReceiveInfo[] getRecivers() {
-        return recivers;
     }
 
     public ProductCodeInfo[] getProducts() {

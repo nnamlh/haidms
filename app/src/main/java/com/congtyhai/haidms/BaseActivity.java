@@ -1,19 +1,21 @@
 package com.congtyhai.haidms;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.IntentFilter;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-
 import com.congtyhai.app.AppController;
 import com.congtyhai.di.component.ActivityComponent;
 import com.congtyhai.di.component.DaggerActivityComponent;
@@ -30,10 +32,11 @@ import com.congtyhai.util.AnimationHelper;
 import com.congtyhai.util.ApiInterface;
 import com.congtyhai.util.Commons;
 import com.congtyhai.util.HAIRes;
+import com.congtyhai.util.NotificationUtils;
 import com.congtyhai.util.SharedPrefsHelper;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -47,9 +50,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
 import javax.inject.Inject;
-
 import retrofit2.Retrofit;
 
 /**
@@ -57,6 +58,9 @@ import retrofit2.Retrofit;
  */
 
 public class BaseActivity extends AppCompatActivity {
+
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private android.support.v7.app.AlertDialog.Builder dNotification;
 
     @Inject
     protected Retrofit retrofit;
@@ -94,11 +98,38 @@ public class BaseActivity extends AppCompatActivity {
 
         activityComponent.inject(this);
 
+        fireBaseBroadcast();
+
         pDialog = new ProgressDialog(BaseActivity.this);
         pDialog.setTitle("Đang xử lý...");
         pDialog.setCancelable(false);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         //
+
+    }
+
+    private void fireBaseBroadcast() {
+        // show dialog notification
+        dNotification = new android.support.v7.app.AlertDialog.Builder(BaseActivity.this);
+        dNotification.setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // checking for type intent filter
+                if (intent.getAction().equals(HAIRes.getInstance().REGISTRATION_COMPLETE)) {
+                    FirebaseMessaging.getInstance().subscribeToTopic(HAIRes.getInstance().TOPIC_GLOBAL);
+                } else if (intent.getAction().equals(HAIRes.getInstance().PUSH_NOTIFICATION)) {
+                    String message = intent.getStringExtra("message");
+                    String title = intent.getStringExtra("title");
+                    showNotification(title, message);
+                }
+            }
+        };
 
     }
 
@@ -216,28 +247,6 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    protected List<ReceiveInfo> getListReceive() {
-        Gson gson = new Gson();
-        try {
-
-            File file = new File(
-                    Environment
-                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),
-                    "HAI");
-            BufferedReader br = new BufferedReader(
-                    new FileReader(file.getAbsoluteFile() + HAIRes.getInstance().PATH_RECEIVE_JSON));
-
-            Type listType = new TypeToken<List<ReceiveInfo>>() {
-            }.getType();
-            return gson.fromJson(br, listType);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return new ArrayList<>();
-    }
-
     protected List<AgencyInfo> getListAgency() {
 
         Gson gson = new Gson();
@@ -321,14 +330,7 @@ public class BaseActivity extends AppCompatActivity {
         return new ArrayList<>();
     }
 
-    protected void saveListReceive(ReceiveInfo[] receiveInfo) {
-        try {
-            Gson gson = new Gson();
-            commons.writeFile(gson.toJson(receiveInfo), HAIRes.getInstance().PATH_RECEIVE_JSON);
-        } catch (Exception e) {
 
-        }
-    }
 
     protected void saveListProduct(final ProductCodeInfo[] productCodeInfos) {
         Gson gson = new Gson();
@@ -399,6 +401,43 @@ public class BaseActivity extends AppCompatActivity {
             default:
                 return 1;
         }
+    }
+
+
+    //
+    protected boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(HAIRes.getInstance().REGISTRATION_COMPLETE));
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(HAIRes.getInstance().PUSH_NOTIFICATION));
+
+        NotificationUtils.clearNotifications(getApplicationContext());
+    }
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        super.onPause();
+    }
+
+    private void showNotification(String title, String messenge) {
+
+        dNotification.setTitle(title);
+        dNotification.setMessage(messenge);
+        dNotification.show();
     }
 
 }

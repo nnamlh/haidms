@@ -82,6 +82,7 @@
             android:name=".checkin.CheckInTaskActivity"
             android:label="@string/title_activity_check_in_task"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".showinfo.ShowProductActivity"
             android:label="@string/title_activity_show_product"
@@ -94,6 +95,7 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".showinfo.ShowProductDetailActivity"
             android:label="@string/title_activity_show_product_detail"
@@ -129,7 +131,27 @@
         <activity
             android:name=".MainAgencyActivity"
             android:label="@string/title_activity_main_agency"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Util.NotificationActivity"
+            android:label="@string/title_activity_notification"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <!-- Firebase Notifications -->
+        <service android:name="com.congtyhai.service.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name="com.congtyhai.service.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- ./Firebase Notifications -->
+
     </application>
 
 </manifest>
