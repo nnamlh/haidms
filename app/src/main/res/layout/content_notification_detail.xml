@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.congtyhai.haidms.Util.NotificationActivity"
-    tools:showIn="@layout/activity_notification">
+    tools:context="com.congtyhai.haidms.Util.NotificationDetailActivity"
+    android:background="#fff"
+    android:padding="10dp"
+    tools:showIn="@layout/activity_notification_detail">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <WebView
+        android:id="@+id/webView"
+        android:background="#fff"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical" />
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.congtyhai.adapter.CheckinFunctionAdapter;
 import com.congtyhai.haidms.Agency.ShowAgencyActivity;
+import com.congtyhai.haidms.Util.NotificationActivity;
 import com.congtyhai.haidms.calendar.StaffCalendarActivity;
 import com.congtyhai.haidms.checkin.CheckInActivity;
 import com.congtyhai.haidms.product.ProductTaskActivity;
@@ -334,6 +335,7 @@ public class MainActivity extends BaseActivity
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.notification_action:
+                commons.startActivity(MainActivity.this, NotificationActivity.class);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

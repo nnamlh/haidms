@@ -30,6 +30,7 @@
     <string name="title_activity_product_manage">ProductManageActivity</string>
     <string name="title_activity_product_scan">ProductScanActivity</string>
     <string name="title_activity_main_agency">MainAgencyActivity</string>
-    <string name="title_activity_notification">NotificationActivity</string>
+    <string name="title_activity_notification">Tin nhắn</string>
+    <string name="title_activity_notification_detail">Chi tiết</string>
 
 </resources>

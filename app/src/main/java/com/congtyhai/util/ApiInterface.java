@@ -18,6 +18,7 @@ import com.congtyhai.model.api.DecorImage;
 import com.congtyhai.model.api.DecorImageSend;
 import com.congtyhai.model.api.MainInfoResult;
 import com.congtyhai.model.api.MainInfoSend;
+import com.congtyhai.model.api.NotificationInfoResult;
 import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.model.api.ProductDetailResult;
 import com.congtyhai.model.api.ResultInfo;
@@ -118,4 +119,17 @@ public interface ApiInterface {
     Call<List<String>> getProductTask(
             @Query("user") String user,
             @Query("token") String token);
+
+
+    // notification
+    @GET("notification/get")
+    Call<NotificationInfoResult> getNotifications(
+            @Query("user") String user,
+            @Query("token") String token, @Query("page") int page);
+
+    @GET("notification/read")
+    Call<ResultInfo> readNotification(
+            @Query("user") String user,
+            @Query("notification") String notification);
+
 }

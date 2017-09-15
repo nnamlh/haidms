@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.congtyhai.haidms.Util.NotificationActivity">
+    tools:context="com.congtyhai.haidms.Util.NotificationDetailActivity">
 
     <include layout="@layout/toolbar" />
 
-    <include layout="@layout/content_notification" />
+    <include layout="@layout/content_notification_detail" />
 
 </android.support.design.widget.CoordinatorLayout>

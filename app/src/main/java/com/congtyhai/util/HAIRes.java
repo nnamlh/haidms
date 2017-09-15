@@ -15,6 +15,10 @@ import java.util.List;
 
 public class HAIRes {
 
+    // announce
+    public final String ANNOUNCEMENT_DISCONNECT_NETWORK = "Mất kết nối";
+
+
     // broadcast receiver intent filters
     public final String REGISTRATION_COMPLETE = "registrationComplete";
     public final String PUSH_NOTIFICATION = "pushNotification";
