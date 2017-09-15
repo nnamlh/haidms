@@ -4,7 +4,9 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -170,33 +172,58 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void makeJsonRequest(String user, String token) {
-        Call<ResultInfo> call = apiInterface().checkSession(user, token);
 
-        call.enqueue(new Callback<ResultInfo>() {
-            @Override
-            public void onResponse(Call<ResultInfo> call, Response<ResultInfo> response) {
-                if (response.body() != null) {
-                    if("1".equals(response.body().getId())) {
-                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }else {
-                        commons.showAlertCancel(SplashActivity.this, "Cảnh báo", "Tài khoản của bạn đã được đăng nhập ở một thiết bị khác, vui lòng đăng nhập lại hoặt ngưng sử dụng trên thiết bị này", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                commons.startActivity(SplashActivity.this, LoginNameActivity.class);
-                                finish();
-                            }
-                        });
+        PackageInfo pinfo = null;
+
+        try {
+            pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            int versionNumber = pinfo.versionCode;
+            Call<ResultInfo> call = apiInterface().checkSession(user, token, String.valueOf(versionNumber));
+
+            call.enqueue(new Callback<ResultInfo>() {
+                @Override
+                public void onResponse(Call<ResultInfo> call, Response<ResultInfo> response) {
+                    if (response.body() != null) {
+                        if ("1".equals(response.body().getId())) {
+                            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else
+                        if ("2".equals(response.body().getId())) {
+                            commons.showAlertCancel(SplashActivity.this, "Cảnh báo", "Cập nhật phiên bản mới", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    final String appPackageName = getPackageName();
+                                    try {
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                                    } catch (android.content.ActivityNotFoundException anfe) {
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                                    }
+                                }
+                            });
+                        } else {
+                            commons.showAlertCancel(SplashActivity.this, "Cảnh báo", "Tài khoản của bạn đã được đăng nhập ở một thiết bị khác, vui lòng đăng nhập lại hoặt ngưng sử dụng trên thiết bị này", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    commons.startActivity(SplashActivity.this, LoginNameActivity.class);
+                                    finish();
+                                }
+                            });
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ResultInfo> call, Throwable t) {
+                @Override
+                public void onFailure(Call<ResultInfo> call, Throwable t) {
 
-            }
-        });
+                }
+            });
+
+
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

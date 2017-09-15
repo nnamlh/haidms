@@ -46,7 +46,7 @@ public interface ApiInterface {
     @GET("user/loginsession")
     Call<ResultInfo> checkSession(
             @Query("user") String user,
-            @Query("token") String token);
+            @Query("token") String token, @Query("version") String version);
 
     // main info
     @POST("restmain/maininfo")
