@@ -1,5 +1,6 @@
 package com.congtyhai.haidms;
 
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
@@ -23,12 +24,14 @@ import com.congtyhai.haidms.calendar.StaffCalendarActivity;
 import com.congtyhai.haidms.checkin.CheckInActivity;
 import com.congtyhai.haidms.product.ProductTaskActivity;
 import com.congtyhai.haidms.showinfo.ShowProductActivity;
+import com.congtyhai.model.Realm.DTopicFirebase;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.MainInfoResult;
 import com.congtyhai.model.api.MainInfoSend;
 import com.congtyhai.model.app.CheckInFunctionInfo;
 import com.congtyhai.model.app.HaiLocation;
 import com.congtyhai.util.HAIRes;
+import com.congtyhai.util.RealmController;
 import com.congtyhai.view.NonScrollListView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -47,6 +50,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -87,7 +91,7 @@ public class MainActivity extends BaseActivity
         showpDialog();
         String tokenFirebase = prefsHelper.get(HAIRes.getInstance().PREF_KEY_FIREBASE, "");
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
-        String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
+        final String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
         final int needUpdate = needUpdateDaily();
         MainInfoSend info = new MainInfoSend(user, token, tokenFirebase, needUpdate);
         Call<MainInfoResult> call = apiInterface().updateReg(info);
@@ -97,8 +101,17 @@ public class MainActivity extends BaseActivity
 
                 if (response.body() != null) {
                     if ("1".equals(response.body().getId())) {
-                        for (String topic : response.body().getTopics()) {
+                        RealmController.getInstance().clearData(DTopicFirebase.class);
+                        for (final String topic : response.body().getTopics()) {
                             FirebaseMessaging.getInstance().subscribeToTopic(topic);
+                            realmControl.executeTransaction(new Realm.Transaction() {
+                                @Override
+                                public void execute(Realm realm) {
+                                    DTopicFirebase data = realm.createObject(DTopicFirebase.class);
+                                    data.setName(topic);
+
+                                }
+                            });
                         }
                         setListMainFunction(response.body().getFunction());
                         if (needUpdate == 1) {
@@ -307,6 +320,13 @@ public class MainActivity extends BaseActivity
             commons.startActivity(MainActivity.this, ShowProductActivity.class);
         } else if (id == R.id.nav_product_manage) {
             commons.startActivity(MainActivity.this, ProductTaskActivity.class);
+        } else if (id == R.id.nav_logout) {
+           commons.showAlertCancel(MainActivity.this, "Cảnh báo", "Đăng xuất với tài khoản hiện tại", new DialogInterface.OnClickListener() {
+               @Override
+               public void onClick(DialogInterface dialogInterface, int i) {
+                   logout();
+               }
+           });
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

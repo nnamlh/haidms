@@ -9,6 +9,7 @@ import com.congtyhai.di.module.NetModule;
 import com.congtyhai.di.module.UtilityModule;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 /**
  * Created by HAI on 8/7/2017.
@@ -22,6 +23,11 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
         Realm.init(getApplicationContext());
+        RealmConfiguration config = new RealmConfiguration
+                .Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(config);
         applicationComponent = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this))
                 .utilityModule(new UtilityModule()).netModule(new NetModule()).build();
     }

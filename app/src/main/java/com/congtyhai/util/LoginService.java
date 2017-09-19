@@ -2,6 +2,7 @@ package com.congtyhai.util;
 
 import com.congtyhai.model.api.CheckUserLoginResult;
 import com.congtyhai.model.api.LoginResult;
+import com.congtyhai.model.api.ResultInfo;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -21,5 +22,8 @@ public interface LoginService {
 
     @GET("user/loginactivaton")
     Call<LoginResult> loginActivaton();
+
+    @GET("user/logout")
+    Call<ResultInfo> logout();
 
 }

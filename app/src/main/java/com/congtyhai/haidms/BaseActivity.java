@@ -21,18 +21,24 @@ import com.congtyhai.di.component.ActivityComponent;
 import com.congtyhai.di.component.DaggerActivityComponent;
 import com.congtyhai.di.module.ActivityModule;
 import com.congtyhai.di.scope.RetrofitUploadInfo;
+import com.congtyhai.haidms.login.LoginNameActivity;
+import com.congtyhai.model.Realm.DTopicFirebase;
 import com.congtyhai.model.api.AgencyC1Info;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.GroupResultInfo;
 import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.model.api.ReceiveInfo;
+import com.congtyhai.model.api.ResultInfo;
 import com.congtyhai.model.app.HaiLocation;
 import com.congtyhai.service.GPSTracker;
 import com.congtyhai.util.AnimationHelper;
 import com.congtyhai.util.ApiInterface;
 import com.congtyhai.util.Commons;
 import com.congtyhai.util.HAIRes;
+import com.congtyhai.util.LoginService;
 import com.congtyhai.util.NotificationUtils;
+import com.congtyhai.util.RealmController;
+import com.congtyhai.util.ServiceGenerator;
 import com.congtyhai.util.SharedPrefsHelper;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
@@ -51,6 +57,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import javax.inject.Inject;
+
+import io.realm.Realm;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
@@ -90,6 +101,8 @@ public class BaseActivity extends AppCompatActivity {
 
     protected LocationManager locationManager;
 
+    protected Realm realmControl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +118,7 @@ public class BaseActivity extends AppCompatActivity {
         pDialog.setCancelable(false);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         //
+        realmControl = RealmController.getInstance().getRealm();
 
     }
 
@@ -439,5 +453,48 @@ public class BaseActivity extends AppCompatActivity {
         dNotification.setMessage(messenge);
         dNotification.show();
     }
+
+    protected void logout() {
+        showpDialog();
+        String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
+        String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
+        LoginService apiUser = ServiceGenerator.createService(LoginService.class, user, token);
+
+
+        Call<ResultInfo> call = apiUser.logout();
+
+        call.enqueue(new Callback<ResultInfo>() {
+            @Override
+            public void onResponse(Call<ResultInfo> call,
+                                   Response<ResultInfo> response) {
+                hidepDialog();
+                if (response.body() != null) {
+                    //
+                    List<DTopicFirebase> dTopicFirebases = RealmController.getInstance().getTopics();
+                    for(DTopicFirebase topicFirebase : dTopicFirebases) {
+                        FirebaseMessaging.getInstance().unsubscribeFromTopic(topicFirebase.getName());
+                    }
+
+                    RealmController.getInstance().clearData(DTopicFirebase.class);
+                    //
+                    prefsHelper.deleteSavedData(HAIRes.getInstance().PREF_KEY_TOKEN);
+                    prefsHelper.deleteSavedData(HAIRes.getInstance().PREF_KEY_USER);
+                    prefsHelper.deleteSavedData(HAIRes.getInstance().PREF_KEY_TYPE);
+                    prefsHelper.deleteSavedData(HAIRes.getInstance().PREF_KEY_UPDATE_DAILY);
+
+                    Intent intent2 = new Intent(BaseActivity.this, LoginNameActivity.class);
+                    intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent2);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultInfo> call, Throwable t) {
+                hidepDialog();
+            }
+        });
+    }
+
 
 }

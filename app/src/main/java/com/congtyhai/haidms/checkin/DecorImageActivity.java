@@ -138,6 +138,7 @@ public class DecorImageActivity extends BaseActivity implements DatePickerDialog
         };
         magicalPermissions.askPermissions(runnable);
 
+
         magicalCamera = new MagicalCamera(this,RESIZE_PHOTO_PIXELS_PERCENTAGE, magicalPermissions);
 
 

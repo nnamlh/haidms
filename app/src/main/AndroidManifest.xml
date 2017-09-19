@@ -158,7 +158,14 @@
         <activity
             android:name=".Util.NotificationDetailActivity"
             android:label="@string/title_activity_notification_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+
+        <receiver android:name="com.congtyhai.util.NetworkChangeReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

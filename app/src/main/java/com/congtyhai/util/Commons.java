@@ -15,6 +15,8 @@ import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Toast;
 
+import com.congtyhai.haidms.R;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -38,6 +40,7 @@ public final class Commons {
 
     public void showAlertCancel(Activity activity, String tile, String content, DialogInterface.OnClickListener listener) {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+        dialog.setIcon(R.mipmap.ic_logo);
         dialog.setTitle(tile)
                 .setMessage(content)
                 .setPositiveButton("Đồng ý", listener).setNegativeButton("Thôi", new DialogInterface.OnClickListener() {
@@ -52,6 +55,7 @@ public final class Commons {
 
     public void showAlertInfo(Activity activity,String tile, String content, DialogInterface.OnClickListener listener) {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+        dialog.setIcon(R.mipmap.ic_logo);
         dialog.setTitle(tile)
                 .setMessage(content)
                 .setPositiveButton("Đồng ý", listener);

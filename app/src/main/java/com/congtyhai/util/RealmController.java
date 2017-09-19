@@ -1,6 +1,10 @@
 package com.congtyhai.util;
 
+import com.congtyhai.model.Realm.DTopicFirebase;
+
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 /**
  * Created by HAI on 8/15/2017.
@@ -11,12 +15,15 @@ public class RealmController {
     private final Realm realm;
 
     public RealmController() {
+
         realm = Realm.getDefaultInstance();
+
     }
 
     public static RealmController getInstance() {
 
         if (instance == null) {
+
             instance = new RealmController();
         }
         return instance;
@@ -57,5 +64,12 @@ public class RealmController {
             }
 
         });
+    }
+
+
+    // topic
+    //find all objects in the Book.class
+    public RealmResults<DTopicFirebase> getTopics() {
+        return realm.where(DTopicFirebase.class).findAll();
     }
 }
