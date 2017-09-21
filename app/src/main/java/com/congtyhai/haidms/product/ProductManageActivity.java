@@ -151,7 +151,7 @@ public class ProductManageActivity extends BaseActivity {
         eReceiver.setInputType(android.text.InputType.TYPE_CLASS_TEXT
                 + android.text.InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
 
-        new ReadDataTask().execute();
+      //  new ReadDataTask().execute();
 
     }
 

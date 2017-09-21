@@ -4,13 +4,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,16 +16,11 @@ import com.congtyhai.adapter.AgencyAdapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.AgencyInfo;
-import com.congtyhai.model.api.SendBasicInfo;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.DividerItemDecoration;
 import com.congtyhai.view.RecyclerTouchListener;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -44,6 +35,7 @@ public class ShowAgencyActivity extends BaseActivity {
     private AgencyAdapter mAdapter;
 
     int SHOW_DETAIL_AGENCY = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +75,8 @@ public class ShowAgencyActivity extends BaseActivity {
         }));
 
 
-        new ReadDataTask().execute();
+       new ReadDataTask().execute();
+
     }
 
 

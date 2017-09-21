@@ -88,7 +88,9 @@ public class ShowProductActivity extends BaseActivity {
 
 
         new ReadDataTask().execute();
+
     }
+
 
     private void createDialogGroup() {
         builderSingle = new AlertDialog.Builder(ShowProductActivity.this);
@@ -108,8 +110,8 @@ public class ShowProductActivity extends BaseActivity {
                 String code = groupCode.get(which);
                 productCodeInfos.clear();
 
-                for(ProductCodeInfo info: productCodeInfosTemp) {
-                    if (info.getCode().equals(code)){
+                for (ProductCodeInfo info : productCodeInfosTemp) {
+                    if (info.getCode().equals(code)) {
                         productCodeInfos.add(info);
                     }
                 }
@@ -120,6 +122,7 @@ public class ShowProductActivity extends BaseActivity {
         });
 
     }
+
 
     private class ReadGroupTask extends AsyncTask<String, Integer, List<GroupResultInfo>> {
 
@@ -229,11 +232,11 @@ public class ShowProductActivity extends BaseActivity {
         call.enqueue(new Callback<ProductCodeInfo[]>() {
             @Override
             public void onResponse(Call<ProductCodeInfo[]> call, Response<ProductCodeInfo[]> response) {
+                hidepDialog();
                 if (response.body() != null) {
                     saveListProduct(response.body());
                     new ReadDataTask().execute();
                 }
-                hidepDialog();
 
             }
 

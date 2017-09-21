@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,11 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.congtyhai.adapter.CheckinFunctionAdapter;
 import com.congtyhai.haidms.Agency.ShowAgencyActivity;
 import com.congtyhai.haidms.Util.NotificationActivity;
 import com.congtyhai.haidms.calendar.StaffCalendarActivity;
@@ -32,12 +27,10 @@ import com.congtyhai.model.app.CheckInFunctionInfo;
 import com.congtyhai.model.app.HaiLocation;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.util.RealmController;
-import com.congtyhai.view.NonScrollListView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -56,10 +49,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, AdapterView.OnItemClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback{
 
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
     private GoogleMap mMap;
     BottomSheetDialog mBottomSheetDialog;
     List<CheckInFunctionInfo> checkInFunctionInfos;
@@ -77,14 +68,18 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         createToolbar();
-        fabClick();
+
         createNavDraw();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         createLocation();
-        //  createBottomSheet();
+
         makeRequest();
+    }
+
+    public void showCheckIn(View view) {
+        commons.startActivity(MainActivity.this, CheckInActivity.class);
     }
 
     private void makeRequest() {
@@ -177,30 +172,6 @@ public class MainActivity extends BaseActivity
     }
 
 
-    private void createBottomSheet() {
-        mBottomSheetDialog = new BottomSheetDialog(MainActivity.this, R.style.MaterialDialogSheet);
-        View sheetView = MainActivity.this.getLayoutInflater().inflate(R.layout.checkin_bottom_menu, null);
-        ImageView imgClose = (ImageView) sheetView.findViewById(R.id.imgClose);
-        imgClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mBottomSheetDialog.dismiss();
-                fab.setVisibility(View.VISIBLE);
-            }
-        });
-
-        NonScrollListView listView = (NonScrollListView) sheetView.findViewById(R.id.list);
-        checkInFunctionInfos = new ArrayList<CheckInFunctionInfo>();
-        checkInFunctionInfos.add(new CheckInFunctionInfo(HAIRes.getInstance().CHECKIN_CHECK, R.drawable.ic_menu_send, "Ghé thăm", ""));
-        checkInFunctionInfos.add(new CheckInFunctionInfo(HAIRes.getInstance().CHECKIN_PRODUCT, R.drawable.ic_menu_send, "Sản phẩm", ""));
-        CheckinFunctionAdapter adapter = new CheckinFunctionAdapter(MainActivity.this, checkInFunctionInfos);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
-
-        mBottomSheetDialog.setContentView(sheetView);
-        mBottomSheetDialog.setCancelable(false);
-    }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -214,7 +185,7 @@ public class MainActivity extends BaseActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMinZoomPreference(5.0f);
+        mMap.setMinZoomPreference(7.0f);
         mMap.setMaxZoomPreference(16.0f);
         HaiLocation location = getCurrentLocation();
         LatLng me = new LatLng(location.getLatitude(), location.getLongitude());
@@ -277,17 +248,6 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    private void fabClick() {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // mBottomSheetDialog.show();
-                // fab.setVisibility(View.GONE);
-                commons.startActivity(MainActivity.this, CheckInActivity.class);
-            }
-        });
-    }
-
     private void createNavDraw() {
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -333,15 +293,6 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        CheckInFunctionInfo info = checkInFunctionInfos.get(i);
-        if (info.getCode() == HAIRes.getInstance().CHECKIN_CHECK) {
-            commons.startActivity(MainActivity.this, CheckInActivity.class);
-        }
-        mBottomSheetDialog.dismiss();
-        fab.setVisibility(View.VISIBLE);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
