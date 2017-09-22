@@ -21,7 +21,9 @@ public class TimelineView extends RecyclerView {
 
     private static final String TAG = "TimelineView";
 
-    private static final String[] WEEK_DAYS = DateFormatSymbols.getInstance().getShortWeekdays();
+   // private static final String[] WEEK_DAYS = DateFormatSymbols.getInstance().getWeekdays();
+
+    private static final String[] WEEK_DAYS = {"", "T2", "T3", "T4", "T5", "T6", "T7", "CN"};
 
     private final Calendar calendar = Calendar.getInstance(Locale.getDefault());
 
@@ -354,7 +356,8 @@ public class TimelineView extends RecyclerView {
             this.month = month;
             this.day = day;
 
-            lblDay.setText(WEEK_DAYS[dayOfWeek].toUpperCase(Locale.US));
+           // lblDay.setText(WEEK_DAYS[dayOfWeek].toUpperCase(Locale.US));
+            lblDay.setText(WEEK_DAYS[dayOfWeek]);
             lblDate.setText(String.valueOf(day));
             lblValue.setText(label);
 

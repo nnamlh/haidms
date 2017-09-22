@@ -328,6 +328,7 @@ public class CreateCalendarActivity extends BaseActivity {
         timeline.setLastVisibleDate(year, getCalendarMonth(month), days);
         timeline.getMonthView().setVisibility(View.GONE);
 
+
         timeline.setDateLabelAdapter(new MonthView.DateLabelAdapter() {
             @Override
             public CharSequence getLabel(Calendar calendar, int index) {
@@ -457,7 +458,7 @@ public class CreateCalendarActivity extends BaseActivity {
 
             if (calendarStatus.getCompel() == 1) {
                 if (value.getAgencies().size() < calendarStatus.getNumber()) {
-                    commons.showAlertInfo(CreateCalendarActivity.this, "Cảnh báo", calendarStatus.getName() + " phải đi thăm ít nhất " + calendarStatus.getNumber() + " /ngày", new DialogInterface.OnClickListener() {
+                    commons.showAlertInfo(CreateCalendarActivity.this, "Cảnh báo", "Ngày " + value.getDay() + " phải đi thăm ít nhất " + calendarStatus.getNumber() + " /ngày", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
 

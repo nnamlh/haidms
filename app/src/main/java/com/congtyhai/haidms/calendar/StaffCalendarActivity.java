@@ -3,12 +3,15 @@ package com.congtyhai.haidms.calendar;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SyncAdapterType;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -46,7 +49,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class StaffCalendarActivity extends BaseActivity implements AdapterView.OnItemClickListener , DatePickerDialog.OnDateSetListener{
+public class StaffCalendarActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     @BindView(R.id.timeline)
     DatePickerTimeline timeline;
@@ -64,8 +67,8 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
     @BindView(R.id.txttitle)
     TextView txtTitle;
 
-    @BindView(R.id.enotes)
-    EditText eNotes;
+   // @BindView(R.id.enotes)
+  //  EditText eNotes;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -80,6 +83,7 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
     CalendarShowAgencyAdapter adapter;
 
     DatePickerDialog datePickerDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,22 +103,53 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
-        createDateDialog();
 
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         makeRequestShowCalendar(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH) + 1);
+
+
+
     }
 
-    private void createDateDialog() {
+    private void showChangeDateDiaglog() {
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        datePickerDialog = new DatePickerDialog(
-                StaffCalendarActivity.this, StaffCalendarActivity.this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
+        View viewDialog = StaffCalendarActivity.this.getLayoutInflater().inflate(R.layout.diaglog_calendar_month_year, null);
+        final EditText eMonth = (EditText) viewDialog.findViewById(R.id.emonth);
+        final EditText eYear = (EditText) viewDialog.findViewById(R.id.eyear);
+        eYear.setText("" + calendar.get(Calendar.YEAR));
+        eMonth.setText("" + (calendar.get(Calendar.MONTH) + 1));
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Xem lịch");
+        builder.setMessage("Nhập tháng và năm để xem");
+        builder.setIcon(R.mipmap.ic_logo);
+        builder.setView(viewDialog);
+        builder.setNegativeButton("Thôi", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
 
+            }
+        });
+
+        builder.setPositiveButton("Xem", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (!TextUtils.isEmpty(eMonth.getText().toString()) && !TextUtils.isEmpty(eYear.getText().toString())) {
+                    makeRequestShowCalendar(Integer.parseInt(eYear.getText().toString()), Integer.parseInt(eMonth.getText().toString()));
+                }else {
+                    commons.makeToast(StaffCalendarActivity.this, "Nhập tháng và năm").show();
+                }
+
+            }
+        });
+
+        builder.show();
     }
+
+
 
     private void createBottomSheet() {
         mBottomSheetDialog = new BottomSheetDialog(StaffCalendarActivity.this, R.style.MaterialDialogSheet);
@@ -211,7 +246,7 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
                         });
                     } else {
                         //
-                        String title = "Lịch công tác " + response.body().getMonth() + "/" + response.body().getYear();
+                        String title = "Lịch công tác: " + response.body().getMonth() + "/" + response.body().getYear();
                         if (response.body().getHasApprove() == 1) {
                             title+= " ( đã xác nhận)";
                         } else {
@@ -219,7 +254,7 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
                         }
                         txtTitle.setText(title);
 
-                        eNotes.setText(response.body().getNotes());
+                   //     eNotes.setText(response.body().getNotes());
 
                         // show status
                         String allStatus = "";
@@ -233,7 +268,6 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
                             for(CalendarDayShow calendar: response.body().getItems()) {
                                 calendarDayShowHashMap.put(calendar.getDay(), calendar);
                             }
-
                             createTimeLine(response.body().getYear(), response.body().getMonth());
                         } else {
                             timeline.setVisibility(View.GONE);
@@ -341,7 +375,7 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.date_action:
-                datePickerDialog.show();
+                showChangeDateDiaglog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -349,8 +383,4 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
     }
 
 
-    @Override
-    public void onDateSet(DatePicker datePicker, int year, int month, int i2) {
-        makeRequestShowCalendar(year, month+1);
-    }
 }

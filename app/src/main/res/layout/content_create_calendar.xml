@@ -4,45 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.congtyhai.haidms.calendar.CreateCalendarActivity"
     tools:showIn="@layout/activity_create_calendar">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="sans-serif-light"
-        android:text="Chọn loại công tác"
-        android:textColor="#000000"
-        android:textSize="14dp"
-        android:textStyle="bold" />
-
     <Spinner
         android:id="@+id/estatus"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/input_text"
         android:fontFamily="sans-serif-light"
         android:textColor="@color/cardview_dark_background" />
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="sans-serif-light"
-        android:text="Cụm khách hàng"
-        android:textColor="#000000"
-        android:textSize="14dp"
-        android:textStyle="bold" />
-
     <Spinner
         android:id="@+id/egroup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/input_text"
         android:fontFamily="sans-serif-light"
         android:textColor="@color/cardview_dark_background" />
@@ -53,10 +33,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="sans-serif-light"
-        android:text="Số khách hàng đã chọn: 4"
+        android:text="Đã chọn: 4"
         android:textColor="#000000"
-        android:textSize="14dp"
-        android:textStyle="bold" />
+        android:textSize="14dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"

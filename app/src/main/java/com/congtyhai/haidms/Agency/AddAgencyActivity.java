@@ -193,7 +193,7 @@ public class AddAgencyActivity extends BaseActivity {
             public void onResponse(Call<ResultInfo> call, Response<ResultInfo> response) {
                 hidepDialog();
                 if (response.body().getId().equals("1")) {
-                    commons.showAlertInfo(AddAgencyActivity.this, "Thông báo", "Đã gửi thông tin khách hàng, liên hệ quản trị để kích hoặt khách hàng", new DialogInterface.OnClickListener() {
+                    commons.showAlertInfo(AddAgencyActivity.this, "Thông báo", "Đã gửi thông tin khách hàng, liên hệ quản trị để kích hoạt khách hàng", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             finish();

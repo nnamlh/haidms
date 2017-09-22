@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/cardview_dark_background"
+        android:maxLines="1"
+        android:hint="Tháng"
+        android:textAlignment="center"
+        android:background="@drawable/input_text"
+        android:id="@+id/emonth"
+        android:fontFamily="sans-serif-light"
+        android:inputType="number"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/cardview_dark_background"
+        android:maxLines="1"
+        android:textAlignment="center"
+        android:background="@drawable/input_text"
+        android:hint="Năm"
+        android:id="@+id/eyear"
+        android:fontFamily="sans-serif-light"
+        android:inputType="number"/>
+
+
+</LinearLayout>
