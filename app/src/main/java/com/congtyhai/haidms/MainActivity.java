@@ -1,6 +1,7 @@
 package com.congtyhai.haidms;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
@@ -277,7 +278,9 @@ public class MainActivity extends BaseActivity
         } else if (id == R.id.nav_staffcalendar) {
             commons.startActivity(MainActivity.this, StaffCalendarActivity.class);
         } else if (id == R.id.nav_product){
-            commons.startActivity(MainActivity.this, ShowProductActivity.class);
+            Intent showProductIntent = commons.createIntent(MainActivity.this, ShowProductActivity.class);
+            showProductIntent.putExtra(HAIRes.getInstance().KEY_INTENT_ORDER, 0);
+            startActivity(showProductIntent);
         } else if (id == R.id.nav_product_manage) {
             commons.startActivity(MainActivity.this, ProductTaskActivity.class);
         } else if (id == R.id.nav_logout) {

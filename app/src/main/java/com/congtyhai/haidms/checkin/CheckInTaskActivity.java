@@ -14,6 +14,7 @@ import com.congtyhai.haidms.Agency.ShowAgencyActivity;
 import com.congtyhai.haidms.Agency.ShowAgencyDetailActivity;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
+import com.congtyhai.haidms.showinfo.ShowProductActivity;
 import com.congtyhai.model.api.CheckInSend;
 import com.congtyhai.model.api.CheckInTaskResult;
 import com.congtyhai.model.api.CheckInTaskSend;
@@ -101,6 +102,10 @@ public class CheckInTaskActivity extends BaseActivity {
                     Intent intentDecor = commons.createIntent(CheckInTaskActivity.this, DecorActivity.class);
                     intentDecor.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, agencyCode);
                     startActivity(intentDecor);
+                } else if (taskInfo.getCode().equals("ordertask")) {
+                    Intent showProductIntent = commons.createIntent(CheckInTaskActivity.this, ShowProductActivity.class);
+                    showProductIntent.putExtra(HAIRes.getInstance().KEY_INTENT_ORDER, 1);
+                    startActivity(showProductIntent);
                 }
             }
 

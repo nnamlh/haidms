@@ -35,6 +35,7 @@ public class HAIRes {
     public final String KEY_INTENT_AGENCY_CODE = "agencycode";
     public final String KEY_INTENT_TEMP = "temp";
     public final String KEY_INTENT_TEMP2 = "temp2";
+    public final String KEY_INTENT_ORDER = "inorder";
 
   //  public final String baseUrl = "http://192.168.2.170:802/api/";
    // public final String baseUrlUpload = "http://192.168.2.170:801/";
@@ -176,4 +177,48 @@ public class HAIRes {
     }
 
 
+    //
+    private List<ProductCodeInfo> productOrders;
+
+    public void addProductOrder(ProductCodeInfo product) {
+        if (productOrders == null)
+            productOrders = new ArrayList<>();
+
+        if (product != null)
+            productOrders.add(product);
+    }
+
+
+    public List<ProductCodeInfo> getProductOrder() {
+        if (productOrders == null)
+            productOrders = new ArrayList<>();
+
+        return productOrders;
+    }
+
+    public void clearProductOrder() {
+        productOrders = new ArrayList<>();
+    }
+
+    public void removeProductOrder(ProductCodeInfo productCodeInfo) {
+        if (productOrders !=  null)
+            productOrders.remove(productCodeInfo);
+    }
+
+    public void removeProductOrderAt(int i) {
+        if (productOrders != null)
+            productOrders.remove(i);
+    }
+
+    public boolean checkExistProductOrder(String code) {
+        if (productOrders != null) {
+            for(ProductCodeInfo order: productOrders) {
+                if (code.equals(order.getCode())) {
+                    return true;
+                }
+            }
+        }
+
+        return  false;
+    }
 }

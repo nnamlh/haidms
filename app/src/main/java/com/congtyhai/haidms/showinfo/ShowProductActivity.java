@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.congtyhai.adapter.ProductShowAdapter;
 import com.congtyhai.haidms.BaseActivity;
@@ -44,6 +45,9 @@ public class ShowProductActivity extends BaseActivity {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
+    @BindView(R.id.txtcountoder)
+    TextView eCountOrder;
+
     private ProductShowAdapter mAdapter;
 
     private List<String> groupName;
@@ -51,6 +55,7 @@ public class ShowProductActivity extends BaseActivity {
 
     AlertDialog.Builder builderSingle;
 
+    int inOrder = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +63,16 @@ public class ShowProductActivity extends BaseActivity {
         setContentView(R.layout.activity_show_product);
         createToolbar();
         ButterKnife.bind(this);
+        Intent intent = getIntent();
+        inOrder = intent.getIntExtra(HAIRes.getInstance().KEY_INTENT_ORDER, 0);
+       // HAIRes.getInstance().clearProductOrder();
+        resetCountOder();
 
         groupCode = new ArrayList<>();
         groupName = new ArrayList<>();
         productCodeInfosTemp = new ArrayList<>();
         productCodeInfos = new ArrayList<>();
-        mAdapter = new ProductShowAdapter(productCodeInfos, this);
+        mAdapter = new ProductShowAdapter(productCodeInfos, this, inOrder);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -71,6 +80,7 @@ public class ShowProductActivity extends BaseActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
+        /*
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -85,12 +95,20 @@ public class ShowProductActivity extends BaseActivity {
 
             }
         }));
+        */
 
 
         new ReadDataTask().execute();
 
     }
 
+    public void notifyAdapterProduct() {
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void resetCountOder() {
+        eCountOrder.setText("" + HAIRes.getInstance().getProductOrder().size());
+    }
 
     private void createDialogGroup() {
         builderSingle = new AlertDialog.Builder(ShowProductActivity.this);
@@ -226,6 +244,7 @@ public class ShowProductActivity extends BaseActivity {
 
     private void makeRequest() {
         showpDialog();
+        HAIRes.getInstance().clearProductOrder();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
         Call<ProductCodeInfo[]> call = apiInterface().getProduct(user, token);
