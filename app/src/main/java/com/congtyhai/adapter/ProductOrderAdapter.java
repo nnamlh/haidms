@@ -71,7 +71,14 @@ public class ProductOrderAdapter  extends RecyclerView.Adapter<ProductOrderAdapt
         holder.detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                activity.changeQuantity(order.getQuantity(), order.getQuantityBox(), position);
+            }
+        });
 
+        holder.imgEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.changeQuantity(order.getQuantity(), order.getQuantityBox(), position);
             }
         });
 
@@ -108,7 +115,7 @@ public class ProductOrderAdapter  extends RecyclerView.Adapter<ProductOrderAdapt
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name, group, detail, price;
-        public ImageView image, imgDelete;
+        public ImageView image, imgDelete, imgEdit;
 
         public MyViewHolder(View view) {
             super(view);
@@ -118,6 +125,7 @@ public class ProductOrderAdapter  extends RecyclerView.Adapter<ProductOrderAdapt
             image = (ImageView) view.findViewById(R.id.image);
             imgDelete = (ImageView) view.findViewById(R.id.imgdelete);
             price = (TextView) view.findViewById(R.id.price);
+            imgEdit  = (ImageView) view.findViewById(R.id.imgedit);
 
         }
     }
