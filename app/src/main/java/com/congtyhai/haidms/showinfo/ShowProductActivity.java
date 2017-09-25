@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,8 +20,11 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.congtyhai.adapter.ProductShowAdapter;
+import com.congtyhai.haidms.Agency.AddAgencyActivity;
+import com.congtyhai.haidms.Agency.ShowAgencyActivity;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
+import com.congtyhai.haidms.order.ShowOrderActivity;
 import com.congtyhai.model.api.GroupResultInfo;
 import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.util.HAIRes;
@@ -54,6 +58,14 @@ public class ShowProductActivity extends BaseActivity {
     private List<String> groupCode;
 
     AlertDialog.Builder builderSingle;
+
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+
+    @BindView(R.id.lorder)
+    View lOrder;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +105,17 @@ public class ShowProductActivity extends BaseActivity {
         }));
         */
 
+        if(HAIRes.getInstance().inOder == 1) {
+            lOrder.setVisibility(View.VISIBLE);
+
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    commons.startActivity(ShowProductActivity.this, ShowOrderActivity.class);
+                }
+            });
+        }
 
         new ReadDataTask().execute();
 
@@ -312,5 +335,12 @@ public class ShowProductActivity extends BaseActivity {
         // mAdapter = new ProductShowAdapter(productCodeInfos, ShowProductActivity.this);
         // recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        notifyAdapterProduct();
+        resetCountOder();
     }
 }

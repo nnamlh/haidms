@@ -16,6 +16,7 @@ import com.congtyhai.haidms.R;
 import com.congtyhai.haidms.showinfo.ShowProductActivity;
 import com.congtyhai.haidms.showinfo.ShowProductDetailActivity;
 import com.congtyhai.model.api.ProductCodeInfo;
+import com.congtyhai.model.api.ProductOrder;
 import com.congtyhai.util.HAIRes;
 
 import java.util.List;
@@ -49,9 +50,8 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final ProductCodeInfo productCodeInfo = productCodeInfos.get(position);
         holder.name.setText(productCodeInfo.getName());
-        holder.group.setText("Nhóm: " + productCodeInfo.getGroupName());
-        holder.producer.setText("Nhà sản xuất: " + productCodeInfo.getProducer());
-        holder.describe.setText(" Không độc hại với môi trường, động vật bậc cao, sản phẩm lý tưởng trong nông nghiệp xanh:Thân thiện với môi trường - Nông sản sạch - An toàn-Phù hợp với các chương trình GAP và IPM");
+        holder.group.setText(productCodeInfo.getGroupName());
+        holder.describe.setText(productCodeInfo.getShort_describe());
 
         Glide.with(activity).load(productCodeInfo.getImage())
                 .thumbnail(0.5f)
@@ -71,14 +71,23 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
             holder.btnOrder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    HAIRes.getInstance().addProductOrder(productCodeInfo);
+                    ProductOrder productOrder = new ProductOrder();
+                    productOrder.setCode(productCodeInfo.getId());
+                    productOrder.setImage(productCodeInfo.getImage());
+                    productOrder.setQuantity(productCodeInfo.getQuantity_box());
+                    productOrder.setPrice(productCodeInfo.getPrice());
+                    productOrder.setQuantityBox(productCodeInfo.getQuantity_box());
+                    productOrder.setUnit(productCodeInfo.getUnit());
+                    productOrder.setName(productCodeInfo.getName());
+                    productOrder.setGroup(productCodeInfo.getGroupName());
+                    HAIRes.getInstance().addProductOrder(productOrder);
                     activity.notifyAdapterProduct();
                     activity.resetCountOder();
                     Toast.makeText(activity, "Đã chọn mua : " + productCodeInfo.getName(), Toast.LENGTH_LONG).show();
                 }
             });
 
-            if (HAIRes.getInstance().checkExistProductOrder(productCodeInfo.getCode())) {
+            if (HAIRes.getInstance().checkExistProductOrder(productCodeInfo.getId())) {
                 holder.btnOrder.setVisibility(View.GONE);
                 holder.imgCheck.setVisibility(View.VISIBLE);
             } else {
@@ -97,14 +106,13 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, group, producer, describe;
+        public TextView name, group, describe;
         public ImageView image, imgCheck;
         public Button btnOrder, btnDetail;
 
         public MyViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.name);
-            producer = (TextView) view.findViewById(R.id.producer);
             describe = (TextView) view.findViewById(R.id.describe);
             group = (TextView) view.findViewById(R.id.group);
             image = (ImageView) view.findViewById(R.id.image);

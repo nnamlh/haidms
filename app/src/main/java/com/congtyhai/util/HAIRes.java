@@ -4,7 +4,9 @@ import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.CalendarCreateSend;
 import com.congtyhai.model.api.CalendarStatus;
 import com.congtyhai.model.api.ProductCodeInfo;
+import com.congtyhai.model.api.ProductOrder;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +40,7 @@ public class HAIRes {
     public final String KEY_INTENT_TEMP = "temp";
     public final String KEY_INTENT_TEMP2 = "temp2";
     public final String KEY_INTENT_ORDER = "inorder";
+    public String CurrentAgency ;
 
   //  public final String baseUrl = "http://192.168.2.170:802/api/";
    // public final String baseUrlUpload = "http://192.168.2.170:801/";
@@ -180,9 +183,9 @@ public class HAIRes {
 
 
     //
-    private List<ProductCodeInfo> productOrders;
+    private List<ProductOrder> productOrders;
 
-    public void addProductOrder(ProductCodeInfo product) {
+    public void addProductOrder(ProductOrder product) {
         if (productOrders == null)
             productOrders = new ArrayList<>();
 
@@ -191,7 +194,7 @@ public class HAIRes {
     }
 
 
-    public List<ProductCodeInfo> getProductOrder() {
+    public List<ProductOrder> getProductOrder() {
         if (productOrders == null)
             productOrders = new ArrayList<>();
 
@@ -202,7 +205,7 @@ public class HAIRes {
         productOrders = new ArrayList<>();
     }
 
-    public void removeProductOrder(ProductCodeInfo productCodeInfo) {
+    public void removeProductOrder(ProductOrder productCodeInfo) {
         if (productOrders !=  null)
             productOrders.remove(productCodeInfo);
     }
@@ -214,7 +217,7 @@ public class HAIRes {
 
     public boolean checkExistProductOrder(String code) {
         if (productOrders != null) {
-            for(ProductCodeInfo order: productOrders) {
+            for(ProductOrder order: productOrders) {
                 if (code.equals(order.getCode())) {
                     return true;
                 }
@@ -222,5 +225,18 @@ public class HAIRes {
         }
 
         return  false;
+    }
+
+    public String formatMoneyToText(double value) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        String moneyString = formatter.format(value);
+        if (moneyString.endsWith(".00")) {
+            int centsIndex = moneyString.lastIndexOf(".00");
+            if (centsIndex != -1) {
+                moneyString = moneyString.substring(1, centsIndex);
+            }
+        }
+
+        return  moneyString + " VND";
     }
 }

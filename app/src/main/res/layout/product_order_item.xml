@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#fff"
     android:padding="10dp">
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
         android:src="@mipmap/ic_logo" />
@@ -38,55 +39,39 @@
         android:textSize="14dp" />
 
     <TextView
-        android:id="@+id/describe"
+        android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/group"
         android:layout_marginTop="3dp"
         android:layout_toRightOf="@id/image"
         android:fontFamily="sans-serif-light"
-        android:text="Hoặt chất: abc"
+        android:text="200.000.000 VND"
         android:textColor="#000000"
-        android:textSize="14dp" />
-
-    <Button
-        android:layout_width="70dp"
-        android:layout_height="30dp"
-        android:text="Xem thêm"
-        android:id="@+id/btndetail"
-        android:textSize="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_below="@id/describe"
-        android:layout_alignParentBottom="true"
-        android:textColor="#007DC6"
-        android:layout_toRightOf="@id/image"
-        android:background="@drawable/btn_detail_blue"/>
-
-    <Button
-        android:layout_width="70dp"
-        android:layout_height="30dp"
-        android:text="Mua hàng"
-        android:id="@+id/btnorder"
-        android:textSize="10dp"
-        android:visibility="gone"
-        android:layout_marginTop="5dp"
-        android:layout_below="@id/describe"
-        android:textColor="#007DC6"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/btndetail"
-        android:layout_marginLeft="20dp"
-        android:background="@drawable/btn_detail_blue"/>
+        android:textSize="14dp"
+        android:textStyle="bold" />
 
     <ImageView
+        android:id="@+id/imgdelete"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@mipmap/ic_order_task"
-        android:id="@+id/imgcheck"
-        android:visibility="gone"
-        android:layout_marginTop="5dp"
-        android:layout_below="@id/describe"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/btndetail"
-        android:layout_marginLeft="20dp"/>
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/price"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="3dp"
+        android:src="@mipmap/ic_delete" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/price"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@id/image"
+        android:fontFamily="sans-serif-light"
+        android:text="1 thùng 3 chai"
+        android:id="@+id/detail"
+        android:textColor="#000000"
+        android:textSize="14dp" />
 
 </RelativeLayout>
