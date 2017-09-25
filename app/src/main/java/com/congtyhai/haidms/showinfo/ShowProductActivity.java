@@ -55,24 +55,20 @@ public class ShowProductActivity extends BaseActivity {
 
     AlertDialog.Builder builderSingle;
 
-    int inOrder = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_product);
         createToolbar();
         ButterKnife.bind(this);
-        Intent intent = getIntent();
-        inOrder = intent.getIntExtra(HAIRes.getInstance().KEY_INTENT_ORDER, 0);
-       // HAIRes.getInstance().clearProductOrder();
+
         resetCountOder();
 
         groupCode = new ArrayList<>();
         groupName = new ArrayList<>();
         productCodeInfosTemp = new ArrayList<>();
         productCodeInfos = new ArrayList<>();
-        mAdapter = new ProductShowAdapter(productCodeInfos, this, inOrder);
+        mAdapter = new ProductShowAdapter(productCodeInfos, this);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);

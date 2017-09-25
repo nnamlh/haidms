@@ -18,6 +18,8 @@ public class HAIRes {
     // announce
     public final String ANNOUNCEMENT_DISCONNECT_NETWORK = "Mất kết nối";
 
+    public int inOder = 0;
+
 
     // broadcast receiver intent filters
     public final String REGISTRATION_COMPLETE = "registrationComplete";

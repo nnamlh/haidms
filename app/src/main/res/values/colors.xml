@@ -14,4 +14,5 @@
     <color name="no_hover_error">#FFFFFF</color>
     <color name="bggreen">#00B462</color>
     <color name="actionbar_opacity">#33000000</color>
+    <color name="color_blue">#007DC6</color>
 </resources>

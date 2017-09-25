@@ -31,10 +31,10 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
     List<ProductCodeInfo> productCodeInfos;
     int inOder = 0;
 
-    public ProductShowAdapter(List<ProductCodeInfo> productCodeInfos, ShowProductActivity activity, int inOder) {
+    public ProductShowAdapter(List<ProductCodeInfo> productCodeInfos, ShowProductActivity activity) {
         this.productCodeInfos = productCodeInfos;
         this.activity = activity;
-        this.inOder = inOder;
+        this.inOder = HAIRes.getInstance().inOder;
     }
 
     @Override
@@ -49,10 +49,9 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final ProductCodeInfo productCodeInfo = productCodeInfos.get(position);
         holder.name.setText(productCodeInfo.getName());
-        holder.code.setText("Mã: " + productCodeInfo.getCode());
         holder.group.setText("Nhóm: " + productCodeInfo.getGroupName());
         holder.producer.setText("Nhà sản xuất: " + productCodeInfo.getProducer());
-        holder.active.setText("Hoặt tính: " + productCodeInfo.getActivce());
+        holder.describe.setText(" Không độc hại với môi trường, động vật bậc cao, sản phẩm lý tưởng trong nông nghiệp xanh:Thân thiện với môi trường - Nông sản sạch - An toàn-Phù hợp với các chương trình GAP và IPM");
 
         Glide.with(activity).load(productCodeInfo.getImage())
                 .thumbnail(0.5f)
@@ -98,16 +97,15 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, code, group, producer, active;
+        public TextView name, group, producer, describe;
         public ImageView image, imgCheck;
         public Button btnOrder, btnDetail;
 
         public MyViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.name);
-            code = (TextView) view.findViewById(R.id.code);
             producer = (TextView) view.findViewById(R.id.producer);
-            active = (TextView) view.findViewById(R.id.active);
+            describe = (TextView) view.findViewById(R.id.describe);
             group = (TextView) view.findViewById(R.id.group);
             image = (ImageView) view.findViewById(R.id.image);
             btnOrder = (Button) view.findViewById(R.id.btnorder);

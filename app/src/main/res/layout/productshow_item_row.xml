@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
@@ -24,25 +24,13 @@
         android:textSize="16dp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/name"
-        android:layout_marginTop="5dp"
-        android:layout_toRightOf="@id/image"
-        android:fontFamily="sans-serif-light"
-        android:text="AZ00001223"
-        android:textColor="#000000"
-        android:textSize="14dp" />
-
 
     <TextView
         android:id="@+id/group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/code"
-        android:layout_marginTop="5dp"
+        android:layout_below="@id/name"
+        android:layout_marginTop="3dp"
         android:layout_toRightOf="@id/image"
         android:fontFamily="sans-serif-light"
         android:text="Nhóm: thuốc sâu"
@@ -55,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/group"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="3dp"
         android:layout_toRightOf="@id/image"
         android:fontFamily="sans-serif-light"
         android:text="Nơi sản xuất: abc"
@@ -64,11 +52,11 @@
 
 
     <TextView
-        android:id="@+id/active"
+        android:id="@+id/describe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/producer"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="3dp"
         android:layout_toRightOf="@id/image"
         android:fontFamily="sans-serif-light"
         android:text="Hoặt chất: abc"
@@ -76,40 +64,41 @@
         android:textSize="14dp" />
 
     <Button
-        android:layout_width="50dp"
-        android:layout_height="20dp"
-        android:text="Chi tiết"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:text="Xem thêm"
         android:id="@+id/btndetail"
-        android:textSize="7dp"
+        android:textSize="10dp"
         android:layout_marginTop="5dp"
-        android:layout_below="@id/active"
-        android:textColor="#fff"
+        android:layout_below="@id/describe"
+        android:textColor="#007DC6"
         android:layout_toRightOf="@id/image"
-        android:background="@drawable/btn_checkin"/>
+        android:background="@drawable/btn_detail_blue"/>
 
     <Button
-        android:layout_width="50dp"
-        android:layout_height="20dp"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
         android:text="Mua hàng"
         android:id="@+id/btnorder"
-        android:textSize="7dp"
+        android:textSize="10dp"
         android:visibility="gone"
         android:layout_marginTop="5dp"
-        android:layout_below="@id/active"
-        android:textColor="#fff"
+        android:layout_below="@id/describe"
+        android:textColor="#007DC6"
         android:layout_toRightOf="@id/btndetail"
         android:layout_marginLeft="20dp"
-        android:background="@drawable/btn_checkin"/>
+        android:background="@drawable/btn_detail_blue"/>
 
     <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@mipmap/ic_check"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/ic_order_task"
         android:id="@+id/imgcheck"
         android:visibility="gone"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/describe"
+        android:layout_toRightOf="@id/btndetail"
+        android:layout_marginLeft="20dp"/>
 
 
 

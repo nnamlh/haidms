@@ -103,9 +103,10 @@ public class CheckInTaskActivity extends BaseActivity {
                     intentDecor.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, agencyCode);
                     startActivity(intentDecor);
                 } else if (taskInfo.getCode().equals("ordertask")) {
-                    Intent showProductIntent = commons.createIntent(CheckInTaskActivity.this, ShowProductActivity.class);
-                    showProductIntent.putExtra(HAIRes.getInstance().KEY_INTENT_ORDER, 1);
-                    startActivity(showProductIntent);
+                    HAIRes.getInstance().inOder = 1;
+                    commons.startActivity(CheckInTaskActivity.this, ShowProductActivity.class);
+                    //  showProductIntent.putExtra(HAIRes.getInstance().KEY_INTENT_ORDER, 1);
+                    //  startActivity(showProductIntent);
                 }
             }
 
