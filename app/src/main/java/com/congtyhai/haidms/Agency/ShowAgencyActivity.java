@@ -1,25 +1,35 @@
 package com.congtyhai.haidms.Agency;
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 
 import com.congtyhai.adapter.AgencyAdapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
+import com.congtyhai.haidms.showinfo.ShowProductActivity;
 import com.congtyhai.model.api.AgencyInfo;
+import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.DividerItemDecoration;
 import com.congtyhai.view.RecyclerTouchListener;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,12 +40,15 @@ import retrofit2.Response;
 public class ShowAgencyActivity extends BaseActivity {
 
     private List<AgencyInfo> agencyList ;
+    private List<AgencyInfo> agencyListTemp ;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private AgencyAdapter mAdapter;
 
     int SHOW_DETAIL_AGENCY = 1;
 
+    AlertDialog.Builder builderSingle;
+    private List<Integer> groups;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +56,10 @@ public class ShowAgencyActivity extends BaseActivity {
         setContentView(R.layout.activity_show_agency);
         ButterKnife.bind(this);
         createToolbar();
+
         agencyList = new ArrayList<>();
+        agencyListTemp = new ArrayList<>();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,8 +93,38 @@ public class ShowAgencyActivity extends BaseActivity {
 
        new ReadDataTask().execute();
 
-    }
 
+
+    }
+    private void createDialogGroup() {
+        builderSingle = new AlertDialog.Builder(ShowAgencyActivity.this);
+        builderSingle.setIcon(R.mipmap.ic_logo);
+        builderSingle.setTitle("Chọn cụm:");
+        final ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<Integer>(ShowAgencyActivity.this, android.R.layout.select_dialog_singlechoice, groups);
+        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+
+        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                agencyList.clear();
+                int code = groups.get(which);
+                for(AgencyInfo info : agencyListTemp) {
+                    if(info.getGroup() == code) {
+                        agencyList.add(info);
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+
+            }
+        });
+
+    }
 
     private void makeRequest() {
         showpDialog();
@@ -123,14 +169,20 @@ public class ShowAgencyActivity extends BaseActivity {
 
         protected void onPostExecute(List<AgencyInfo> result) {
             agencyList = new ArrayList<>();
+            groups = new ArrayList<>();
+            agencyListTemp = new ArrayList<>();
             for (AgencyInfo info : result) {
                 agencyList.add(info);
+                agencyListTemp.add(info);
+                if(!groups.contains(info.getGroup())) {
+                    groups.add(info.getGroup());
+                }
             }
-
+            Collections.sort(groups);
             mAdapter = new AgencyAdapter(agencyList);
             recyclerView.setAdapter(mAdapter);
             mAdapter.notifyDataSetChanged();
-
+            createDialogGroup();
             hidepDialog();
         }
     }
@@ -138,6 +190,26 @@ public class ShowAgencyActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_agency_show, menu);
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.find_action).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                handleSearch(newText);
+                return false;
+            }
+        });
         return true;
     }
 
@@ -148,6 +220,9 @@ public class ShowAgencyActivity extends BaseActivity {
             case R.id.refesh_action:
                 makeRequest();
                 return true;
+            case R.id.filter_group:
+                builderSingle.show();
+                return  true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -163,7 +238,16 @@ public class ShowAgencyActivity extends BaseActivity {
             }
         }
     }
+    private void handleSearch(String query) {
+        agencyList.clear();
 
+        for(AgencyInfo info: agencyListTemp) {
+            if (info.getCode().contains(query)){
+                agencyList.add(info);
+            }
+        }
+        mAdapter.notifyDataSetChanged();
+    }
 
 
 }

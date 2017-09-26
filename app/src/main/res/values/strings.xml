@@ -33,5 +33,6 @@
     <string name="title_activity_notification">Tin nhắn</string>
     <string name="title_activity_notification_detail">Chi tiết</string>
     <string name="title_activity_show_order">ShowOrderActivity</string>
+    <string name="title_activity_complete_order">CompleteOrderActivity</string>
 
 </resources>

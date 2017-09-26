@@ -178,7 +178,9 @@ public class ShowAgencyDetailActivity extends BaseActivity {
         protected void onPostExecute(Address result) {
 
             if (result != null) {
-                eAddress.setText(result.getAddressLine(0));
+                String strAddress = result.getSubThoroughfare() + " " + result.getThoroughfare() + " , " + result.getSubLocality();
+
+                eAddress.setText(strAddress);
                 eProvince.setText(result.getAdminArea());
                 eDistrict.setText(result.getSubAdminArea());
                 eWard.setText(result.getSubLocality());
@@ -268,20 +270,23 @@ public class ShowAgencyDetailActivity extends BaseActivity {
             eSotre.setError("Không để trống tên cửa hàng");
             return false;
         }
+        if (TextUtils.isEmpty(ePhone.getText().toString())) {
+            ePhone.setError("Không để trống số điện thoại");
+            return false;
+        }
+        /*
         if (TextUtils.isEmpty(eGroup.getText().toString())) {
             eGroup.setError("Không để trống cụm khách hàng");
             return false;
         }
+
 
         if (TextUtils.isEmpty(eC1.getText().toString())) {
             eC1.setError("Không để trống cấp 1");
             return false;
         }
 
-        if (TextUtils.isEmpty(ePhone.getText().toString())) {
-            ePhone.setError("Không để trống số điện thoại");
-            return false;
-        }
+      */
         if (TextUtils.isEmpty(eAddress.getText().toString())) {
             eAddress.setError("Không để trống địa chỉ");
             return false;

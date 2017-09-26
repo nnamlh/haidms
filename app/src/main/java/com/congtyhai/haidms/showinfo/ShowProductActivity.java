@@ -3,7 +3,6 @@ package com.congtyhai.haidms.showinfo;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,10 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import com.congtyhai.adapter.ProductShowAdapter;
-import com.congtyhai.haidms.Agency.AddAgencyActivity;
-import com.congtyhai.haidms.Agency.ShowAgencyActivity;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.haidms.order.ShowOrderActivity;
@@ -29,7 +25,6 @@ import com.congtyhai.model.api.GroupResultInfo;
 import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.DividerItemDecoration;
-import com.congtyhai.view.RecyclerTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,6 +101,7 @@ public class ShowProductActivity extends BaseActivity {
         */
 
         if(HAIRes.getInstance().inOder == 1) {
+
             lOrder.setVisibility(View.VISIBLE);
 
             fab.setOnClickListener(new View.OnClickListener() {

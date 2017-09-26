@@ -3,9 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/find_action"
+        android:icon="@mipmap/ic_search"
+        app:showAsAction="collapseActionView|ifRoom"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        android:title="Tìm" />
+
+    <item
+        android:id="@+id/filter_group"
+        app:showAsAction="never"
+        android:title="Lọc theo cụm" />
+
     <item
         android:id="@+id/refesh_action"
-        android:icon="@mipmap/ic_refesh"
-        app:showAsAction="ifRoom"
-        android:title="Lam moi" />
+        app:showAsAction="never"
+        android:title="Tải lại danh sách" />
 </menu>

@@ -53,7 +53,15 @@
         <activity
             android:name=".Agency.ShowAgencyActivity"
             android:label="@string/title_activity_show_agency"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Agency.AddAgencyActivity"
             android:label="@string/title_activity_add_agency"
@@ -169,6 +177,10 @@
         <activity
             android:name=".order.ShowOrderActivity"
             android:label="@string/title_activity_show_order"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".order.CompleteOrderActivity"
+            android:label="@string/title_activity_complete_order"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
