@@ -18,6 +18,7 @@ import com.congtyhai.model.app.CheckInAgencyInfo;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.util.HaiActionInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CheckInPlanFragment extends Fragment {
@@ -47,23 +48,7 @@ public class CheckInPlanFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        refeshList();
-
-        swipeRefreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                       refeshList();
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }
-        );
-
-        return view;
-    }
-
-    private void refeshList() {
-        checkInAgencyInfos = activity.getListCheckInPlan();
+        checkInAgencyInfos = new ArrayList<>();
         adapter = new CheckInAgencyAdapter(checkInAgencyInfos);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new RecyclerTouchListener.ClickListener() {
@@ -82,6 +67,30 @@ public class CheckInPlanFragment extends Fragment {
 
             }
         }));
+
+        refeshList();
+
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                       refeshList();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+        );
+
+        return view;
+    }
+
+    private void refeshList() {
+        checkInAgencyInfos.clear();
+        List<CheckInAgencyInfo> temp  = activity.getListCheckInPlan();
+        for(CheckInAgencyInfo info: temp) {
+            checkInAgencyInfos.add(info);
+        }
+
+        adapter.notifyDataSetChanged();
     }
 
 }

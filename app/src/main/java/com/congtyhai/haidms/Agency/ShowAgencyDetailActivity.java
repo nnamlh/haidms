@@ -270,11 +270,12 @@ public class ShowAgencyDetailActivity extends BaseActivity {
             eSotre.setError("Không để trống tên cửa hàng");
             return false;
         }
+         /*
         if (TextUtils.isEmpty(ePhone.getText().toString())) {
             ePhone.setError("Không để trống số điện thoại");
             return false;
         }
-        /*
+
         if (TextUtils.isEmpty(eGroup.getText().toString())) {
             eGroup.setError("Không để trống cụm khách hàng");
             return false;

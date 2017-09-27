@@ -150,7 +150,7 @@ public class CheckInActivity extends BaseActivity {
     }
 */
 
-    public void makeTask(final String agencyCode, final long distance) {
+    public void makeTask(final String agencyCode, final float distance) {
         commons.showAlertCancel(CheckInActivity.this, "Thông báo", "Bạn muốn ghé thăm khách hàng: " + agencyCode, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -201,7 +201,7 @@ public class CheckInActivity extends BaseActivity {
                 checkInAgencyInfo.setDeputy(info.getDeputy());
                 checkInAgencyInfo.setCode(info.getCode());
                 checkInAgencyInfo.setName(info.getName());
-                long distabce = commons.distance(getCurrentLocation().getLatitude(), getCurrentLocation().getLongitude(), info.getLat(), info.getLng(), "M");
+                float distabce = commons.distance(getCurrentLocation().getLatitude(), getCurrentLocation().getLongitude(), info.getLat(), info.getLng());
                 checkInAgencyInfo.setDistance(distabce);
 
                 checkInAgencyInfos.add(checkInAgencyInfo);
@@ -219,7 +219,7 @@ public class CheckInActivity extends BaseActivity {
                 checkInAgencyInfo.setDeputy(item.getDeputy());
                 checkInAgencyInfo.setCode(item.getCode());
                 checkInAgencyInfo.setName(item.getName());
-                long distabce = commons.distance(getCurrentLocation().getLatitude(), getCurrentLocation().getLongitude(), item.getLat(), item.getLng(), "M");
+                float distabce = commons.distance(getCurrentLocation().getLatitude(), getCurrentLocation().getLongitude(), item.getLat(), item.getLng());
                 checkInAgencyInfo.setDistance(distabce);
 
                 checkInAgencyInfos.add(checkInAgencyInfo);

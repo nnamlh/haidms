@@ -209,7 +209,7 @@ public class MainActivity extends BaseActivity
 
                 TextView distance = (TextView) v.findViewById(R.id.txtdistance);
 
-                long d = commons.distance(getCurrentLocation().getLatitude(), getCurrentLocation().getLongitude(), marker.getPosition().latitude, marker.getPosition().longitude, "M");
+                float d = commons.distance(getCurrentLocation().getLatitude(), getCurrentLocation().getLongitude(), marker.getPosition().latitude, marker.getPosition().longitude);
                 distance.setText(d + " m");
                 return v;
             }

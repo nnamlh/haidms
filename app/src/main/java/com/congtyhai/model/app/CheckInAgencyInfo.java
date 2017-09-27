@@ -9,7 +9,7 @@ public class CheckInAgencyInfo {
     private String code;
     private String name;
     private String deputy;
-    private long distance;
+    private float distance;
 
     public String getCode() {
         return code;
@@ -35,11 +35,11 @@ public class CheckInAgencyInfo {
         this.deputy = deputy;
     }
 
-    public long getDistance() {
+    public float getDistance() {
         return distance;
     }
 
-    public void setDistance(long distance) {
+    public void setDistance(float distance) {
         this.distance = distance;
     }
 
