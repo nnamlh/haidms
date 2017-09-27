@@ -53,7 +53,7 @@
         <activity
             android:name=".Agency.ShowAgencyActivity"
             android:label="@string/title_activity_show_agency"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -181,6 +181,10 @@
         <activity
             android:name=".order.CompleteOrderActivity"
             android:label="@string/title_activity_complete_order"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".showinfo.CheckStaffActivity"
+            android:label="@string/title_activity_check_staff"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

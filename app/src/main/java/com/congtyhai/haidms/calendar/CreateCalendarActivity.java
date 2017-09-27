@@ -356,7 +356,10 @@ public class CreateCalendarActivity extends BaseActivity {
             public void onDateSelected(int year, int month, int day, int index) {
                 daySelect = day;
                 groupSelect = dayGroupAgencyChooseMap.get(daySelect);
-               // eStatus.setSelection(HAIRes.getInstance().findPostitionStatus(calendarDayMap.get(daySelect).getStatus()));
+                String statusCode = HAIRes.getInstance().statusInfos.get(eStatus.getSelectedItemPosition()).id;
+                if (!calendarDayMap.get(daySelect).getStatus().equals(statusCode)) {
+                    eStatus.setSelection(HAIRes.getInstance().findPostitionStatus(calendarDayMap.get(daySelect).getStatus()));
+                }
                 eGroups.setSelection(findPostionGroup());
                 refeshList();
             }
