@@ -194,6 +194,8 @@ public class CheckInActivity extends BaseActivity {
 
     public List<CheckInAgencyInfo> getListCheckInPlan() {
         List<CheckInAgencyInfo> checkInAgencyInfos = new ArrayList<>();
+        double lat = getCurrentLocation().getLatitude();
+        double lng =  getCurrentLocation().getLongitude();
         for(String item : inPlans) {
             AgencyInfo info = findAgency(item);
             if (info != null) {
@@ -201,7 +203,7 @@ public class CheckInActivity extends BaseActivity {
                 checkInAgencyInfo.setDeputy(info.getDeputy());
                 checkInAgencyInfo.setCode(info.getCode());
                 checkInAgencyInfo.setName(info.getName());
-                float distabce = commons.distance(getCurrentLocation().getLatitude(), getCurrentLocation().getLongitude(), info.getLat(), info.getLng());
+                float distabce = commons.distance(lat, lng, info.getLat(), info.getLng());
                 checkInAgencyInfo.setDistance(distabce);
 
                 checkInAgencyInfos.add(checkInAgencyInfo);
@@ -212,6 +214,8 @@ public class CheckInActivity extends BaseActivity {
 
     public List<CheckInAgencyInfo> getListCheckOutPlan() {
         List<CheckInAgencyInfo> checkInAgencyInfos = new ArrayList<>();
+        double lat = getCurrentLocation().getLatitude();
+        double lng =  getCurrentLocation().getLongitude();
         for(AgencyInfo item : agencyInfos) {
 
             if (!outPlans.contains(item.getCode())) {
@@ -219,7 +223,7 @@ public class CheckInActivity extends BaseActivity {
                 checkInAgencyInfo.setDeputy(item.getDeputy());
                 checkInAgencyInfo.setCode(item.getCode());
                 checkInAgencyInfo.setName(item.getName());
-                float distabce = commons.distance(getCurrentLocation().getLatitude(), getCurrentLocation().getLongitude(), item.getLat(), item.getLng());
+                float distabce = commons.distance(lat,lng, item.getLat(), item.getLng());
                 checkInAgencyInfo.setDistance(distabce);
 
                 checkInAgencyInfos.add(checkInAgencyInfo);

@@ -164,7 +164,13 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected HaiLocation getCurrentLocation() {
-        return new HaiLocation(gps.getLatitude(), gps.getLongitude());
+        gps = new GPSTracker(BaseActivity.this);
+        if(gps.canGetLocation()) {
+            return new HaiLocation(gps.getLatitude(), gps.getLongitude());
+        } else {
+            gps.showSettingsAlert();
+            return new HaiLocation(0, 0);
+        }
     }
 
     // dialog
