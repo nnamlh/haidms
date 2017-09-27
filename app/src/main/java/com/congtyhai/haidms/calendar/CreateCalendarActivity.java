@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.IntegerRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -182,6 +183,17 @@ public class CreateCalendarActivity extends BaseActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String code = HAIRes.getInstance().statusInfos.get(i).id;
                 calendarDayMap.get(daySelect).setStatus(code);
+
+                if(code.equals("HOLIDAY")) {
+                    timeline.getTimelineView().addMapDateTextColor(daySelect, ContextCompat.getColor(CreateCalendarActivity.this, R.color.mti_bg_lbl_date_selected_color_red) );
+                } else if (code.equals("CSKH")) {
+                    timeline.getTimelineView().addMapDateTextColor(daySelect, ContextCompat.getColor(CreateCalendarActivity.this, R.color.mti_lbl_date));
+                } else {
+                    timeline.getTimelineView().addMapDateTextColor(daySelect, ContextCompat.getColor(CreateCalendarActivity.this, R.color.mti_bg_lbl_date_selected_color_yellow));
+                }
+
+                timeline.getTimelineView().notifiAdapter();
+
             }
 
             @Override
@@ -207,6 +219,8 @@ public class CreateCalendarActivity extends BaseActivity {
                 }
                 dayGroupAgencyChooseMap.put(daySelect, groupSelect);
                 refeshList();
+                //
+
             }
 
             @Override
@@ -328,14 +342,14 @@ public class CreateCalendarActivity extends BaseActivity {
         timeline.setLastVisibleDate(year, getCalendarMonth(month), days);
         timeline.getMonthView().setVisibility(View.GONE);
 
-
+        /*
         timeline.setDateLabelAdapter(new MonthView.DateLabelAdapter() {
             @Override
             public CharSequence getLabel(Calendar calendar, int index) {
                 return Integer.toString(calendar.get(Calendar.MONTH) + 1) + "/" + (calendar.get(Calendar.YEAR) % 2000);
             }
         });
-
+*/
 
         timeline.setOnDateSelectedListener(new DatePickerTimeline.OnDateSelectedListener() {
             @Override

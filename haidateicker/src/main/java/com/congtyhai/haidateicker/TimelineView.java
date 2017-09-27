@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -24,6 +25,8 @@ public class TimelineView extends RecyclerView {
    // private static final String[] WEEK_DAYS = DateFormatSymbols.getInstance().getWeekdays();
 
     private static final String[] WEEK_DAYS = {"", "T2", "T3", "T4", "T5", "T6", "T7", "CN"};
+
+    private HashMap<Integer, Integer> mapDateTextColor;
 
     private final Calendar calendar = Calendar.getInstance(Locale.getDefault());
 
@@ -60,6 +63,7 @@ public class TimelineView extends RecyclerView {
     }
 
     private void init() {
+        mapDateTextColor = new HashMap<>();
         calendar.setTimeInMillis(System.currentTimeMillis());
         setSelectedDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         resetCalendar();
@@ -69,6 +73,20 @@ public class TimelineView extends RecyclerView {
         adapter = new TimelineAdapter();
         setLayoutManager(layoutManager);
         setAdapter(adapter);
+    }
+
+    public void addMapDateTextColor(int date, int color) {
+        if (mapDateTextColor.containsKey(date)) {
+            mapDateTextColor.remove(date);
+        }
+
+        mapDateTextColor.put(date, color);
+
+    }
+
+    public void notifiAdapter() {
+        if(adapter != null)
+            adapter.notifyDataSetChanged();
     }
 
     private void resetCalendar() {
@@ -361,9 +379,23 @@ public class TimelineView extends RecyclerView {
             lblDate.setText(String.valueOf(day));
             lblValue.setText(label);
 
+            /*
             lblDate.setBackgroundResource(selected ? R.drawable.mti_bg_lbl_date_selected
                                                    : (isToday ? R.drawable.mti_bg_lbl_date_today : 0));
             lblDate.setTextColor(selected || isToday ? lblDateSelectedColor : lblDateColor);
+            */
+            lblDate.setBackgroundResource(selected ? R.drawable.mti_bg_lbl_date_selected
+                    : (isToday ? R.drawable.mti_bg_lbl_date_today : 0));
+
+           // lblDate.setTextColor(selected || isToday ? lblDateSelectedColor : lblDateColor);
+
+            if (mapDateTextColor.containsKey(day)) {
+                lblDate.setTextColor(mapDateTextColor.get(day));
+                lblDay.setTextColor(mapDateTextColor.get(day));
+            } else {
+                lblDate.setTextColor(lblDateColor);
+                lblDay.setTextColor(lblDateColor);
+            }
         }
     }
 }

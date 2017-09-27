@@ -7,6 +7,7 @@ import android.content.SyncAdapterType;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -267,8 +268,19 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
                         if (response.body().getItems() != null) {
                             for(CalendarDayShow calendar: response.body().getItems()) {
                                 calendarDayShowHashMap.put(calendar.getDay(), calendar);
+
+                                if(calendar.getStatus().equals("HOLIDAY")) {
+                                    timeline.getTimelineView().addMapDateTextColor(calendar.getDay(), ContextCompat.getColor(StaffCalendarActivity.this, R.color.mti_bg_lbl_date_selected_color_red) );
+                                } else if (calendar.getStatus().equals("CSKH")) {
+                                    timeline.getTimelineView().addMapDateTextColor(calendar.getDay(), ContextCompat.getColor(StaffCalendarActivity.this, R.color.mti_lbl_date));
+                                } else {
+                                    timeline.getTimelineView().addMapDateTextColor(calendar.getDay(), ContextCompat.getColor(StaffCalendarActivity.this, R.color.mti_bg_lbl_date_selected_color_yellow));
+                                }
                             }
                             createTimeLine(response.body().getYear(), response.body().getMonth());
+
+
+
                         } else {
                             timeline.setVisibility(View.GONE);
                             txtTitle.setText("Không có dữ liệu");
