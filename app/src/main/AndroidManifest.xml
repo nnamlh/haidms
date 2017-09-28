@@ -185,6 +185,10 @@
         <activity
             android:name=".showinfo.CheckStaffActivity"
             android:label="@string/title_activity_check_staff"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".calendar.CalendarModifyActivity"
+            android:label="@string/title_activity_calendar_modify"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

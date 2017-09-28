@@ -20,19 +20,16 @@
 
     <item
         android:id="@+id/filter_forcus_action"
-        android:icon="@mipmap/ic_refesh"
         app:showAsAction="never"
         android:title="Sản phẩm bán chạy" />
 
     <item
         android:id="@+id/filter_group_action"
-        android:icon="@mipmap/ic_refesh"
         app:showAsAction="never"
         android:title="Lọc theo nhóm" />
 
     <item
         android:id="@+id/refesh_action"
-        android:icon="@mipmap/ic_refesh"
         app:showAsAction="never"
         android:title="Tải lại danh sách" />
 

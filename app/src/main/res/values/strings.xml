@@ -34,6 +34,7 @@
     <string name="title_activity_notification_detail">Chi tiết</string>
     <string name="title_activity_show_order">ShowOrderActivity</string>
     <string name="title_activity_complete_order">CompleteOrderActivity</string>
-    <string name="title_activity_check_staff">CheckStaffActivity</string>
+    <string name="title_activity_check_staff">Kiểm tra nhân viên HAI</string>
+    <string name="title_activity_calendar_modify">Chỉnh sửa lịch</string>
 
 </resources>

@@ -5,10 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.congtyhai.haidms.calendar.CalendarCreateReviewActivity">
+    tools:context="com.congtyhai.haidms.calendar.CalendarModifyActivity">
 
     <include layout="@layout/toolbar" />
-    <include layout="@layout/content_calendar_create_review" />
-
+    <include layout="@layout/content_calendar_modify" />
 
 </android.support.design.widget.CoordinatorLayout>

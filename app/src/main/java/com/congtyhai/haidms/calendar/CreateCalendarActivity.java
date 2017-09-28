@@ -174,14 +174,14 @@ public class CreateCalendarActivity extends BaseActivity {
     }
 
     private void createListStatus() {
-        CalendarStatusAdapter adapter = new CalendarStatusAdapter(this, HAIRes.getInstance().statusInfos);
+        CalendarStatusAdapter adapter = new CalendarStatusAdapter(this, HAIRes.getInstance().getCalendarStatuses());
         eStatus.setAdapter(adapter);
         eStatus.setSelection(HAIRes.getInstance().findPostitionStatus(HAIRes.getInstance().CALENDAR_CSKH));
 
         eStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String code = HAIRes.getInstance().statusInfos.get(i).id;
+                String code = HAIRes.getInstance().getCalendarStatuses().get(i).id;
                 calendarDayMap.get(daySelect).setStatus(code);
 
                 if(code.equals("HOLIDAY")) {
@@ -356,7 +356,7 @@ public class CreateCalendarActivity extends BaseActivity {
             public void onDateSelected(int year, int month, int day, int index) {
                 daySelect = day;
                 groupSelect = dayGroupAgencyChooseMap.get(daySelect);
-                String statusCode = HAIRes.getInstance().statusInfos.get(eStatus.getSelectedItemPosition()).id;
+                String statusCode = HAIRes.getInstance().getCalendarStatuses().get(eStatus.getSelectedItemPosition()).id;
                 if (!calendarDayMap.get(daySelect).getStatus().equals(statusCode)) {
                     eStatus.setSelection(HAIRes.getInstance().findPostitionStatus(calendarDayMap.get(daySelect).getStatus()));
                 }
@@ -444,7 +444,7 @@ public class CreateCalendarActivity extends BaseActivity {
             List<CalendarAgencyInfo> values = entry.getValue();
             for (CalendarAgencyInfo info : values) {
                 if (info.getDayChoose().size() == 0) {
-                    commons.showAlertInfo(CreateCalendarActivity.this, "Cảnh báo", "Khách hàng : " + info.getDeputy() + " ( " + info.getName() + ") chưa được thăm lần nào trong tháng", new DialogInterface.OnClickListener() {
+                    commons.showAlertInfo(CreateCalendarActivity.this, "Cảnh báo", "Khách hàng : " + info.getDeputy() + " ( " + info.getCode() + " - Cụm " + info.getGroup() + ") chưa được thăm lần nào trong tháng", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -492,7 +492,7 @@ public class CreateCalendarActivity extends BaseActivity {
     }
 
     private CalendarStatus findStatusById(String id) {
-        for (CalendarStatus item : HAIRes.getInstance().statusInfos) {
+        for (CalendarStatus item : HAIRes.getInstance().getCalendarStatuses()) {
             if (item.getId().equals(id))
                 return item;
         }

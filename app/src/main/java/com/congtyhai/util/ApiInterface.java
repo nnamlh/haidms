@@ -8,6 +8,8 @@ import com.congtyhai.model.api.CalendarCheckResult;
 import com.congtyhai.model.api.CalendarCreateSend;
 import com.congtyhai.model.api.CalendarShowResult;
 import com.congtyhai.model.api.CalendarShowSend;
+import com.congtyhai.model.api.CalendarUpdateSend;
+import com.congtyhai.model.api.CheckCalendarUpdateResult;
 import com.congtyhai.model.api.CheckInGetPlanResult;
 import com.congtyhai.model.api.CheckInGetPlanSend;
 import com.congtyhai.model.api.CheckInSend;
@@ -22,7 +24,6 @@ import com.congtyhai.model.api.NotificationInfoResult;
 import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.model.api.ProductDetailResult;
 import com.congtyhai.model.api.ResultInfo;
-import com.congtyhai.model.api.SendBasicInfo;
 
 import java.util.List;
 
@@ -127,9 +128,20 @@ public interface ApiInterface {
             @Query("user") String user,
             @Query("token") String token, @Query("page") int page);
 
+
     @GET("notification/read")
     Call<ResultInfo> readNotification(
             @Query("user") String user,
             @Query("notification") String notification);
 
+
+    @GET("checkin/calendarcheckupdate")
+    Call<CheckCalendarUpdateResult> checkCalendarUpdate(
+            @Query("user") String user,
+            @Query("token") String token,
+            @Query("day") int day, @Query("month") int month, @Query("year") int year);
+
+
+    @POST("checkin/updatecalendar")
+    Call<ResultInfo> updateCalendar(@Body CalendarUpdateSend info);
 }

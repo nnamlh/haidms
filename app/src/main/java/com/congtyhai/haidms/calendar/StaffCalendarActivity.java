@@ -30,11 +30,13 @@ import com.congtyhai.haidateicker.MonthView;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.CalendarCheckResult;
+import com.congtyhai.model.api.CalendarDayCreate;
 import com.congtyhai.model.api.CalendarDayShow;
 import com.congtyhai.model.api.CalendarShowAgency;
 import com.congtyhai.model.api.CalendarShowResult;
 import com.congtyhai.model.api.CalendarShowSend;
 import com.congtyhai.model.api.CalendarShowStatusDetail;
+import com.congtyhai.model.api.CheckCalendarUpdateResult;
 import com.congtyhai.model.app.CheckInFunctionInfo;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.DividerItemDecoration;
@@ -83,8 +85,17 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
     List<CalendarShowAgency> calendarShowAgencies;
     CalendarShowAgencyAdapter adapter;
 
-    DatePickerDialog datePickerDialog;
+    int hasApprove = 0;
 
+    @BindView(R.id.imgedit)
+    ImageView imgEdit;
+
+
+    int daySelect;
+    int monthSelect;
+    int yearSelect;
+
+    int REFESH_CALENDAR = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +121,28 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
         calendar.setTime(date);
         makeRequestShowCalendar(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH) + 1);
 
+        imgEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CalendarDayShow calendarDayShow = calendarDayShowHashMap.get(daySelect);
+
+                if(calendarDayShow != null) {
+                    CalendarDayCreate calendarDayCreate = new CalendarDayCreate();
+                    calendarDayCreate.setAgencies(new ArrayList<String>());
+                    calendarDayCreate.setDay(calendarDayShow.getDay());
+                    calendarDayCreate.setNotes("");
+                    calendarDayCreate.setStatus(calendarDayShow.getStatus());
+                    calendarDayCreate.setAgencies(new ArrayList<String>());
+                    for(CalendarShowAgency item : calendarDayShow.getAgences()) {
+                        calendarDayCreate.getAgencies().add(item.getCode());
+                    }
+                    HAIRes.getInstance().setCalendarDayCreate(calendarDayCreate);
+                    makeCheckUpdate();
+                } else {
+                    commons.makeToast(StaffCalendarActivity.this, "Không thể chỉnh sửa").show();
+                }
+            }
+        });
 
 
     }
@@ -187,7 +220,7 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
     private void makeRequest() {
         showpDialog();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
-        HAIRes.getInstance().statusInfos.clear();
+
         checkInFunctionInfos.clear();
         Call<CalendarCheckResult> call = apiInterface().calendarCheck(user);
         call.enqueue(new Callback<CalendarCheckResult>() {
@@ -206,7 +239,7 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
                        checkInFunctionInfos.add(new CheckInFunctionInfo(item, R.drawable.ic_menu_send, "Tạo lịch " + item, ""));
                    }
 
-                   HAIRes.getInstance().statusInfos.addAll(response.body().getStatus());
+                   HAIRes.getInstance().addListCalendarStatus(response.body().getStatus());
 
                    adapterBottom.notifyDataSetChanged();
                    mBottomSheetDialog.show();
@@ -222,6 +255,52 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
         });
     }
 
+    private void makeCheckUpdate() {
+        showpDialog();
+        String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
+        String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
+
+        Call<CheckCalendarUpdateResult> call = apiInterface().checkCalendarUpdate(user, token, daySelect, monthSelect, yearSelect);
+        call.enqueue(new Callback<CheckCalendarUpdateResult>() {
+            @Override
+            public void onResponse(Call<CheckCalendarUpdateResult> call, Response<CheckCalendarUpdateResult> response) {
+                hidepDialog();
+                if(response.body() != null) {
+                    if (response.body().getId().equals("1")){
+                        HAIRes.getInstance().addListCalendarStatus(response.body().getStatus());
+                        Intent intent = commons.createIntent(StaffCalendarActivity.this, CalendarModifyActivity.class);
+                        intent.putExtra(HAIRes.getInstance().KEY_INTENT_DAY, daySelect);
+                        intent.putExtra(HAIRes.getInstance().KEY_INTENT_MONTH, monthSelect);
+                        intent.putExtra(HAIRes.getInstance().KEY_INTENT_YEAR, yearSelect);
+                        startActivityForResult(intent, REFESH_CALENDAR);
+                    } else {
+                        commons.showAlertInfo(StaffCalendarActivity.this, "Cảnh báo", response.body().getMsg(), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CheckCalendarUpdateResult> call, Throwable t) {
+                hidepDialog();
+            }
+        });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REFESH_CALENDAR) {
+            if (resultCode == RESULT_OK) {
+                makeRequestShowCalendar(yearSelect, monthSelect);
+            } else if (resultCode == RESULT_CANCELED) {
+
+            }
+        }
+    }
 
     private void makeRequestShowCalendar(int year, int month) {
         showpDialog();
@@ -248,10 +327,13 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
                     } else {
                         //
                         String title = "Lịch công tác: " + response.body().getMonth() + "/" + response.body().getYear();
+                        hasApprove = response.body().getHasApprove();
                         if (response.body().getHasApprove() == 1) {
                             title+= " ( đã xác nhận)";
                         } else {
                             title+= " ( chưa xác nhận)";
+                            imgEdit.setVisibility(View.VISIBLE);
+
                         }
                         txtTitle.setText(title);
 
@@ -338,8 +420,11 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
         timeline.setOnDateSelectedListener(new DatePickerTimeline.OnDateSelectedListener() {
             @Override
             public void onDateSelected(int year, int month, int day, int index) {
+                daySelect = day;
+                monthSelect = month + 1;
+                yearSelect = year;
                 CalendarDayShow calendarDayShow = calendarDayShowHashMap.get(day);
-                calendarShowAgencies = new ArrayList<CalendarShowAgency>();
+                calendarShowAgencies.clear();
                 if (calendarDayShow != null) {
                     txtDetail.setText(calendarDayShow.getStatusName());
                     if (calendarDayShow.getAgences() != null) {
@@ -349,8 +434,8 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
                 } else {
                     txtDetail.setText("Không có dữ liệu");
                 }
-                adapter = new CalendarShowAgencyAdapter(calendarShowAgencies);
-                recyclerView.setAdapter(adapter);
+              //  adapter = new CalendarShowAgencyAdapter(calendarShowAgencies);
+              //  recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
         });

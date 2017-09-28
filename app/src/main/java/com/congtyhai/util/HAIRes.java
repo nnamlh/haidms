@@ -2,6 +2,8 @@ package com.congtyhai.util;
 
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.CalendarCreateSend;
+import com.congtyhai.model.api.CalendarDayCreate;
+import com.congtyhai.model.api.CalendarDayShow;
 import com.congtyhai.model.api.CalendarStatus;
 import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.model.api.ProductOrder;
@@ -40,7 +42,12 @@ public class HAIRes {
     public final String KEY_INTENT_TEMP = "temp";
     public final String KEY_INTENT_TEMP2 = "temp2";
     public final String KEY_INTENT_ORDER = "inorder";
+    public final String KEY_INTENT_DAY = "dayselect";
+    public final String KEY_INTENT_MONTH = "monthselect";
+    public final String KEY_INTENT_YEAR = "yearselect";
     public String CurrentAgency ;
+    private CalendarDayCreate calendarDayCreate;
+  //  private List<CalendarStatus> calendarStatuses;
 
   //  public final String baseUrl = "http://192.168.2.170:802/api/";
    // public final String baseUrlUpload = "http://192.168.2.170:801/";
@@ -84,23 +91,32 @@ public class HAIRes {
     public final String PREF_KEY_FUNCTION = "functionlogin";
 
     // data
-    public List<CalendarStatus> statusInfos = new ArrayList<>();
+    private List<CalendarStatus> calendarStatuses = new ArrayList<>();
+    public void addListCalendarStatus(List<CalendarStatus> statuses) {
+        calendarStatuses.clear();
+        calendarStatuses.addAll(statuses);
+    }
+
+    public List<CalendarStatus> getCalendarStatuses() {
+        return this.calendarStatuses;
+    }
+
     public CalendarCreateSend calendarCreateSend = new CalendarCreateSend();
     public AgencyInfo currentAgencySelect = new AgencyInfo();
     public final double LIMIT_DISTANCE = 300;
 
     public String[] GetListStatusName() {
-        String[] statusTemp = new String[statusInfos.size()];
-        for(int i=0; i< statusInfos.size(); i++) {
-            statusTemp[i] = statusInfos.get(i).name;
+        String[] statusTemp = new String[calendarStatuses.size()];
+        for(int i=0; i< calendarStatuses.size(); i++) {
+            statusTemp[i] = calendarStatuses.get(i).name;
         }
 
         return statusTemp;
     }
 
     public int findPostitionStatus(String status) {
-        for(int i=0; i< statusInfos.size(); i++) {
-            if (status.equals(statusInfos.get(i).id)){
+        for(int i=0; i< calendarStatuses.size(); i++) {
+            if (status.equals(calendarStatuses.get(i).id)){
                 return  i;
             }
         }
@@ -109,9 +125,9 @@ public class HAIRes {
     }
 
     public String findStatusName(String status) {
-        for(int i=0; i< statusInfos.size(); i++) {
-            if (status.equals(statusInfos.get(i).id)){
-                return statusInfos.get(i).name;
+        for(int i=0; i< calendarStatuses.size(); i++) {
+            if (status.equals(calendarStatuses.get(i).id)){
+                return calendarStatuses.get(i).name;
             }
         }
 
@@ -238,5 +254,13 @@ public class HAIRes {
         }
 
         return  moneyString + " VND";
+    }
+
+    public CalendarDayCreate getCalendarDayCreate() {
+        return calendarDayCreate;
+    }
+
+    public void setCalendarDayCreate(CalendarDayCreate calendarDayCreate) {
+        this.calendarDayCreate = calendarDayCreate;
     }
 }
