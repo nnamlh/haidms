@@ -12,7 +12,9 @@
     <color name="red">#D50000</color>
     <color name="hover_error">#EF9A9A</color>
     <color name="no_hover_error">#FFFFFF</color>
-    <color name="bggreen">#00B462</color>
+    <color name="bggreen">#33B04A</color>
     <color name="actionbar_opacity">#33000000</color>
     <color name="color_blue">#007DC6</color>
+
+    <color name="event_title">#4c4c4c</color>
 </resources>

@@ -189,6 +189,34 @@
         <activity
             android:name=".calendar.CalendarModifyActivity"
             android:label="@string/title_activity_calendar_modify"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".product.TrackingActivity"
+            android:label="@string/title_activity_tracking"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Event.EventActivity"
+            android:label="@string/title_activity_event"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Event.EventDetailActivity"
+            android:label="@string/title_activity_event_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Event.ProductEventDetailActivity"
+            android:label="@string/title_activity_product_event_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Event.EventSendActivity"
+            android:label="@string/title_activity_event_send"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Event.SendCodeResultActivity"
+            android:label="@string/title_activity_send_code_result"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Event.ScanEventCodeActivity"
+            android:label="@string/title_activity_scan_event_code"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

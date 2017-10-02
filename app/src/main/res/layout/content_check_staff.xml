@@ -17,7 +17,7 @@
             android:layout_height="100dp"
             android:layout_marginTop="1dp"
             android:layout_alignParentTop="true"
-            android:background="@color/bggreen"/>
+            android:background="@color/colorPrimary"/>
 
 
         <ImageView

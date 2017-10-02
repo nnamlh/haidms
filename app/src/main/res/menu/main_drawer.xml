@@ -4,44 +4,39 @@
     <group android:checkableBehavior="none">
         <item
             android:id="@+id/nav_customer"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@mipmap/ic_agency"
             android:title="Danh sách khách hàng" />
         <item
             android:id="@+id/nav_product"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@mipmap/ic_product"
             android:visible="true"
             android:title="Danh sách sản phẩm" />
         <item
             android:id="@+id/nav_staffcalendar"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@mipmap/ic_calendar"
             android:title="Lịch công tác" />
         <item
             android:id="@+id/nav_checkstaff"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@mipmap/ic_checkstaff"
             android:visible="false"
             android:title="Kiểm tra nhân viên" />
         <item
             android:id="@+id/nav_product_manage"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@mipmap/ic_work_manage"
             android:visible="false"
             android:title="Quản lý sản phẩm" />
         <item
             android:id="@+id/nav_promotion"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@mipmap/ic_promotion"
             android:visible="false"
             android:title="Khuyến mãi" />
-        <item
-            android:id="@+id/nav_notice"
-            android:icon="@drawable/ic_menu_manage"
-            android:visible="false"
-            android:title="Thông báo" />
     </group>
 
     <item android:title="Hổ trợ">
         <menu>
             <item
                 android:id="@+id/nav_callcenter"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@mipmap/ic_call"
                 android:title="Giọi tổng đài" />
             <item
                 android:id="@+id/nav_branch"

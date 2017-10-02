@@ -1,6 +1,7 @@
 package com.congtyhai.haidms.showinfo;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,12 +9,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.haidms.Util.SimpleScanActivity;
+import com.congtyhai.haidms.checkin.CheckInActivity;
+import com.congtyhai.model.api.CheckStaffResult;
+import com.congtyhai.util.HAIRes;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CheckStaffActivity extends BaseActivity {
 
@@ -57,11 +66,50 @@ public class CheckStaffActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CheckStaffActivity.this, SimpleScanActivity.class);
-                intent.putExtra("ScreenKey", "staff");
+                intent.putExtra(HAIRes.getInstance().KEY_SCREEN_KEY_SCAN, "staff");
                 startActivityForResult(intent, 1);
             }
         });
     }
+
+    private void makeRequest(String code) {
+        showpDialog();
+        String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
+        String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
+        Call<CheckStaffResult> call = apiInterface().checkStaff(user, token, code);
+        call.enqueue(new Callback<CheckStaffResult>() {
+            @Override
+            public void onResponse(Call<CheckStaffResult> call, Response<CheckStaffResult> response) {
+                hidepDialog();
+
+                if(response.body() != null) {
+                    if (response.body().getId().equals("1")) {
+                        Glide.with(getApplicationContext()).load(response.body().getAvatar())
+                                .thumbnail(0.5f)
+                                .into(staffImage);
+                        Glide.with(getApplicationContext()).load(response.body().getSignature())
+                                .thumbnail(0.5f)
+                                .into(staffSignture);
+                        txtStt.setText(response.body().getStatus());
+                    } else {
+                        commons.showAlertInfo(CheckStaffActivity.this, "Thông báo", response.body().getMsg(), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CheckStaffResult> call, Throwable t) {
+                hidepDialog();
+            }
+        });
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -81,7 +129,7 @@ public class CheckStaffActivity extends BaseActivity {
                         txtBranch.setText(arr[3]);
                         txtAddress.setText(arr[4]);
 
-                        //  makeJsonRequest(HaiSetting.getInstance().USER, HaiSetting.getInstance().TOKEN, staffCode);
+                        makeRequest(staffCode);
 
                     } else {
                         commons.makeToast(getApplicationContext(), "Mã quét không đúng.").show();
@@ -97,5 +145,7 @@ public class CheckStaffActivity extends BaseActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
 
 }

@@ -5,8 +5,11 @@ import com.congtyhai.model.api.CalendarCreateSend;
 import com.congtyhai.model.api.CalendarDayCreate;
 import com.congtyhai.model.api.CalendarDayShow;
 import com.congtyhai.model.api.CalendarStatus;
+import com.congtyhai.model.api.EventProduct;
+import com.congtyhai.model.api.GeneralInfo;
 import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.model.api.ProductOrder;
+import com.congtyhai.model.api.ResultEventInfo;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -45,6 +48,7 @@ public class HAIRes {
     public final String KEY_INTENT_DAY = "dayselect";
     public final String KEY_INTENT_MONTH = "monthselect";
     public final String KEY_INTENT_YEAR = "yearselect";
+    public final String KEY_SCREEN_KEY_SCAN = "ScreenKey";
     public String CurrentAgency ;
     private CalendarDayCreate calendarDayCreate;
   //  private List<CalendarStatus> calendarStatuses;
@@ -262,5 +266,83 @@ public class HAIRes {
 
     public void setCalendarDayCreate(CalendarDayCreate calendarDayCreate) {
         this.calendarDayCreate = calendarDayCreate;
+    }
+
+    // event
+    private List<ResultEventInfo> resultEventInfos;
+    public List<ResultEventInfo> getResultEventInfos() {
+        if (resultEventInfos == null) {
+            resultEventInfos = new ArrayList<>();
+        }
+        return resultEventInfos;
+    }
+
+    public void addListEvent(ResultEventInfo info) {
+
+        if (resultEventInfos == null) {
+            resultEventInfos = new ArrayList<>();
+        }
+        resultEventInfos.add(info);
+
+    }
+
+    public void clearListEvent() {
+        if (resultEventInfos != null) {
+            resultEventInfos = new ArrayList<>();
+        }
+    }
+
+    // procduct event
+    private List<EventProduct> PRODUCTEVENT;
+    public void addListProductEvent(EventProduct eventProduct) {
+        if (PRODUCTEVENT == null) {
+            PRODUCTEVENT = new ArrayList<>();
+        }
+
+        PRODUCTEVENT.add(eventProduct);
+    }
+
+    public List<EventProduct> getListProductEvent() {
+        if (PRODUCTEVENT == null) {
+            PRODUCTEVENT = new ArrayList<>();
+        }
+
+        return PRODUCTEVENT;
+    }
+
+    public void resetListProductEvent() {
+        if (PRODUCTEVENT == null) {
+            PRODUCTEVENT = new ArrayList<>();
+        }
+        PRODUCTEVENT.clear();
+    }
+    //
+    private List<String> EVENTCODES = new ArrayList<>();
+    public List<String> getEVENTCODES() {
+        return this.EVENTCODES;
+    }
+
+    public boolean addToEventCode(String id) {
+
+        if (EVENTCODES.contains(id))
+            return false;
+
+        EVENTCODES.add(id);
+
+        return true;
+    }
+
+    public void resetEventCode() {
+        EVENTCODES.clear();
+    }
+
+    //
+    private List<GeneralInfo> eventCodeResult;
+    public List<GeneralInfo> getEventCodeResult() {
+        return eventCodeResult;
+    }
+
+    public void setEventCodeResult(List<GeneralInfo> eventCodeResult) {
+        this.eventCodeResult = eventCodeResult;
     }
 }

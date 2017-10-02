@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.congtyhai.adapter.TaskAdapter;
 import com.congtyhai.haidms.BaseActivity;
+import com.congtyhai.haidms.Event.EventSendActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.DecorFolder;
 import com.congtyhai.model.app.TaskInfo;
@@ -78,6 +79,12 @@ public class ProductTaskActivity extends BaseActivity {
                         intent= commons.createIntent(ProductTaskActivity.this,ProductManageActivity.class);
                         intent.putExtra("STATUS", HAIRes.getInstance().PRODUCT_HELP_SCAN);
                         break;
+                    case "tracking":
+                        commons.startActivity(ProductTaskActivity.this, TrackingActivity.class);
+                        break;
+                    case "savepoint":
+                        commons.startActivity(ProductTaskActivity.this, EventSendActivity.class);
+
                 }
 
                 if(intent != null) {

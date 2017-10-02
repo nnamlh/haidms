@@ -24,17 +24,24 @@
     <string name="title_activity_show_product">Danh sách sản phẩm</string>
     <string name="title_activity_show_product_detail">Chi tiết</string>
     <string name="title_activity_decor">DecorActivity</string>
-    <string name="title_activity_decor_image">DecorImageActivity</string>
+    <string name="title_activity_decor_image">Chụp hình</string>
     <string name="title_activity_search_results">SearchResultsActivity</string>
     <string name="title_activity_product_task">Quản lý sản phẩm</string>
-    <string name="title_activity_product_manage">ProductManageActivity</string>
+    <string name="title_activity_product_manage">Quản lý sản phẩm</string>
     <string name="title_activity_product_scan">ProductScanActivity</string>
     <string name="title_activity_main_agency">MainAgencyActivity</string>
     <string name="title_activity_notification">Tin nhắn</string>
     <string name="title_activity_notification_detail">Chi tiết</string>
-    <string name="title_activity_show_order">ShowOrderActivity</string>
-    <string name="title_activity_complete_order">CompleteOrderActivity</string>
+    <string name="title_activity_show_order">Đơn hàng</string>
+    <string name="title_activity_complete_order">Đặt hàng</string>
     <string name="title_activity_check_staff">Kiểm tra nhân viên HAI</string>
     <string name="title_activity_calendar_modify">Chỉnh sửa lịch</string>
+    <string name="title_activity_tracking">Hành trình sản phẩm</string>
+    <string name="title_activity_event">Khuyến mãi</string>
+    <string name="title_activity_event_detail">Chi tiết</string>
+    <string name="title_activity_product_event_detail">Sản phẩm tham gia</string>
+    <string name="title_activity_event_send">Tích điểm</string>
+    <string name="title_activity_send_code_result">Kết quả tích điểm</string>
+    <string name="title_activity_scan_event_code">Quét mã khuyến mãi</string>
 
 </resources>

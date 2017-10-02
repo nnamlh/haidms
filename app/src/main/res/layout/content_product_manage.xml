@@ -120,7 +120,7 @@
             android:imeActionId="@+id/input_text"
             android:imeActionLabel="Thêm"
             android:imeOptions="actionUnspecified"
-            android:textAllCaps="true"
+            android:inputType="textCapCharacters"
             android:paddingLeft="5dp" />
 
     </RelativeLayout>

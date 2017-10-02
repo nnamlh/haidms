@@ -11,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -24,7 +22,7 @@ public class TimelineView extends RecyclerView {
 
    // private static final String[] WEEK_DAYS = DateFormatSymbols.getInstance().getWeekdays();
 
-    private static final String[] WEEK_DAYS = {"", "T2", "T3", "T4", "T5", "T6", "T7", "CN"};
+    private static final String[] WEEK_DAYS = {"CN", "T2", "T3", "T4", "T5", "T6", "T7", "CN"};
 
     private HashMap<Integer, Integer> mapDateTextColor;
 
@@ -375,7 +373,7 @@ public class TimelineView extends RecyclerView {
             this.day = day;
 
            // lblDay.setText(WEEK_DAYS[dayOfWeek].toUpperCase(Locale.US));
-            lblDay.setText(WEEK_DAYS[dayOfWeek]);
+            lblDay.setText(WEEK_DAYS[dayOfWeek - 1]);
             lblDate.setText(String.valueOf(day));
             lblValue.setText(label);
 
