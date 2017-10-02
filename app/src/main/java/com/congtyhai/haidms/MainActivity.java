@@ -2,10 +2,13 @@ package com.congtyhai.haidms;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.TextView;
+
 import com.congtyhai.haidms.Agency.ShowAgencyActivity;
 import com.congtyhai.haidms.Event.EventActivity;
 import com.congtyhai.haidms.Util.NotificationActivity;
@@ -52,7 +56,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback{
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
     private GoogleMap mMap;
     BottomSheetDialog mBottomSheetDialog;
@@ -112,14 +116,14 @@ public class MainActivity extends BaseActivity
                             });
                         }
                         setListMainFunction(response.body().getFunction());
+
                         if (needUpdate == 1) {
                             saveListAgency(response.body().getAgencies());
-                          //  saveListReceive(response.body().getRecivers());
                             saveListAgencyC1(response.body().getAgencyc1());
+                            saveListProduct(response.body().getProducts());
+                            saveListProductGroup(response.body().getProductGroups());
                             updateDaily();
                         }
-                        saveListProduct(response.body().getProducts());
-                        saveListProductGroup(response.body().getProductGroups());
 
                         txtName.setText(response.body().getName());
                         txtCode.setText(response.body().getCode());
@@ -241,12 +245,13 @@ public class MainActivity extends BaseActivity
         }
 
         protected void onPostExecute(List<AgencyInfo> result) {
-            for (AgencyInfo info : result) {
-                LatLng me = new LatLng(info.getLat(), info.getLng());
-                mMap.addMarker(new MarkerOptions().position(me).title(info.getDeputy() + " - " + info.getCode()).snippet(info.getName()));
-            }
+           if (result != null){
+               for (AgencyInfo info : result) {
+                   LatLng me = new LatLng(info.getLat(), info.getLng());
+                   mMap.addMarker(new MarkerOptions().position(me).title(info.getDeputy() + " - " + info.getCode()).snippet(info.getName()));
+               }
 
-
+           }
             hidepDialog();
         }
     }
@@ -279,24 +284,30 @@ public class MainActivity extends BaseActivity
             commons.startActivity(MainActivity.this, ShowAgencyActivity.class);
         } else if (id == R.id.nav_staffcalendar) {
             commons.startActivity(MainActivity.this, StaffCalendarActivity.class);
-        } else if (id == R.id.nav_product){
+        } else if (id == R.id.nav_product) {
             HAIRes.getInstance().inOder = 0;
             commons.startActivity(MainActivity.this, ShowProductActivity.class);
-          //  showProductIntent.putExtra(HAIRes.getInstance().KEY_INTENT_ORDER, 0);
-           // startActivity(showProductIntent);
+            //  showProductIntent.putExtra(HAIRes.getInstance().KEY_INTENT_ORDER, 0);
+            // startActivity(showProductIntent);
         } else if (id == R.id.nav_product_manage) {
             commons.startActivity(MainActivity.this, ProductTaskActivity.class);
         } else if (id == R.id.nav_logout) {
-           commons.showAlertCancel(MainActivity.this, "Cảnh báo", "Đăng xuất với tài khoản hiện tại", new DialogInterface.OnClickListener() {
-               @Override
-               public void onClick(DialogInterface dialogInterface, int i) {
-                   logout();
-               }
-           });
+            commons.showAlertCancel(MainActivity.this, "Cảnh báo", "Đăng xuất với tài khoản hiện tại", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    logout();
+                }
+            });
         } else if (id == R.id.nav_checkstaff) {
             commons.startActivity(MainActivity.this, CheckStaffActivity.class);
         } else if (id == R.id.nav_promotion) {
             commons.startActivity(MainActivity.this, EventActivity.class);
+        } else if (id == R.id.nav_callcenter) {
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + HAIRes.getInstance().PHONE_CALL_CENTER));
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                startActivity(intent);
+            }
+
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

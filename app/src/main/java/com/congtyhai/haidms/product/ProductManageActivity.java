@@ -387,10 +387,15 @@ public class ProductManageActivity extends BaseActivity {
 
         protected void onPostExecute(List<ProductCodeInfo> result) {
             hidepDialog();
+            HAIRes.getInstance().clearProductCodeMap();
             if (result == null || result.size() == 0) {
                 productCodeInfos = new ArrayList<>();
             } else {
                 productCodeInfos.addAll(result);
+
+                for(ProductCodeInfo info: productCodeInfos) {
+                    HAIRes.getInstance().addProductCodeMap(info);
+                }
 
             }
 

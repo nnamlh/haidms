@@ -40,11 +40,11 @@
                 android:title="Giọi tổng đài" />
             <item
                 android:id="@+id/nav_branch"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@mipmap/ic_place"
                 android:title="Hệ thống chi nhánh" />
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@mipmap/ic_off"
                 android:title="Đăng xuất" />
         </menu>
     </item>

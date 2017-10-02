@@ -18,7 +18,7 @@
         android:layout_centerVertical="true"
         android:hint="Tên sản phẩm..."
         android:imeActionId="@+id/search"
-        android:background="@drawable/input_login"
+        android:background="@drawable/input_text"
         android:imeActionLabel="Tìm kiếm"
         android:imeOptions="actionUnspecified"
         android:inputType="text"

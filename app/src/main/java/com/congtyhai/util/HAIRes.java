@@ -66,7 +66,7 @@ public class HAIRes {
         }
         return instance;
     }
-
+    public final String PHONE_CALL_CENTER = "02838292805 ";
     // code menu check in
     public final int CHECKIN_CHECK = 1;
     public final int CHECKIN_PICTURE = 2;
@@ -159,7 +159,7 @@ public class HAIRes {
     }
 
     public void addProductCodeMap(ProductCodeInfo info) {
-        productCodeMap.put(info.getCode(), info.getName());
+        productCodeMap.put(info.getBarcode(), info.getName());
     }
     public void addListProduct(String item) {
         if (LIST_PRODUCT == null) {
