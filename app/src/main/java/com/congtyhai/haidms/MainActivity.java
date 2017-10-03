@@ -164,9 +164,13 @@ public class MainActivity extends BaseActivity
                         MenuItem event = menu.findItem(R.id.nav_promotion);
                         event.setVisible(true);
                         break;
-                    case "newfeed":
-                        MenuItem newFeed = menu.findItem(R.id.nav_notice);
-                        newFeed.setVisible(true);
+                    case "listproduct":
+                        MenuItem productlist = menu.findItem(R.id.nav_product);
+                        productlist.setVisible(true);
+                        break;
+                    case "listagency":
+                        MenuItem agency = menu.findItem(R.id.nav_customer);
+                        agency.setVisible(true);
                         break;
                 }
             }

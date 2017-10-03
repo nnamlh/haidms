@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 
+import com.congtyhai.haidms.login.LoginActivity;
 import com.congtyhai.haidms.login.LoginNameActivity;
 import com.congtyhai.model.api.ResultInfo;
 import com.congtyhai.util.HAIRes;
@@ -162,7 +163,7 @@ public class SplashActivity extends BaseActivity {
         }
     }
 
-    private void makeJsonRequest(String user, String token) {
+    private void makeJsonRequest(final String user, final String token) {
 
         PackageInfo pinfo = null;
 
@@ -176,8 +177,15 @@ public class SplashActivity extends BaseActivity {
                 public void onResponse(Call<ResultInfo> call, Response<ResultInfo> response) {
                     if (response.body() != null) {
                         if ("1".equals(response.body().getId())) {
-                            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                            startActivity(intent);
+                            String type = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TYPE, "");
+                            if ("STAFF".equals(type)) {
+                                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                                startActivity(intent);
+
+                            } else {
+                                Intent intent = new Intent(SplashActivity.this, MainAgencyActivity.class);
+                                startActivity(intent);
+                            }
                             finish();
                         } else if ("2".equals(response.body().getId())) {
                             commons.showAlertCancel(SplashActivity.this, "Thông báo", "Cập nhật phiên bản mới", new DialogInterface.OnClickListener() {
@@ -205,7 +213,12 @@ public class SplashActivity extends BaseActivity {
 
                 @Override
                 public void onFailure(Call<ResultInfo> call, Throwable t) {
-
+                    commons.showAlertInfo(SplashActivity.this, "Thông báo", "Thử lại", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            makeJsonRequest(user, token);
+                        }
+                    });
                 }
             });
 

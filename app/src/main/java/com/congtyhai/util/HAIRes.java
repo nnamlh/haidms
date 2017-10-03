@@ -40,6 +40,7 @@ public class HAIRes {
     public final String KEY_USER = "userlogin";
     public final String KEY_TOKEN = "tokenlogin";
     public final String KEY_INTENT_USER = "username";
+    public final String KEY_INTENT_PHONE = "phonenumber";
     public final String KEY_INTENT_CREATE_CALENDAR = "createcalendar";
     public final String KEY_INTENT_AGENCY_CODE = "agencycode";
     public final String KEY_INTENT_TEMP = "temp";
@@ -66,7 +67,7 @@ public class HAIRes {
         }
         return instance;
     }
-    public final String PHONE_CALL_CENTER = "02838292805 ";
+    public final String PHONE_CALL_CENTER = "1800577768";
     // code menu check in
     public final int CHECKIN_CHECK = 1;
     public final int CHECKIN_PICTURE = 2;

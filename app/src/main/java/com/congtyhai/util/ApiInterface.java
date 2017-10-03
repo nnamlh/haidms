@@ -24,6 +24,7 @@ import com.congtyhai.model.api.DecorFolder;
 import com.congtyhai.model.api.DecorImage;
 import com.congtyhai.model.api.DecorImageSend;
 import com.congtyhai.model.api.EventInfoSend;
+import com.congtyhai.model.api.MainAgencyInfoResult;
 import com.congtyhai.model.api.MainInfoResult;
 import com.congtyhai.model.api.MainInfoSend;
 import com.congtyhai.model.api.NotificationInfoResult;
@@ -65,6 +66,9 @@ public interface ApiInterface {
     // main info
     @POST("restmain/maininfo")
     Call<MainInfoResult> updateReg(@Body MainInfoSend info);
+
+    @POST("restmain/mainagencyinfo")
+    Call<MainAgencyInfoResult> mainAgency(@Body MainInfoSend info);
 
     // calendar
     @GET("checkin/calendarcheck")

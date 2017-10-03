@@ -54,7 +54,7 @@ public class LoginNameActivity extends LoginActivity {
 
                 if (response.body() != null) {
                     if (response.body().getId().equals("0")) {
-                        commons.makeToast(LoginNameActivity.this,response.body().getMsg());
+                        commons.makeToast(LoginNameActivity.this,response.body().getMsg()).show();
                     } else if (response.body().getId().equals("1")) {
                         Intent intent = commons.createIntent(LoginNameActivity.this, LoginPassActivity.class);
                         intent.putExtra(HAIRes.getInstance().KEY_INTENT_USER, user);
@@ -63,10 +63,12 @@ public class LoginNameActivity extends LoginActivity {
                     } else if (response.body().getId().equals("2")) {
                         Intent intent = commons.createIntent(LoginNameActivity.this, LoginCodeActivity.class);
                         intent.putExtra(HAIRes.getInstance().KEY_INTENT_USER, user);
+                        intent.putExtra(HAIRes.getInstance().KEY_INTENT_PHONE, response.body().getPhone());
                         startActivity(intent);
                         finish();
                     } else if (response.body().getId().equals("3")) {
                         //
+                        loginSuccess(user, response.body().getToken(), response.body().getType());
 
                     }
                 }
