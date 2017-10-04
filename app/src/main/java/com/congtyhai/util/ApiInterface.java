@@ -5,6 +5,7 @@ import com.congtyhai.model.api.AgencyCreateSend;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.AgencyModifySend;
 import com.congtyhai.model.api.AuthInfo;
+import com.congtyhai.model.api.BranchInfoResult;
 import com.congtyhai.model.api.CalendarCheckResult;
 import com.congtyhai.model.api.CalendarCreateSend;
 import com.congtyhai.model.api.CalendarShowResult;
@@ -193,4 +194,8 @@ public interface ApiInterface {
 
     @POST("event/eventdetail")
     Call<ResultEventDetail> eventDetail(@Body EventInfoSend info);
+
+    //
+    @GET("restmain/getlistbranch")
+    Call<List<BranchInfoResult>> getBranch();
 }

@@ -218,6 +218,10 @@
         <activity
             android:name=".Event.ScanEventCodeActivity"
             android:label="@string/title_activity_scan_event_code"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".showinfo.ShowBranchActivity"
+            android:label="@string/title_activity_show_branch"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

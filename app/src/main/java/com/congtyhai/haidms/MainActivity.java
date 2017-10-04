@@ -25,9 +25,11 @@ import com.congtyhai.haidms.calendar.StaffCalendarActivity;
 import com.congtyhai.haidms.checkin.CheckInActivity;
 import com.congtyhai.haidms.product.ProductTaskActivity;
 import com.congtyhai.haidms.showinfo.CheckStaffActivity;
+import com.congtyhai.haidms.showinfo.ShowBranchActivity;
 import com.congtyhai.haidms.showinfo.ShowProductActivity;
 import com.congtyhai.model.Realm.DTopicFirebase;
 import com.congtyhai.model.api.AgencyInfo;
+import com.congtyhai.model.api.BranchInfoResult;
 import com.congtyhai.model.api.MainInfoResult;
 import com.congtyhai.model.api.MainInfoSend;
 import com.congtyhai.model.app.CheckInFunctionInfo;
@@ -311,7 +313,8 @@ public class MainActivity extends BaseActivity
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                 startActivity(intent);
             }
-
+        } else if (id == R.id.nav_branch) {
+            commons.startActivity(MainActivity.this, ShowBranchActivity.class);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

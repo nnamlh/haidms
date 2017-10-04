@@ -29,6 +29,7 @@ import com.congtyhai.haidms.Util.NotificationActivity;
 import com.congtyhai.haidms.calendar.StaffCalendarActivity;
 import com.congtyhai.haidms.product.ProductTaskActivity;
 import com.congtyhai.haidms.showinfo.CheckStaffActivity;
+import com.congtyhai.haidms.showinfo.ShowBranchActivity;
 import com.congtyhai.haidms.showinfo.ShowProductActivity;
 import com.congtyhai.model.Realm.DTopicFirebase;
 import com.congtyhai.model.api.MainAgencyInfoResult;
@@ -231,6 +232,8 @@ public class MainAgencyActivity extends BaseActivity
                 startActivity(intent);
             }
 
+        }else if (id == R.id.nav_branch) {
+            commons.startActivity(MainAgencyActivity.this, ShowBranchActivity.class);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
