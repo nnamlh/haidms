@@ -338,16 +338,26 @@
         android:inputType="textNoSuggestions"/>
 
 
-    <Button
+    <ImageView
         android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/image"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"/>
+
+    <Button
+        android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
-        android:text="Thêm mới"
+        android:text="Chụp ảnh"
+        android:layout_gravity="center_horizontal"
         android:textColor="@color/white"
         android:textSize="18dp"
+        android:onClick="takeImage"
         android:layout_marginBottom="30dp"
         android:id="@+id/btnAdd"
-        android:background="@drawable/button_login"/>
+        style="@style/Widget.AppCompat.Button.Colored"/>
+
 
 
 </LinearLayout>

@@ -35,6 +35,8 @@ public class AgencyCreateSend {
 
     private double lat ;
 
+    private String image;
+
     public String getName() {
         return name;
     }
@@ -177,5 +179,13 @@ public class AgencyCreateSend {
 
     public void setLat(double lat) {
         this.lat = lat;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

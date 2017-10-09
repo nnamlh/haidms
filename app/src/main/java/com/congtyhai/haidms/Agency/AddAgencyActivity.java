@@ -1,38 +1,59 @@
 package com.congtyhai.haidms.Agency;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.BoolRes;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.AgencyCreateSend;
 import com.congtyhai.model.api.ResultInfo;
 import com.congtyhai.util.HAIRes;
+import com.frosquivel.magicalcamera.MagicalCamera;
+import com.frosquivel.magicalcamera.MagicalPermissions;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -72,9 +93,6 @@ public class AddAgencyActivity extends BaseActivity {
     @BindView(R.id.eward)
     EditText eWard;
 
-    @BindView(R.id.btnAdd)
-    Button btnAdd;
-
     @BindView(R.id.imgSearch)
     ImageView imgSearch;
 
@@ -89,7 +107,8 @@ public class AddAgencyActivity extends BaseActivity {
 
     @BindView(R.id.etax)
     EditText eTax;
-
+    @BindView(R.id.image)
+    ImageView image;
 
     int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
 
@@ -98,6 +117,21 @@ public class AddAgencyActivity extends BaseActivity {
     double lat;
     double lng;
 
+    String[] permissions = new String[]{
+            Manifest.permission.CAMERA,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+    private MagicalPermissions magicalPermissions;
+    MagicalCamera magicalCamera;
+    private int RESIZE_PHOTO_PIXELS_PERCENTAGE = 50;
+
+    String path = "";
+
+    boolean updateImageSuccess = false;
+
+    String imageUpdatePath = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +139,7 @@ public class AddAgencyActivity extends BaseActivity {
         createToolbar();
         ButterKnife.bind(this);
         createLocation();
+        createCamera();
         lat = getCurrentLocation().getLatitude();
         lng = getCurrentLocation().getLongitude();
         new ReadDataTask().execute();
@@ -134,22 +169,52 @@ public class AddAgencyActivity extends BaseActivity {
             }
         });
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                commons.showAlertCancel(AddAgencyActivity.this, "Cảnh báo", "Bạn muốn thêm khách hàng mới ?", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        makeRequest();
-                    }
-                });
-            }
-        });
-
         initERank();
 
     }
+    public void takeImage(View view) {
+        magicalCamera.takePhoto();
+    }
 
+    private void createCamera() {
+        magicalPermissions = new MagicalPermissions(this, permissions);
+
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                //TODO location permissions are granted code here your feature
+                Toast.makeText(getApplicationContext(), "Thanks for granting location permissions", Toast.LENGTH_LONG).show();
+            }
+        };
+        magicalPermissions.askPermissions(runnable);
+
+
+        magicalCamera = new MagicalCamera(this, RESIZE_PHOTO_PIXELS_PERCENTAGE, magicalPermissions);
+
+
+    }
+
+    private void previewMedia(String filePath) {
+        Uri imageUri = Uri.parse(filePath);
+        File file = new File(imageUri.getPath());
+
+        try {
+            InputStream ims = new FileInputStream(file);
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 10;
+
+            final Bitmap bitmap = BitmapFactory.decodeStream(ims, null, options);
+
+            image.setImageBitmap(bitmap);
+            image.setVisibility(View.VISIBLE);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
     private void initERank() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.agency_rank, android.R.layout.simple_spinner_item);
@@ -157,13 +222,11 @@ public class AddAgencyActivity extends BaseActivity {
         eRank.setAdapter(adapter);
     }
 
-    private void makeRequest() {
+    private void makeRequest(String imagePath) {
 
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
 
-        if (!checkRequire())
-            return;
 
         showpDialog();
         AgencyCreateSend info = new AgencyCreateSend();
@@ -186,6 +249,7 @@ public class AddAgencyActivity extends BaseActivity {
         info.setRank(eRank.getSelectedItem().toString());
         info.setPhone(ePhone.getText().toString());
         info.setTaxCode(eTax.getText().toString());
+        info.setImage(imagePath);
 
         Call<ResultInfo> call = apiInterface().createAgencyC2(info);
         call.enqueue(new Callback<ResultInfo>() {
@@ -228,17 +292,17 @@ public class AddAgencyActivity extends BaseActivity {
             eSotre.setError("Không để trống tên cửa hàng");
             return false;
         }
-        /*
+
         if (TextUtils.isEmpty(eGroup.getText().toString())) {
             eGroup.setError("Không để trống cụm khách hàng");
             return false;
         }
-
+        /*
         if (TextUtils.isEmpty(eC1.getText().toString())) {
             eC1.setError("Không để trống cấp 1");
             return false;
         }
-*/
+        */
         if (TextUtils.isEmpty(ePhone.getText().toString())) {
             ePhone.setError( "Không để trống số điện thoại");
             return false;
@@ -312,9 +376,7 @@ public class AddAgencyActivity extends BaseActivity {
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.
             }
-        }
-
-        if (requestCode == C1_CODE) {
+        } else if (requestCode == C1_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 String result = data.getStringExtra("result");
                 eC1.setText(result);
@@ -322,6 +384,125 @@ public class AddAgencyActivity extends BaseActivity {
             if (resultCode == Activity.RESULT_CANCELED) {
 
             }
+        } else {
+            //CALL THIS METHOD EVER
+            magicalCamera.resultPhoto(requestCode, resultCode, data);
+            File mediaStorageDir = new File(
+                    Environment
+                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),
+                    "NDH");
+            // Create the storage directory if it does not exist
+            if (!mediaStorageDir.exists()) {
+                if (!mediaStorageDir.mkdirs()) {
+
+                }
+            }
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                    Locale.getDefault()).format(new Date());
+            path = magicalCamera.savePhotoInMemoryDevice(magicalCamera.getPhoto(), timeStamp, "NONGDUOCHAI", MagicalCamera.JPEG, true);
+
+
+            previewMedia(path);
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_next, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.next_action:
+
+                if (checkRequire())
+                {
+                    commons.showAlertCancel(AddAgencyActivity.this, "Cảnh báo", "Bạn muốn thêm khách hàng mới ?", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            if (updateImageSuccess) {
+                                makeRequest(imageUpdatePath);
+                            } else {
+                                if (!TextUtils.isEmpty(path)){
+                                    uploadImage(path);
+                                } else {
+                                    commons.makeToast(AddAgencyActivity.this, "Chụp ảnh").show();
+                                }
+                            }
+                        }
+                    });
+                }
+
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void uploadImage(String filePath) {
+
+        showpDialog();
+        String muser = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
+        String mtoken = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
+        File sourceFile = null;
+        RequestBody requestFile = null;
+        MultipartBody.Part body = null;
+        if (filePath != null) {
+            Uri imageUri = Uri.parse(filePath);
+            sourceFile = new File(imageUri.getPath());
+
+            requestFile =
+                    RequestBody.create(MediaType.parse("multipart/form-data"), sourceFile);
+            body =
+                    MultipartBody.Part.createFormData("image", sourceFile.getName(), requestFile);
+
+        }
+
+        RequestBody user =
+                RequestBody.create(
+                        MediaType.parse("text/plain"), muser);
+
+        RequestBody token =
+                RequestBody.create(
+                        MediaType.parse("text/plain"), mtoken);
+
+        RequestBody extension =
+                RequestBody.create(
+                        MediaType.parse("text/plain"), ".jpg");
+
+        RequestBody folder =
+                RequestBody.create(
+                        MediaType.parse("text/plain"), "1");
+
+
+        Call<ResultInfo> call = apiInterfaceUpload().uploadImage2(body, user, token, extension, folder);
+
+        call.enqueue(new Callback<ResultInfo>() {
+            @Override
+            public void onResponse(Call<ResultInfo> call, Response<ResultInfo> response) {
+                hidepDialog();
+                if (response.body() != null) {
+                    if (response.body().getId().equals("1")) {
+                        imageUpdatePath = response.body().getMsg();
+                        updateImageSuccess = true;
+                        makeRequest(response.body().getMsg());
+                    } else {
+                        Toast.makeText(AddAgencyActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultInfo> call, Throwable t) {
+                hidepDialog();
+            }
+        });
+
+    }
+
 }

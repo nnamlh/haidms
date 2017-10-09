@@ -94,6 +94,8 @@ public class ShowAgencyDetailActivity extends BaseActivity {
 
     boolean isUpdate = false;
 
+    int SHOW_UPDATE_LOCATION = 1000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -315,6 +317,16 @@ public class ShowAgencyDetailActivity extends BaseActivity {
                 // The user canceled the operation.
             }
         }
+
+        if (requestCode == SHOW_UPDATE_LOCATION) {
+            if (resultCode == RESULT_OK) {
+                MenuItem menuItem = menu.findItem(R.id.location_action);
+                menuItem.setVisible(false);
+                isUpdate = true;
+            }else if (resultCode == RESULT_CANCELED) {
+
+            }
+        }
     }
 
     @Override
@@ -336,7 +348,10 @@ public class ShowAgencyDetailActivity extends BaseActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.location_action:
-                makeRequest(true);
+              //  makeRequest(true);
+                Intent intent = commons.createIntent(ShowAgencyDetailActivity.this, AgencyUpdateLocationActivity.class);
+                intent.putExtra(HAIRes.getInstance().KEY_INTENT_AGENCY_CODE, HAIRes.getInstance().currentAgencySelect.getId());
+                startActivityForResult(intent, SHOW_UPDATE_LOCATION);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -4,6 +4,7 @@ import com.congtyhai.model.api.AgencyC1Info;
 import com.congtyhai.model.api.AgencyCreateSend;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.AgencyModifySend;
+import com.congtyhai.model.api.AgencyUpdateLocationSend;
 import com.congtyhai.model.api.AuthInfo;
 import com.congtyhai.model.api.BranchInfoResult;
 import com.congtyhai.model.api.CalendarCheckResult;
@@ -132,6 +133,14 @@ public interface ApiInterface {
     @Multipart
     @POST("upload/decor")
     Call<ResultInfo> uploadImage(@Part MultipartBody.Part file, @Part("user") RequestBody user, @Part("token") RequestBody token, @Part("extension") RequestBody extension, @Part("agency") RequestBody agency,@Part("group") RequestBody group, @Part("lat") RequestBody lat, @Part("lng") RequestBody lng);
+
+    // agecy
+    @Multipart
+    @POST("upload/uploadimage")
+    Call<ResultInfo> uploadImage2(@Part MultipartBody.Part file, @Part("user") RequestBody user, @Part("token") RequestBody token, @Part("extension") RequestBody extension, @Part("folder") RequestBody folder);
+
+    @POST("agency/updatelocation")
+    Call<ResultInfo> updateAgencyLocation(@Body AgencyUpdateLocationSend info);
 
     //product
     @GET("product/getproducttask")

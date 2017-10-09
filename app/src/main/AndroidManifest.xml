@@ -222,6 +222,10 @@
         <activity
             android:name=".showinfo.ShowBranchActivity"
             android:label="@string/title_activity_show_branch"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Agency.AgencyUpdateLocationActivity"
+            android:label="@string/title_activity_agency_update_location"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

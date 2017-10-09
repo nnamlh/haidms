@@ -22,10 +22,11 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
+        android:onClick="orderClick"
         android:background="@drawable/btn_non_radius"
         android:fontFamily="sans-serif-light"
         android:textStyle="bold"
-        android:text="TIẾN HÀNH THANH TOÁN"
+        android:text="TIẾN HÀNH ĐẶT HÀNG"
         android:textColor="#fff" />
 
 
@@ -61,7 +62,6 @@
             android:text="29.000.000 VND"
             android:textColor="#000"
             android:textSize="14dp" />
-
 
         <TextView
             android:layout_width="wrap_content"

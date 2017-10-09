@@ -44,5 +44,7 @@
     <string name="title_activity_send_code_result">Kết quả tích điểm</string>
     <string name="title_activity_scan_event_code">Quét mã khuyến mãi</string>
     <string name="title_activity_show_branch">Hệ thống chi nhánh</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_agency_update_location">Cập nhật tọa độ</string>
 
 </resources>

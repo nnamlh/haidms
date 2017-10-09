@@ -16,7 +16,6 @@ import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.ProductOrder;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.DividerItemDecoration;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -112,5 +111,9 @@ public class ShowOrderActivity extends BaseActivity {
             price+= order.getPrice() * order.getQuantity();
         }
         txtMoney.setText(HAIRes.getInstance().formatMoneyToText(price));
+    }
+
+    public void orderClick(View view) {
+        commons.startActivity(ShowOrderActivity.this, CompleteOrderActivity.class);
     }
 }
