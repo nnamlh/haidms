@@ -1,84 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:background="#fff">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Khách hàng"
-        android:textSize="12dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:id="@+id/name"
-        android:text="Le Hoai Nam"
-        android:textSize="14dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="Cửa hàng"
-        android:textSize="12dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:text="HAI"
-        android:id="@+id/store"
-        android:textSize="14dp" />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="Điện thoại"
-        android:textSize="12dp"/>
-
-    <EditText
+    <Button
+        android:id="@+id/btncontinue"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textColor="@color/cardview_dark_background"
-        android:maxLines="1"
-        android:id="@+id/phone"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_non_radius"
         android:fontFamily="sans-serif-light"
-        android:inputType="textNoSuggestions"/>
+        android:text="HOÀN THÀNH"
+        android:textColor="#fff"
+        android:textStyle="bold" />
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="Địa chỉ"
-        android:textSize="12dp"/>
-
-    <EditText
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textColor="@color/cardview_dark_background"
-        android:maxLines="1"
-        android:id="@+id/address"
-        android:fontFamily="sans-serif-light"
-        android:inputType="textNoSuggestions"/>
+        android:layout_height="match_parent"
+        android:layout_above="@id/btncontinue"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Khách hàng"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="Le Hoai Nam"
+                android:textColor="#000000"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Cửa hàng"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/store"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="HAI"
+                android:textColor="#000000"
+                android:textSize="14dp"
+                android:textStyle="bold" />
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="Hình thức"
-        android:textSize="12dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Điện thoại"
+                android:textSize="12dp" />
+
+            <EditText
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:fontFamily="sans-serif-light"
+                android:inputType="textNoSuggestions"
+                android:maxLines="1"
+                android:textColor="@color/cardview_dark_background" />
 
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Địa chỉ"
+                android:textSize="12dp" />
 
-</LinearLayout>
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:fontFamily="sans-serif-light"
+                android:inputType="textNoSuggestions"
+                android:maxLines="1"
+                android:textColor="@color/cardview_dark_background" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Hình thức thanh toán"
+                android:textSize="12dp" />
+
+            <RadioGroup
+                android:id="@+id/paytype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Phương thức giao hàng"
+                android:textSize="12dp" />
+
+            <RadioGroup
+                android:id="@+id/shiptype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Ngày đề nghị giao hàng"
+                android:textSize="12dp" />
+
+            <EditText
+                android:id="@+id/suggestdate"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:fontFamily="sans-serif-light"
+                android:inputType="textNoSuggestions"
+                android:maxLines="1"
+                android:textColor="@color/cardview_dark_background" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Ghi chú"
+                android:textSize="12dp" />
+
+            <EditText
+                android:id="@+id/notes"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:fontFamily="sans-serif-light"
+                android:inputType="textNoSuggestions"
+                android:textColor="@color/cardview_dark_background" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

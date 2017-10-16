@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.AgencyInfo;
@@ -18,10 +19,12 @@ import com.congtyhai.model.app.CheckInAgencyInfo;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.CheckInOtherFragment;
 import com.congtyhai.view.CheckInPlanFragment;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,9 +33,9 @@ public class CheckInActivity extends BaseActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private List<String> inPlans ;
+    private List<String> inPlans;
     private List<String> outPlans;
-    private List<AgencyInfo> agencyInfos ;
+    private List<AgencyInfo> agencyInfos;
     int SHOW_TASK = 1;
 
     @Override
@@ -73,7 +76,7 @@ public class CheckInActivity extends BaseActivity {
                 if (response.body() != null) {
                     inPlans.clear();
                     outPlans.clear();
-                    if(response.body().getId().equals("0")) {
+                    if (response.body().getId().equals("0")) {
                         commons.showAlertInfo(CheckInActivity.this, "Cảnh báo", response.body().getMsg(), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -161,6 +164,7 @@ public class CheckInActivity extends BaseActivity {
             }
         });
     }
+
     private class ReadDataTask extends AsyncTask<String, Integer, List<AgencyInfo>> {
         protected List<AgencyInfo> doInBackground(String... urls) {
 
@@ -195,8 +199,8 @@ public class CheckInActivity extends BaseActivity {
     public List<CheckInAgencyInfo> getListCheckInPlan() {
         List<CheckInAgencyInfo> checkInAgencyInfos = new ArrayList<>();
         double lat = getCurrentLocation().getLatitude();
-        double lng =  getCurrentLocation().getLongitude();
-        for(String item : inPlans) {
+        double lng = getCurrentLocation().getLongitude();
+        for (String item : inPlans) {
             AgencyInfo info = findAgency(item);
             if (info != null) {
                 CheckInAgencyInfo checkInAgencyInfo = new CheckInAgencyInfo();
@@ -215,15 +219,15 @@ public class CheckInActivity extends BaseActivity {
     public List<CheckInAgencyInfo> getListCheckOutPlan() {
         List<CheckInAgencyInfo> checkInAgencyInfos = new ArrayList<>();
         double lat = getCurrentLocation().getLatitude();
-        double lng =  getCurrentLocation().getLongitude();
-        for(AgencyInfo item : agencyInfos) {
+        double lng = getCurrentLocation().getLongitude();
+        for (AgencyInfo item : agencyInfos) {
 
             if (!outPlans.contains(item.getCode())) {
                 CheckInAgencyInfo checkInAgencyInfo = new CheckInAgencyInfo();
                 checkInAgencyInfo.setDeputy(item.getDeputy());
                 checkInAgencyInfo.setCode(item.getCode());
                 checkInAgencyInfo.setName(item.getName());
-                float distabce = commons.distance(lat,lng, item.getLat(), item.getLng());
+                float distabce = commons.distance(lat, lng, item.getLat(), item.getLng());
                 checkInAgencyInfo.setDistance(distabce);
 
                 checkInAgencyInfos.add(checkInAgencyInfo);
@@ -233,7 +237,7 @@ public class CheckInActivity extends BaseActivity {
         return checkInAgencyInfos;
     }
 
-    public AgencyInfo findAgency(String code){
+    public AgencyInfo findAgency(String code) {
         for (AgencyInfo agency : agencyInfos) {
             if (agency.getCode().equals(code))
                 return agency;
@@ -283,9 +287,6 @@ public class CheckInActivity extends BaseActivity {
             return mFragmentTitleList.get(position);
         }
     }
-
-
-
 
 
 }

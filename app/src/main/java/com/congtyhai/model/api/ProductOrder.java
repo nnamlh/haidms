@@ -5,6 +5,7 @@ package com.congtyhai.model.api;
  */
 
 public class ProductOrder {
+    private String id;
     private String code;
     private int quantity;
     private double price;
@@ -13,6 +14,8 @@ public class ProductOrder {
     private String image;
     private String group;
     private String name;
+    private String c1Code;
+    private String c1Name;
 
     public String getCode() {
         return code;
@@ -76,5 +79,29 @@ public class ProductOrder {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getC1Code() {
+        return c1Code;
+    }
+
+    public void setC1Code(String c1Code) {
+        this.c1Code = c1Code;
+    }
+
+    public String getC1Name() {
+        return c1Name;
+    }
+
+    public void setC1Name(String c1Name) {
+        this.c1Name = c1Name;
     }
 }

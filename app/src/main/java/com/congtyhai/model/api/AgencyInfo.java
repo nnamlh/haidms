@@ -2,6 +2,8 @@ package com.congtyhai.model.api;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by HAI on 8/22/2017.
  */
@@ -61,6 +63,9 @@ public class AgencyInfo {
 
     @SerializedName("country")
     private String country;
+
+    @SerializedName("c1")
+    private List<AgencyC2C1> c1;
 
     public String getTaxCode() {
         return taxCode;
@@ -212,5 +217,13 @@ public class AgencyInfo {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public List<AgencyC2C1> getC1() {
+        return c1;
+    }
+
+    public void setC1(List<AgencyC2C1> c1) {
+        this.c1 = c1;
     }
 }

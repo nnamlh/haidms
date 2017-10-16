@@ -276,7 +276,9 @@ public class BaseActivity extends AppCompatActivity {
                 }.getType();
                 List<AgencyInfo> agencyInfos = gson.fromJson(reader, listType);
 
-                return agencyInfos;
+                if(agencyInfos != null) {
+                    return agencyInfos;
+                }
             }
 
         } catch (Exception e) {
@@ -297,7 +299,8 @@ public class BaseActivity extends AppCompatActivity {
                 }.getType();
                 List<GroupResultInfo> groups = gson.fromJson(reader, listType);
 
-                return groups;
+               if (groups != null)
+                   return groups;
             }
 
         } catch (Exception e) {
@@ -317,7 +320,8 @@ public class BaseActivity extends AppCompatActivity {
                 }.getType();
                 List<ProductCodeInfo> groups = gson.fromJson(reader, listType);
 
-                return groups;
+                if(groups != null)
+                    return groups;
             }
 
         } catch (Exception e) {
@@ -338,7 +342,8 @@ public class BaseActivity extends AppCompatActivity {
                 }.getType();
                 List<AgencyC1Info> agencyInfos = gson.fromJson(reader, listType);
 
-                return agencyInfos;
+                if(agencyInfos != null)
+                    return agencyInfos;
             }
 
         } catch (Exception e) {

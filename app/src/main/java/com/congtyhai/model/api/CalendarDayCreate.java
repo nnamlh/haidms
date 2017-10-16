@@ -10,6 +10,8 @@ public class CalendarDayCreate {
 
     private int day;
 
+    private String dayInWeek;
+
     private List<String> agencies;
 
     private String status;
@@ -48,4 +50,11 @@ public class CalendarDayCreate {
         this.notes = notes;
     }
 
+    public String getDayInWeek() {
+        return dayInWeek;
+    }
+
+    public void setDayInWeek(String dayInWeek) {
+        this.dayInWeek = dayInWeek;
+    }
 }

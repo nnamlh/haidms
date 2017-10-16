@@ -90,6 +90,15 @@ public class ProductOrderAdapter  extends RecyclerView.Adapter<ProductOrderAdapt
                 activity.startActivity(intent);
             }
         });
+
+        holder.c1Name.setText("Nơi bán hàng: " + order.getC1Name() + " - " + order.getC1Code());
+
+        holder.c1Name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.changeC1(position);
+            }
+        });
     }
 
     private String getOrderDetailText(int box, int quantity, String unit) {
@@ -114,7 +123,7 @@ public class ProductOrderAdapter  extends RecyclerView.Adapter<ProductOrderAdapt
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, group, detail, price;
+        public TextView name, group, detail, price, c1Name;
         public ImageView image, imgDelete, imgEdit;
 
         public MyViewHolder(View view) {
@@ -126,7 +135,7 @@ public class ProductOrderAdapter  extends RecyclerView.Adapter<ProductOrderAdapt
             imgDelete = (ImageView) view.findViewById(R.id.imgdelete);
             price = (TextView) view.findViewById(R.id.price);
             imgEdit  = (ImageView) view.findViewById(R.id.imgedit);
-
+            c1Name = (TextView) view.findViewById(R.id.c1name);
         }
     }
 }

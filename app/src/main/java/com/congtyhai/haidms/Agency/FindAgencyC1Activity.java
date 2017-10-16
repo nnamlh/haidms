@@ -62,6 +62,7 @@ public class FindAgencyC1Activity extends BaseActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent returnIntent = new Intent();
                         returnIntent.putExtra("result", info.getCode());
+                        returnIntent.putExtra("name", info.getName());
                         setResult(Activity.RESULT_OK,returnIntent);
                         finish();
                     }

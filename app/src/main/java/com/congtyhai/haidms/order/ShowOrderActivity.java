@@ -1,6 +1,8 @@
 package com.congtyhai.haidms.order;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,6 +13,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.congtyhai.adapter.ProductOrderAdapter;
+import com.congtyhai.haidms.Agency.AddAgencyActivity;
+import com.congtyhai.haidms.Agency.FindAgencyC1Activity;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.ProductOrder;
@@ -29,6 +33,10 @@ public class ShowOrderActivity extends BaseActivity {
     TextView txtMoney;
 
     String agencyCode;
+
+    int C1_CODE = 2;
+
+    int indexSelect = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +107,11 @@ public class ShowOrderActivity extends BaseActivity {
         builder.show();
     }
 
+    public void changeC1(int position) {
+        indexSelect = position;
+
+
+    }
 
     public void notifyAdapter() {
         adapter.notifyDataSetChanged();
@@ -116,4 +129,21 @@ public class ShowOrderActivity extends BaseActivity {
     public void orderClick(View view) {
         commons.startActivity(ShowOrderActivity.this, CompleteOrderActivity.class);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == C1_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                String code = data.getStringExtra("result");
+                String name = data.getStringExtra("name");
+
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+
+            }
+        }
+    }
+
+
+
 }

@@ -121,12 +121,11 @@ public class MainActivity extends BaseActivity
 
                         if (needUpdate == 1) {
                             saveListAgency(response.body().getAgencies());
-                            saveListAgencyC1(response.body().getAgencyc1());
                             saveListProduct(response.body().getProducts());
                             saveListProductGroup(response.body().getProductGroups());
                             updateDaily();
                         }
-
+                        saveListAgencyC1(response.body().getAgencyc1());
                         txtName.setText(response.body().getName());
                         txtCode.setText(response.body().getCode());
                         txtType.setText(response.body().getType());
@@ -251,7 +250,9 @@ public class MainActivity extends BaseActivity
         }
 
         protected void onPostExecute(List<AgencyInfo> result) {
+
            if (result != null){
+
                for (AgencyInfo info : result) {
                    LatLng me = new LatLng(info.getLat(), info.getLng());
                    mMap.addMarker(new MarkerOptions().position(me).title(info.getDeputy() + " - " + info.getCode()).snippet(info.getName()));

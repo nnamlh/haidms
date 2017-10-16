@@ -1,5 +1,9 @@
 package com.congtyhai.model.app;
 
+import com.congtyhai.model.api.AgencyC2C1;
+
+import java.util.List;
+
 /**
  * Created by HAI on 8/25/2017.
  */
@@ -46,7 +50,4 @@ public class CheckInAgencyInfo {
     public CheckInAgencyInfo() {
 
     }
-
-
-
 }

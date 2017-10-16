@@ -10,6 +10,7 @@ import com.congtyhai.model.api.GeneralInfo;
 import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.model.api.ProductOrder;
 import com.congtyhai.model.api.ResultEventInfo;
+import com.congtyhai.model.app.CheckInAgencyInfo;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -54,10 +55,10 @@ public class HAIRes {
     private CalendarDayCreate calendarDayCreate;
   //  private List<CalendarStatus> calendarStatuses;
 
-  //  public final String baseUrl = "http://192.168.2.170:802/api/";
-   // public final String baseUrlUpload = "http://192.168.2.170:801/";
-  public final String baseUrl = "http://dmsapi.nongduochai.vn/api/";
-    public final String baseUrlUpload = "http://dms.nongduochai.vn/";
+    public final String baseUrl = "http://192.168.2.170:802/api/";
+    public final String baseUrlUpload = "http://192.168.2.170:801/";
+    //public final String baseUrl = "http://dmsapi.nongduochai.vn/api/";
+    //public final String baseUrlUpload = "http://dms.nongduochai.vn/";
 
     private static HAIRes instance = null;
 
