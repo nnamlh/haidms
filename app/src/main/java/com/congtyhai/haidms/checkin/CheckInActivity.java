@@ -15,6 +15,7 @@ import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.CheckInGetPlanResult;
 import com.congtyhai.model.api.CheckInGetPlanSend;
+import com.congtyhai.model.app.C2Info;
 import com.congtyhai.model.app.CheckInAgencyInfo;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.CheckInOtherFragment;
@@ -114,52 +115,23 @@ public class CheckInActivity extends BaseActivity {
         }
     }
 
-/*
-    public void makeUpdate(String code, long distance, final int inPlan, final HaiActionInterface action) {
-        showpDialog();
-        String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
-        String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
-        CheckInSend checkInSend = new CheckInSend();
-        checkInSend.setCode(code);
-        checkInSend.setUser(user);
-        checkInSend.setToken(token);
-        checkInSend.setDistance(distance);
-        checkInSend.setInPlan(inPlan);
-        checkInSend.setLat(getCurrentLocation().getLatitude());
-        checkInSend.setLng(getCurrentLocation().getLongitude());
-
-        Call<CheckInResult> call = apiInterface().checkIn(checkInSend);
-        call.enqueue(new Callback<CheckInResult>() {
-            @Override
-            public void onResponse(Call<CheckInResult> call, Response<CheckInResult> response) {
-                if (response.body() != null) {
-                    if (inPlan == 1) {
-                        inPlans = response.body().getNewplan();
-                    } else {
-                        outPlans = response.body().getNewplan();
-                    }
-                    commons.makeToast(CheckInActivity.this, "Đã check in");
-                }
-                action.onResult();
-                hidepDialog();
-            }
-
-            @Override
-            public void onFailure(Call<CheckInResult> call, Throwable t) {
-                hidepDialog();
-            }
-        });
-
-    }
-*/
-
-    public void makeTask(final String agencyCode, final float distance) {
-        commons.showAlertCancel(CheckInActivity.this, "Thông báo", "Bạn muốn ghé thăm khách hàng: " + agencyCode, new DialogInterface.OnClickListener() {
+    public void makeTask(final CheckInAgencyInfo info) {
+        commons.showAlertCancel(CheckInActivity.this, "Thông báo", "Bạn muốn ghé thăm khách hàng: " + info.getName() + " - " + info.getCode(), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = commons.createIntent(CheckInActivity.this, CheckInTaskActivity.class);
-                intent.putExtra(HAIRes.getInstance().KEY_INTENT_AGENCY_CODE, agencyCode);
-                intent.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, distance);
+                intent.putExtra(HAIRes.getInstance().KEY_INTENT_AGENCY_CODE, info.getCode());
+                intent.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, info.getDistance());
+
+                // save aency
+                C2Info c2Info = new C2Info();
+                c2Info.setCode(info.getCode());
+                c2Info.setDeputy(info.getDeputy());
+                c2Info.setStore(info.getName());
+                c2Info.setC1(info.getC1());
+
+                HAIRes.getInstance().c2Select = c2Info;
+
                 startActivityForResult(intent, SHOW_TASK);
             }
         });
@@ -207,6 +179,7 @@ public class CheckInActivity extends BaseActivity {
                 checkInAgencyInfo.setDeputy(info.getDeputy());
                 checkInAgencyInfo.setCode(info.getCode());
                 checkInAgencyInfo.setName(info.getName());
+                checkInAgencyInfo.setC1(info.getC1());
                 float distabce = commons.distance(lat, lng, info.getLat(), info.getLng());
                 checkInAgencyInfo.setDistance(distabce);
 
@@ -227,6 +200,7 @@ public class CheckInActivity extends BaseActivity {
                 checkInAgencyInfo.setDeputy(item.getDeputy());
                 checkInAgencyInfo.setCode(item.getCode());
                 checkInAgencyInfo.setName(item.getName());
+                checkInAgencyInfo.setC1(item.getC1());
                 float distabce = commons.distance(lat, lng, item.getLat(), item.getLng());
                 checkInAgencyInfo.setDistance(distabce);
 

@@ -58,7 +58,7 @@ public class CheckInPlanFragment extends Fragment {
                 if (info.getDistance() > HAIRes.getInstance().LIMIT_DISTANCE) {
                     Toast.makeText(activity, "Chưa thể checkin", Toast.LENGTH_LONG).show();
                 } else {
-                    activity.makeTask(info.getCode(), info.getDistance());
+                    activity.makeTask(info);
                 }
             }
 

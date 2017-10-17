@@ -87,12 +87,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/detail"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/image"
         android:fontFamily="sans-serif-light"
-        android:text="Nơi lấy hàng: Đại lý viễn thông A1 - 1AGG34878"
+        android:text="NƠI BÁN: Đại lý viễn thông A1 - 1AGG34878"
         android:id="@+id/c1name"
-        android:textStyle="bold"
         android:textColor="#000000"
         android:textSize="16dp" />
 

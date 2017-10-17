@@ -14,6 +14,7 @@ public class CheckInAgencyInfo {
     private String name;
     private String deputy;
     private float distance;
+    private List<AgencyC2C1> c1;
 
     public String getCode() {
         return code;
@@ -49,5 +50,13 @@ public class CheckInAgencyInfo {
 
     public CheckInAgencyInfo() {
 
+    }
+
+    public List<AgencyC2C1> getC1() {
+        return c1;
+    }
+
+    public void setC1(List<AgencyC2C1> c1) {
+        this.c1 = c1;
     }
 }

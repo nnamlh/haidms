@@ -80,6 +80,8 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
                     productOrder.setUnit(productCodeInfo.getUnit());
                     productOrder.setName(productCodeInfo.getName());
                     productOrder.setGroup(productCodeInfo.getGroupName());
+                    productOrder.setC1Code(HAIRes.getInstance().c2Select.chooseC1().getCode());
+                    productOrder.setC1Name(HAIRes.getInstance().c2Select.chooseC1().getStore());
                     HAIRes.getInstance().addProductOrder(productOrder);
                     activity.notifyAdapterProduct();
                     activity.resetCountOder();

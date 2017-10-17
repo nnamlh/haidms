@@ -91,7 +91,7 @@ public class ProductOrderAdapter  extends RecyclerView.Adapter<ProductOrderAdapt
             }
         });
 
-        holder.c1Name.setText("Nơi bán hàng: " + order.getC1Name() + " - " + order.getC1Code());
+        holder.c1Name.setText("NƠI BÁN: " + order.getC1Name() + " - " + order.getC1Code());
 
         holder.c1Name.setOnClickListener(new View.OnClickListener() {
             @Override

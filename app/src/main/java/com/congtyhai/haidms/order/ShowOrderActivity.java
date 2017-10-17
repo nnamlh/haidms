@@ -10,13 +10,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.congtyhai.adapter.OrderShowC1Adaper;
 import com.congtyhai.adapter.ProductOrderAdapter;
 import com.congtyhai.haidms.Agency.AddAgencyActivity;
 import com.congtyhai.haidms.Agency.FindAgencyC1Activity;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
+import com.congtyhai.haidms.showinfo.ShowProductActivity;
+import com.congtyhai.model.api.AgencyC2C1;
+import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.model.api.ProductOrder;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.DividerItemDecoration;
@@ -38,6 +44,8 @@ public class ShowOrderActivity extends BaseActivity {
 
     int indexSelect = -1;
 
+    AlertDialog.Builder c1Dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,8 +65,37 @@ public class ShowOrderActivity extends BaseActivity {
         recyclerView.setAdapter(adapter);
 
         resetMoneyAll();
+        createDialogC1();
 
     }
+
+
+    private void createDialogC1() {
+        c1Dialog = new AlertDialog.Builder(ShowOrderActivity.this);
+        c1Dialog.setIcon(R.mipmap.ic_logo);
+        c1Dialog.setTitle("Chọn nơi bán");
+        final OrderShowC1Adaper arrayAdapter = new OrderShowC1Adaper(ShowOrderActivity.this);
+        c1Dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        c1Dialog.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                AgencyC2C1 agencyC2C1 = HAIRes.getInstance().c2Select.findC1(which);
+                HAIRes.getInstance().getProductOrder().get(indexSelect).setC1Name(agencyC2C1.getStore());
+                HAIRes.getInstance().getProductOrder().get(indexSelect).setC1Code(agencyC2C1.getCode());
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+
+
+    }
+
 
     public void changeQuantity(int quantity, final int boxNumber, final int position) {
 
@@ -109,8 +146,7 @@ public class ShowOrderActivity extends BaseActivity {
 
     public void changeC1(int position) {
         indexSelect = position;
-
-
+        c1Dialog.show();
     }
 
     public void notifyAdapter() {

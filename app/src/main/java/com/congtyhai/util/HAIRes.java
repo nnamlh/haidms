@@ -10,6 +10,7 @@ import com.congtyhai.model.api.GeneralInfo;
 import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.model.api.ProductOrder;
 import com.congtyhai.model.api.ResultEventInfo;
+import com.congtyhai.model.app.C2Info;
 import com.congtyhai.model.app.CheckInAgencyInfo;
 
 import java.text.NumberFormat;
@@ -97,6 +98,7 @@ public class HAIRes {
     public final String PREF_KEY_FUNCTION = "functionlogin";
 
     // data
+    public C2Info c2Select;
     private List<CalendarStatus> calendarStatuses = new ArrayList<>();
     public void addListCalendarStatus(List<CalendarStatus> statuses) {
         calendarStatuses.clear();

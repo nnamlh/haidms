@@ -21,6 +21,7 @@ import com.congtyhai.adapter.ProductShowAdapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.haidms.order.ShowOrderActivity;
+import com.congtyhai.model.api.AgencyC2C1;
 import com.congtyhai.model.api.GroupResultInfo;
 import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.util.HAIRes;
@@ -83,23 +84,6 @@ public class ShowProductActivity extends BaseActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        /*
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Intent intent = commons.createIntent(ShowProductActivity.this, ShowProductDetailActivity.class);
-                ProductCodeInfo info = productCodeInfos.get(position);
-                intent.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, info.getId());
-                startActivity(intent);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
-        */
-
         if(HAIRes.getInstance().inOder == 1) {
 
             lOrder.setVisibility(View.VISIBLE);
@@ -107,7 +91,6 @@ public class ShowProductActivity extends BaseActivity {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     commons.startActivity(ShowProductActivity.this, ShowOrderActivity.class);
                 }
             });
@@ -189,7 +172,6 @@ public class ShowProductActivity extends BaseActivity {
 
         }
     }
-
 
     private class ReadDataTask extends AsyncTask<String, Integer, List<ProductCodeInfo>> {
         protected List<ProductCodeInfo> doInBackground(String... urls) {

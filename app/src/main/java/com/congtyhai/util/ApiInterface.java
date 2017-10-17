@@ -1,6 +1,7 @@
 package com.congtyhai.util;
 
 import com.congtyhai.model.api.AgencyC1Info;
+import com.congtyhai.model.api.AgencyC2C1;
 import com.congtyhai.model.api.AgencyCreateSend;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.AgencyModifySend;
@@ -97,6 +98,9 @@ public interface ApiInterface {
 
     @POST("agency/modifyagencyc2")
     Call<ResultInfo> modifyAgencyC2(@Body AgencyModifySend info);
+
+    @GET("agency/getc1c2")
+    Call<List<AgencyC2C1>> getAgencyC2C1(@Query("code") String code);
 
     // c1
     @GET("agency/getagencyc1")
