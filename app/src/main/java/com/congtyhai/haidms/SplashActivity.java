@@ -1,6 +1,5 @@
 package com.congtyhai.haidms;
 
-import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -14,13 +13,9 @@ import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.view.animation.Animation;
 import android.widget.ImageView;
-
-import com.congtyhai.haidms.login.LoginActivity;
 import com.congtyhai.haidms.login.LoginNameActivity;
 import com.congtyhai.model.api.ResultInfo;
 import com.congtyhai.util.HAIRes;
-import com.frosquivel.magicalcamera.MagicalPermissions;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -37,15 +32,13 @@ public class SplashActivity extends BaseActivity {
     private static final int REQUEST_PERMISSION_SETTING = 101;
 
     String[] permissionsRequired = new String[]{
-            Manifest.permission.CAMERA,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.CALL_PHONE
+            android.Manifest.permission.CAMERA,
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.READ_PHONE_STATE,
+            android.Manifest.permission.CALL_PHONE
 
     };
-
-    private MagicalPermissions magicalPermissions;
 
     private boolean sentToSettings = false;
 
@@ -87,8 +80,9 @@ public class SplashActivity extends BaseActivity {
 
 
     private boolean checkShowRequestPermisstionRationale(String[] permiss) {
+
         for (int i = 0; i < permiss.length; i++) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[i])) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(SplashActivity.this, permiss[i])) {
                 return true;
             }
         }

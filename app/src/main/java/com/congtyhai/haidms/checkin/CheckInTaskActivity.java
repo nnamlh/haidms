@@ -10,28 +10,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.congtyhai.adapter.TaskAdapter;
-import com.congtyhai.haidms.Agency.ShowAgencyActivity;
-import com.congtyhai.haidms.Agency.ShowAgencyDetailActivity;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.haidms.showinfo.ShowProductActivity;
 import com.congtyhai.model.api.CheckInSend;
 import com.congtyhai.model.api.CheckInTaskResult;
 import com.congtyhai.model.api.CheckInTaskSend;
-import com.congtyhai.model.api.DecorFolder;
 import com.congtyhai.model.api.ResultInfo;
 import com.congtyhai.model.api.TaskInfoResult;
 import com.congtyhai.model.app.TaskInfo;
 import com.congtyhai.util.HAIRes;
-import com.congtyhai.view.DividerItemDecoration;
 import com.congtyhai.view.RecyclerTouchListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;

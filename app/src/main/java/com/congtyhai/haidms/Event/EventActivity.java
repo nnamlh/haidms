@@ -3,26 +3,19 @@ package com.congtyhai.haidms.Event;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-
 import com.congtyhai.adapter.EventAdapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.AuthInfo;
 import com.congtyhai.model.api.ResultEvent;
 import com.congtyhai.model.api.ResultEventInfo;
-import com.congtyhai.util.ApiInterface;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.RecyclerTouchListener;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;

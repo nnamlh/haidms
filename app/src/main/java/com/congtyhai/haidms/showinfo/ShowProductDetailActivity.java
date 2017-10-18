@@ -2,10 +2,6 @@ package com.congtyhai.haidms.showinfo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,7 +12,6 @@ import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.ProductDetailResult;
 import com.congtyhai.util.HAIRes;
 import com.synnapps.carouselview.CarouselView;
-import com.synnapps.carouselview.ImageListener;
 import com.synnapps.carouselview.ViewListener;
 
 import butterknife.BindView;

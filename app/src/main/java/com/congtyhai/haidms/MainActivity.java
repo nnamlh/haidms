@@ -29,7 +29,6 @@ import com.congtyhai.haidms.showinfo.ShowBranchActivity;
 import com.congtyhai.haidms.showinfo.ShowProductActivity;
 import com.congtyhai.model.Realm.DTopicFirebase;
 import com.congtyhai.model.api.AgencyInfo;
-import com.congtyhai.model.api.BranchInfoResult;
 import com.congtyhai.model.api.MainInfoResult;
 import com.congtyhai.model.api.MainInfoSend;
 import com.congtyhai.model.app.CheckInFunctionInfo;
@@ -251,7 +250,7 @@ public class MainActivity extends BaseActivity
 
         protected void onPostExecute(List<AgencyInfo> result) {
 
-           if (result != null){
+           if (result != null && mMap != null){
 
                for (AgencyInfo info : result) {
                    LatLng me = new LatLng(info.getLat(), info.getLng());

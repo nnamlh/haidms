@@ -1,12 +1,10 @@
 package com.congtyhai.haidms.checkin;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -15,10 +13,8 @@ import com.congtyhai.adapter.DecorFolderAdapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.DecorFolder;
-import com.congtyhai.model.app.TaskInfo;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.RecyclerTouchListener;
-
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;

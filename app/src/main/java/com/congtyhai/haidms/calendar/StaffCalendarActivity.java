@@ -1,9 +1,7 @@
 package com.congtyhai.haidms.calendar;
 
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SyncAdapterType;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
@@ -18,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -236,7 +233,7 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
                    });
                } else {
                    for (String item : response.body().getMonth()) {
-                       checkInFunctionInfos.add(new CheckInFunctionInfo(item, R.drawable.ic_menu_send, "Tạo lịch " + item, ""));
+                       checkInFunctionInfos.add(new CheckInFunctionInfo(item, R.mipmap.ic_add, "Tạo lịch " + item, ""));
                    }
 
                    HAIRes.getInstance().addListCalendarStatus(response.body().getStatus());

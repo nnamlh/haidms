@@ -1,9 +1,7 @@
 package com.congtyhai.util;
 
 import com.congtyhai.model.api.AgencyInfo;
-import com.congtyhai.model.api.CalendarCreateSend;
 import com.congtyhai.model.api.CalendarDayCreate;
-import com.congtyhai.model.api.CalendarDayShow;
 import com.congtyhai.model.api.CalendarStatus;
 import com.congtyhai.model.api.EventProduct;
 import com.congtyhai.model.api.GeneralInfo;
@@ -11,8 +9,6 @@ import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.model.api.ProductOrder;
 import com.congtyhai.model.api.ResultEventInfo;
 import com.congtyhai.model.app.C2Info;
-import com.congtyhai.model.app.CheckInAgencyInfo;
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,8 +35,8 @@ public class HAIRes {
     public final int NOTIFICATION_ID = 100;
     public final String SHARED_PREF = "ah_firebase";
 
-    public final String KEY_USER = "userlogin";
-    public final String KEY_TOKEN = "tokenlogin";
+  //  public final String KEY_USER = "userlogin";
+  ///  public final String KEY_TOKEN = "tokenlogin";
     public final String KEY_INTENT_USER = "username";
     public final String KEY_INTENT_PHONE = "phonenumber";
     public final String KEY_INTENT_CREATE_CALENDAR = "createcalendar";
@@ -56,10 +52,10 @@ public class HAIRes {
     private CalendarDayCreate calendarDayCreate;
   //  private List<CalendarStatus> calendarStatuses;
 
-    public final String baseUrl = "http://192.168.2.170:802/api/";
-    public final String baseUrlUpload = "http://192.168.2.170:801/";
-    //public final String baseUrl = "http://dmsapi.nongduochai.vn/api/";
-    //public final String baseUrlUpload = "http://dms.nongduochai.vn/";
+    //public final String baseUrl = "http://192.168.2.170:802/api/";
+    //public final String baseUrlUpload = "http://192.168.2.170:801/";
+    public final String baseUrl = "http://dmsapi.nongduochai.vn/api/";
+    public final String baseUrlUpload = "http://dms.nongduochai.vn/";
 
     private static HAIRes instance = null;
 
@@ -71,20 +67,20 @@ public class HAIRes {
     }
     public final String PHONE_CALL_CENTER = "1800577768";
     // code menu check in
-    public final int CHECKIN_CHECK = 1;
-    public final int CHECKIN_PICTURE = 2;
-    public final int CHECKIN_ORDER = 3;
-    public final int CHECKIN_PRODUCT = 4;
+    //public final int CHECKIN_CHECK = 1;
+  //  public final int CHECKIN_PICTURE = 2;
+   // public final int CHECKIN_ORDER = 3;
+    //public final int CHECKIN_PRODUCT = 4;
 
     // code menu bottom calendar
-    public final int CALENDAR_CREATE = 1;
+   // public final int CALENDAR_CREATE = 1;
     public final int CALENDAR_MODIFY = 2;
 
     // save file path
     public final String PATH_PRODUCT_GROUP_JSON = "/productgroup.json";
     public final String PATH_AGENCY_JSON = "/agency.json";
     public final String PATH_AGENCY_C1_JSON = "/agencyc1.json";
-    public final String PATH_RECEIVE_JSON = "/receive.json";
+    //public final String PATH_RECEIVE_JSON = "/receive.json";
     public final String PATH_PRODUCT_JSON = "/product.json";
 
     // pref
@@ -109,10 +105,11 @@ public class HAIRes {
         return this.calendarStatuses;
     }
 
-    public CalendarCreateSend calendarCreateSend = new CalendarCreateSend();
+   // public CalendarCreateSend calendarCreateSend = new CalendarCreateSend();
     public AgencyInfo currentAgencySelect = new AgencyInfo();
     public final double LIMIT_DISTANCE = 300;
 
+    /*
     public String[] GetListStatusName() {
         String[] statusTemp = new String[calendarStatuses.size()];
         for(int i=0; i< calendarStatuses.size(); i++) {
@@ -120,7 +117,7 @@ public class HAIRes {
         }
 
         return statusTemp;
-    }
+    }*/
 
     public int findPostitionStatus(String status) {
         for(int i=0; i< calendarStatuses.size(); i++) {
@@ -132,6 +129,7 @@ public class HAIRes {
         return 0;
     }
 
+    /*
     public String findStatusName(String status) {
         for(int i=0; i< calendarStatuses.size(); i++) {
             if (status.equals(calendarStatuses.get(i).id)){
@@ -141,10 +139,10 @@ public class HAIRes {
 
         return "";
     }
-
+*/
     // status
     public final String CALENDAR_CSKH = "CSKH";
-    public final String CALENDAR_OTHER = "OTHER";
+  //  public final String CALENDAR_OTHER = "OTHER";
 
 
     // product
@@ -229,10 +227,11 @@ public class HAIRes {
         productOrders = new ArrayList<>();
     }
 
+    /*
     public void removeProductOrder(ProductOrder productCodeInfo) {
         if (productOrders !=  null)
             productOrders.remove(productCodeInfo);
-    }
+    }*/
 
     public void removeProductOrderAt(int i) {
         if (productOrders != null)

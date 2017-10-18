@@ -2,26 +2,20 @@ package com.congtyhai.haidms.product;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.congtyhai.adapter.TaskAdapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.Event.EventSendActivity;
 import com.congtyhai.haidms.R;
-import com.congtyhai.model.api.DecorFolder;
 import com.congtyhai.model.app.TaskInfo;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.RecyclerTouchListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;

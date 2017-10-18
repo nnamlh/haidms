@@ -21,7 +21,6 @@ import com.congtyhai.adapter.ProductShowAdapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.haidms.order.ShowOrderActivity;
-import com.congtyhai.model.api.AgencyC2C1;
 import com.congtyhai.model.api.GroupResultInfo;
 import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.util.HAIRes;

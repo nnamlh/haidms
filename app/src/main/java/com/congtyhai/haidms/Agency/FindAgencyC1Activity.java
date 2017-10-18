@@ -16,7 +16,6 @@ import com.congtyhai.adapter.AgencyC1Adapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.AgencyC1Info;
-import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.DividerItemDecoration;
 import com.congtyhai.view.RecyclerTouchListener;

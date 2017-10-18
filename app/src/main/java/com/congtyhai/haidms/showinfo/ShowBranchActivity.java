@@ -16,7 +16,6 @@ import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.BranchInfoResult;
 import com.congtyhai.model.app.HaiLocation;
-import com.congtyhai.util.HAIRes;
 import com.congtyhai.util.ItemRowClick;
 import com.congtyhai.view.DividerItemDecoration;
 import com.google.android.gms.maps.CameraUpdateFactory;

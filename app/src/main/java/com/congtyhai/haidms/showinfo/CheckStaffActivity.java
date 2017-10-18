@@ -10,11 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.haidms.Util.SimpleScanActivity;
-import com.congtyhai.haidms.checkin.CheckInActivity;
 import com.congtyhai.model.api.CheckStaffResult;
 import com.congtyhai.util.HAIRes;
 
