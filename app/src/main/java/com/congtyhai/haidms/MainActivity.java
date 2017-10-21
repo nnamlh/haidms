@@ -104,6 +104,10 @@ public class MainActivity extends BaseActivity
 
                 if (response.body() != null) {
                     if ("1".equals(response.body().getId())) {
+                        txtName.setText(response.body().getName());
+                        txtCode.setText(response.body().getCode());
+                        txtType.setText(response.body().getType());
+
                         RealmController.getInstance().clearData(DTopicFirebase.class);
                         for (final String topic : response.body().getTopics()) {
                             FirebaseMessaging.getInstance().subscribeToTopic(topic);
@@ -117,7 +121,6 @@ public class MainActivity extends BaseActivity
                             });
                         }
                         setListMainFunction(response.body().getFunction());
-
                         if (needUpdate == 1) {
                             saveListAgency(response.body().getAgencies());
                             saveListProduct(response.body().getProducts());
@@ -125,9 +128,7 @@ public class MainActivity extends BaseActivity
                             updateDaily();
                         }
                         saveListAgencyC1(response.body().getAgencyc1());
-                        txtName.setText(response.body().getName());
-                        txtCode.setText(response.body().getCode());
-                        txtType.setText(response.body().getType());
+
                     }
                 }
                 initList();

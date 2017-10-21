@@ -54,6 +54,17 @@ public final class Commons {
         dialog.show();
     }
 
+    public void showAlertCancelHandle(Activity activity, String tile, String content, DialogInterface.OnClickListener listener, DialogInterface.OnClickListener cancel) {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+        dialog.setIcon(R.mipmap.ic_logo);
+        dialog.setTitle(tile)
+                .setMessage(content)
+                .setPositiveButton("Đồng ý", listener).setNegativeButton("Thôi", listener);
+
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+
     public void showAlertInfo(Activity activity,String tile, String content, DialogInterface.OnClickListener listener) {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
         dialog.setIcon(R.mipmap.ic_logo);
@@ -64,39 +75,69 @@ public final class Commons {
         dialog.show();
     }
 
-    public void writeFile(String json, String path) {
+    public void writeFile(String json, String path, Activity activity) {
         try {
+
+            if (isExternalStorageAvailable() && !isExternalStorageReadOnly()) {
+                File file = new File(activity.getExternalFilesDir("NONGDUOCHAI"), path);
+
+                if (!file.exists()) {
+                    file.mkdirs();
+                }
+
+                FileWriter writer = new FileWriter(file.getAbsoluteFile() + path);
+                writer.write(json);
+                writer.close();
+            }
+
+            /*
             File file = new File(
                     Environment
                             .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
                     "NONGDUOCHAI");
+*/
 
-            if (!file.exists()) {
-                file.mkdirs();
-            }
-
-            FileWriter writer = new FileWriter(file.getAbsoluteFile() + path);
-            writer.write(json);
-            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public BufferedReader readBufferedReader(String path) {
-        try {
+    private boolean isExternalStorageReadOnly() {
+        String extStorageState = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(extStorageState)) {
+            return true;
+        }
+        return false;
+    }
 
+    private boolean isExternalStorageAvailable() {
+        String extStorageState = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(extStorageState)) {
+            return true;
+        }
+        return false;
+    }
+
+    public BufferedReader readBufferedReader(String path, Activity activity) {
+        try {
+            if (isExternalStorageAvailable() && !isExternalStorageReadOnly()) {
+
+                File file = new File(activity.getExternalFilesDir("NONGDUOCHAI"), path);
+
+                BufferedReader br = new BufferedReader(
+                        new FileReader(file.getAbsoluteFile() +  path));
+
+                return  br;
+            }
+
+            /*
             File file = new File(
                     Environment
                             .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
-                    "NONGDUOCHAI");
-            BufferedReader br = new BufferedReader(
-                    new FileReader(file.getAbsoluteFile() +  path));
-
-            return  br;
+                    "NONGDUOCHAI");*/
 
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
         }
 
         return null;

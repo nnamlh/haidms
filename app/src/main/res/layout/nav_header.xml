@@ -24,7 +24,7 @@
         android:textSize="16dp"
         android:textStyle="bold"
         android:id="@+id/name"
-        android:text="LÊ HOÀI NAM"
+        android:text=""
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
@@ -35,7 +35,7 @@
         android:textSize="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0008" />
+        android:text="" />
 
     <TextView
         android:id="@+id/type"
@@ -45,6 +45,6 @@
         android:textSize="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0008" />
+        android:text="" />
 
 </LinearLayout>

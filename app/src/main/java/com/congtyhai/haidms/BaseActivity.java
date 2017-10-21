@@ -237,7 +237,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void saveListAgency(AgencyInfo[] agencies) {
         try {
             Gson gson = new Gson();
-            commons.writeFile(gson.toJson(agencies), HAIRes.getInstance().PATH_AGENCY_JSON);
+            commons.writeFile(gson.toJson(agencies), HAIRes.getInstance().PATH_AGENCY_JSON, BaseActivity.this);
         } catch (Exception e) {
 
         }
@@ -248,7 +248,7 @@ public class BaseActivity extends AppCompatActivity {
 
         try {
             Gson gson = new Gson();
-            commons.writeFile(gson.toJson(groups), HAIRes.getInstance().PATH_PRODUCT_GROUP_JSON);
+            commons.writeFile(gson.toJson(groups), HAIRes.getInstance().PATH_PRODUCT_GROUP_JSON, BaseActivity.this);
         } catch (Exception e) {
 
         }
@@ -257,7 +257,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void saveListAgencyC1(AgencyC1Info[] agencies) {
         try {
             Gson gson = new Gson();
-            commons.writeFile(gson.toJson(agencies), HAIRes.getInstance().PATH_AGENCY_C1_JSON);
+            commons.writeFile(gson.toJson(agencies), HAIRes.getInstance().PATH_AGENCY_C1_JSON, BaseActivity.this);
         } catch (Exception e) {
 
         }
@@ -269,7 +269,7 @@ public class BaseActivity extends AppCompatActivity {
         Gson gson = new Gson();
         try {
 
-            BufferedReader reader = commons.readBufferedReader(HAIRes.getInstance().PATH_AGENCY_JSON);
+            BufferedReader reader = commons.readBufferedReader(HAIRes.getInstance().PATH_AGENCY_JSON, BaseActivity.this);
 
             if (reader != null) {
                 Type listType = new TypeToken<List<AgencyInfo>>() {
@@ -292,7 +292,7 @@ public class BaseActivity extends AppCompatActivity {
         Gson gson = new Gson();
         try {
 
-            BufferedReader reader = commons.readBufferedReader(HAIRes.getInstance().PATH_PRODUCT_GROUP_JSON);
+            BufferedReader reader = commons.readBufferedReader(HAIRes.getInstance().PATH_PRODUCT_GROUP_JSON, BaseActivity.this);
 
             if (reader != null) {
                 Type listType = new TypeToken<List<GroupResultInfo>>() {
@@ -313,7 +313,7 @@ public class BaseActivity extends AppCompatActivity {
         Gson gson = new Gson();
         try {
 
-            BufferedReader reader = commons.readBufferedReader(HAIRes.getInstance().PATH_PRODUCT_JSON);
+            BufferedReader reader = commons.readBufferedReader(HAIRes.getInstance().PATH_PRODUCT_JSON, BaseActivity.this);
 
             if (reader != null) {
                 Type listType = new TypeToken<List<ProductCodeInfo>>() {
@@ -335,7 +335,7 @@ public class BaseActivity extends AppCompatActivity {
         Gson gson = new Gson();
         try {
 
-            BufferedReader reader = commons.readBufferedReader(HAIRes.getInstance().PATH_AGENCY_C1_JSON);
+            BufferedReader reader = commons.readBufferedReader(HAIRes.getInstance().PATH_AGENCY_C1_JSON, BaseActivity.this);
 
             if (reader != null) {
                 Type listType = new TypeToken<List<AgencyC1Info>>() {
@@ -356,7 +356,7 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void saveListProduct(final ProductCodeInfo[] productCodeInfos) {
         Gson gson = new Gson();
-        commons.writeFile(gson.toJson(productCodeInfos), HAIRes.getInstance().PATH_PRODUCT_JSON);
+        commons.writeFile(gson.toJson(productCodeInfos), HAIRes.getInstance().PATH_PRODUCT_JSON, BaseActivity.this);
     }
 
     protected void updateDaily() {

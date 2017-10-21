@@ -96,20 +96,30 @@ public class SplashActivity extends BaseActivity {
         if (!checkSelf(permissionsRequired)) {
 
             if (checkShowRequestPermisstionRationale(permissionsRequired)) {
-                commons.showAlertCancel(SplashActivity.this, "Cho phép truy cập", "Ứng dụng cần cho phép truy cập một số tác vụ", new DialogInterface.OnClickListener() {
+                commons.showAlertCancelHandle(SplashActivity.this, "Cho phép truy cập", "Ứng dụng cần cho phép truy cập một số tác vụ", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         ActivityCompat.requestPermissions(SplashActivity.this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT);
                     }
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
                 });
             } else {
-                commons.showAlertCancel(SplashActivity.this, "Cho phép truy cập", "Bạn cần đồng ý cho phép quyền truy cập để có thể sử dụng chương trình", new DialogInterface.OnClickListener() {
+                commons.showAlertCancelHandle(SplashActivity.this, "Cho phép truy cập", "Bạn cần đồng ý cho phép quyền truy cập để có thể sử dụng chương trình", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                         Uri uri = Uri.fromParts("package", getPackageName(), null);
                         intent.setData(uri);
                         startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
+                    }
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
                     }
                 });
             }
@@ -137,20 +147,30 @@ public class SplashActivity extends BaseActivity {
             if (allgranted) {
                 proceedAfterPermission();
             } else if (checkShowRequestPermisstionRationale(permissionsRequired)) {
-                commons.showAlertCancel(SplashActivity.this, "Cho phép truy cập", "Ứng dụng cần cho phép truy cập một số tác vụ", new DialogInterface.OnClickListener() {
+                commons.showAlertCancelHandle(SplashActivity.this, "Cho phép truy cập", "Ứng dụng cần cho phép truy cập một số tác vụ", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         ActivityCompat.requestPermissions(SplashActivity.this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT);
                     }
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
                 });
             } else {
-                commons.showAlertCancel(SplashActivity.this, "Cho phép truy cập", "Bạn cần đồng ý cho phép quyền truy cập để có thể sử dụng chương trình", new DialogInterface.OnClickListener() {
+                commons.showAlertCancelHandle(SplashActivity.this, "Cho phép truy cập", "Bạn cần đồng ý cho phép quyền truy cập để có thể sử dụng chương trình", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                         Uri uri = Uri.fromParts("package", getPackageName(), null);
                         intent.setData(uri);
                         startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
+                    }
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
                     }
                 });
             }
@@ -182,7 +202,7 @@ public class SplashActivity extends BaseActivity {
                             }
                             finish();
                         } else if ("2".equals(response.body().getId())) {
-                            commons.showAlertCancel(SplashActivity.this, "Thông báo", "Cập nhật phiên bản mới", new DialogInterface.OnClickListener() {
+                            commons.showAlertCancelHandle(SplashActivity.this, "Thông báo", "Cập nhật phiên bản mới", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     final String appPackageName = getPackageName();
@@ -192,12 +212,22 @@ public class SplashActivity extends BaseActivity {
                                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                                     }
                                 }
+                            }, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    finish();
+                                }
                             });
                         } else {
-                            commons.showAlertCancel(SplashActivity.this, "Thông báo", "Đăng nhập để truy cập ứng dụng", new DialogInterface.OnClickListener() {
+                            commons.showAlertCancelHandle(SplashActivity.this, "Thông báo", "Đăng nhập để truy cập ứng dụng", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     commons.startActivity(SplashActivity.this, LoginNameActivity.class);
+                                    finish();
+                                }
+                            }, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
                                     finish();
                                 }
                             });
