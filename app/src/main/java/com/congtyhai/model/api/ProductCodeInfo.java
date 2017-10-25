@@ -36,6 +36,7 @@ public class ProductCodeInfo {
     private String unit ;
     @SerializedName("quantity_box")
     private int quantity_box;
+
     @SerializedName("vat")
     private double vat;
 

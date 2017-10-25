@@ -237,10 +237,15 @@ public class SplashActivity extends BaseActivity {
 
                 @Override
                 public void onFailure(Call<ResultInfo> call, Throwable t) {
-                    commons.showAlertInfo(SplashActivity.this, "Thông báo", "Thử lại", new DialogInterface.OnClickListener() {
+                    commons.showAlertCancelHandle(SplashActivity.this, "Thông báo", "Thử lại", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             makeJsonRequest(user, token);
+                        }
+                    }, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
                         }
                     });
                 }

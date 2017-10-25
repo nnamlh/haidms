@@ -39,7 +39,9 @@ public class CompleteOrderPromotionFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
+
         items = new ArrayList<>();
+        /*
         items.add(new OrderEventInfoItem(0));
 
         for(int i = 0; i < 5; i++) {
@@ -50,7 +52,7 @@ public class CompleteOrderPromotionFragment extends Fragment {
         for(int i = 0; i < 5; i++) {
             items.add(new OrderEventInfoItem(1));
         }
-
+        */
         adapter = new OrderEventInfoAdapter(items);
 
         recyclerView.setHasFixedSize(true);

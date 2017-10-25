@@ -41,6 +41,9 @@ import com.congtyhai.model.api.ResultUpdate;
 import com.congtyhai.model.api.StaffHelpRequest;
 import com.congtyhai.model.api.TrackingResukt;
 import com.congtyhai.model.api.UpdateProductInfo;
+import com.congtyhai.model.api.order.OrderCompleteSend;
+import com.congtyhai.model.api.order.OrderConfirmResult;
+import com.congtyhai.model.api.order.OrderConfirmSend;
 
 import java.util.List;
 
@@ -211,4 +214,11 @@ public interface ApiInterface {
     //
     @GET("restmain/getlistbranch")
     Call<List<BranchInfoResult>> getBranch();
+
+    // order
+    @POST("order/confirm")
+    Call<OrderConfirmResult> orderConfirm(@Body OrderConfirmSend info);
+
+    @POST("order/staffcomplete")
+    Call<ResultInfo> orderComplete(@Body OrderCompleteSend info);
 }

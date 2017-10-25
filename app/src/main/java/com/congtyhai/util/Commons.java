@@ -39,6 +39,10 @@ public final class Commons {
 
     }
 
+    public void showToastDisconnect(final Context context) {
+        Toast.makeText(context, "Mất kết nối internet", Toast.LENGTH_LONG).show();
+    }
+
     public void showAlertCancel(Activity activity, String tile, String content, DialogInterface.OnClickListener listener) {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
         dialog.setIcon(R.mipmap.ic_logo);

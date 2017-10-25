@@ -1,8 +1,6 @@
 package com.congtyhai.haidms.order;
 
-import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -33,8 +31,6 @@ public class ShowOrderActivity extends BaseActivity {
     TextView txtMoney;
 
     String agencyCode;
-
-    int C1_CODE = 2;
 
     int indexSelect = -1;
 
@@ -89,7 +85,6 @@ public class ShowOrderActivity extends BaseActivity {
 
 
     }
-
 
     public void changeQuantity(int quantity, final int boxNumber, final int position) {
 
@@ -156,24 +151,26 @@ public class ShowOrderActivity extends BaseActivity {
         txtMoney.setText(HAIRes.getInstance().formatMoneyToText(price));
     }
 
-    public void orderClick(View view) {
-        commons.startActivity(ShowOrderActivity.this, CompleteOrderActivity.class);
-    }
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == C1_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                String code = data.getStringExtra("result");
-                String name = data.getStringExtra("name");
+    public void onResume() {
+        super.onResume();
 
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-
-            }
-        }
+        notifyAdapter();
+        resetMoneyAll();
     }
 
 
+    public void orderClick(View view) {
+       if (HAIRes.getInstance().getProductOrder() == null || HAIRes.getInstance().getProductOrder().size() == 0) {
+            commons.makeToast(ShowOrderActivity.this, "Chọn mặt hàng cần đặt").show();
+       } else {
+           commons.showAlertCancel( ShowOrderActivity.this,"Cảnh báo", "Kiểm tra các mặt hàng và số lượng trước khi đặt hàng", new DialogInterface.OnClickListener() {
+               @Override
+               public void onClick(DialogInterface dialogInterface, int i) {
+                   commons.startActivity(ShowOrderActivity.this, CompleteOrderActivity.class);
+               }
+           });
+       }
+    }
 
 }
