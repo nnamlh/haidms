@@ -226,6 +226,10 @@
         <activity
             android:name=".Agency.AgencyUpdateLocationActivity"
             android:label="@string/title_activity_agency_update_location"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".manageorders.YourOrdersActivity"
+            android:label="@string/title_activity_your_orders"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
