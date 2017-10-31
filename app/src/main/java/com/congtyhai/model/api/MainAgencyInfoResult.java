@@ -33,6 +33,9 @@ public class MainAgencyInfoResult {
     @SerializedName("productGroups")
     private  GroupResultInfo[] productGroups;
 
+    @SerializedName("c2")
+    private C2C1Info[] c2;
+
     @SerializedName("name")
     private String name ;
     @SerializedName("code")
@@ -120,5 +123,13 @@ public class MainAgencyInfoResult {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public C2C1Info[] getC2() {
+        return c2;
+    }
+
+    public void setC2(C2C1Info[] c2) {
+        this.c2 = c2;
     }
 }

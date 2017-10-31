@@ -130,16 +130,31 @@ public class MainActivity extends BaseActivity
                         saveListAgencyC1(response.body().getAgencyc1());
 
                     }
+
+                    initList();
+                    hidepDialog();
+                    new ReadDataTask().execute();
+                } else {
+                    commons.showAlertInfo(MainActivity.this, "Thông báo", "Ứng dụng đang nâng cấp", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    });
                 }
-                initList();
-                hidepDialog();
-                new ReadDataTask().execute();
+
             }
 
             @Override
             public void onFailure(Call<MainInfoResult> call, Throwable t) {
-                initList();
+                //initList();
                 hidepDialog();
+                commons.showAlertInfo(MainActivity.this, "Thông báo", "Mất kết nối 3G hoặc Internet trên điện thoại", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
             }
         });
     }

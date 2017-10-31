@@ -3,10 +3,10 @@
 
     <group android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_customer"
+            android:id="@+id/nav_list_c2"
             android:icon="@mipmap/ic_agency"
             android:visible="false"
-            android:title="Danh sách khách hàng" />
+            android:title="Danh sách cấp 2" />
         <item
             android:id="@+id/nav_product"
             android:icon="@mipmap/ic_product"
@@ -22,6 +22,11 @@
             android:icon="@mipmap/ic_work_manage"
             android:visible="false"
             android:title="Quản lý sản phẩm" />
+        <item
+            android:id="@+id/nav_order"
+            android:icon="@mipmap/ic_order"
+            android:visible="true"
+            android:title="Đơn hàng" />
         <item
             android:id="@+id/nav_promotion"
             android:icon="@mipmap/ic_promotion"

@@ -8,6 +8,7 @@ import com.congtyhai.model.api.AgencyModifySend;
 import com.congtyhai.model.api.AgencyUpdateLocationSend;
 import com.congtyhai.model.api.AuthInfo;
 import com.congtyhai.model.api.BranchInfoResult;
+import com.congtyhai.model.api.C2C1Info;
 import com.congtyhai.model.api.CalendarCheckResult;
 import com.congtyhai.model.api.CalendarCreateSend;
 import com.congtyhai.model.api.CalendarShowResult;
@@ -41,6 +42,8 @@ import com.congtyhai.model.api.ResultUpdate;
 import com.congtyhai.model.api.StaffHelpRequest;
 import com.congtyhai.model.api.TrackingResukt;
 import com.congtyhai.model.api.UpdateProductInfo;
+import com.congtyhai.model.api.order.C1OrderShowResult;
+import com.congtyhai.model.api.order.C1OrderShowSend;
 import com.congtyhai.model.api.order.OrderCompleteSend;
 import com.congtyhai.model.api.order.OrderConfirmResult;
 import com.congtyhai.model.api.order.OrderConfirmSend;
@@ -93,6 +96,11 @@ public interface ApiInterface {
     // agency
     @GET("agency/getagencyc2")
     Call<AgencyInfo[]> getAgencyC2(
+            @Query("user") String user,
+            @Query("token") String token);
+
+    @GET("agency/getc2c1")
+    Call<C2C1Info[]> getC2C1(
             @Query("user") String user,
             @Query("token") String token);
 
@@ -221,4 +229,9 @@ public interface ApiInterface {
 
     @POST("order/staffcomplete")
     Call<ResultInfo> orderComplete(@Body OrderCompleteSend info);
+
+
+    ///
+    @POST("c1order/show")
+    Call<C1OrderShowResult> c1OrderShow(@Body C1OrderShowSend info);
 }

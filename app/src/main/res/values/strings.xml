@@ -48,5 +48,7 @@
     <string name="title_activity_agency_update_location">Cập nhật tọa độ</string>
     <string name="title_activity_orders">OrdersActivity</string>
     <string name="title_activity_your_orders">YourOrdersActivity</string>
+    <string name="title_activity_c1_order">Đơn hàng</string>
+    <string name="title_activity_c2_of_c1">Danh sách cấp 2</string>
 
 </resources>

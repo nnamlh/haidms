@@ -25,6 +25,7 @@ import com.congtyhai.haidms.login.LoginNameActivity;
 import com.congtyhai.model.Realm.DTopicFirebase;
 import com.congtyhai.model.api.AgencyC1Info;
 import com.congtyhai.model.api.AgencyInfo;
+import com.congtyhai.model.api.C2C1Info;
 import com.congtyhai.model.api.GroupResultInfo;
 import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.model.api.ReceiveInfo;
@@ -243,6 +244,40 @@ public class BaseActivity extends AppCompatActivity {
         }
 
     }
+
+    protected void saveListC2OfC1(C2C1Info[] agencies) {
+        try {
+            Gson gson = new Gson();
+            commons.writeFile(gson.toJson(agencies), HAIRes.getInstance().PATH_AGENCY_JSON, BaseActivity.this);
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    protected List<C2C1Info> getListC2C1() {
+
+        Gson gson = new Gson();
+        try {
+
+            BufferedReader reader = commons.readBufferedReader(HAIRes.getInstance().PATH_AGENCY_JSON, BaseActivity.this);
+
+            if (reader != null) {
+                Type listType = new TypeToken<List<C2C1Info>>() {
+                }.getType();
+                List<C2C1Info> agencyInfos = gson.fromJson(reader, listType);
+
+                if(agencyInfos != null) {
+                    return agencyInfos;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
 
     protected void saveListProductGroup(GroupResultInfo[] groups) {
 
@@ -489,6 +524,12 @@ public class BaseActivity extends AppCompatActivity {
                     prefsHelper.deleteSavedData(HAIRes.getInstance().PREF_KEY_USER);
                     prefsHelper.deleteSavedData(HAIRes.getInstance().PREF_KEY_TYPE);
                     prefsHelper.deleteSavedData(HAIRes.getInstance().PREF_KEY_UPDATE_DAILY);
+
+                    // xoa file
+                    commons.deleteFile(HAIRes.getInstance().PATH_AGENCY_C1_JSON, BaseActivity.this);
+                    commons.deleteFile(HAIRes.getInstance().PATH_AGENCY_JSON, BaseActivity.this);
+                    commons.deleteFile(HAIRes.getInstance().PATH_PRODUCT_GROUP_JSON, BaseActivity.this);
+                    commons.deleteFile(HAIRes.getInstance().PATH_PRODUCT_JSON, BaseActivity.this);
 
                     Intent intent2 = new Intent(BaseActivity.this, LoginNameActivity.class);
                     intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

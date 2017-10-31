@@ -106,6 +106,23 @@ public final class Commons {
         }
     }
 
+    public  void deleteFile(String path, Activity activity) {
+        try {
+
+            if (isExternalStorageAvailable() && !isExternalStorageReadOnly()) {
+                File file = new File(activity.getExternalFilesDir("NONGDUOCHAI"), path);
+
+                if (file != null){
+                    file.delete();
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private boolean isExternalStorageReadOnly() {
         String extStorageState = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(extStorageState)) {

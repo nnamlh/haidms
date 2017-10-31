@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.congtyhai.haidms.manageorders.C1OrderActivity"
+    tools:showIn="@layout/activity_c1_order">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Loại đơn hàng"
+        android:textSize="14dp" />
+
+    <Spinner
+        android:id="@+id/estatus"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:textSize="14dp"
+        android:background="@drawable/input_text"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/cardview_dark_background" />
+
+    <!--  cua hang -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:text="Cấp 2"
+        android:textSize="16dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/input_text"
+        android:maxLines="1"
+        android:id="@+id/ec2"
+        android:paddingLeft="5dp"
+        android:text="Tất cả"
+        android:textColor="#000"
+        android:gravity="center_vertical"
+        android:textSize="14dp"
+        android:fontFamily="sans-serif-light"
+        android:inputType="textNoSuggestions"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#333333"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
+
+</LinearLayout>

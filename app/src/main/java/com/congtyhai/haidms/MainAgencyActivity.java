@@ -16,10 +16,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.congtyhai.haidms.Agency.C2OfC1Activity;
 import com.congtyhai.haidms.Agency.ShowAgencyActivity;
 import com.congtyhai.haidms.Event.EventActivity;
 import com.congtyhai.haidms.Util.NotificationActivity;
 import com.congtyhai.haidms.calendar.StaffCalendarActivity;
+import com.congtyhai.haidms.manageorders.C1OrderActivity;
 import com.congtyhai.haidms.product.ProductTaskActivity;
 import com.congtyhai.haidms.showinfo.CheckStaffActivity;
 import com.congtyhai.haidms.showinfo.ShowBranchActivity;
@@ -95,6 +97,8 @@ public class MainAgencyActivity extends BaseActivity
                             updateDaily();
                         }
 
+                        saveListC2OfC1(response.body().getC2());
+
                         txtName.setText(response.body().getName());
                         txtCode.setText(response.body().getCode());
                         txtType.setText(response.body().getType());
@@ -115,6 +119,12 @@ public class MainAgencyActivity extends BaseActivity
         String function = getListMainFunction();
         Menu menu = navigationView.getMenu();
         try {
+
+            String type = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TYPE, "");
+            if ("CI".equals(type)) {
+                MenuItem listC2 = menu.findItem(R.id.nav_list_c2);
+                listC2.setVisible(true);
+            }
 
             JSONArray jsonArray = new JSONArray(function);
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -188,11 +198,7 @@ public class MainAgencyActivity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        if (id == R.id.nav_customer) {
-            commons.startActivity(MainAgencyActivity.this, ShowAgencyActivity.class);
-        } else if (id == R.id.nav_staffcalendar) {
-            commons.startActivity(MainAgencyActivity.this, StaffCalendarActivity.class);
-        } else if (id == R.id.nav_product) {
+        if (id == R.id.nav_product) {
             HAIRes.getInstance().inOder = 0;
             commons.startActivity(MainAgencyActivity.this, ShowProductActivity.class);
             //  showProductIntent.putExtra(HAIRes.getInstance().KEY_INTENT_ORDER, 0);
@@ -218,6 +224,13 @@ public class MainAgencyActivity extends BaseActivity
 
         }else if (id == R.id.nav_branch) {
             commons.startActivity(MainAgencyActivity.this, ShowBranchActivity.class);
+        } else if (id == R.id.nav_order){
+            String type = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TYPE, "");
+            if ("CI".equals(type)){
+                commons.startActivity(MainAgencyActivity.this, C1OrderActivity.class);
+            }
+        } else if (id == R.id.nav_list_c2) {
+            commons.startActivity(MainAgencyActivity.this, C2OfC1Activity.class);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -230,6 +230,14 @@
         <activity
             android:name=".manageorders.YourOrdersActivity"
             android:label="@string/title_activity_your_orders"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".manageorders.C1OrderActivity"
+            android:label="@string/title_activity_c1_order"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Agency.C2OfC1Activity"
+            android:label="@string/title_activity_c2_of_c1"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
