@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:text="BEAM 100 GR"
+        android:textColor="#000000"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:id="@+id/ename"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:id="@+id/equantity"
+        android:layout_marginTop="10dp"
+        android:text="Số lượng: 500"
+        android:textSize="14dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:id="@+id/equantityfinish"
+        android:layout_marginTop="10dp"
+        android:text="Đã giao: 500"
+        android:textSize="14dp" />
+
+</LinearLayout>

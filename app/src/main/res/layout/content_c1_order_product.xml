@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.congtyhai.haidms.manageorders.C1OrderProductActivity"
+    tools:showIn="@layout/activity_c1_order_product">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <!-- ten -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Mã đơn hàng"
+            android:textColor="#000000"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/ecode"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:enabled="false"
+            android:fontFamily="sans-serif-light"
+            android:inputType="textNoSuggestions"
+            android:textSize="12dp"
+            android:textColor="@color/cardview_dark_background" />
+
+
+        <!-- ten -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Cửa hàng"
+            android:textColor="#000000"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/estore"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:enabled="false"
+            android:fontFamily="sans-serif-light"
+            android:inputType="textNoSuggestions"
+            android:textSize="12dp"
+            android:textColor="@color/cardview_dark_background" />
+
+        <!-- ten -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Điện thoại"
+            android:textColor="#000000"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/ephone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:enabled="false"
+            android:fontFamily="sans-serif-light"
+            android:inputType="textNoSuggestions"
+            android:textSize="12dp"
+            android:textColor="@color/cardview_dark_background" />
+
+        <!-- ten -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Địa chỉ"
+            android:textColor="#000000"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/eaddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:fontFamily="sans-serif-light"
+            android:textSize="12dp"
+            android:gravity="top|left"
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:maxLines="6"
+            android:minLines="3"
+            android:textColor="@color/cardview_dark_background" />
+
+        <!-- ten -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Sản phẩm đặt hàng"
+            android:textColor="#000000"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+        <com.congtyhai.view.NonScrollListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+
+    </LinearLayout>
+
+</ScrollView>

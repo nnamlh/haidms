@@ -1,7 +1,9 @@
 package com.congtyhai.haidms.Agency;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -38,6 +40,8 @@ public class C2OfC1Activity extends BaseActivity {
     RecyclerView recyclerView;
     private C2C1Adapter mAdapter;
 
+    boolean isResult = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +63,14 @@ public class C2OfC1Activity extends BaseActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-
+                C2C1Info info = agencyList.get(position);
+                if (isResult) {
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("code", info.getCode());
+                    returnIntent.putExtra("name", info.getName());
+                    setResult(Activity.RESULT_OK,returnIntent);
+                    finish();
+                }
             }
 
             @Override
@@ -67,6 +78,14 @@ public class C2OfC1Activity extends BaseActivity {
 
             }
         }));
+
+        Intent intent = getIntent();
+
+        String code = intent.getStringExtra(HAIRes.getInstance().KEY_INTENT_TEMP);
+
+        if("getcode".equals(code)) {
+            isResult = true;
+        }
 
 
         new ReadDataTask().execute();
@@ -76,6 +95,7 @@ public class C2OfC1Activity extends BaseActivity {
 
 
     private void makeRequest() {
+
         showpDialog();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");

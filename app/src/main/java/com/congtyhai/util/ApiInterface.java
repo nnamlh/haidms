@@ -42,11 +42,14 @@ import com.congtyhai.model.api.ResultUpdate;
 import com.congtyhai.model.api.StaffHelpRequest;
 import com.congtyhai.model.api.TrackingResukt;
 import com.congtyhai.model.api.UpdateProductInfo;
+import com.congtyhai.model.api.order.C1OrderProductUpdateSend;
 import com.congtyhai.model.api.order.C1OrderShowResult;
 import com.congtyhai.model.api.order.C1OrderShowSend;
 import com.congtyhai.model.api.order.OrderCompleteSend;
 import com.congtyhai.model.api.order.OrderConfirmResult;
 import com.congtyhai.model.api.order.OrderConfirmSend;
+import com.congtyhai.model.api.order.OrderProductHistory;
+import com.congtyhai.model.api.order.OrderProductResult;
 
 import java.util.List;
 
@@ -234,4 +237,15 @@ public interface ApiInterface {
     ///
     @POST("c1order/show")
     Call<C1OrderShowResult> c1OrderShow(@Body C1OrderShowSend info);
+
+    @GET("c1order/getproduct")
+    Call<List<OrderProductResult>> c1OrderProduct( @Query("user") String user,
+                                                   @Query("id") String id);
+
+    @GET("c1order/orderproducthistory")
+    Call<List<OrderProductHistory>> c1OrderProductHistory(@Query("orderId") String orderId,
+                                                   @Query("productId") String productId);
+
+    @POST("c1order/updateorderproduct")
+    Call<ResultInfo> c1OrderProductUpdate(@Body C1OrderProductUpdateSend info);
 }

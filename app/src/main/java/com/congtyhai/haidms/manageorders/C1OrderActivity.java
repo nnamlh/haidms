@@ -1,11 +1,13 @@
 package com.congtyhai.haidms.manageorders;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,17 +15,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.congtyhai.adapter.C1OrderAdapter;
-import com.congtyhai.adapter.C2C1Adapter;
 import com.congtyhai.haidms.Agency.C2OfC1Activity;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
-import com.congtyhai.model.api.C2C1Info;
 import com.congtyhai.model.api.order.C1OrderInfo;
 import com.congtyhai.model.api.order.C1OrderShowResult;
 import com.congtyhai.model.api.order.C1OrderShowSend;
-import com.congtyhai.util.EndlessRecyclerViewScrollListener;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.DividerItemDecoration;
+import com.congtyhai.view.LoadMoreListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +41,11 @@ public class C1OrderActivity extends BaseActivity {
     @BindView(R.id.ec2)
     TextView eC2;
 
-    String[]  listTypeName = {"Đang thực hiện", "Đã thực hiện"};
+    String[] listTypeName = {"Đang thực hiện", "Đã thực hiện"};
 
     String[] listTypeId = {"process", "finish"};
 
-    int page = 0;
+    int page = 1;
 
     AlertDialog.Builder builderSingle;
 
@@ -55,12 +55,12 @@ public class C1OrderActivity extends BaseActivity {
 
     int GET_C2_CODE = 2;
 
+    int RESULT_PRODUCT = 3;
+
     String typeChoose = "process";
 
-    EndlessRecyclerViewScrollListener scrollListener;
-
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+    @BindView(R.id.list)
+    LoadMoreListView listView;
 
     List<C1OrderInfo> c1OrderInfos;
 
@@ -85,30 +85,45 @@ public class C1OrderActivity extends BaseActivity {
         });
 
         c1OrderInfos = new ArrayList<>();
-        mAdapter = new C1OrderAdapter(c1OrderInfos);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager mLayoutManager  = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
-        // Retain an instance so that you can call `resetState()` for fresh searches
-        scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
+        mAdapter = new C1OrderAdapter(c1OrderInfos, this);
+        listView.setAdapter(mAdapter);
+
+        listView.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
             @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+            public void onLoadMore() {
                 makeRequest();
             }
-        };
-        // Adds the scroll listener to RecyclerView
-        recyclerView.addOnScrollListener(scrollListener);
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                C1OrderInfo info = c1OrderInfos.get(position);
+
+                HAIRes.getInstance().C1OrderInfo = info;
+                Intent intent = commons.createIntent(C1OrderActivity.this, C1OrderProductActivity.class);
+                startActivityForResult(intent, RESULT_PRODUCT);
+            }
+        });
 
         makeRequest();
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        HAIRes.getInstance().C1OrderInfo = null;
+    }
+
+    public void makeRequest(View view) {
+        makeRequest();
+    }
+
     private void makeRequest() {
-        page++;
+
         showpDialog();
+        c1OrderInfos.clear();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
 
@@ -125,15 +140,17 @@ public class C1OrderActivity extends BaseActivity {
             @Override
             public void onResponse(Call<C1OrderShowResult> call, Response<C1OrderShowResult> response) {
 
-                //
-                if (response.body() != null) {
-
+                if (response.body() != null && response.body().getOrders().size() > 0) {
+                    page++;
                     c1OrderInfos.addAll(response.body().getOrders());
 
                     mAdapter.notifyDataSetChanged();
-
+                    listView.onLoadMoreComplete();
+                } else {
+                    mAdapter.notifyDataSetChanged();
+                    listView.onLoadMoreComplete();
+                    listView.setOnLoadMoreListener(null);
                 }
-
                 hidepDialog();
             }
 
@@ -147,7 +164,7 @@ public class C1OrderActivity extends BaseActivity {
 
     private void initTypeOrder() {
 
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(C1OrderActivity.this, android.R.layout.simple_spinner_item,listTypeName );
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(C1OrderActivity.this, android.R.layout.simple_spinner_item, listTypeName);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         eType.setAdapter(adapter);
 
@@ -199,4 +216,20 @@ public class C1OrderActivity extends BaseActivity {
         });
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+      if (requestCode == GET_C2_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                String code = data.getStringExtra("code");
+                String name = data.getStringExtra("name");
+                eC2.setText(name);
+                c2Choose = code;
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+
+            }
+        }
+    }
+
 }

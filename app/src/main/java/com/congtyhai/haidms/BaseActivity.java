@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -545,5 +546,12 @@ public class BaseActivity extends AppCompatActivity {
         });
     }
 
+
+    protected String getFirebaseReg() {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(HAIRes.getInstance().SHARED_PREF, 0);
+        String token = pref.getString("regId", "");
+
+        return  token;
+    }
 
 }

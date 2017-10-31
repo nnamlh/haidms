@@ -2,24 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
     android:layout_height="wrap_content">
 
     <TextView
+        android:id="@+id/code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
-        android:textColor="#000000"
-        android:id="@+id/code"
-        android:text="DNI32329842"
-        android:textSize="16dp" />
+        android:text="HOÀNG ANH"
+        android:textColor="#000000" />
+
 
     <TextView
+        android:id="@+id/agency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
-        android:textColor="#000000"
-        android:id="@+id/agency"
-        android:text="CỬA HÀNG VĂN LANG" />
+        android:text="HOÀNG ANH"
+        android:textColor="#000000" />
 
     <TextView
         android:layout_width="wrap_content"

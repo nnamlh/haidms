@@ -92,7 +92,7 @@ public class MainActivity extends BaseActivity
 
     private void makeRequest() {
         showpDialog();
-        String tokenFirebase = prefsHelper.get(HAIRes.getInstance().PREF_KEY_FIREBASE, "");
+        String tokenFirebase = getFirebaseReg();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         final String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
         final int needUpdate = needUpdateDaily();

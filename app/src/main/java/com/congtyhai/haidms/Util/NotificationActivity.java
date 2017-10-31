@@ -6,15 +6,16 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.congtyhai.adapter.NotificationAdapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.NotificationInfo;
 import com.congtyhai.model.api.NotificationInfoResult;
-import com.congtyhai.util.EndlessRecyclerViewScrollListener;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.DividerItemDecoration;
+import com.congtyhai.view.LoadMoreListView;
 import com.congtyhai.view.RecyclerTouchListener;
 
 import java.util.ArrayList;
@@ -28,13 +29,11 @@ import retrofit2.Response;
 
 public class NotificationActivity extends BaseActivity {
 
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+    @BindView(R.id.list)
+    LoadMoreListView listView;
 
     NotificationAdapter adapter;
     List<NotificationInfo> notificationInfos;
-    EndlessRecyclerViewScrollListener scrollListener;
-
     int page = 1;
 
     @Override
@@ -47,17 +46,11 @@ public class NotificationActivity extends BaseActivity {
 
         notificationInfos = new ArrayList<>();
         adapter = new NotificationAdapter(notificationInfos, this);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager mLayoutManager  = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
+        listView.setAdapter(adapter);
 
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view, int position) {
-
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 NotificationInfo info = notificationInfos.get(position);
 
                 Intent intent = commons.createIntent(NotificationActivity.this, NotificationDetailActivity.class);
@@ -67,30 +60,22 @@ public class NotificationActivity extends BaseActivity {
                 startActivity(intent);
                 notificationInfos.get(position).setIsRead(1);
                 adapter.notifyDataSetChanged();
-
-
             }
+        });
 
+        listView.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
             @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
-
-        // Retain an instance so that you can call `resetState()` for fresh searches
-        scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+            public void onLoadMore() {
                 makeRequest();
             }
-        };
-        // Adds the scroll listener to RecyclerView
-        recyclerView.addOnScrollListener(scrollListener);
+        });
+
         makeRequest();
     }
 
 
     void makeRequest() {
+
         showpDialog();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
@@ -105,8 +90,14 @@ public class NotificationActivity extends BaseActivity {
                         for(NotificationInfo info : response.body().getData()) {
                             notificationInfos.add(info);
                         }
+
                         adapter.notifyDataSetChanged();
+                        listView.onLoadMoreComplete();
+                    } else {
+                        listView.onLoadMoreComplete();
+                        listView.setOnLoadMoreListener(null);
                     }
+
                 }
 
                 hidepDialog();

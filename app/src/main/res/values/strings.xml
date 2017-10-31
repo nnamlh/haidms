@@ -30,7 +30,7 @@
     <string name="title_activity_product_manage">Quản lý sản phẩm</string>
     <string name="title_activity_product_scan">ProductScanActivity</string>
     <string name="title_activity_main_agency">DMS HAI</string>
-    <string name="title_activity_notification">Tin nhắn</string>
+    <string name="title_activity_notification">Thông báo</string>
     <string name="title_activity_notification_detail">Chi tiết</string>
     <string name="title_activity_show_order">Đơn hàng</string>
     <string name="title_activity_complete_order">Đặt hàng</string>
@@ -50,5 +50,7 @@
     <string name="title_activity_your_orders">YourOrdersActivity</string>
     <string name="title_activity_c1_order">Đơn hàng</string>
     <string name="title_activity_c2_of_c1">Danh sách cấp 2</string>
+    <string name="title_activity_c1_order_product">Chi tiết đơn hàng</string>
+    <string name="title_activity_c1_order_product_history">Chi tiết giao hàng</string>
 
 </resources>

@@ -238,6 +238,14 @@
         <activity
             android:name=".Agency.C2OfC1Activity"
             android:label="@string/title_activity_c2_of_c1"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".manageorders.C1OrderProductActivity"
+            android:label="@string/title_activity_c1_order_product"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".manageorders.C1OrderProductHistoryActivity"
+            android:label="@string/title_activity_c1_order_product_history"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

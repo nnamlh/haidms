@@ -55,18 +55,20 @@
         android:fontFamily="sans-serif-light"
         android:inputType="textNoSuggestions"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#333333"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <Button
+        android:layout_width="70dp"
+        android:layout_height="35dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/white"
+        android:text="XEM"
+        android:onClick="makeRequest"
+        android:background="@drawable/btn_checkin"/>
+
+    <com.congtyhai.view.LoadMoreListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:clipToPadding="false"
         android:scrollbars="vertical" />
 
