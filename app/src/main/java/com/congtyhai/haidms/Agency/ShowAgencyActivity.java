@@ -21,8 +21,11 @@ import android.widget.ArrayAdapter;
 
 import com.congtyhai.adapter.AgencyAdapter;
 import com.congtyhai.haidms.BaseActivity;
+import com.congtyhai.haidms.MainActivity;
 import com.congtyhai.haidms.R;
+import com.congtyhai.haidms.showinfo.ShowProductActivity;
 import com.congtyhai.model.api.AgencyInfo;
+import com.congtyhai.model.app.C2Info;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.DividerItemDecoration;
 import com.congtyhai.view.RecyclerTouchListener;
@@ -59,10 +62,6 @@ public class ShowAgencyActivity extends BaseActivity {
 
         Intent intent = getIntent();
         codeRequest = intent.getStringExtra(HAIRes.getInstance().KEY_INTENT_ACTION);
-
-        agencyList = new ArrayList<>();
-        agencyListTemp = new ArrayList<>();
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +69,14 @@ public class ShowAgencyActivity extends BaseActivity {
                 commons.startActivity(ShowAgencyActivity.this, AddAgencyActivity.class);
             }
         });
+
+        if(!"".equals(codeRequest)) {
+
+            fab.setVisibility(View.GONE);
+        }
+
+        agencyList = new ArrayList<>();
+        agencyListTemp = new ArrayList<>();
 
         mAdapter = new AgencyAdapter(agencyList);
         recyclerView.setHasFixedSize(true);
@@ -82,14 +89,27 @@ public class ShowAgencyActivity extends BaseActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-
+                AgencyInfo info =  agencyList.get(position);
                 HAIRes.getInstance().currentAgencySelect = agencyList.get(position);
                 if (codeRequest.equals("stafforder")) {
                     Intent intentResult = getIntent();
                     intentResult.putExtra("code", agencyList.get(position).getCode());
                     setResult(Activity.RESULT_OK,intentResult);
                     finish();
-                } else {
+                } else if (codeRequest.equals("createorder")) {
+                    HAIRes.getInstance().inOder = 1;
+                    HAIRes.getInstance().CurrentAgency = info.getCode();
+                    C2Info c2Info = new C2Info();
+                    c2Info.setCode(info.getCode());
+                    c2Info.setDeputy(info.getDeputy());
+                    c2Info.setStore(info.getName());
+                    c2Info.setC1(info.getC1());
+
+                    HAIRes.getInstance().c2Select = c2Info;
+
+                    commons.startActivity(ShowAgencyActivity.this, ShowProductActivity.class);
+                }
+                else {
                     Intent intent = commons.createIntent(ShowAgencyActivity.this, ShowAgencyDetailActivity.class);
                     startActivityForResult(intent, SHOW_DETAIL_AGENCY);
                 }

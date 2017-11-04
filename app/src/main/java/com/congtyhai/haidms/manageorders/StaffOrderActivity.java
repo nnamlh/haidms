@@ -47,6 +47,8 @@ public class StaffOrderActivity extends BaseActivity {
 
     int GET_C2_CODE = 2;
 
+    int CREATE_ORDER = 3;
+
     @BindView(R.id.list)
     LoadMoreListView listView;
 
@@ -60,13 +62,14 @@ public class StaffOrderActivity extends BaseActivity {
         setContentView(R.layout.activity_staff_order);
         createToolbar();
         ButterKnife.bind(this);
-
+        HAIRes.getInstance().clearProductOrder();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = commons.createIntent(StaffOrderActivity.this, ShowAgencyActivity.class);
+                intent.putExtra(HAIRes.getInstance().KEY_INTENT_ACTION, "createorder");
+                startActivityForResult(intent, CREATE_ORDER);
             }
         });
 
@@ -189,6 +192,10 @@ public class StaffOrderActivity extends BaseActivity {
             if (resultCode == Activity.RESULT_CANCELED) {
 
             }
+        }
+
+        if(requestCode == CREATE_ORDER) {
+
         }
     }
 
