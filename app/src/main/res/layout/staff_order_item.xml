@@ -39,10 +39,28 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:textColor="#000000"
+        android:id="@+id/createdate"
+        android:layout_marginTop="5dp"
+        android:text="Ngày tạo: 21/2/2013" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
         android:id="@+id/expectdate"
         android:layout_marginTop="5dp"
-        android:text="Ngày muốn giao: 21/2/2013" />
+        android:text="Đề nghị giao: 21/2/2013" />
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:id="@+id/estatus"
+        android:textStyle="italic"
+        android:layout_marginTop="5dp"
+        android:text="Đang liên hệ" />
 
 </LinearLayout>

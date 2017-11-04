@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -49,6 +51,19 @@ public class C1OrderProductHistoryActivity extends BaseActivity {
 
     C1OrderProductUpdateSend infoSend;
 
+    int quantityOrder;
+
+    int quantityFinish;
+
+    String unit;
+
+    @BindView(R.id.ename)
+    EditText eName;
+    @BindView(R.id.equantity)
+    EditText eQuantity;
+    @BindView(R.id.efinish)
+    EditText eFinish;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,8 +81,23 @@ public class C1OrderProductHistoryActivity extends BaseActivity {
 
         quantityBox = intent.getIntExtra("quantityBox", 0);
 
+        quantityOrder = intent.getIntExtra("quantityOrder", 0);
+
+        quantityFinish = intent.getIntExtra("quantityFinish", 0);
+
+        String product = intent.getStringExtra("product");
+
+        unit = intent.getStringExtra("unit");
+
+        eName.setText(product);
+
+        eQuantity.setText(commons.getOrderDetailText(quantityBox, quantityOrder,unit ));
+        eFinish.setText(commons.getOrderDetailText(quantityBox, quantityFinish, unit));
+
+
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
+
 
         infoSend.setOrderId(orderId);
         infoSend.setProductId(productId);
@@ -100,6 +130,8 @@ public class C1OrderProductHistoryActivity extends BaseActivity {
                     if (response.body().getId().equals("1")){
                         commons.makeToast(C1OrderProductHistoryActivity.this, "Cập nhật thành công").show();
                         isUpdate = true;
+                        quantityFinish+=infoSend.getQuantity();
+                        eFinish.setText(commons.getOrderDetailText(quantityBox, quantityFinish, unit));
                         makeRequest();
                     }else {
                         commons.showAlertInfo(C1OrderProductHistoryActivity.this, "Cảnh báo", response.body().getMsg(), new DialogInterface.OnClickListener() {
@@ -129,6 +161,44 @@ public class C1OrderProductHistoryActivity extends BaseActivity {
       //  eBox.setText("" + countBox);
         final  EditText eNotes = (EditText) viewDialog.findViewById(R.id.enotes) ;
 
+        eCan.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(TextUtils.isEmpty(eCan.getText().toString())) {
+                    eCan.setText("0");
+                }
+            }
+        });
+
+        eBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(TextUtils.isEmpty(eBox.getText().toString())) {
+                    eBox.setText("0");
+                }
+            }
+        });
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Thao tác");
         builder.setMessage("Nhập số lượng giao hàng");
@@ -146,11 +216,14 @@ public class C1OrderProductHistoryActivity extends BaseActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (!TextUtils.isEmpty(eCan.getText().toString()) && !TextUtils.isEmpty(eBox.getText().toString())) {
                     try{
-                        int quantityCan  = Integer.parseInt(eCan.getText().toString());
-                        int quantityBox = Integer.parseInt(eBox.getText().toString());
-                        int quantity = quantityBox + quantityBox*quantityCan;
-                        infoSend.setQuantity(quantity);
+                        int can  = Integer.parseInt(eCan.getText().toString());
+                        int box = Integer.parseInt(eBox.getText().toString());
+
+                        int sum = box + quantityBox*can;
+                        infoSend.setQuantity(sum);
+
                         infoSend.setNotes(eNotes.getText().toString());
+
                         makeUpdate();
 
                     }catch (Exception e) {

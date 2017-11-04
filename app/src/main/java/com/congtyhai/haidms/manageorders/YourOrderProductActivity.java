@@ -1,6 +1,5 @@
 package com.congtyhai.haidms.manageorders;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,14 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import com.congtyhai.adapter.C1OrderProductAdapter;
+import com.congtyhai.adapter.YourOrderProductAdapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.order.C1OrderInfo;
 import com.congtyhai.model.api.order.OrderProductResult;
+import com.congtyhai.model.api.order.YourOrderInfo;
 import com.congtyhai.util.HAIRes;
 
 import java.util.ArrayList;
@@ -28,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class C1OrderProductActivity extends BaseActivity {
+public class YourOrderProductActivity extends BaseActivity {
 
     @BindView(R.id.ecode)
     EditText eCode;
@@ -41,22 +43,21 @@ public class C1OrderProductActivity extends BaseActivity {
     @BindView(R.id.list)
     ListView listView;
 
-    C1OrderProductAdapter adapter;
+    YourOrderProductAdapter adapter;
 
     List<OrderProductResult> orderProducts;
 
-    C1OrderInfo info;
+    YourOrderInfo info;
 
-    int RESULT_CODE = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_c1_order_product);
+        setContentView(R.layout.activity_your_order_product);
         createToolbar();
         ButterKnife.bind(this);
 
-        info = HAIRes.getInstance().C1OrderInfo;
+        info = HAIRes.getInstance().yourOrderInfo;
 
         eCode.setText(info.getCode());
 
@@ -67,40 +68,24 @@ public class C1OrderProductActivity extends BaseActivity {
         ePhone.setText(info.getPhone());
 
         orderProducts = new ArrayList<>();
-        adapter = new C1OrderProductAdapter(orderProducts, this);
+
+        adapter = new YourOrderProductAdapter(orderProducts, this);
+
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 OrderProductResult info = orderProducts.get(i);
-                Intent intent = commons.createIntent(C1OrderProductActivity.this, C1OrderProductHistoryActivity.class);
-                intent.putExtra("orderId", info.getOrderId());
-                intent.putExtra("productId", info.getProductId());
-                intent.putExtra("quantityBox", info.getQuantityBox());
-                intent.putExtra("quantityOrder", info.getQuantity());
-                intent.putExtra("quantityFinish", info.getQuantityFinish());
-                intent.putExtra("product", info.getProductName());
-                intent.putExtra("unit", info.getUnit());
-                startActivityForResult(intent, RESULT_CODE);
+                Intent intent = commons.createIntent(YourOrderProductActivity.this, YourOrderProductHistoryActivity.class);
+                HAIRes.getInstance().orderProductResult = info;
+                startActivity(intent);
             }
         });
 
         makeRequest();
+
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == RESULT_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                makeRequest();
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-
-            }
-        }
-    }
-
     private void makeRequest(){
 
         orderProducts.clear();
@@ -108,7 +93,7 @@ public class C1OrderProductActivity extends BaseActivity {
 
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
 
-        Call<List<OrderProductResult>> call = apiInterface().c1OrderProduct(user, info.getOrderId());
+        Call<List<OrderProductResult>> call = apiInterface().yourOrderProduct(user, info.getOrderId());
 
         call.enqueue(new Callback<List<OrderProductResult>>() {
             @Override

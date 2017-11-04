@@ -52,5 +52,9 @@
     <string name="title_activity_c2_of_c1">Danh sách cấp 2</string>
     <string name="title_activity_c1_order_product">Chi tiết đơn hàng</string>
     <string name="title_activity_c1_order_product_history">Chi tiết giao hàng</string>
+    <string name="title_activity_staff_order">Danh sách đơn hàng</string>
+    <string name="title_activity_your_order_product">Chi tiết đơn hàng</string>
+    <string name="title_activity_your_order_product_history">Chi tiết giao hàng
+    </string>
 
 </resources>

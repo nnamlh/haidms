@@ -1,5 +1,6 @@
 package com.congtyhai.haidms.Agency;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -47,12 +48,17 @@ public class ShowAgencyActivity extends BaseActivity {
     AlertDialog.Builder builderSingle;
     private List<Integer> groups;
 
+    String codeRequest = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_agency);
         ButterKnife.bind(this);
         createToolbar();
+
+        Intent intent = getIntent();
+        codeRequest = intent.getStringExtra(HAIRes.getInstance().KEY_INTENT_ACTION);
 
         agencyList = new ArrayList<>();
         agencyListTemp = new ArrayList<>();
@@ -76,9 +82,19 @@ public class ShowAgencyActivity extends BaseActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
+
                 HAIRes.getInstance().currentAgencySelect = agencyList.get(position);
-                Intent intent = commons.createIntent(ShowAgencyActivity.this, ShowAgencyDetailActivity.class);
-                startActivityForResult(intent, SHOW_DETAIL_AGENCY);
+                if (codeRequest.equals("stafforder")) {
+                    Intent intentResult = getIntent();
+                    intentResult.putExtra("code", agencyList.get(position).getCode());
+                    setResult(Activity.RESULT_OK,intentResult);
+                    finish();
+                } else {
+                    Intent intent = commons.createIntent(ShowAgencyActivity.this, ShowAgencyDetailActivity.class);
+                    startActivityForResult(intent, SHOW_DETAIL_AGENCY);
+                }
+
+
             }
 
             @Override

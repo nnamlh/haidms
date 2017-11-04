@@ -9,6 +9,8 @@ import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.model.api.ProductOrder;
 import com.congtyhai.model.api.ResultEventInfo;
 import com.congtyhai.model.api.order.C1OrderInfo;
+import com.congtyhai.model.api.order.OrderProductResult;
+import com.congtyhai.model.api.order.YourOrderInfo;
 import com.congtyhai.model.app.C2Info;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -49,6 +51,7 @@ public class HAIRes {
     public final String KEY_INTENT_MONTH = "monthselect";
     public final String KEY_INTENT_YEAR = "yearselect";
     public final String KEY_SCREEN_KEY_SCAN = "ScreenKey";
+    public final String KEY_INTENT_ACTION = "actionrequest";
     public String CurrentAgency ;
     private CalendarDayCreate calendarDayCreate;
   //  private List<CalendarStatus> calendarStatuses;
@@ -354,4 +357,8 @@ public class HAIRes {
 
     // order
     public C1OrderInfo C1OrderInfo;
+
+    public YourOrderInfo yourOrderInfo;
+
+    public OrderProductResult orderProductResult;
 }
