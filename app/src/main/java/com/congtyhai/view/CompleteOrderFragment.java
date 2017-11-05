@@ -198,6 +198,6 @@ public class CompleteOrderFragment extends Fragment implements DatePickerDialog.
     }
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-        eDate.setText(day + "/" +  month + "/" + year);
+        eDate.setText(day + "/" +  (month + 1) + "/" + year);
     }
 }

@@ -102,6 +102,7 @@ public class CheckInTaskActivity extends BaseActivity {
                     startActivity(intentDecor);
                 } else if (taskInfo.getCode().equals("ordertask")) {
                     HAIRes.getInstance().inOder = 1;
+                    HAIRes.getInstance().CREATE_ORDER_TYPE = 1;
                     commons.startActivity(CheckInTaskActivity.this, ShowProductActivity.class);
                     //  showProductIntent.putExtra(HAIRes.getInstance().KEY_INTENT_ORDER, 1);
                     //  startActivity(showProductIntent);

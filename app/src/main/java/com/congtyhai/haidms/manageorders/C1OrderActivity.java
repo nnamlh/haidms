@@ -123,7 +123,7 @@ public class C1OrderActivity extends BaseActivity {
     private void makeRequest() {
 
         showpDialog();
-        c1OrderInfos.clear();
+
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
 
@@ -201,7 +201,8 @@ public class C1OrderActivity extends BaseActivity {
                     eC2.setText("Tất cả");
                     if (!"".equals(c2Choose)) {
                         c2Choose = "";
-                        page = 0;
+                        page = 1;
+                        c1OrderInfos.clear();
                         makeRequest();
 
                     }
@@ -225,6 +226,8 @@ public class C1OrderActivity extends BaseActivity {
                 String name = data.getStringExtra("name");
                 eC2.setText(name);
                 c2Choose = code;
+                c1OrderInfos.clear();
+                makeRequest();
             }
             if (resultCode == Activity.RESULT_CANCELED) {
 

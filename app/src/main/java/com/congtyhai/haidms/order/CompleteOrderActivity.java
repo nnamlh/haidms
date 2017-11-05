@@ -105,8 +105,6 @@ public class CompleteOrderActivity extends BaseActivity {
         });
     }
 
-
-
     //
     public  void makeUpdate( String address, String phone, String note, String shipType, String payType, String timeSuggest) {
         showpDialog();
@@ -131,7 +129,7 @@ public class CompleteOrderActivity extends BaseActivity {
         info.setShipType(shipType);
         info.setPayType(payType);
         info.setTimeSuggest(timeSuggest);
-        info.setInCheckIn(1);
+        info.setInCheckIn(HAIRes.getInstance().CREATE_ORDER_TYPE);
 
         Call<ResultInfo> call = apiInterface().orderComplete(info);
         call.enqueue(new Callback<ResultInfo>() {

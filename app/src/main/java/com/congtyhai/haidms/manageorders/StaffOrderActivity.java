@@ -94,6 +94,7 @@ public class StaffOrderActivity extends BaseActivity {
                 YourOrderInfo info = staffOrderInfos.get(i);
 
                 HAIRes.getInstance().yourOrderInfo = info;
+                HAIRes.getInstance().CREATE_ORDER_TYPE = 0;
                 commons.startActivity(StaffOrderActivity.this, YourOrderProductActivity.class);
 
             }
@@ -105,7 +106,7 @@ public class StaffOrderActivity extends BaseActivity {
     private void makeRequest() {
 
         showpDialog();
-        staffOrderInfos.clear();
+
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
 
@@ -160,10 +161,13 @@ public class StaffOrderActivity extends BaseActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if (which == 0) {
                     if (!c2Choose.equals("")) {
-                        c2Choose = "";
-                        page = 1;
-                        makeRequest();
+
                     }
+
+                    c2Choose = "";
+                    page = 1;
+                    staffOrderInfos.clear();
+                    makeRequest();
 
                 } else {
                     Intent intent = commons.createIntent(StaffOrderActivity.this, ShowAgencyActivity.class);
@@ -186,6 +190,7 @@ public class StaffOrderActivity extends BaseActivity {
                 if(!c2Choose.equals(code)) {
                     c2Choose = code;
                     page = 1;
+                    staffOrderInfos.clear();
                     makeRequest();
                 }
             }

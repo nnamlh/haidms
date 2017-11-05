@@ -22,6 +22,7 @@ import com.congtyhai.haidms.Event.EventActivity;
 import com.congtyhai.haidms.Util.NotificationActivity;
 import com.congtyhai.haidms.calendar.StaffCalendarActivity;
 import com.congtyhai.haidms.manageorders.C1OrderActivity;
+import com.congtyhai.haidms.manageorders.YourOrdersActivity;
 import com.congtyhai.haidms.product.ProductTaskActivity;
 import com.congtyhai.haidms.showinfo.CheckStaffActivity;
 import com.congtyhai.haidms.showinfo.ShowBranchActivity;
@@ -29,6 +30,7 @@ import com.congtyhai.haidms.showinfo.ShowProductActivity;
 import com.congtyhai.model.Realm.DTopicFirebase;
 import com.congtyhai.model.api.MainAgencyInfoResult;
 import com.congtyhai.model.api.MainInfoSend;
+import com.congtyhai.model.api.order.C2OrderShowSend;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.util.RealmController;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -228,6 +230,10 @@ public class MainAgencyActivity extends BaseActivity
             String type = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TYPE, "");
             if ("CI".equals(type)){
                 commons.startActivity(MainAgencyActivity.this, C1OrderActivity.class);
+            } else if ("CII".equals(type)) {
+                commons.startActivity(MainAgencyActivity.this, YourOrdersActivity.class);
+
+
             }
         } else if (id == R.id.nav_list_c2) {
             commons.startActivity(MainAgencyActivity.this, C2OfC1Activity.class);

@@ -361,4 +361,6 @@ public class HAIRes {
     public YourOrderInfo yourOrderInfo;
 
     public OrderProductResult orderProductResult;
+
+    public int CREATE_ORDER_TYPE = 0;
 }
