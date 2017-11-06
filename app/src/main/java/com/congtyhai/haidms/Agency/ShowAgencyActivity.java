@@ -91,12 +91,12 @@ public class ShowAgencyActivity extends BaseActivity {
             public void onClick(View view, int position) {
                 AgencyInfo info =  agencyList.get(position);
                 HAIRes.getInstance().currentAgencySelect = agencyList.get(position);
-                if (codeRequest.equals("stafforder")) {
+                if ("stafforder".equals(codeRequest)) {
                     Intent intentResult = getIntent();
                     intentResult.putExtra("code", agencyList.get(position).getCode());
                     setResult(Activity.RESULT_OK,intentResult);
                     finish();
-                } else if (codeRequest.equals("createorder")) {
+                } else if ("createorder".equals(codeRequest)) {
                     HAIRes.getInstance().inOder = 1;
                     HAIRes.getInstance().CurrentAgency = info.getCode();
                     C2Info c2Info = new C2Info();

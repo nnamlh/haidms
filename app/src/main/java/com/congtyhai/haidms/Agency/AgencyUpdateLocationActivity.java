@@ -94,7 +94,7 @@ public class AgencyUpdateLocationActivity extends BaseActivity implements OnMapR
     };
     private MagicalPermissions magicalPermissions;
     MagicalCamera magicalCamera;
-    private int RESIZE_PHOTO_PIXELS_PERCENTAGE = 50;
+    private int RESIZE_PHOTO_PIXELS_PERCENTAGE = 30;
 
     String path = "";
 
