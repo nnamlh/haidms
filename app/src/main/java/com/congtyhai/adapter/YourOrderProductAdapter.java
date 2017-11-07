@@ -65,7 +65,7 @@ public class YourOrderProductAdapter extends BaseAdapter {
 
         txtFinish.setText("Đã giao: " + getOrderDetailText(info.getQuantityBox(), info.getQuantityFinish(), info.getUnit()));
 
-        txtC1.setText("Nơi bán: " + info.getC1Store());
+        txtC1.setText("Nơi bán: " + info.getC1Store() + " ( " + info.getC1Code() + " )");
 
 
         return view;

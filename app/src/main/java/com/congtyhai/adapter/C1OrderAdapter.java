@@ -57,7 +57,7 @@ public class C1OrderAdapter extends BaseAdapter{
         C1OrderInfo info = c1OrderInfos.get(position);
 
         code.setText(info.getCode());
-        agency.setText(info.getC2Name());
+        agency.setText(info.getC2Name() + "( " + info.getC2Code() + " )" );
         count.setText(info.getProductCount() + " sản phẩm");
         date.setText("Ngày đề nghị giao: " + info.getDateSuggest());
 

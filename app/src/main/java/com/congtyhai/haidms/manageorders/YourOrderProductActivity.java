@@ -61,7 +61,7 @@ public class YourOrderProductActivity extends BaseActivity {
 
         eCode.setText(info.getCode());
 
-        eStore.setText(info.getC2Name());
+        eStore.setText(info.getC2Name() + " ( " + info.getC2Code() + " )");
 
         eAddress.setText(info.getAddress());
 

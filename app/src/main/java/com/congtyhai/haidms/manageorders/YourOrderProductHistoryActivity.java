@@ -78,7 +78,7 @@ public class YourOrderProductHistoryActivity extends BaseActivity {
         eQuantity.setText(commons.getOrderDetailText(orderProductResult.getQuantityBox(), orderProductResult.getQuantity(),unit ));
         eFinish.setText(commons.getOrderDetailText(orderProductResult.getQuantityBox(), orderProductResult.getQuantityFinish(), unit));
 
-        eC1.setText(orderProductResult.getC1Store());
+        eC1.setText(orderProductResult.getC1Store() + " ( " + orderProductResult.getC1Code() + " )");
 
         eC1Phone.setText(orderProductResult.getC1Phone());
 
