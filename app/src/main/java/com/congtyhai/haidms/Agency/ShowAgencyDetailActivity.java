@@ -106,7 +106,6 @@ public class ShowAgencyDetailActivity extends BaseActivity {
         eCode.setText(HAIRes.getInstance().currentAgencySelect.getCode());
         eSotre.setText(HAIRes.getInstance().currentAgencySelect.getName());
         eDeputy.setText(HAIRes.getInstance().currentAgencySelect.getDeputy());
-        eC1.setText(HAIRes.getInstance().currentAgencySelect.getC1Id());
         eIdentityCard.setText(HAIRes.getInstance().currentAgencySelect.getIdentityCard());
         eBusinessLicene.setText(HAIRes.getInstance().currentAgencySelect.getBusinessLicense());
         ePhone.setText(HAIRes.getInstance().currentAgencySelect.getPhone());

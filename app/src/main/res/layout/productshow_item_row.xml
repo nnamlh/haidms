@@ -38,14 +38,38 @@
         android:textSize="14dp" />
 
     <TextView
-        android:id="@+id/describe"
+        android:id="@+id/quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/group"
         android:layout_marginTop="3dp"
         android:layout_toRightOf="@id/image"
         android:fontFamily="sans-serif-light"
-        android:text="Hoặt chất: abc"
+        android:text="Quy cách: 100 Giói/thùng"
+        android:textColor="#000000"
+        android:textSize="14dp" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/quantity"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@id/image"
+        android:fontFamily="sans-serif-light"
+        android:text="Giá bán lẽ: 100 Giói/thùng"
+        android:textColor="#000000"
+        android:textSize="14dp" />
+
+    <TextView
+        android:id="@+id/pricebox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/price"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@id/image"
+        android:fontFamily="sans-serif-light"
+        android:text="Giá thùng: 100 Giói/thùng"
         android:textColor="#000000"
         android:textSize="14dp" />
 
@@ -56,7 +80,7 @@
         android:id="@+id/btndetail"
         android:textSize="10dp"
         android:layout_marginTop="5dp"
-        android:layout_below="@id/describe"
+        android:layout_below="@id/pricebox"
         android:layout_alignParentBottom="true"
         android:textColor="#007DC6"
         android:layout_toRightOf="@id/image"
@@ -70,7 +94,7 @@
         android:textSize="10dp"
         android:visibility="gone"
         android:layout_marginTop="5dp"
-        android:layout_below="@id/describe"
+        android:layout_below="@id/pricebox"
         android:textColor="#007DC6"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/btndetail"
@@ -84,7 +108,7 @@
         android:id="@+id/imgcheck"
         android:visibility="gone"
         android:layout_marginTop="5dp"
-        android:layout_below="@id/describe"
+        android:layout_below="@id/pricebox"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/btndetail"
         android:layout_marginLeft="20dp"/>

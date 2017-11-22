@@ -32,9 +32,6 @@ public class AgencyInfo {
     @SerializedName("phone")
     private String phone;
 
-    @SerializedName("c1Id")
-    private String c1Id;
-
     @SerializedName("rank")
     private String rank;
 
@@ -105,14 +102,6 @@ public class AgencyInfo {
 
     public void setBusinessLicense(String businessLicense) {
         this.businessLicense = businessLicense;
-    }
-
-    public String getC1Id() {
-        return c1Id;
-    }
-
-    public void setC1Id(String c1Id) {
-        this.c1Id = c1Id;
     }
 
     public String getRank() {

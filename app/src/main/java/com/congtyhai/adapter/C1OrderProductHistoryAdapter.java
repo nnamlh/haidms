@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.order.OrderProductHistory;
+import com.congtyhai.util.HAIRes;
 
 import java.util.List;
 
@@ -59,25 +60,11 @@ public class C1OrderProductHistoryAdapter extends BaseAdapter {
 
         eDate.setText(info.getDate());
         eNotes.setText("Ghi chú: " + info.getNotes());
-        eQuantity.setText("SL giao: " + getOrderDetailText(info.getQuantityBox(),  info.getQuantity(), info.getUnit()));
+        eQuantity.setText("SL giao: " + HAIRes.getInstance().getOrderQuantityDetailText(info.getQuantityBox(),  info.getQuantity(), info.getUnit()));
 
         return view;
     }
 
-    private String getOrderDetailText(int box, int quantity, String unit) {
-        int countCan = quantity / box;
-        int countBox = quantity - countCan*box;
 
-        if (countCan == 0) {
-            return countBox + " " + unit;
-        }
-
-        if (countBox == 0) {
-            return countCan + " thùng";
-        }
-
-        return countCan + " thùng " + countBox + " " + unit;
-
-    }
 
 }

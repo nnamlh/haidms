@@ -275,7 +275,7 @@ public class ShowAgencyActivity extends BaseActivity {
         agencyList.clear();
 
         for(AgencyInfo info: agencyListTemp) {
-            if (info.getCode().contains(query)){
+            if (info.getCode().contains(query) || info.getName().contains(query) || info.getDeputy().contains(query)){
                 agencyList.add(info);
             }
         }

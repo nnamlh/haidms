@@ -51,7 +51,9 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
         final ProductCodeInfo productCodeInfo = productCodeInfos.get(position);
         holder.name.setText(productCodeInfo.getName());
         holder.group.setText(productCodeInfo.getGroupName());
-        holder.describe.setText(productCodeInfo.getShort_describe());
+        holder.quantity.setText("Quy cách: " + productCodeInfo.getQuantity_box() + " " + productCodeInfo.getUnit() + " /thùng");
+        holder.price.setText("Giá bán lẽ: " + HAIRes.getInstance().formatMoneyToText(productCodeInfo.getPrice()));
+        holder.pricebox.setText("Giá thùng: " + HAIRes.getInstance().formatMoneyToText(productCodeInfo.getPrice() * productCodeInfo.getQuantity_box()));
 
         Glide.with(activity).load(productCodeInfo.getImage())
                 .thumbnail(0.5f)
@@ -108,14 +110,16 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, group, describe;
+        public TextView name, group, quantity, price, pricebox;
         public ImageView image, imgCheck;
         public Button btnOrder, btnDetail;
 
         public MyViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.name);
-            describe = (TextView) view.findViewById(R.id.describe);
+            quantity = (TextView) view.findViewById(R.id.quantity);
+            price = (TextView) view.findViewById(R.id.price);
+            pricebox = (TextView) view.findViewById(R.id.pricebox);
             group = (TextView) view.findViewById(R.id.group);
             image = (ImageView) view.findViewById(R.id.image);
             btnOrder = (Button) view.findViewById(R.id.btnorder);

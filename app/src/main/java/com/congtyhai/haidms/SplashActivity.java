@@ -10,12 +10,17 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import com.congtyhai.haidms.login.LoginNameActivity;
 import com.congtyhai.model.api.ResultInfo;
 import com.congtyhai.util.HAIRes;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -56,7 +61,7 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                checkPermission();
+                checkAndRequestPermissions();
             }
 
             @Override
@@ -67,66 +72,50 @@ public class SplashActivity extends BaseActivity {
 
     }
 
-    private boolean checkSelf(String[] permiss) {
 
-        for (int i = 0; i < permiss.length; i++) {
-            if (ActivityCompat.checkSelfPermission(this, permiss[i]) != PackageManager.PERMISSION_GRANTED) {
-                return false;
+    private  void checkAndRequestPermissions() {
+
+        List<String> listPermissionsNeeded = new ArrayList<>();
+
+        List<String> listPermissionsHasDenies = new ArrayList<>();
+
+        for (int i = 0; i < permissionsRequired.length; i++) {
+            int permissCheck = ContextCompat.checkSelfPermission(this,
+                    permissionsRequired[i]);
+
+            if (permissCheck != PackageManager.PERMISSION_GRANTED) {
+                // check
+
+                boolean permissCheckRational = ActivityCompat.shouldShowRequestPermissionRationale(SplashActivity.this, permissionsRequired[i]);
+                if (permissCheckRational){
+                    listPermissionsHasDenies.add(permissionsRequired[i]);
+                } else {
+                    listPermissionsNeeded.add(permissionsRequired[i]);
+                }
             }
         }
+        if(!listPermissionsHasDenies.isEmpty()) {
+            commons.showAlertCancelHandle(SplashActivity.this, "Cho phép truy cập", "Bạn đã chặn một số quyền, để truy cập bạn phải cho phép tất cả quyền", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package", getPackageName(), null);
+                    intent.setData(uri);
+                    startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
+                }
+            }, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    finish();
+                }
+            });
 
-        return true;
-    }
-
-
-    private boolean checkShowRequestPermisstionRationale(String[] permiss) {
-
-        for (int i = 0; i < permiss.length; i++) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(SplashActivity.this, permiss[i])) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-
-    private void checkPermission() {
-
-        if (!checkSelf(permissionsRequired)) {
-
-            if (checkShowRequestPermisstionRationale(permissionsRequired)) {
-                commons.showAlertCancelHandle(SplashActivity.this, "Cho phép truy cập", "Ứng dụng cần cho phép truy cập một số tác vụ", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        ActivityCompat.requestPermissions(SplashActivity.this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT);
-                    }
-                }, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                });
-            } else {
-                commons.showAlertCancelHandle(SplashActivity.this, "Cho phép truy cập", "Bạn cần đồng ý cho phép quyền truy cập để có thể sử dụng chương trình", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        Uri uri = Uri.fromParts("package", getPackageName(), null);
-                        intent.setData(uri);
-                        startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
-                    }
-                }, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                });
-            }
-
+        } else if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),PERMISSION_CALLBACK_CONSTANT);
         } else {
             proceedAfterPermission();
         }
+
     }
 
 
@@ -146,26 +135,11 @@ public class SplashActivity extends BaseActivity {
             }
             if (allgranted) {
                 proceedAfterPermission();
-            } else if (checkShowRequestPermisstionRationale(permissionsRequired)) {
-                commons.showAlertCancelHandle(SplashActivity.this, "Cho phép truy cập", "Ứng dụng cần cho phép truy cập một số tác vụ", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        ActivityCompat.requestPermissions(SplashActivity.this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT);
-                    }
-                }, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                });
-            } else {
+            }  else {
                 commons.showAlertCancelHandle(SplashActivity.this, "Cho phép truy cập", "Bạn cần đồng ý cho phép quyền truy cập để có thể sử dụng chương trình", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        Uri uri = Uri.fromParts("package", getPackageName(), null);
-                        intent.setData(uri);
-                        startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
+                       checkAndRequestPermissions();
                     }
                 }, new DialogInterface.OnClickListener() {
                     @Override
@@ -263,7 +237,7 @@ public class SplashActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_PERMISSION_SETTING) {
-            checkPermission();
+            checkAndRequestPermissions();
         }
     }
 
@@ -274,8 +248,6 @@ public class SplashActivity extends BaseActivity {
                 String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, null);
                 String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, null);
                 if (TextUtils.isEmpty(token) || TextUtils.isEmpty(user)) {
-                    //commons.startActivity(SplashActivity.this, LoginNameActivity.class);
-                   // finish();
                     makeJsonRequest("none", "none");
                 } else {
                     makeJsonRequest(user, token);
@@ -288,7 +260,7 @@ public class SplashActivity extends BaseActivity {
     protected void onPostResume() {
         super.onPostResume();
         if (sentToSettings) {
-            checkPermission();
+            checkAndRequestPermissions();
         }
     }
 

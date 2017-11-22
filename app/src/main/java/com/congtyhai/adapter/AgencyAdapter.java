@@ -35,9 +35,9 @@ public class AgencyAdapter extends RecyclerView.Adapter<AgencyAdapter.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         AgencyInfo agency = agencyList.get(position);
-        holder.store.setText(agency.getName());
-        holder.deputy.setText(agency.getDeputy() + " - " + agency.getCode());
-        holder.address.setText(agency.getAddress());
+        holder.store.setText(agency.getName() + " - " + agency.getCode());
+        holder.deputy.setText(agency.getDeputy() );
+        holder.address.setText(agency.getAddress() + " ," + agency.getDistrict() + " ," + agency.getProvince());
         holder.phone.setText(agency.getPhone());
         holder.group.setText("Thuộc cụm: " + agency.getGroup());
         holder.rank.setText("Hạng: " + agency.getRank());

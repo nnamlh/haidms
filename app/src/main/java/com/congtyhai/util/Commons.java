@@ -63,7 +63,7 @@ public final class Commons {
         dialog.setIcon(R.mipmap.ic_logo);
         dialog.setTitle(tile)
                 .setMessage(content)
-                .setPositiveButton("Đồng ý", listener).setNegativeButton("Thôi", listener);
+                .setPositiveButton("Đồng ý", listener).setNegativeButton("Thôi", cancel);
 
         dialog.setCancelable(false);
         dialog.show();

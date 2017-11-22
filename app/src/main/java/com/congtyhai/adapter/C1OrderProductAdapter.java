@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.order.OrderProductResult;
+import com.congtyhai.util.HAIRes;
 
 import java.util.List;
 
@@ -60,27 +61,13 @@ public class C1OrderProductAdapter extends BaseAdapter{
 
         txtName.setText(info.getProductName());
 
-        txtQuantity.setText("SL đặt: " + getOrderDetailText(info.getQuantityBox(), info.getQuantity(), info.getUnit()));
+        txtQuantity.setText("SL đặt: " +  HAIRes.getInstance().getOrderQuantityDetailText(info.getQuantityBox(), info.getQuantity(), info.getUnit()));
 
-        txtFinish.setText("Đã giao: " + getOrderDetailText(info.getQuantityBox(), info.getQuantityFinish(), info.getUnit()));
+        txtFinish.setText("Đã giao: " +  HAIRes.getInstance().getOrderQuantityDetailText(info.getQuantityBox(), info.getQuantityFinish(), info.getUnit()));
 
         return view;
     }
 
-    private String getOrderDetailText(int box, int quantity, String unit) {
-        int countCan = quantity / box;
-        int countBox = quantity - countCan*box;
 
-        if (countCan == 0) {
-            return countBox + " " + unit;
-        }
-
-        if (countBox == 0) {
-            return countCan + " thùng";
-        }
-
-        return countCan + " thùng " + countBox + " " + unit;
-
-    }
 
 }
