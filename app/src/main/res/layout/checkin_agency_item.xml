@@ -23,10 +23,22 @@
         android:fontFamily="sans-serif-light"
         android:textColor="#000000"
         android:layout_below="@id/txtname"
-        android:id="@+id/txtcode"
+        android:id="@+id/txttype"
         android:layout_marginTop="10dp"
         android:text="Mã cấp 1"
         android:textSize="14dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
+        android:layout_below="@id/txttype"
+        android:id="@+id/txtinplan"
+        android:layout_marginTop="10dp"
+        android:text="Mã cấp 1"
+        android:textStyle="italic"
+        android:textSize="12dp" />
 
 
     <TextView
@@ -34,7 +46,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:textColor="#000000"
-        android:layout_below="@id/txtcode"
+        android:layout_below="@id/txtinplan"
         android:id="@+id/txtdistance"
         android:layout_marginTop="10dp"
         android:text="300 m"

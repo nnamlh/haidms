@@ -32,11 +32,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder>{
         holder.name.setText(taskInfo.getName());
         holder.notes.setText(taskInfo.getNotes());
 
+        /*
         if (taskInfo.getTime() != -1) {
             holder.time.setText( taskInfo.getTime() + " phút");
         } else {
             holder.time.setText("");
         }
+        */
+        holder.time.setText("");
 
         holder.image.setBackgroundResource(taskInfo.getImage());
 
@@ -44,12 +47,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder>{
             holder.notes.setText("Bạn đã ghé thăm");
         }
 
+        /*
         if(taskInfo.getTimeRemain() == 0) {
             holder.notes.setText("Kết thúc quy trình ghé thăm");
         } else
         if(taskInfo.getTimeRemain() != -1) {
             holder.notes.setText("Thời gian còn lại để kết thúc: " + taskInfo.getTimeRemain() + " phút");
-        }
+        }*/
+        holder.notes.setText("Kết thúc quy trình ghé thăm");
     }
 
     @Override

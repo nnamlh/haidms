@@ -21,6 +21,9 @@ public class CalendarShowAgency {
     @SerializedName("perform")
     private int perform ;
 
+    @SerializedName("ctypename")
+    private String ctypename;
+
 
     public String getDeputy() {
         return deputy;
@@ -68,5 +71,13 @@ public class CalendarShowAgency {
 
     public void setPerform(int perform) {
         this.perform = perform;
+    }
+
+    public String getCtypename() {
+        return ctypename;
+    }
+
+    public void setCtypename(String ctypename) {
+        this.ctypename = ctypename;
     }
 }

@@ -42,6 +42,7 @@ import com.congtyhai.model.api.ResultUpdate;
 import com.congtyhai.model.api.StaffHelpRequest;
 import com.congtyhai.model.api.TrackingResukt;
 import com.congtyhai.model.api.UpdateProductInfo;
+import com.congtyhai.model.api.checkin.CheckInOutPlanSend;
 import com.congtyhai.model.api.order.C1OrderProductUpdateSend;
 import com.congtyhai.model.api.order.C1OrderShowResult;
 import com.congtyhai.model.api.order.C1OrderShowSend;
@@ -98,6 +99,9 @@ public interface ApiInterface {
 
     @POST("checkin/checkingetplan")
     Call<CheckInGetPlanResult> checkInGetPlan(@Body CheckInGetPlanSend info);
+
+    @POST("checkin/checkinoutplan")
+    Call<ResultInfo> checkInOutPlan(@Body CheckInOutPlanSend info);
 
     // agency
     @GET("agency/getagencyc2")

@@ -15,6 +15,42 @@ public class CheckInAgencyInfo {
     private String deputy;
     private float distance;
     private List<AgencyC2C1> c1;
+    private String checkInType;
+    private String checkInName;
+    private int inPlan;
+    private int isShowType;
+
+    public String getCheckInType() {
+        return checkInType;
+    }
+
+    public void setCheckInType(String checkInType) {
+        this.checkInType = checkInType;
+    }
+
+    public String getCheckInName() {
+        return checkInName;
+    }
+
+    public void setCheckInName(String checkInName) {
+        this.checkInName = checkInName;
+    }
+
+    public int getInPlan() {
+        return inPlan;
+    }
+
+    public void setInPlan(int inPlan) {
+        this.inPlan = inPlan;
+    }
+
+    public int getIsShowType() {
+        return isShowType;
+    }
+
+    public void setIsShowType(int isShowType) {
+        this.isShowType = isShowType;
+    }
 
     public String getCode() {
         return code;
@@ -52,7 +88,7 @@ public class CheckInAgencyInfo {
 
     }
 
-    public List<AgencyC2C1> getC1() {
+   public List<AgencyC2C1> getC1() {
         return c1;
     }
 

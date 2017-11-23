@@ -29,6 +29,7 @@ public class CalendarDayShow {
         this.day = day;
     }
 
+
     public String getStatus() {
         return status;
     }
@@ -44,6 +45,7 @@ public class CalendarDayShow {
     public void setStatusName(String statusName) {
         this.statusName = statusName;
     }
+
 
     public String getNotes() {
         return notes;

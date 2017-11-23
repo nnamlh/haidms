@@ -2,6 +2,7 @@ package com.congtyhai.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,8 +39,13 @@ public class CalendarShowAgencyAdapter  extends   RecyclerView.Adapter<CalendarS
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         CalendarShowAgency agency = calendarShowAgencies.get(position);
-        holder.deputy.setText(agency.getDeputy() + " - " + agency.getCode());
-        holder.name.setText(agency.getName());
+       if(TextUtils.isEmpty(agency.getCode())) {
+           holder.name.setText("KHÔNG THĂM KHÁCH HÀNG");
+       } else {
+           holder.name.setText(agency.getName() + " - " + agency.getCode());
+       }
+
+        holder.calendar.setText(agency.getCtypename());
         if(agency.getPerform() == 1) {
             holder.imgCheck.setVisibility(View.VISIBLE);
         } else {
@@ -61,12 +67,12 @@ public class CalendarShowAgencyAdapter  extends   RecyclerView.Adapter<CalendarS
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView deputy, name, status;
+        public TextView calendar, name, status;
         public ImageView imgCheck;
 
         public MyViewHolder(View view) {
             super(view);
-            deputy = (TextView) view.findViewById(R.id.deputy);
+            calendar = (TextView) view.findViewById(R.id.calendar);
             name = (TextView) view.findViewById(R.id.name);
             status = (TextView) view.findViewById(R.id.status);
             imgCheck = (ImageView) view.findViewById(R.id.imgcheck);

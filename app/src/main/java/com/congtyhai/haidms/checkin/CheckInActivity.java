@@ -9,12 +9,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 
+import com.congtyhai.adapter.AgencyAdapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.AgencyInfo;
+import com.congtyhai.model.api.CalendarStatus;
 import com.congtyhai.model.api.CheckInGetPlanResult;
 import com.congtyhai.model.api.CheckInGetPlanSend;
+import com.congtyhai.model.api.ResultInfo;
+import com.congtyhai.model.api.checkin.AgencyCheckinInfo;
+import com.congtyhai.model.api.checkin.CheckInOutPlanSend;
 import com.congtyhai.model.app.C2Info;
 import com.congtyhai.model.app.CheckInAgencyInfo;
 import com.congtyhai.util.HAIRes;
@@ -23,6 +29,7 @@ import com.congtyhai.view.CheckInPlanFragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -34,9 +41,9 @@ public class CheckInActivity extends BaseActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private List<String> inPlans;
-    private List<String> outPlans;
+    private List<AgencyCheckinInfo> checkInLists;
     private List<AgencyInfo> agencyInfos;
+    private List<CalendarStatus> statuses;
     int SHOW_TASK = 1;
 
     @Override
@@ -44,11 +51,11 @@ public class CheckInActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_in);
         createToolbar();
-
+        statuses = new ArrayList<>();
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
-        inPlans = new ArrayList<>();
-        outPlans = new ArrayList<>();
+        checkInLists = new ArrayList<>();
+        // outPlans = new ArrayList<>();
         agencyInfos = new ArrayList<>();
         makeRequest();
 
@@ -75,8 +82,8 @@ public class CheckInActivity extends BaseActivity {
             @Override
             public void onResponse(Call<CheckInGetPlanResult> call, Response<CheckInGetPlanResult> response) {
                 if (response.body() != null) {
-                    inPlans.clear();
-                    outPlans.clear();
+                    checkInLists.clear();
+                    //   outPlans.clear();
                     if (response.body().getId().equals("0")) {
                         commons.showAlertInfo(CheckInActivity.this, "Cảnh báo", response.body().getMsg(), new DialogInterface.OnClickListener() {
                             @Override
@@ -85,8 +92,9 @@ public class CheckInActivity extends BaseActivity {
                             }
                         });
                     } else {
-                        inPlans = response.body().getInplan();
-                        outPlans = response.body().getOutplan();
+                        checkInLists = response.body().getCheckin();
+                        //outPlans = response.body().getOutplan();
+                        statuses = response.body().getStatus();
                         new ReadDataTask().execute();
                     }
                 }
@@ -113,6 +121,69 @@ public class CheckInActivity extends BaseActivity {
 
             }
         }
+    }
+
+    public void createOutPlan(final String code, final String cType, String cName) {
+       if (TextUtils.isEmpty(code)) {
+           commons.showAlertCancel(CheckInActivity.this, "Thông báo", "Bạn đang thêm lịch ngoài kế hoạch nhưng không ghé thăm khách hàng: " + cName , new DialogInterface.OnClickListener() {
+               @Override
+               public void onClick(DialogInterface dialogInterface, int i) {
+                    sendOutPlan(code, cType);
+               }
+           });
+       } else {
+           commons.showAlertCancel(CheckInActivity.this, "Thông báo", "Bạn đang thêm lịch ngoài kế hoạch : " + cName + ", cho khách hàng: " + code, new DialogInterface.OnClickListener() {
+               @Override
+               public void onClick(DialogInterface dialogInterface, int i) {
+                   sendOutPlan(code, cType);
+               }
+           });
+       }
+    }
+
+    private void sendOutPlan(String code, String cType) {
+        showpDialog();
+        String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
+        String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
+        CheckInOutPlanSend info = new CheckInOutPlanSend();
+        info.setCode(code);
+        info.setCtype(cType);
+        info.setToken(token);
+        info.setUser(user);
+        info.setLat(getCurrentLocation().getLatitude());
+        info.setLng(getCurrentLocation().getLongitude());
+
+        Call<ResultInfo> call = apiInterface().checkInOutPlan(info);
+        call.enqueue(new Callback<ResultInfo>() {
+            @Override
+            public void onResponse(Call<ResultInfo> call, Response<ResultInfo> response) {
+                if (response.body() != null) {
+                    if (response.body().getId().equals("1")) {
+                        commons.showAlertInfo(CheckInActivity.this, "Thông báo", "Đã tạo xong kế hoạch ngoài, vào tab DANH SÁCH GHÉ THĂM để thực hiện ghé thăm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                makeRequest();
+                            }
+                        });
+                    } else {
+                        commons.showAlertInfo(CheckInActivity.this, "Cảnh báo", response.body().getMsg(), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                    }
+                }
+
+                hidepDialog();
+            }
+
+            @Override
+            public void onFailure(Call<ResultInfo> call, Throwable t) {
+                commons.showToastDisconnect(CheckInActivity.this);
+                hidepDialog();
+            }
+        });
     }
 
     public void makeTask(final CheckInAgencyInfo info) {
@@ -172,63 +243,62 @@ public class CheckInActivity extends BaseActivity {
         List<CheckInAgencyInfo> checkInAgencyInfos = new ArrayList<>();
         double lat = getCurrentLocation().getLatitude();
         double lng = getCurrentLocation().getLongitude();
-        for (String item : inPlans) {
-            AgencyInfo info = findAgency(item);
-            if (info != null) {
-                CheckInAgencyInfo checkInAgencyInfo = new CheckInAgencyInfo();
-                checkInAgencyInfo.setDeputy(info.getDeputy());
-                checkInAgencyInfo.setCode(info.getCode());
-                checkInAgencyInfo.setName(info.getName());
-                checkInAgencyInfo.setC1(info.getC1());
-                float distabce = commons.distance(lat, lng, info.getLat(), info.getLng());
-                checkInAgencyInfo.setDistance(distabce);
-
-                checkInAgencyInfos.add(checkInAgencyInfo);
-            }
+        for (AgencyCheckinInfo item : checkInLists) {
+            CheckInAgencyInfo checkInAgencyInfo = new CheckInAgencyInfo();
+            checkInAgencyInfo.setDeputy(item.getDeputy());
+            checkInAgencyInfo.setCode(item.getCode());
+            checkInAgencyInfo.setName(item.getName());
+            checkInAgencyInfo.setCheckInName(item.getCname());
+            checkInAgencyInfo.setCheckInType(item.getCtype());
+            checkInAgencyInfo.setIsShowType(1);
+            checkInAgencyInfo.setInPlan(item.getInPlan());
+            float distabce = commons.distance(lat, lng, item.getLat(), item.getLng());
+            checkInAgencyInfo.setDistance(distabce);
+            checkInAgencyInfos.add(checkInAgencyInfo);
         }
         return checkInAgencyInfos;
     }
 
-    public List<CheckInAgencyInfo> getListCheckOutPlan() {
+    public List<CheckInAgencyInfo> getListCheckOutPlan(String search) {
         List<CheckInAgencyInfo> checkInAgencyInfos = new ArrayList<>();
         double lat = getCurrentLocation().getLatitude();
         double lng = getCurrentLocation().getLongitude();
         for (AgencyInfo item : agencyInfos) {
 
-            if (!outPlans.contains(item.getCode())) {
-                CheckInAgencyInfo checkInAgencyInfo = new CheckInAgencyInfo();
-                checkInAgencyInfo.setDeputy(item.getDeputy());
-                checkInAgencyInfo.setCode(item.getCode());
-                checkInAgencyInfo.setName(item.getName());
-                checkInAgencyInfo.setC1(item.getC1());
-                float distabce = commons.distance(lat, lng, item.getLat(), item.getLng());
-                checkInAgencyInfo.setDistance(distabce);
-
-                checkInAgencyInfos.add(checkInAgencyInfo);
-            }
-
+           if((item.getCode().contains(search) || item.getName().contains(search)) && !checkInPlan(item.getCode())) {
+               CheckInAgencyInfo checkInAgencyInfo = new CheckInAgencyInfo();
+               checkInAgencyInfo.setDeputy(item.getDeputy());
+               checkInAgencyInfo.setCode(item.getCode());
+               checkInAgencyInfo.setName(item.getName());
+               checkInAgencyInfo.setIsShowType(0);
+               float distabce = commons.distance(lat, lng, item.getLat(), item.getLng());
+               checkInAgencyInfo.setDistance(distabce);
+               checkInAgencyInfos.add(checkInAgencyInfo);
+           }
         }
         return checkInAgencyInfos;
     }
 
-    public AgencyInfo findAgency(String code) {
-        for (AgencyInfo agency : agencyInfos) {
-            if (agency.getCode().equals(code))
-                return agency;
+    private boolean checkInPlan(String code) {
+        for(AgencyCheckinInfo item : checkInLists) {
+            if(item.getCode().equals(code)) {
+                return  true;
+            }
         }
 
-        return null;
+        return  false;
     }
+
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         CheckInPlanFragment inPlanFragment = new CheckInPlanFragment();
         inPlanFragment.setActivityCheckIn(CheckInActivity.this);
-        adapter.addFragment(inPlanFragment, "KẾ HOẠCH NGÀY");
+        adapter.addFragment(inPlanFragment, "DANH SÁCH GHÉ THĂM");
 
 
         CheckInOtherFragment otherFragment = new CheckInOtherFragment();
-        otherFragment.setActivityCheckIn(CheckInActivity.this);
+        otherFragment.setActivityCheckIn(CheckInActivity.this, statuses);
         adapter.addFragment(otherFragment, "NGOÀI KẾ HOẠCH");
         viewPager.setAdapter(adapter);
     }

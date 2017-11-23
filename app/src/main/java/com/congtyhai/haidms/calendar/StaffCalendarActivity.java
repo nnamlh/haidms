@@ -128,7 +128,7 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
                     calendarDayCreate.setAgencies(new ArrayList<String>());
                     calendarDayCreate.setDay(calendarDayShow.getDay());
                     calendarDayCreate.setNotes("");
-                    calendarDayCreate.setStatus(calendarDayShow.getStatus());
+                  //  calendarDayCreate.setStatus(calendarDayShow.getStatus());
                     calendarDayCreate.setAgencies(new ArrayList<String>());
                     for(CalendarShowAgency item : calendarDayShow.getAgences()) {
                         calendarDayCreate.getAgencies().add(item.getCode());
@@ -141,6 +141,7 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
             }
         });
 
+        imgEdit.setVisibility(View.GONE);
 
     }
 

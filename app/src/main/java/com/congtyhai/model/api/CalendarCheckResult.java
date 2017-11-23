@@ -47,7 +47,6 @@ public class CalendarCheckResult {
         this.month = month;
     }
 
-
     public List<CalendarStatus> getStatus() {
         return status;
     }

@@ -166,13 +166,14 @@ public class CheckInTaskActivity extends BaseActivity {
     }
 
     private void startTimer() {
+        /*
         countDownTimer = new CountDownTimer(60 * 1000 * timeRemain, 60 * 1000) {
 
             public void onTick(long millisUntilFinished) {
                 for (int i = 0; i < taskInfos.size(); i++) {
                     if (taskInfos.get(i).getCode().equals("endtask")) {
                         taskInfos.get(i).setTimeRemain(timeRemain);
-                        timeRemain--;
+                        timeRemain++;
                         break;
                     }
                 }
@@ -192,7 +193,7 @@ public class CheckInTaskActivity extends BaseActivity {
         };
 
         countDownTimer.start();
-
+*/
     }
 
     private void makeRequest(String code) {

@@ -1,5 +1,6 @@
 package com.congtyhai.model.api;
 
+import com.congtyhai.model.api.checkin.AgencyCheckinInfo;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -15,10 +16,10 @@ public class CheckInGetPlanResult {
     @SerializedName("msg")
     private String msg;
 
-    @SerializedName("inplan")
-    private List<String> inplan ;
-    @SerializedName("outplan")
-    private List<String> outplan ;
+    @SerializedName("checkin")
+    private List<AgencyCheckinInfo> checkin ;
+    @SerializedName("status")
+    private List<CalendarStatus> status;
 
     public String getId() {
         return id;
@@ -36,19 +37,19 @@ public class CheckInGetPlanResult {
         this.msg = msg;
     }
 
-    public List<String> getInplan() {
-        return inplan;
+    public List<CalendarStatus> getStatus() {
+        return status;
     }
 
-    public void setInplan(List<String> inplan) {
-        this.inplan = inplan;
+    public void setStatus(List<CalendarStatus> status) {
+        this.status = status;
     }
 
-    public List<String> getOutplan() {
-        return outplan;
+    public List<AgencyCheckinInfo> getCheckin() {
+        return checkin;
     }
 
-    public void setOutplan(List<String> outplan) {
-        this.outplan = outplan;
+    public void setCheckin(List<AgencyCheckinInfo> checkin) {
+        this.checkin = checkin;
     }
 }

@@ -2,9 +2,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.congtyhai.view.CheckInOtherFragment">
 
-    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ <LinearLayout
+     android:layout_width="match_parent"
+     android:orientation="vertical"
+     android:padding="10dp"
+     android:layout_height="wrap_content">
+
+     <Spinner
+         android:id="@+id/estatus"
+         android:layout_width="match_parent"
+         android:layout_height="45dp"
+         android:layout_marginTop="5dp"
+         android:background="@drawable/input_text"
+         android:fontFamily="sans-serif-light"
+         android:textColor="@color/cardview_dark_background" />
+
+
+     <Button
+         android:id="@+id/btnsend"
+         android:layout_width="match_parent"
+         android:layout_height="40dp"
+         android:layout_marginTop="10dp"
+         android:layout_alignParentBottom="true"
+         android:background="@drawable/btn_non_radius"
+         android:fontFamily="sans-serif-light"
+         android:textStyle="bold"
+         android:text="KHÔNG THĂM KHÁCH HÀNG"
+         android:textColor="#fff" />
+
+     <EditText
+         android:id="@+id/esearch"
+         android:layout_width="match_parent"
+         android:layout_height="40dp"
+         android:layout_marginTop="10dp"
+         android:paddingLeft="10dp"
+         android:inputType="textCapCharacters"
+         android:hint="Gỏ tên hoặc mã để tìm !"
+         android:background="@drawable/input_text"
+         android:fontFamily="sans-serif-light"
+         android:textColor="@color/cardview_dark_background" />
+
+ </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
