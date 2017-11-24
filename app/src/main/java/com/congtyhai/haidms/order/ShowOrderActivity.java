@@ -34,7 +34,7 @@ public class ShowOrderActivity extends BaseActivity {
 
     int indexSelect = -1;
 
-    AlertDialog.Builder c1Dialog;
+  //  AlertDialog.Builder c1Dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +55,11 @@ public class ShowOrderActivity extends BaseActivity {
         recyclerView.setAdapter(adapter);
 
         resetMoneyAll();
-        createDialogC1();
+     //   createDialogC1();
 
     }
 
-
+/*
     private void createDialogC1() {
         c1Dialog = new AlertDialog.Builder(ShowOrderActivity.this);
         c1Dialog.setIcon(R.mipmap.ic_logo);
@@ -85,7 +85,11 @@ public class ShowOrderActivity extends BaseActivity {
 
 
     }
-
+    public void changeC1(int position) {
+        indexSelect = position;
+        c1Dialog.show();
+    }
+*/
     public void changeQuantity(int quantity, final int boxNumber, final int position) {
 
         int countCan = quantity / boxNumber;
@@ -133,10 +137,8 @@ public class ShowOrderActivity extends BaseActivity {
         builder.show();
     }
 
-    public void changeC1(int position) {
-        indexSelect = position;
-        c1Dialog.show();
-    }
+
+
 
     public void notifyAdapter() {
         adapter.notifyDataSetChanged();

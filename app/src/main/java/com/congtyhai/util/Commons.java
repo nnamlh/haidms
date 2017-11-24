@@ -190,6 +190,7 @@ public final class Commons {
         return phoneNumber;
     }
 
+
     public String getOrderDetailText(int box, int quantity, String unit) {
         int countCan = quantity / box;
         int countBox = quantity - countCan*box;
@@ -205,6 +206,7 @@ public final class Commons {
         return countCan + " thùng " + countBox + " " + unit;
 
     }
+
 
 
     public float distance(double lat1, double lon1, double lat2, double lon2) {

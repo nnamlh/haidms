@@ -32,19 +32,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder>{
         holder.name.setText(taskInfo.getName());
         holder.notes.setText(taskInfo.getNotes());
 
-        /*
-        if (taskInfo.getTime() != -1) {
-            holder.time.setText( taskInfo.getTime() + " phút");
-        } else {
-            holder.time.setText("");
-        }
-        */
-        holder.time.setText("");
-
         holder.image.setBackgroundResource(taskInfo.getImage());
 
         if (taskInfo.getCode().equals("begintask")){
             holder.notes.setText("Bạn đã ghé thăm");
+        } else if (taskInfo.getCode().equals("endtask")){
+            holder.notes.setText("Thời gian đã ghé thăm: " + taskInfo.getTimeRemain() + " phút");
+        } else {
+            holder.notes.setText("");
+
         }
 
         /*
@@ -54,7 +50,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder>{
         if(taskInfo.getTimeRemain() != -1) {
             holder.notes.setText("Thời gian còn lại để kết thúc: " + taskInfo.getTimeRemain() + " phút");
         }*/
-        holder.notes.setText("Kết thúc quy trình ghé thăm");
     }
 
     @Override
@@ -63,14 +58,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder>{
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, notes, time;
+        public TextView name, notes;
         public ImageView image;
 
         public MyViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.name);
             notes = (TextView) view.findViewById(R.id.notes);
-            time = (TextView) view.findViewById(R.id.time);
             image = (ImageView) view.findViewById(R.id.image);
         }
     }

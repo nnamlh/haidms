@@ -11,11 +11,13 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 import com.congtyhai.adapter.ProductShowAdapter;
 import com.congtyhai.haidms.BaseActivity;
@@ -208,6 +210,54 @@ public class ShowProductActivity extends BaseActivity {
 
 
         }
+    }
+    public void notifyAdapter() {
+        mAdapter.notifyDataSetChanged();
+    }
+    public void changeQuantity(int quantity, final int boxNumber, final int position) {
+
+        int countCan = quantity / boxNumber;
+        int countBox = quantity - countCan*boxNumber;
+
+        View viewDialog = ShowProductActivity.this.getLayoutInflater().inflate(R.layout.dialog_change_quantity_order, null);
+        final EditText eCan = (EditText) viewDialog.findViewById(R.id.ecan);
+        eCan.setText("" + countCan);
+        final EditText eBox = (EditText) viewDialog.findViewById(R.id.ebox);
+        eBox.setText("" + countBox);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Thao tác");
+        builder.setMessage("Thay đổi số lượng mua");
+        builder.setIcon(R.mipmap.ic_logo);
+        builder.setView(viewDialog);
+        builder.setNegativeButton("Thôi", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        builder.setPositiveButton("Nhập", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (!TextUtils.isEmpty(eCan.getText().toString()) && !TextUtils.isEmpty(eBox.getText().toString())) {
+                    try{
+                        int quantityCan  = Integer.parseInt(eCan.getText().toString());
+                        int quantityBox = Integer.parseInt(eBox.getText().toString());
+                        int quantity = quantityBox + boxNumber*quantityCan;
+                        HAIRes.getInstance().getProductOrder().get(position).setQuantity(quantity);
+                        mAdapter.notifyDataSetChanged();
+                    }catch (Exception e) {
+
+                    }
+                }else {
+                    commons.makeToast(ShowProductActivity.this, "Nhập số lượng").show();
+                }
+
+            }
+        });
+
+        builder.show();
     }
 
     @Override

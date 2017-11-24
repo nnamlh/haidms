@@ -101,16 +101,32 @@
         android:layout_marginLeft="20dp"
         android:background="@drawable/btn_detail_blue"/>
 
-    <ImageView
-        android:layout_width="30dp"
+
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:src="@mipmap/ic_order_task"
-        android:id="@+id/imgcheck"
-        android:visibility="gone"
         android:layout_marginTop="5dp"
+        android:background="@drawable/btn_detail_blue"
         android:layout_below="@id/pricebox"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/btndetail"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="20dp"
+        android:fontFamily="sans-serif-light"
+        android:text="Mua: 1 thùng 3 chai"
+        android:id="@+id/detail"
+        android:textColor="#000"
+        android:textSize="10dp" />
+
+
+
+    <ImageView
+        android:id="@+id/imgdelete"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/pricebox"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/ic_delete" />
+
 
 </RelativeLayout>

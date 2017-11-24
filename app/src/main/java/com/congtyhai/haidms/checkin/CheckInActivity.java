@@ -150,6 +150,7 @@ public class CheckInActivity extends BaseActivity {
         info.setCtype(cType);
         info.setToken(token);
         info.setUser(user);
+
         info.setLat(getCurrentLocation().getLatitude());
         info.setLng(getCurrentLocation().getLongitude());
 
@@ -251,6 +252,7 @@ public class CheckInActivity extends BaseActivity {
             checkInAgencyInfo.setCheckInName(item.getCname());
             checkInAgencyInfo.setCheckInType(item.getCtype());
             checkInAgencyInfo.setIsShowType(1);
+            checkInAgencyInfo.setC1(item.getC1());
             checkInAgencyInfo.setInPlan(item.getInPlan());
             float distabce = commons.distance(lat, lng, item.getLat(), item.getLng());
             checkInAgencyInfo.setDistance(distabce);

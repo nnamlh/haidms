@@ -25,6 +25,9 @@ import com.congtyhai.view.RecyclerTouchListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -47,7 +50,7 @@ public class CheckInTaskActivity extends BaseActivity {
     long distance;
 
     int timeRemain;
-    CountDownTimer countDownTimer;
+    Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,16 +89,12 @@ public class CheckInTaskActivity extends BaseActivity {
             public void onClick(View view, int position) {
                 TaskInfo taskInfo = taskInfos.get(position);
                 if (taskInfo.getCode().equals("endtask")) {
-                    if (taskInfo.getTimeRemain() > 0) {
-                        commons.makeToast(CheckInTaskActivity.this, "Còn " + taskInfo.getTimeRemain() + " phút mới có thể kết thúc").show();
-                    } else {
-                        commons.showAlertCancel(CheckInTaskActivity.this, "Cảnh báo", "Hoàn thành ghé thăm", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                makeCheckIn();
-                            }
-                        });
-                    }
+                    commons.showAlertCancel(CheckInTaskActivity.this, "Cảnh báo", "Hoàn thành ghé thăm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            makeCheckIn();
+                        }
+                    });
                 } else if (taskInfo.getCode().equals("decortask")) {
                     Intent intentDecor = commons.createIntent(CheckInTaskActivity.this, DecorActivity.class);
                     intentDecor.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, agencyCode);
@@ -104,8 +103,6 @@ public class CheckInTaskActivity extends BaseActivity {
                     HAIRes.getInstance().inOder = 1;
                     HAIRes.getInstance().CREATE_ORDER_TYPE = 1;
                     commons.startActivity(CheckInTaskActivity.this, ShowProductActivity.class);
-                    //  showProductIntent.putExtra(HAIRes.getInstance().KEY_INTENT_ORDER, 1);
-                    //  startActivity(showProductIntent);
                 }
             }
 
@@ -166,34 +163,33 @@ public class CheckInTaskActivity extends BaseActivity {
     }
 
     private void startTimer() {
-        /*
-        countDownTimer = new CountDownTimer(60 * 1000 * timeRemain, 60 * 1000) {
 
-            public void onTick(long millisUntilFinished) {
-                for (int i = 0; i < taskInfos.size(); i++) {
-                    if (taskInfos.get(i).getCode().equals("endtask")) {
-                        taskInfos.get(i).setTimeRemain(timeRemain);
-                        timeRemain++;
-                        break;
-                    }
-                }
-                adapter.notifyDataSetChanged();
-            }
+        timer = new Timer();
+        //Set the schedule function and rate
+        timer.scheduleAtFixedRate(new TimerTask() {
 
-            public void onFinish() {
-                for (int i = 0; i < taskInfos.size(); i++) {
-                    if (taskInfos.get(i).getCode().equals("endtask")) {
-                        taskInfos.get(i).setTimeRemain(timeRemain);
-                        break;
-                    }
-                }
-                adapter.notifyDataSetChanged();
-                commons.makeToast(CheckInTaskActivity.this, "Bạn có thể Check In").show();
-            }
-        };
+                                      @Override
+                                      public void run() {
+                                          runOnUiThread(new Runnable() {
+                                              @Override
+                                              public void run() {
+                                                  for (int i = 0; i < taskInfos.size(); i++) {
+                                                      if (taskInfos.get(i).getCode().equals("endtask")) {
+                                                          taskInfos.get(i).setTimeRemain(timeRemain);
+                                                          timeRemain++;
+                                                          break;
+                                                      }
+                                                  }
+                                                  adapter.notifyDataSetChanged();
+                                              }
+                                          });
+                                      }
 
-        countDownTimer.start();
-*/
+                                  },
+                0,
+                60 * 1000);
+
+
     }
 
     private void makeRequest(String code) {

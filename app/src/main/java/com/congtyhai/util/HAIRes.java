@@ -255,6 +255,29 @@ public class HAIRes {
         return  false;
     }
 
+    public ProductOrder getProductOrder(String code) {
+        if (productOrders != null) {
+            for(ProductOrder order: productOrders) {
+                if (code.equals(order.getCode())) {
+                    return order;
+                }
+            }
+        }
+
+        return  null;
+    }
+
+    public int getProductOrderIndex(String code) {
+        if (productOrders != null) {
+            for(int i = 0; i< productOrders.size(); i++) {
+                if (code.equals(productOrders.get(i).getCode())) {
+                    return i;
+                }
+            }
+        }
+        return  0;
+    }
+
     public String formatMoneyToText(double value) {
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         String moneyString = formatter.format(value);

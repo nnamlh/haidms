@@ -37,6 +37,9 @@ public class ProductCodeInfo {
     @SerializedName("quantity_box")
     private int quantity_box;
 
+    @SerializedName("quantity")
+    private int quantity;
+
     @SerializedName("vat")
     private double vat;
 
@@ -151,5 +154,13 @@ public class ProductCodeInfo {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

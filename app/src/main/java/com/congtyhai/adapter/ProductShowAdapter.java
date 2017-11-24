@@ -51,7 +51,7 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
         final ProductCodeInfo productCodeInfo = productCodeInfos.get(position);
         holder.name.setText(productCodeInfo.getName());
         holder.group.setText(productCodeInfo.getGroupName());
-        holder.quantity.setText("Quy cách: " + productCodeInfo.getQuantity_box() + " " + productCodeInfo.getUnit() + " /thùng");
+        holder.quantity.setText("Quy cách: " + productCodeInfo.getQuantity() + " " + productCodeInfo.getUnit() + " /" + productCodeInfo.getQuantity_box() + " hộp/ 1 thùng" );
         holder.price.setText("Giá bán lẽ: " + HAIRes.getInstance().formatMoneyToText(productCodeInfo.getPrice()));
         holder.pricebox.setText("Giá thùng: " + HAIRes.getInstance().formatMoneyToText(productCodeInfo.getPrice() * productCodeInfo.getQuantity_box()));
 
@@ -76,9 +76,9 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
                     ProductOrder productOrder = new ProductOrder();
                     productOrder.setCode(productCodeInfo.getId());
                     productOrder.setImage(productCodeInfo.getImage());
-                    productOrder.setQuantity(productCodeInfo.getQuantity_box());
+                    productOrder.setQuantity(productCodeInfo.getQuantity());
                     productOrder.setPrice(productCodeInfo.getPrice());
-                    productOrder.setQuantityBox(productCodeInfo.getQuantity_box());
+                    productOrder.setQuantityBox(productCodeInfo.getQuantity());
                     productOrder.setUnit(productCodeInfo.getUnit());
                     productOrder.setName(productCodeInfo.getName());
                     productOrder.setGroup(productCodeInfo.getGroupName());
@@ -91,13 +91,36 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
                 }
             });
 
-            if (HAIRes.getInstance().checkExistProductOrder(productCodeInfo.getId())) {
+            //
+            final ProductOrder order = HAIRes.getInstance().getProductOrder(productCodeInfo.getId());
+
+            if (order != null) {
+                final int orderPosition =   HAIRes.getInstance().getProductOrderIndex(productCodeInfo.getId());
+                holder.imgDelete.setVisibility(View.VISIBLE);
                 holder.btnOrder.setVisibility(View.GONE);
-                holder.imgCheck.setVisibility(View.VISIBLE);
+                holder.detail.setVisibility(View.VISIBLE);
+                holder.detail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        activity.changeQuantity(order.getQuantity(),order.getQuantityBox(), orderPosition);
+                    }
+                });
+                holder.imgDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        HAIRes.getInstance().removeProductOrderAt(orderPosition);
+                        activity.notifyAdapter();
+                    }
+                });
+                holder.detail.setText(HAIRes.getInstance().getOrderQuantityDetailText(order.getQuantityBox(), order.getQuantity(), order.getUnit()));
             } else {
+                holder.imgDelete.setVisibility(View.GONE);
                 holder.btnOrder.setVisibility(View.VISIBLE);
-                holder.imgCheck.setVisibility(View.GONE);
+                holder.detail.setVisibility(View.GONE);
+
             }
+
+
         }
 
 
@@ -111,8 +134,9 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name, group, quantity, price, pricebox;
-        public ImageView image, imgCheck;
-        public Button btnOrder, btnDetail;
+
+        public ImageView image, imgDelete;
+        public Button btnOrder, btnDetail, detail;
 
         public MyViewHolder(View view) {
             super(view);
@@ -124,10 +148,11 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
             image = (ImageView) view.findViewById(R.id.image);
             btnOrder = (Button) view.findViewById(R.id.btnorder);
             btnDetail = (Button) view.findViewById(R.id.btndetail);
-            imgCheck = (ImageView)view.findViewById(R.id.imgcheck);
-
+            detail = (Button) view.findViewById(R.id.detail);
+            imgDelete = (ImageView) view.findViewById(R.id.imgdelete);
             if (inOder == 1) {
                 btnOrder.setVisibility(View.VISIBLE);
+
             } else {
                 btnOrder.setVisibility(View.GONE);
             }

@@ -1,6 +1,9 @@
 package com.congtyhai.model.api.checkin;
 
+import com.congtyhai.model.api.AgencyC2C1;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 /**
  * Created by HAI on 11/23/2017.
@@ -24,7 +27,8 @@ public class AgencyCheckinInfo {
     private String ctype;
     @SerializedName("cname")
     private String cname;
-
+    @SerializedName("c1")
+    private List<AgencyC2C1> c1;
     public String getDeputy() {
         return deputy;
     }
@@ -87,5 +91,13 @@ public class AgencyCheckinInfo {
 
     public void setCname(String cname) {
         this.cname = cname;
+    }
+
+    public List<AgencyC2C1> getC1() {
+        return c1;
+    }
+
+    public void setC1(List<AgencyC2C1> c1) {
+        this.c1 = c1;
     }
 }
