@@ -103,7 +103,7 @@ public class ShowAgencyActivity extends BaseActivity {
                     c2Info.setCode(info.getCode());
                     c2Info.setDeputy(info.getDeputy());
                     c2Info.setStore(info.getName());
-                    c2Info.setC1(info.getC1());
+                  //  c2Info.setC1(info.getC1());
 
                     HAIRes.getInstance().c2Select = c2Info;
 

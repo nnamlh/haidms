@@ -23,9 +23,11 @@ public class OrderShowC1Adaper extends BaseAdapter {
 
     private LayoutInflater inflater;
 
-    public OrderShowC1Adaper(Activity activity){
-        agencyC2C1List = HAIRes.getInstance().c2Select.getC1();
+
+    public OrderShowC1Adaper(Activity activity, List<AgencyC2C1> agencyC2C1s){
+      //  agencyC2C1List = HAIRes.getInstance().c2Select.getC1();
         inflater = activity.getLayoutInflater();
+        this.agencyC2C1List = agencyC2C1s;
     }
 
     @Override
@@ -55,8 +57,12 @@ public class OrderShowC1Adaper extends BaseAdapter {
         AgencyC2C1 agencyC2C1 = agencyC2C1List.get(i);
 
         store.setText(agencyC2C1.getStore());
-        deputy.setText(agencyC2C1.getName() + " - " + agencyC2C1.getCode());
 
+        if (agencyC2C1.getCode().equals("000")) {
+            deputy.setText(agencyC2C1.getName());
+        } else {
+            deputy.setText(agencyC2C1.getName() + " - " + agencyC2C1.getCode());
+        }
         return view;
     }
 }

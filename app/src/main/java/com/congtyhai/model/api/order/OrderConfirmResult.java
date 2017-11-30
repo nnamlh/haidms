@@ -1,5 +1,6 @@
 package com.congtyhai.model.api.order;
 
+import com.congtyhai.model.api.AgencyC2C1;
 import com.congtyhai.model.api.TypeCommon;
 import com.google.gson.annotations.SerializedName;
 
@@ -34,6 +35,8 @@ public class OrderConfirmResult {
     private String phone ;
     @SerializedName("address")
     private String address ;
+    @SerializedName("c1")
+    private List<AgencyC2C1> c1;
 
     public String getId() {
         return id;
@@ -121,5 +124,13 @@ public class OrderConfirmResult {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public List<AgencyC2C1> getC1() {
+        return c1;
+    }
+
+    public void setC1(List<AgencyC2C1> c1) {
+        this.c1 = c1;
     }
 }

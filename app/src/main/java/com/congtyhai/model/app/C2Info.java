@@ -16,7 +16,7 @@ public class C2Info {
 
     private String deputy;
 
-    private List<AgencyC2C1> c1;
+ //   private List<AgencyC2C1> c1;
 
     public String getCode() {
         return code;
@@ -41,6 +41,8 @@ public class C2Info {
     public void setDeputy(String deputy) {
         this.deputy = deputy;
     }
+
+    /*
 
     public List<AgencyC2C1> getC1() {
         return c1;
@@ -68,4 +70,5 @@ public class C2Info {
 
         return new AgencyC2C1();
     }
+    */
 }

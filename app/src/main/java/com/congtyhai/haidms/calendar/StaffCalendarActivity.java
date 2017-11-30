@@ -73,8 +73,6 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    @BindView(R.id.txtdetail)
-    TextView txtDetail;
 
     @BindView(R.id.txtstatus)
     TextView txtStatus;
@@ -128,7 +126,7 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
                     calendarDayCreate.setAgencies(new ArrayList<String>());
                     calendarDayCreate.setDay(calendarDayShow.getDay());
                     calendarDayCreate.setNotes("");
-                  //  calendarDayCreate.setStatus(calendarDayShow.getStatus());
+                    calendarDayCreate.setStatus(calendarDayShow.getStatus());
                     calendarDayCreate.setAgencies(new ArrayList<String>());
                     for(CalendarShowAgency item : calendarDayShow.getAgences()) {
                         calendarDayCreate.getAgencies().add(item.getCode());
@@ -169,7 +167,10 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
         builder.setPositiveButton("Xem", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+
                 if (!TextUtils.isEmpty(eMonth.getText().toString()) && !TextUtils.isEmpty(eYear.getText().toString())) {
+                    monthSelect = Integer.parseInt(eMonth.getText().toString());
+                    yearSelect = Integer.parseInt(eYear.getText().toString());
                     makeRequestShowCalendar(Integer.parseInt(eYear.getText().toString()), Integer.parseInt(eMonth.getText().toString()));
                 }else {
                     commons.makeToast(StaffCalendarActivity.this, "Nhập tháng và năm").show();
@@ -424,16 +425,11 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
                 CalendarDayShow calendarDayShow = calendarDayShowHashMap.get(day);
                 calendarShowAgencies.clear();
                 if (calendarDayShow != null) {
-                    txtDetail.setText(calendarDayShow.getStatusName());
                     if (calendarDayShow.getAgences() != null) {
                         for (CalendarShowAgency item :calendarDayShow.getAgences() )
                             calendarShowAgencies.add(item);
                     }
-                } else {
-                    txtDetail.setText("Không có dữ liệu");
                 }
-              //  adapter = new CalendarShowAgencyAdapter(calendarShowAgencies);
-              //  recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
         });

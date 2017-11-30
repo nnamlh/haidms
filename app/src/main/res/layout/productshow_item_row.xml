@@ -112,6 +112,7 @@
         android:layout_toRightOf="@id/btndetail"
         android:layout_marginLeft="20dp"
         android:fontFamily="sans-serif-light"
+        android:visibility="gone"
         android:text="Mua: 1 thùng 3 chai"
         android:id="@+id/detail"
         android:textColor="#000"
@@ -124,6 +125,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentRight="true"
+        android:visibility="gone"
         android:layout_below="@id/pricebox"
         android:layout_marginRight="10dp"
         android:src="@mipmap/ic_delete" />

@@ -27,10 +27,8 @@ import com.congtyhai.model.api.GroupResultInfo;
 import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.DividerItemDecoration;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -211,9 +209,7 @@ public class ShowProductActivity extends BaseActivity {
 
         }
     }
-    public void notifyAdapter() {
-        mAdapter.notifyDataSetChanged();
-    }
+
     public void changeQuantity(int quantity, final int boxNumber, final int position) {
 
         int countCan = quantity / boxNumber;

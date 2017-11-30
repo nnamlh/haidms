@@ -61,8 +61,8 @@ public class AgencyInfo {
     @SerializedName("country")
     private String country;
 
-    @SerializedName("c1")
-    private List<AgencyC2C1> c1;
+  //  @SerializedName("c1")
+   // private List<AgencyC2C1> c1;
 
     public String getTaxCode() {
         return taxCode;
@@ -208,6 +208,7 @@ public class AgencyInfo {
         this.country = country;
     }
 
+    /*
     public List<AgencyC2C1> getC1() {
         return c1;
     }
@@ -215,4 +216,5 @@ public class AgencyInfo {
     public void setC1(List<AgencyC2C1> c1) {
         this.c1 = c1;
     }
+    */
 }

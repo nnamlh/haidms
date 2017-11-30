@@ -59,7 +59,7 @@ public class StaffOrderAdapter extends BaseAdapter {
         YourOrderInfo info = staffOrderInfos.get(position);
 
         code.setText("Mã hàng: " + info.getCode());
-        agency.setText(info.getC2Name());
+        agency.setText(info.getC2Name() + " (" + info.getC2Code() + ") ");
         count.setText(info.getProductCount() + " sản phẩm");
         date.setText("Ngày đề nghị giao: " + info.getDateSuggest());
         datecreate.setText("Ngày đặt hàng: " + info.getDate());

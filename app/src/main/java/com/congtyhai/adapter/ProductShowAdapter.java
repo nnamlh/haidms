@@ -82,8 +82,6 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
                     productOrder.setUnit(productCodeInfo.getUnit());
                     productOrder.setName(productCodeInfo.getName());
                     productOrder.setGroup(productCodeInfo.getGroupName());
-                    productOrder.setC1Code(HAIRes.getInstance().c2Select.chooseC1().getCode());
-                    productOrder.setC1Name(HAIRes.getInstance().c2Select.chooseC1().getStore());
                     HAIRes.getInstance().addProductOrder(productOrder);
                     activity.notifyAdapterProduct();
                     activity.resetCountOder();
@@ -109,7 +107,8 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
                     @Override
                     public void onClick(View view) {
                         HAIRes.getInstance().removeProductOrderAt(orderPosition);
-                        activity.notifyAdapter();
+                        activity.notifyAdapterProduct();
+                        activity.resetCountOder();
                     }
                 });
                 holder.detail.setText(HAIRes.getInstance().getOrderQuantityDetailText(order.getQuantityBox(), order.getQuantity(), order.getUnit()));
@@ -117,14 +116,8 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
                 holder.imgDelete.setVisibility(View.GONE);
                 holder.btnOrder.setVisibility(View.VISIBLE);
                 holder.detail.setVisibility(View.GONE);
-
             }
-
-
         }
-
-
-
     }
 
     @Override
@@ -152,12 +145,9 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
             imgDelete = (ImageView) view.findViewById(R.id.imgdelete);
             if (inOder == 1) {
                 btnOrder.setVisibility(View.VISIBLE);
-
             } else {
                 btnOrder.setVisibility(View.GONE);
             }
-
-
         }
     }
 }

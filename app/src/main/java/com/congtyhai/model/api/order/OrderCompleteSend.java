@@ -29,7 +29,9 @@ public class OrderCompleteSend {
 
     private String orderType ;
 
-    public int inCheckIn ;
+    private int inCheckIn ;
+
+    private String c1;
 
     public String getUser() {
         return user;
@@ -125,5 +127,13 @@ public class OrderCompleteSend {
 
     public void setInCheckIn(int inCheckIn) {
         this.inCheckIn = inCheckIn;
+    }
+
+    public String getC1() {
+        return c1;
+    }
+
+    public void setC1(String c1) {
+        this.c1 = c1;
     }
 }

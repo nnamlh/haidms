@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.widget.Spinner;
+
 import com.congtyhai.adapter.HelpViewPagerAdapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
@@ -57,7 +59,7 @@ public class CompleteOrderActivity extends BaseActivity {
         HelpViewPagerAdapter adapter = new HelpViewPagerAdapter(getSupportFragmentManager());
 
         CompleteOrderFragment order = new CompleteOrderFragment();
-        order.setData(CompleteOrderActivity.this, result.getDeputy(), result.getStore(), result.getAgencyCode(),result.getPhone(), result.getAddress(), result.getPayType(), result.getShipType());
+        order.setData(CompleteOrderActivity.this, result.getDeputy(), result.getStore(), result.getAgencyCode(),result.getPhone(), result.getAddress(), result.getPayType(), result.getShipType(), result.getC1());
         adapter.addFragment(order, "ĐẶT HÀNG");
 
         CompleteOrderPromotionFragment promotion = new CompleteOrderPromotionFragment();
@@ -79,7 +81,7 @@ public class CompleteOrderActivity extends BaseActivity {
 
         for(ProductOrder productOrder: HAIRes.getInstance().getProductOrder()){
             OrderProductSend orderProductSend = new OrderProductSend();
-            orderProductSend.setC1(productOrder.getC1Code());
+            //orderProductSend.setC1(productOrder.getC1Code());
             orderProductSend.setCode(productOrder.getCode());
             orderProductSend.setQuantity(productOrder.getQuantity());
             info.getProduct().add(orderProductSend);
@@ -106,16 +108,16 @@ public class CompleteOrderActivity extends BaseActivity {
     }
 
     //
-    public  void makeUpdate( String address, String phone, String note, String shipType, String payType, String timeSuggest) {
+    public  void makeUpdate( String address, String phone, String note, String shipType, String payType, String timeSuggest, String c1) {
         showpDialog();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
 
         OrderCompleteSend info = new OrderCompleteSend();
+
         info.setProduct(new ArrayList<OrderProductSend>());
         for(ProductOrder productOrder: HAIRes.getInstance().getProductOrder()){
             OrderProductSend orderProductSend = new OrderProductSend();
-            orderProductSend.setC1(productOrder.getC1Code());
             orderProductSend.setCode(productOrder.getCode());
             orderProductSend.setQuantity(productOrder.getQuantity());
             info.getProduct().add(orderProductSend);
@@ -129,6 +131,7 @@ public class CompleteOrderActivity extends BaseActivity {
         info.setShipType(shipType);
         info.setPayType(payType);
         info.setTimeSuggest(timeSuggest);
+        info.setC1(c1);
         info.setInCheckIn(HAIRes.getInstance().CREATE_ORDER_TYPE);
 
         Call<ResultInfo> call = apiInterface().orderComplete(info);

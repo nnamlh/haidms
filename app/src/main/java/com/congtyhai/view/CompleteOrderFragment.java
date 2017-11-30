@@ -13,11 +13,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.congtyhai.adapter.OrderShowC1Adaper;
 import com.congtyhai.haidms.R;
 import com.congtyhai.haidms.order.CompleteOrderActivity;
+import com.congtyhai.model.api.AgencyC2C1;
 import com.congtyhai.model.api.TypeCommon;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -66,7 +69,10 @@ public class CompleteOrderFragment extends Fragment implements DatePickerDialog.
 
     @BindView(R.id.btncontinue)
     Button btnUpdate;
+    @BindView(R.id.sc1choose)
+    Spinner sC1Choose;
 
+    OrderShowC1Adaper mC1Adapter;
 
     String name, store, phone, code, address, shipCode = "", payCode = "";
 
@@ -74,7 +80,9 @@ public class CompleteOrderFragment extends Fragment implements DatePickerDialog.
 
     CompleteOrderActivity activity;
 
-    public void setData(CompleteOrderActivity activity ,String name, String store, String code, String phone, String address, List<TypeCommon> payType, List<TypeCommon> shipType) {
+    List<AgencyC2C1> c2C1s;
+
+    public void setData(CompleteOrderActivity activity , String name, String store, String code, String phone, String address, List<TypeCommon> payType, List<TypeCommon> shipType, List<AgencyC2C1> agencyC2C1) {
         this.payType = payType;
         this.shipType = shipType;
         this.name = name;
@@ -84,7 +92,7 @@ public class CompleteOrderFragment extends Fragment implements DatePickerDialog.
         this.address = address;
         this.activity = activity;
 
-
+        this.c2C1s = agencyC2C1;
     }
 
     @Override
@@ -96,6 +104,10 @@ public class CompleteOrderFragment extends Fragment implements DatePickerDialog.
 
         payTypeRadioId = new ArrayList<>();
         shipTypeRadioId = new ArrayList<>();
+
+        if (c2C1s == null)
+            c2C1s = new ArrayList<>();
+
         if(payType == null)
             payType = new ArrayList<>();
 
@@ -151,6 +163,9 @@ public class CompleteOrderFragment extends Fragment implements DatePickerDialog.
 
         createDateDialog();
 
+        createC1Spinner();
+
+
         eDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,7 +179,8 @@ public class CompleteOrderFragment extends Fragment implements DatePickerDialog.
             @Override
             public void onClick(View view) {
                 if(checkUpdate()) {
-                    activity.makeUpdate(eAddress.getText().toString(), ePhone.getText().toString(), eNote.getText().toString(), shipCode, payCode, eDate.getText().toString());
+                    AgencyC2C1 c1Info = c2C1s.get(sC1Choose.getSelectedItemPosition());
+                    activity.makeUpdate(eAddress.getText().toString(), ePhone.getText().toString(), eNote.getText().toString(), shipCode, payCode, eDate.getText().toString(), c1Info.getCode());
                 }else{
                     Toast.makeText(activity, "Điền đủ thông tin", Toast.LENGTH_LONG).show();
                 }
@@ -174,6 +190,16 @@ public class CompleteOrderFragment extends Fragment implements DatePickerDialog.
         return view;
 
     }
+
+    private void createC1Spinner() {
+        mC1Adapter = new OrderShowC1Adaper(activity, c2C1s);
+
+        sC1Choose.setAdapter(mC1Adapter);
+
+
+
+    }
+
 
     private boolean checkUpdate() {
         if (TextUtils.isEmpty(eAddress.getText().toString()) || TextUtils.isEmpty(ePhone.getText().toString()) || TextUtils.isEmpty(eNote.getText().toString()) || TextUtils.isEmpty(eDate.getText().toString())){

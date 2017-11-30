@@ -9,7 +9,7 @@ public class OrderProductSend {
 
     private int quantity ;
 
-    private String c1 ;
+//    private String c1 ;
 
     public String getCode() {
         return code;
@@ -27,11 +27,4 @@ public class OrderProductSend {
         this.quantity = quantity;
     }
 
-    public String getC1() {
-        return c1;
-    }
-
-    public void setC1(String c1) {
-        this.c1 = c1;
-    }
 }
