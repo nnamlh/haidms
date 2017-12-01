@@ -320,7 +320,7 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 timeline.setVisibility(View.GONE);
-                                txtTitle.setText("Không có dữ liệu");
+                               // txtTitle.setText("Không có dữ liệu");
                             }
                         });
                     } else {
@@ -408,13 +408,14 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
         timeline.setFirstVisibleDate(showYear, getCalendarMonth(showMonth), 01);
         timeline.setLastVisibleDate(showYear,  getCalendarMonth(showMonth), days);
 
+        /*
         timeline.setDateLabelAdapter(new MonthView.DateLabelAdapter() {
             @Override
             public CharSequence getLabel(Calendar calendar, int index) {
                 return Integer.toString(calendar.get(Calendar.MONTH) + 1) + "/" + (calendar.get(Calendar.YEAR) % 2000);
             }
         });
-
+*/
 
         timeline.setOnDateSelectedListener(new DatePickerTimeline.OnDateSelectedListener() {
             @Override
@@ -422,21 +423,28 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
                 daySelect = day;
                 monthSelect = month + 1;
                 yearSelect = year;
-                CalendarDayShow calendarDayShow = calendarDayShowHashMap.get(day);
-                calendarShowAgencies.clear();
-                if (calendarDayShow != null) {
-                    if (calendarDayShow.getAgences() != null) {
-                        for (CalendarShowAgency item :calendarDayShow.getAgences() )
-                            calendarShowAgencies.add(item);
-                    }
-                }
-                adapter.notifyDataSetChanged();
+                refeshList(daySelect);
             }
         });
 
-        timeline.setFollowScroll(false);
 
-        timeline.setSelectedDate(showYear, getCalendarMonth(showMonth), showDay);
+
+        timeline.setSelectedDate(showYear, getCalendarMonth(showMonth), 1);
+        daySelect = 1;
+        timeline.setFollowScroll(false);
+        refeshList(daySelect);
+    }
+
+    private  void refeshList(int day) {
+        CalendarDayShow calendarDayShow = calendarDayShowHashMap.get(day);
+        calendarShowAgencies.clear();
+        if (calendarDayShow != null) {
+            if (calendarDayShow.getAgences() != null) {
+                for (CalendarShowAgency item :calendarDayShow.getAgences() )
+                    calendarShowAgencies.add(item);
+            }
+        }
+        adapter.notifyDataSetChanged();
     }
 
     @Override
