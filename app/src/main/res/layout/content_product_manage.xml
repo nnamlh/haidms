@@ -37,7 +37,7 @@
             android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
-            android:hint="Nhập kho nhận"
+            android:hint="Nhập nơi nhận"
             android:layout_toLeftOf="@id/btnfind"
             android:background="#fff"
             android:paddingLeft="5dp" />
@@ -69,7 +69,8 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
             android:inputType="textCapCharacters"
-            android:hint="Nhập kho nhận"
+            android:hint="Nhập nơi nhận"
+            android:enabled="false"
             android:layout_toLeftOf="@id/btnfindagency"
             android:background="#fff"
             android:paddingLeft="5dp" />

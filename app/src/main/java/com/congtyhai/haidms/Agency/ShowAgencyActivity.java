@@ -88,8 +88,8 @@ public class ShowAgencyActivity extends BaseActivity {
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
-            public void onClick(View view, int position) {
-                AgencyInfo info =  agencyList.get(position);
+            public void onClick(View view, final int position) {
+                final AgencyInfo info =  agencyList.get(position);
                 HAIRes.getInstance().currentAgencySelect = agencyList.get(position);
                 if ("stafforder".equals(codeRequest)) {
                     Intent intentResult = getIntent();
@@ -108,6 +108,16 @@ public class ShowAgencyActivity extends BaseActivity {
                     HAIRes.getInstance().c2Select = c2Info;
 
                     commons.startActivity(ShowAgencyActivity.this, ShowProductActivity.class);
+                } else if("chooseagency".equals(codeRequest)){
+                    commons.showAlertCancel(ShowAgencyActivity.this, "Chọn đại lý", "Bạn chọn đại lý: " + info.getName() + "-" + info.getCode(), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intentResult = getIntent();
+                            intentResult.putExtra("code", info.getCode());
+                            setResult(Activity.RESULT_OK,intentResult);
+                            finish();
+                        }
+                    });
                 }
                 else {
                     Intent intent = commons.createIntent(ShowAgencyActivity.this, ShowAgencyDetailActivity.class);

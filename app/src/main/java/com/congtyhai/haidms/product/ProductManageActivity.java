@@ -1,22 +1,26 @@
 package com.congtyhai.haidms.product;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.congtyhai.adapter.GeneralAdapter;
 import com.congtyhai.adapter.ProductManageAdapter;
+import com.congtyhai.haidms.Agency.ShowAgencyActivity;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.Realm.DHistoryProductScan;
@@ -81,6 +85,9 @@ public class ProductManageActivity extends BaseActivity {
     String companyCode = "89352433";
 
     List<ProductCodeInfo> productCodeInfos;
+
+
+    int CHOOSE_AGENCY = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -344,6 +351,19 @@ public class ProductManageActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CHOOSE_AGENCY) {
+            if (resultCode == Activity.RESULT_OK) {
+                String code = data.getStringExtra("code");
+                txtAgency.setText(code);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+
+            }
+        }
+    }
+
     private void saveHistory(final int isUpdate, final List<GeneralInfo> result, final int isNear, final int countSucess, final int countFail) {
         final String timeStamp = new SimpleDateFormat("MM/dd/yyyy HH:mm",
                 Locale.getDefault()).format(new Date());
@@ -509,7 +529,9 @@ public class ProductManageActivity extends BaseActivity {
     }
 
     public void findAgencyClick(View view) {
-
+        Intent intentSend = commons.createIntent(ProductManageActivity.this, ShowAgencyActivity.class);
+        intentSend.putExtra(HAIRes.getInstance().KEY_INTENT_ACTION, "chooseagency");
+        startActivityForResult(intentSend, CHOOSE_AGENCY);
     }
 
     private void showAlert(final int pos) {
