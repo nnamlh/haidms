@@ -39,8 +39,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder>{
         } else if (taskInfo.getCode().equals("endtask")){
             holder.notes.setText("Thời gian đã ghé thăm: " + taskInfo.getTimeRemain() + " phút");
         } else {
-            holder.notes.setText("");
-
+            holder.notes.setText(taskInfo.getNotes());
         }
 
         /*

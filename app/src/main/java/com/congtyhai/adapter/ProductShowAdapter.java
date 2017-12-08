@@ -53,7 +53,7 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
         holder.group.setText(productCodeInfo.getGroupName());
         holder.quantity.setText("Quy cách: " + productCodeInfo.getQuantity() + " " + productCodeInfo.getUnit() + " /" + productCodeInfo.getQuantity_box() + " hộp/ 1 thùng" );
         holder.price.setText("Giá bán lẽ: " + HAIRes.getInstance().formatMoneyToText(productCodeInfo.getPrice()));
-        holder.pricebox.setText("Giá thùng: " + HAIRes.getInstance().formatMoneyToText(productCodeInfo.getPrice() * productCodeInfo.getQuantity_box()));
+        holder.pricebox.setText("Giá thùng: " + HAIRes.getInstance().formatMoneyToText(productCodeInfo.getPrice() * productCodeInfo.getQuantity()));
 
         Glide.with(activity).load(productCodeInfo.getImage())
                 .thumbnail(0.5f)

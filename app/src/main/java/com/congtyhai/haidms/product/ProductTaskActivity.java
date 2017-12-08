@@ -122,16 +122,19 @@ public class ProductTaskActivity extends BaseActivity {
                             case "savepoint":
                                 taskInfo.setCode(item);
                                 taskInfo.setName("TÍCH ĐIỂM");
+                                taskInfo.setNotes("Quét tích điểm khuyến mãi");
                                 taskInfo.setImage(R.mipmap.ic_product_savepoint);
                                 break;
                             case "tracking":
                                 taskInfo.setCode(item);
                                 taskInfo.setName("TRA CỨU");
+                                taskInfo.setNotes("Tra cứu hành trình sản phẩm");
                                 taskInfo.setImage(R.mipmap.ic_product_search);
                                 break;
                             case "staffimportproduct":
                                 taskInfo.setCode(item);
                                 taskInfo.setName( "NHẬP GIÙM");
+                                taskInfo.setNotes("Dành cho nhân viên thị trường");
                                 taskInfo.setImage(R.mipmap.ic_product_satffhelp);
                                 break;
                             case "exportproduct":
@@ -142,6 +145,7 @@ public class ProductTaskActivity extends BaseActivity {
                             case "transport":
                                 taskInfo.setCode(item);
                                 taskInfo.setName("ĐIỀU KHO");
+                                taskInfo.setNotes("Nhập kho chi nhánh khác");
                                 taskInfo.setImage(R.mipmap.ic_product_dieukho);
                                 break;
                         }
