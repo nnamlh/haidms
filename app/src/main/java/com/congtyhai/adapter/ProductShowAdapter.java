@@ -51,7 +51,7 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
         final ProductCodeInfo productCodeInfo = productCodeInfos.get(position);
         holder.name.setText(productCodeInfo.getName());
         holder.group.setText(productCodeInfo.getGroupName());
-        holder.quantity.setText("Quy cách: " + productCodeInfo.getQuantity() + " " + productCodeInfo.getUnit() + " /" + productCodeInfo.getQuantity_box() + " hộp/ 1 thùng" );
+        holder.quantity.setText("Quy cách: " + productCodeInfo.getQuantity() + " " + productCodeInfo.getUnit() + "/ 1 thùng" );
         holder.price.setText("Giá bán lẽ: " + HAIRes.getInstance().formatMoneyToText(productCodeInfo.getPrice()));
         holder.pricebox.setText("Giá thùng: " + HAIRes.getInstance().formatMoneyToText(productCodeInfo.getPrice() * productCodeInfo.getQuantity()));
 

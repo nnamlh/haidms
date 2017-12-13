@@ -21,7 +21,10 @@ import com.congtyhai.adapter.OrderShowC1Adaper;
 import com.congtyhai.haidms.R;
 import com.congtyhai.haidms.order.CompleteOrderActivity;
 import com.congtyhai.model.api.AgencyC2C1;
+import com.congtyhai.model.api.ProductOrder;
 import com.congtyhai.model.api.TypeCommon;
+import com.congtyhai.util.HAIRes;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -72,6 +75,9 @@ public class CompleteOrderFragment extends Fragment implements DatePickerDialog.
     @BindView(R.id.sc1choose)
     Spinner sC1Choose;
 
+    @BindView(R.id.pricetotal)
+    TextView priceTotal;
+
     OrderShowC1Adaper mC1Adapter;
 
     String name, store, phone, code, address, shipCode = "", payCode = "";
@@ -121,6 +127,8 @@ public class CompleteOrderFragment extends Fragment implements DatePickerDialog.
         ePhone.setText(phone);
 
         eAddress.setText(address);
+
+
 
 
         for (int i = 0; i < payType.size(); i++) {
@@ -186,6 +194,12 @@ public class CompleteOrderFragment extends Fragment implements DatePickerDialog.
                 }
             }
         });
+
+        double price = 0;
+        for(ProductOrder order: HAIRes.getInstance().getProductOrder()) {
+            price+= order.getPrice() * order.getQuantity();
+        }
+        priceTotal.setText(HAIRes.getInstance().formatMoneyToText(price));
 
         return view;
 
