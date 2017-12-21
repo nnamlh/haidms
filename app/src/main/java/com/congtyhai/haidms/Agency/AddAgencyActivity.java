@@ -381,23 +381,25 @@ public class AddAgencyActivity extends BaseActivity {
             }
         } else {
             //CALL THIS METHOD EVER
-            magicalCamera.resultPhoto(requestCode, resultCode, data);
-            File mediaStorageDir = new File(
-                    Environment
-                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),
-                    "NDH");
-            // Create the storage directory if it does not exist
-            if (!mediaStorageDir.exists()) {
-                if (!mediaStorageDir.mkdirs()) {
+            if (resultCode == RESULT_OK) {
+                magicalCamera.resultPhoto(requestCode, resultCode, data);
+                File mediaStorageDir = new File(
+                        Environment
+                                .getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),
+                        "NDH");
+                // Create the storage directory if it does not exist
+                if (!mediaStorageDir.exists()) {
+                    if (!mediaStorageDir.mkdirs()) {
 
+                    }
                 }
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                        Locale.getDefault()).format(new Date());
+                path = magicalCamera.savePhotoInMemoryDevice(magicalCamera.getPhoto(), timeStamp, "NONGDUOCHAI", MagicalCamera.JPEG, true);
+
+
+                previewMedia(path);
             }
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
-                    Locale.getDefault()).format(new Date());
-            path = magicalCamera.savePhotoInMemoryDevice(magicalCamera.getPhoto(), timeStamp, "NONGDUOCHAI", MagicalCamera.JPEG, true);
-
-
-            previewMedia(path);
         }
     }
 

@@ -49,7 +49,7 @@ public class CheckInAgencyAdapter  extends RecyclerView.Adapter<CheckInAgencyAda
             holder.type.setVisibility(View.GONE);
         }
 
-        holder.distance.setText(info.getDistance() + " m");
+        holder.distance.setText(HAIRes.getInstance().getConvertMesterDistance(info.getDistance()));
 
         if (info.getDistance() <= HAIRes.getInstance().LIMIT_DISTANCE) {
            holder.imgLocation.setImageResource(R.mipmap.ic_location_on);

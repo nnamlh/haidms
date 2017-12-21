@@ -70,9 +70,10 @@ public class ShowAgencyActivity extends BaseActivity {
             }
         });
 
-        if(!"".equals(codeRequest)) {
-
+        if(codeRequest != null) {
             fab.setVisibility(View.GONE);
+        } else {
+            fab.setVisibility(View.VISIBLE);
         }
 
         agencyList = new ArrayList<>();
@@ -103,11 +104,10 @@ public class ShowAgencyActivity extends BaseActivity {
                     c2Info.setCode(info.getCode());
                     c2Info.setDeputy(info.getDeputy());
                     c2Info.setStore(info.getName());
-                  //  c2Info.setC1(info.getC1());
-
                     HAIRes.getInstance().c2Select = c2Info;
 
                     commons.startActivity(ShowAgencyActivity.this, ShowProductActivity.class);
+                    finish();
                 } else if("chooseagency".equals(codeRequest)){
                     commons.showAlertCancel(ShowAgencyActivity.this, "Chọn đại lý", "Bạn chọn đại lý: " + info.getName() + "-" + info.getCode(), new DialogInterface.OnClickListener() {
                         @Override

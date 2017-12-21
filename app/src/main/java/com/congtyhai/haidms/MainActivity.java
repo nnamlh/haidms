@@ -40,6 +40,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -214,7 +215,7 @@ public class MainActivity extends BaseActivity
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMinZoomPreference(7.0f);
-        mMap.setMaxZoomPreference(16.0f);
+        mMap.setMaxZoomPreference(20.0f);
         HaiLocation location = getCurrentLocation();
         LatLng me = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
@@ -236,12 +237,14 @@ public class MainActivity extends BaseActivity
 
                 TextView distance = (TextView) v.findViewById(R.id.txtdistance);
 
-                float d = commons.distance(getCurrentLocation().getLatitude(), getCurrentLocation().getLongitude(), marker.getPosition().latitude, marker.getPosition().longitude);
-                distance.setText(d + " m");
+                double d = commons.distance(getCurrentLocation().getLatitude(), getCurrentLocation().getLongitude(), marker.getPosition().latitude, marker.getPosition().longitude);
+
+
+                distance.setText(HAIRes.getInstance().getConvertMesterDistance(d));
                 return v;
             }
         });
-        //mMap.addMarker(new MarkerOptions().position(me).title("ME").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        mMap.addMarker(new MarkerOptions().position(me).title("VỊ TRÍ CỦA TÔI").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(me));
 
     }

@@ -209,13 +209,9 @@ public final class Commons {
 
 
 
-    public float distance(double lat1, double lon1, double lat2, double lon2) {
-        /*
-        float[] results = new float[1];
-        Location.distanceBetween(lat1, lon1,
-                lat2, lon2, results);
-        return (Math.round(results[0]));
-        */
+    public double distance(double lat1, double lon1, double lat2, double lon2) {
+
+/*
         double earthRadius = 6371000; //meters
         double dLat = Math.toRadians(lat2-lat1);
         double dLng = Math.toRadians(lon2-lon1);
@@ -227,21 +223,37 @@ public final class Commons {
 
         return (Math.round(dist));
 
-        /*
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-        if (unit == "K") {
-            dist = dist * 1.609344;
-        } else if (unit == "N") {
-            dist = dist * 0.8684;
-        }
 
-        return (Math.round(dist));
+        float pk = (float) (180.f/Math.PI);
+
+        double a1 = lat1 / pk;
+        double a2 = lon1 / pk;
+        double b1 = lat2 / pk;
+        double b2 = lon2 / pk;
+
+        double t1 = Math.cos(a1) * Math.cos(a2) * Math.cos(b1) * Math.cos(b2);
+        double t2 = Math.cos(a1) * Math.sin(a2) * Math.cos(b1) * Math.sin(b2);
+        double t3 = Math.sin(a1) * Math.sin(b1);
+        double tt = Math.acos(t1 + t2 + t3);
+
+        return 6366000 * tt;
         */
+
+
+        Location startPoint=new Location("locationA");
+        startPoint.setLatitude(lat1);
+        startPoint.setLongitude(lon1);
+
+        Location endPoint=new Location("locationA");
+        endPoint.setLatitude(lat2);
+        endPoint.setLongitude(lon2);
+
+        double distance=startPoint.distanceTo(endPoint);
+
+        return (Math.round(distance));
     }
+
+
 
     /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 	/*::	This function converts decimal degrees to radians						 :*/

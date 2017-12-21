@@ -103,8 +103,13 @@ public class CheckInOtherFragment extends Fragment {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 CalendarStatus status = calendarStatuses.get(eStatus.getSelectedItemPosition());
-                activity.createOutPlan("", status.getId(), status.getName());
+                if(status.getCompel() == 1) {
+                    Toast.makeText(activity, "Chọn đại lý ghé thăm khi chọn công việc: " + status.getName(), Toast.LENGTH_LONG ).show();
+                } else{
+                    activity.createOutPlan("", status.getId(), status.getName());
+                }
             }
         });
 
@@ -171,6 +176,22 @@ public class CheckInOtherFragment extends Fragment {
 
             }
         });
+
+        int idx = findPositionSatatus("CSKH");
+
+        if (idx != -1) {
+            eStatus.setSelection(idx);
+        }
     }
 
+
+    private int findPositionSatatus(String status) {
+        for (int i = 0; i < calendarStatuses.size(); i++) {
+            if(calendarStatuses.get(i).getId().equals(status)) {
+                return i;
+            }
+        }
+
+        return  -1;
+    }
 }

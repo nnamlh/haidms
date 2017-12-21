@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="5dp">
 
         <!-- ten -->
         <TextView
@@ -76,19 +76,81 @@
             android:maxLines="1"
             android:textColor="@color/cardview_dark_background" />
 
+        <!-- chi nhanh -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Chi nhánh"
+            android:textColor="#000000"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/ebranch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:enabled="false"
+            android:fontFamily="sans-serif-light"
+            android:inputType="textNoSuggestions"
+            android:maxLines="1"
+            android:textColor="@color/cardview_dark_background" />
+
+
         <!--  cap 1-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-light"
-            android:text="Mã cấp 1"
+            android:text="Đại lý cấp 1 (1)"
             android:textColor="#000000"
             android:textSize="14dp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/ec1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:enabled="false"
+            android:fontFamily="sans-serif-light"
+            android:inputType="textNoSuggestions"
+            android:maxLines="1"
+            android:textColor="@color/cardview_dark_background" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Đại lý cấp 1 (2)"
+            android:textColor="#000000"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/ec12"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:enabled="false"
+            android:fontFamily="sans-serif-light"
+            android:inputType="textNoSuggestions"
+            android:maxLines="1"
+            android:textColor="@color/cardview_dark_background" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Đại lý cấp 1 (3)"
+            android:textColor="#000000"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/ec13"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:enabled="false"

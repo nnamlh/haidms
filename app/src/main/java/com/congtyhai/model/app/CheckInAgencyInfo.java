@@ -13,7 +13,7 @@ public class CheckInAgencyInfo {
     private String code;
     private String name;
     private String deputy;
-    private float distance;
+    private double distance;
     private List<AgencyC2C1> c1;
     private String checkInType;
     private String checkInName;
@@ -76,11 +76,11 @@ public class CheckInAgencyInfo {
         this.deputy = deputy;
     }
 
-    public float getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(float distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 

@@ -112,7 +112,7 @@ public class HAIRes {
 
    // public CalendarCreateSend calendarCreateSend = new CalendarCreateSend();
     public AgencyInfo currentAgencySelect = new AgencyInfo();
-    public final double LIMIT_DISTANCE = 300;
+    public final double LIMIT_DISTANCE = 1000;
 
     /*
     public String[] GetListStatusName() {
@@ -401,5 +401,13 @@ public class HAIRes {
 
         return countCan + " thùng " + countBox + " " + unit;
 
+    }
+
+    public String getConvertMesterDistance (double value) {
+        if (value < 1000) {
+            return  Math.round(value) + " m";
+        }
+
+        return  Math.round(value / 1000) + " km";
     }
 }

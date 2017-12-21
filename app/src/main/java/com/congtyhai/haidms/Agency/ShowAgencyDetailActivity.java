@@ -19,6 +19,7 @@ import android.widget.ImageView;
 
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
+import com.congtyhai.model.api.AgencyC2C1;
 import com.congtyhai.model.api.AgencyModifySend;
 import com.congtyhai.model.api.ResultInfo;
 import com.congtyhai.util.HAIRes;
@@ -92,6 +93,15 @@ public class ShowAgencyDetailActivity extends BaseActivity {
     double lng;
     Menu menu;
 
+    @BindView(R.id.ebranch)
+    EditText eBranch;
+
+    @BindView(R.id.ec12)
+    EditText eC12;
+
+    @BindView(R.id.ec13)
+    EditText eC13;
+
     boolean isUpdate = false;
 
     int SHOW_UPDATE_LOCATION = 1000;
@@ -118,6 +128,8 @@ public class ShowAgencyDetailActivity extends BaseActivity {
         eTax.setText(HAIRes.getInstance().currentAgencySelect.getTaxCode());
         eWard.setText(HAIRes.getInstance().currentAgencySelect.getWard());
         eCountry.setText(HAIRes.getInstance().currentAgencySelect.getCountry());
+        eBranch.setText(HAIRes.getInstance().currentAgencySelect.getHaibranch());
+
         imgLoatiom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -147,6 +159,20 @@ public class ShowAgencyDetailActivity extends BaseActivity {
             }
         });
 
+        List<AgencyC2C1> c2C1s = HAIRes.getInstance().currentAgencySelect.getC1();
+        for(int i=0; i < c2C1s.size(); i++) {
+            switch (i) {
+                case 0:
+                    eC1.setText(c2C1s.get(i).getName() + " - " + c2C1s.get(i).getCode());
+                    break;
+                case 1:
+                    eC12.setText(c2C1s.get(i).getName() + " - " + c2C1s.get(i).getCode());
+                    break;
+                case 2:
+                    eC13.setText(c2C1s.get(i).getName() + " - " + c2C1s.get(i).getCode());
+                    break;
+            }
+        }
 
     }
 
@@ -322,7 +348,7 @@ public class ShowAgencyDetailActivity extends BaseActivity {
                 MenuItem menuItem = menu.findItem(R.id.location_action);
                 menuItem.setVisible(false);
                 isUpdate = true;
-            }else if (resultCode == RESULT_CANCELED) {
+            } else if (resultCode == RESULT_CANCELED) {
 
             }
         }
@@ -347,7 +373,7 @@ public class ShowAgencyDetailActivity extends BaseActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.location_action:
-              //  makeRequest(true);
+                //  makeRequest(true);
                 Intent intent = commons.createIntent(ShowAgencyDetailActivity.this, AgencyUpdateLocationActivity.class);
                 intent.putExtra(HAIRes.getInstance().KEY_INTENT_AGENCY_CODE, HAIRes.getInstance().currentAgencySelect.getId());
                 startActivityForResult(intent, SHOW_UPDATE_LOCATION);
@@ -362,7 +388,7 @@ public class ShowAgencyDetailActivity extends BaseActivity {
     public void onBackPressed() {
         Intent returnIntent = new Intent();
         if (isUpdate) {
-            setResult(Activity.RESULT_OK,returnIntent);
+            setResult(Activity.RESULT_OK, returnIntent);
         } else {
             setResult(Activity.RESULT_CANCELED, returnIntent);
         }

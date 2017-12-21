@@ -142,7 +142,7 @@ public class ShowBranchActivity extends BaseActivity implements OnMapReadyCallba
 
                 TextView distance = (TextView) v.findViewById(R.id.txtdistance);
 
-                float d = commons.distance(getCurrentLocation().getLatitude(), getCurrentLocation().getLongitude(), marker.getPosition().latitude, marker.getPosition().longitude);
+                double d = commons.distance(getCurrentLocation().getLatitude(), getCurrentLocation().getLongitude(), marker.getPosition().latitude, marker.getPosition().longitude);
                 distance.setText(d + " m");
                 return v;
             }

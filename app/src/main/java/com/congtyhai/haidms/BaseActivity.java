@@ -153,8 +153,8 @@ public class BaseActivity extends AppCompatActivity {
 
     protected boolean checkLocation() {
         if (!isLocationEnabled())
-            showAlert();
-        return isLocationEnabled();
+            showAlertGPS();
+        return true;
     }
 
     protected boolean isLocationEnabled() {
@@ -163,11 +163,11 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected HaiLocation getCurrentLocation() {
-        gps = new GPSTracker(BaseActivity.this);
-        if(gps.canGetLocation()) {
+        gps.getLocation();
+        if(isLocationEnabled()) {
             return new HaiLocation(gps.getLatitude(), gps.getLongitude());
         } else {
-            gps.showSettingsAlert();
+            showAlertGPS();
             return new HaiLocation(0, 0);
         }
     }
@@ -183,7 +183,7 @@ public class BaseActivity extends AppCompatActivity {
             pDialog.dismiss();
     }
 
-    protected void showAlert() {
+    protected void showAlertGPS() {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(BaseActivity.this);
         dialog.setTitle("Enable Location")
                 .setMessage("Cho phép lấy thông tin GPS từ điện thoại.")
