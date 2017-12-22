@@ -25,6 +25,16 @@
         android:layout_marginTop="5dp"
         android:textColor="#000000" />
 
+
+    <TextView
+        android:id="@+id/sender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:text="HOÀNG ANH"
+        android:layout_marginTop="5dp"
+        android:textColor="#000000" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

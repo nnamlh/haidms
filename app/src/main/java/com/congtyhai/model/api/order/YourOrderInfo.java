@@ -28,6 +28,12 @@ public class YourOrderInfo {
     @SerializedName("status")
     private String status;
 
+    @SerializedName("senderCode")
+    private String senderCode;
+
+    @SerializedName("senderName")
+    private String senderName;
+
     public String getCode() {
         return code;
     }
@@ -106,5 +112,21 @@ public class YourOrderInfo {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getSenderCode() {
+        return senderCode;
+    }
+
+    public void setSenderCode(String senderCode) {
+        this.senderCode = senderCode;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
     }
 }

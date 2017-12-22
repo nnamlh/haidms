@@ -55,7 +55,7 @@ public class YourOrderProductAdapter extends BaseAdapter {
 
         TextView txtFinish = (TextView) view.findViewById(R.id.equantityfinish);
 
-        TextView txtC1 = (TextView) view.findViewById(R.id.ec1);
+        //TextView txtC1 = (TextView) view.findViewById(R.id.ec1);
 
         OrderProductResult info = orderProductResults.get(i);
 
@@ -65,7 +65,7 @@ public class YourOrderProductAdapter extends BaseAdapter {
 
         txtFinish.setText("Đã giao: " + getOrderDetailText(info.getQuantityBox(), info.getQuantityFinish(), info.getUnit()));
 
-        txtC1.setText("Nơi bán: " + info.getC1Store() + " ( " + info.getC1Code() + " )");
+      //  txtC1.setText("Nơi bán: " + info.getC1Store() + " ( " + info.getC1Code() + " )");
 
 
         return view;

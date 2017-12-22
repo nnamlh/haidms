@@ -49,6 +49,9 @@ public class YourOrderProductActivity extends BaseActivity {
 
     YourOrderInfo info;
 
+    @BindView(R.id.esender)
+    EditText eSender;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,7 @@ public class YourOrderProductActivity extends BaseActivity {
         ePhone.setText(info.getPhone());
 
         orderProducts = new ArrayList<>();
+        eSender.setText(info.getSenderName() + " - " + info.getSenderCode());
 
         adapter = new YourOrderProductAdapter(orderProducts, this);
 

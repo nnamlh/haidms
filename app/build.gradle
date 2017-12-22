@@ -8,8 +8,8 @@ android {
         applicationId "com.congtyhai.haidms"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 22
-        versionName "2.1.1"
+        versionCode 23
+        versionName "2.1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

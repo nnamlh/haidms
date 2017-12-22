@@ -97,6 +97,25 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-light"
+            android:text="Nơi bán"
+            android:textColor="#000000"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/esender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:fontFamily="sans-serif-light"
+            android:inputType="textMultiLine"/>
+
+        <!-- ten -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-light"
             android:text="Sản phẩm đặt hàng"
             android:textColor="#000000"
             android:textSize="14dp"
@@ -107,6 +126,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical" />
+
+
 
     </LinearLayout>
 
