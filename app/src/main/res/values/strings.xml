@@ -56,5 +56,6 @@
     <string name="title_activity_your_order_product">Chi tiết đơn hàng</string>
     <string name="title_activity_your_order_product_history">Chi tiết giao hàng
     </string>
+    <string name="title_activity_kpi">KPI nhân viên</string>
 
 </resources>

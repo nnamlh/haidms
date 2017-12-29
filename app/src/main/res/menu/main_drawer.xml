@@ -37,6 +37,11 @@
             android:icon="@mipmap/ic_promotion"
             android:visible="false"
             android:title="Khuyến mãi" />
+        <item
+            android:id="@+id/nav_kpi"
+            android:icon="@mipmap/ic_kpi"
+            android:visible="true"
+            android:title="KPI" />
     </group>
 
     <item android:title="Hổ trợ">

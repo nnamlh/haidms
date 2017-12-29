@@ -258,6 +258,10 @@
         <activity
             android:name=".manageorders.YourOrderProductHistoryActivity"
             android:label="@string/title_activity_your_order_product_history"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".report.KPIActivity"
+            android:label="@string/title_activity_kpi"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

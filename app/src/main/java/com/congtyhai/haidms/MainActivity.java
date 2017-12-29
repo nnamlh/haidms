@@ -25,6 +25,7 @@ import com.congtyhai.haidms.calendar.StaffCalendarActivity;
 import com.congtyhai.haidms.checkin.CheckInActivity;
 import com.congtyhai.haidms.manageorders.StaffOrderActivity;
 import com.congtyhai.haidms.product.ProductTaskActivity;
+import com.congtyhai.haidms.report.KPIActivity;
 import com.congtyhai.haidms.showinfo.CheckStaffActivity;
 import com.congtyhai.haidms.showinfo.ShowBranchActivity;
 import com.congtyhai.haidms.showinfo.ShowProductActivity;
@@ -337,6 +338,8 @@ public class MainActivity extends BaseActivity
             commons.startActivity(MainActivity.this, ShowBranchActivity.class);
         } else if (id == R.id.nav_order) {
             commons.startActivity(MainActivity.this, StaffOrderActivity.class);
+        } else if (id == R.id.nav_kpi) {
+            commons.startActivity(MainActivity.this, KPIActivity.class);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
