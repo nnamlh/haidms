@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.order.OrderProductResult;
+import com.congtyhai.util.HAIRes;
 
 import java.util.List;
 
@@ -55,6 +56,16 @@ public class YourOrderProductAdapter extends BaseAdapter {
 
         TextView txtFinish = (TextView) view.findViewById(R.id.equantityfinish);
 
+        TextView txtPrice = (TextView) view.findViewById(R.id.price);
+
+
+        TextView txtMoney = (TextView) view.findViewById(R.id.money);
+
+        TextView txtStatus = (TextView) view.findViewById(R.id.status);
+
+        TextView txtBox = (TextView) view.findViewById(R.id.box);
+
+
         //TextView txtC1 = (TextView) view.findViewById(R.id.ec1);
 
         OrderProductResult info = orderProductResults.get(i);
@@ -64,6 +75,19 @@ public class YourOrderProductAdapter extends BaseAdapter {
         txtQuantity.setText("SL đặt: " + getOrderDetailText(info.getQuantityBox(), info.getQuantity(), info.getUnit()));
 
         txtFinish.setText("Đã giao: " + getOrderDetailText(info.getQuantityBox(), info.getQuantityFinish(), info.getUnit()));
+
+        txtPrice.setText("Đơn giá: " + HAIRes.getInstance().formatMoneyToText(info.getPerPrice()) + "/" + info.getUnit());
+
+        txtMoney.setText("Tổng tiền: " + HAIRes.getInstance().formatMoneyToText(info.getPrice()));
+
+        txtBox.setText("Quy cách: " + info.getQuantityBox() + " " + info.getUnit() + "/ 1 thùng");
+
+
+        if (info.getQuantity() == info.getQuantityFinish()) {
+            txtStatus.setText("Đã giao");
+        } else {
+            txtStatus.setText("Đang giao");
+        }
 
       //  txtC1.setText("Nơi bán: " + info.getC1Store() + " ( " + info.getC1Code() + " )");
 

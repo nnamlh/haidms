@@ -7,12 +7,12 @@ package com.congtyhai.model.app;
 public class OrderEventInfoItem {
 
     private String event;
-    private String timeBegin;
-    private String timeEnd;
+    private String time;
     private String eventId;
     private String award;
     private String awardImg;
     private String point;
+    private String hasPoint;
     private String describe;
     private int type;
     // 0: header
@@ -28,22 +28,6 @@ public class OrderEventInfoItem {
 
     public void setEvent(String event) {
         this.event = event;
-    }
-
-    public String getTimeBegin() {
-        return timeBegin;
-    }
-
-    public void setTimeBegin(String timeBegin) {
-        this.timeBegin = timeBegin;
-    }
-
-    public String getTimeEnd() {
-        return timeEnd;
-    }
-
-    public void setTimeEnd(String timeEnd) {
-        this.timeEnd = timeEnd;
     }
 
     public String getEventId() {
@@ -92,5 +76,21 @@ public class OrderEventInfoItem {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getHasPoint() {
+        return hasPoint;
+    }
+
+    public void setHasPoint(String hasPoint) {
+        this.hasPoint = hasPoint;
     }
 }

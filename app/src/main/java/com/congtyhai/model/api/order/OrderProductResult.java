@@ -18,16 +18,7 @@ public class OrderProductResult {
     private int quantityFinish;
     @SerializedName("quantity")
     private int quantity;
-    @SerializedName("c1Id")
-    private String c1Id;
-    @SerializedName("c1Code")
-    private String c1Code;
-    @SerializedName("c1Store")
-    private String c1Store;
-    @SerializedName("c1Address")
-    private String c1Address;
-    @SerializedName("c1Phone")
-    private String c1Phone;
+
     @SerializedName("price")
     private double price ;
     @SerializedName("perPrice")
@@ -109,43 +100,4 @@ public class OrderProductResult {
         this.quantity = quantity;
     }
 
-    public String getC1Id() {
-        return c1Id;
-    }
-
-    public void setC1Id(String c1Id) {
-        this.c1Id = c1Id;
-    }
-
-    public String getC1Code() {
-        return c1Code;
-    }
-
-    public void setC1Code(String c1Code) {
-        this.c1Code = c1Code;
-    }
-
-    public String getC1Store() {
-        return c1Store;
-    }
-
-    public void setC1Store(String c1Store) {
-        this.c1Store = c1Store;
-    }
-
-    public String getC1Address() {
-        return c1Address;
-    }
-
-    public void setC1Address(String c1Address) {
-        this.c1Address = c1Address;
-    }
-
-    public String getC1Phone() {
-        return c1Phone;
-    }
-
-    public void setC1Phone(String c1Phone) {
-        this.c1Phone = c1Phone;
-    }
 }

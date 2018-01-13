@@ -11,12 +11,22 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import com.congtyhai.haidms.login.LoginNameActivity;
 import com.congtyhai.model.api.ResultInfo;
 import com.congtyhai.util.HAIRes;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,20 +42,7 @@ public class SplashActivity extends BaseActivity {
 
     @BindView(R.id.image)
     ImageView imgLogo;
-
-    private static final int PERMISSION_CALLBACK_CONSTANT = 100;
-    private static final int REQUEST_PERMISSION_SETTING = 101;
-
-    String[] permissionsRequired = new String[]{
-            android.Manifest.permission.CAMERA,
-            android.Manifest.permission.ACCESS_FINE_LOCATION,
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            android.Manifest.permission.READ_PHONE_STATE,
-            android.Manifest.permission.CALL_PHONE
-
-    };
-
-    private boolean sentToSettings = false;
+    boolean isSetting = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,84 +69,71 @@ public class SplashActivity extends BaseActivity {
 
     }
 
-
-    private  void checkAndRequestPermissions() {
-
-        List<String> listPermissionsNeeded = new ArrayList<>();
-
-        List<String> listPermissionsHasDenies = new ArrayList<>();
-
-        for (int i = 0; i < permissionsRequired.length; i++) {
-            int permissCheck = ContextCompat.checkSelfPermission(this,
-                    permissionsRequired[i]);
-
-            if (permissCheck != PackageManager.PERMISSION_GRANTED) {
-                // check
-
-                boolean permissCheckRational = ActivityCompat.shouldShowRequestPermissionRationale(SplashActivity.this, permissionsRequired[i]);
-                if (permissCheckRational){
-                    listPermissionsHasDenies.add(permissionsRequired[i]);
-                } else {
-                    listPermissionsNeeded.add(permissionsRequired[i]);
-                }
-            }
-        }
-        if(!listPermissionsHasDenies.isEmpty()) {
-            commons.showAlertCancelHandle(SplashActivity.this, "Cho phép truy cập", "Bạn đã chặn một số quyền, để truy cập bạn phải cho phép tất cả quyền", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    Uri uri = Uri.fromParts("package", getPackageName(), null);
-                    intent.setData(uri);
-                    startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
-                }
-            }, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    finish();
-                }
-            });
-
-        } else if (!listPermissionsNeeded.isEmpty()) {
-            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),PERMISSION_CALLBACK_CONSTANT);
-        } else {
-            proceedAfterPermission();
-        }
-
+    private void openSettings() {
+        isSetting = true;
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        startActivityForResult(intent, 101);
     }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_CALLBACK_CONSTANT) {
-            //check if all permissions are granted
-            boolean allgranted = false;
-            for (int i = 0; i < grantResults.length; i++) {
-                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                    allgranted = true;
-                } else {
-                    allgranted = false;
-                    break;
+    private void showSettingsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
+        builder.setTitle("Need Permissions");
+        builder.setMessage("This app needs permission to use this feature. You can grant them in app settings.");
+        builder.setPositiveButton("GOTO SETTINGS", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                openSettings();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+
+    }
+
+    private void checkAndRequestPermissions() {
+
+
+        Dexter.withActivity(SplashActivity.this).withPermissions(android.Manifest.permission.CAMERA,
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                android.Manifest.permission.READ_PHONE_STATE,
+                android.Manifest.permission.CALL_PHONE).withListener(new MultiplePermissionsListener() {
+            @Override
+            public void onPermissionsChecked(MultiplePermissionsReport report) {
+                if (report.areAllPermissionsGranted()) {
+                    proceedAfterPermission();
+                }
+
+                // check for permanent denial of any permission
+                if (report.isAnyPermissionPermanentlyDenied()) {
+                    // show alert dialog navigating to Settings
+                    showSettingsDialog();
                 }
             }
-            if (allgranted) {
-                proceedAfterPermission();
-            }  else {
-                commons.showAlertCancelHandle(SplashActivity.this, "Cho phép truy cập", "Bạn cần đồng ý cho phép quyền truy cập để có thể sử dụng chương trình", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                       checkAndRequestPermissions();
-                    }
-                }, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                });
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                token.continuePermissionRequest();
             }
-        }
+        }).withErrorListener(new PermissionRequestErrorListener() {
+            @Override
+            public void onError(DexterError error) {
+                Toast.makeText(getApplicationContext(), "Error occurred! ", Toast.LENGTH_SHORT).show();
+            }
+        }).onSameThread().check();
+
+
     }
+
 
     private void makeJsonRequest(final String user, final String token) {
 
@@ -233,14 +217,6 @@ public class SplashActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_PERMISSION_SETTING) {
-            checkAndRequestPermissions();
-        }
-    }
-
     private void proceedAfterPermission() {
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -251,7 +227,7 @@ public class SplashActivity extends BaseActivity {
                     makeJsonRequest("none", "none");
                 } else {
                     makeJsonRequest(user, token);
-               }
+                }
             }
         }, 100);
     }
@@ -259,9 +235,10 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        if (sentToSettings) {
-            checkAndRequestPermissions();
-        }
+       if(isSetting) {
+           checkAndRequestPermissions();
+           isSetting = false;
+       }
     }
 
 }

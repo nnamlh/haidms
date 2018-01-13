@@ -1,5 +1,6 @@
 package com.congtyhai.model.api.order;
 
+import com.congtyhai.util.HAIRes;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -33,6 +34,12 @@ public class YourOrderInfo {
 
     @SerializedName("senderName")
     private String senderName;
+
+    @SerializedName("money")
+    private double money;
+
+    @SerializedName("countProduct")
+    private int countProduct;
 
     public String getCode() {
         return code;
@@ -128,5 +135,21 @@ public class YourOrderInfo {
 
     public void setSenderName(String senderName) {
         this.senderName = senderName;
+    }
+
+    public String getMoney() {
+        return HAIRes.getInstance().formatMoneyToText(money);
+    }
+
+    public void setMoney(double money) {
+        this.money = money;
+    }
+
+    public int getCountProduct() {
+        return countProduct;
+    }
+
+    public void setCountProduct(int countProduct) {
+        this.countProduct = countProduct;
     }
 }

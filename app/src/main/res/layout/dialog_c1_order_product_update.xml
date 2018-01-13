@@ -40,27 +40,5 @@
         android:fontFamily="sans-serif-light"
         android:inputType="number"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:fontFamily="sans-serif-light"
-        android:text="Ghi chú giao hàng"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/cardview_dark_background"
-        android:gravity="top|left"
-        android:inputType="textMultiLine"
-        android:lines="5"
-        android:text="Đã giao hàng"
-        android:paddingLeft="5dp"
-        android:maxLines="6"
-        android:minLines="3"
-        android:background="@drawable/input_text"
-        android:id="@+id/enotes"
-        android:fontFamily="sans-serif-light"/>
-
 
 </LinearLayout>

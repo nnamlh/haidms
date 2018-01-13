@@ -1,12 +1,15 @@
 package com.congtyhai.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.app.OrderEventInfoItem;
 
@@ -20,8 +23,10 @@ public class OrderEventInfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     List<OrderEventInfoItem> items;
 
-    public OrderEventInfoAdapter(List<OrderEventInfoItem> items) {
+    Activity activity;
+    public OrderEventInfoAdapter(List<OrderEventInfoItem> items, Activity activity) {
         this.items = items;
+        this.activity = activity;
     }
 
     @Override
@@ -48,11 +53,18 @@ public class OrderEventInfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             switch (holder.getItemViewType()) {
                 case 0:
                     HeaderView headerView = (HeaderView) holder;
-
+                    headerView.txtEvent.setText(item.getEvent());
+                    headerView.txtHasPoint.setText(item.getHasPoint());
+                    headerView.txtDescribe.setText(item.getDescribe());
+                    headerView.txtPoint.setText(item.getPoint());
+                    headerView.txtTime.setText(item.getTime());
                     break;
                 case 1:
                     ContentView contentView = (ContentView) holder;
-
+                    Glide.with(activity).load(item.getAwardImg())
+                            .thumbnail(0.5f)
+                            .into(contentView.imgGift);
+                    contentView.txtGift.setText(item.getAward());
                     break;
             }
         }
@@ -74,7 +86,7 @@ public class OrderEventInfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     class HeaderView extends RecyclerView.ViewHolder {
 
-        TextView txtEvent, txtPoint, txtTime, txtDescribe;
+        TextView txtEvent, txtPoint, txtTime, txtDescribe, txtHasPoint;
 
         public HeaderView(View view) {
             super(view);
@@ -83,6 +95,7 @@ public class OrderEventInfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             txtPoint = (TextView) view.findViewById(R.id.point);
             txtTime = (TextView) view.findViewById(R.id.time);
             txtDescribe = (TextView) view.findViewById(R.id.describe);
+            txtHasPoint = (TextView) view.findViewById(R.id.haspoint);
 
         }
     }
@@ -91,11 +104,13 @@ public class OrderEventInfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         TextView txtGift;
 
+        ImageView imgGift;
+
         public ContentView(View view) {
             super(view);
 
             txtGift = (TextView) view.findViewById(R.id.gift);
-
+            imgGift = (ImageView) view.findViewById(R.id.imggift);
 
         }
     }

@@ -1,41 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="10dp"
+    android:orientation="vertical"
     android:paddingBottom="10dp"
-    android:orientation="vertical">
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp">
 
 
     <TextView
+        android:id="@+id/ename"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:text="BEAM 100 GR"
         android:textColor="#000000"
         android:textSize="16dp"
-        android:textStyle="bold"
-        android:id="@+id/ename"/>
+        android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/equantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textColor="#000000"
-        android:id="@+id/equantity"
         android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-light"
         android:text="Số lượng: 500"
+        android:textColor="#000000"
         android:textSize="14dp" />
 
     <TextView
+        android:id="@+id/equantityfinish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textColor="#000000"
-        android:id="@+id/equantityfinish"
         android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-light"
         android:text="Đã giao: 500"
+        android:textColor="#000000"
+        android:textSize="14dp" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-light"
+        android:text="Đơn giá : "
+        android:textColor="#000000"
+        android:textSize="14dp" />
+    <TextView
+        android:id="@+id/box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-light"
+        android:text="Quy cách : "
+        android:textColor="#000000"
+        android:textSize="14dp" />
+    <TextView
+        android:id="@+id/money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-light"
+        android:text="Tổng tiền: "
+        android:textColor="#000000"
+        android:textSize="14dp" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-light"
+        android:text="Tình trạng: "
+        android:textColor="#000000"
         android:textSize="14dp" />
 
 </LinearLayout>

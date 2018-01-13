@@ -43,7 +43,6 @@ import com.congtyhai.model.api.StaffHelpRequest;
 import com.congtyhai.model.api.TrackingResukt;
 import com.congtyhai.model.api.UpdateProductInfo;
 import com.congtyhai.model.api.checkin.CheckInOutPlanSend;
-import com.congtyhai.model.api.order.C1OrderProductUpdateSend;
 import com.congtyhai.model.api.order.C1OrderShowResult;
 import com.congtyhai.model.api.order.C1OrderShowSend;
 import com.congtyhai.model.api.order.C2OrderShowSend;
@@ -52,6 +51,7 @@ import com.congtyhai.model.api.order.OrderConfirmResult;
 import com.congtyhai.model.api.order.OrderConfirmSend;
 import com.congtyhai.model.api.order.OrderProductHistory;
 import com.congtyhai.model.api.order.OrderProductResult;
+import com.congtyhai.model.api.order.OrderProductUpdateSend;
 import com.congtyhai.model.api.order.StaffOrderShowSend;
 import com.congtyhai.model.api.order.YourOrderShowResult;
 
@@ -260,8 +260,11 @@ public interface ApiInterface {
     Call<List<OrderProductHistory>> yourOrderProductHistory(@Query("orderId") String orderId,
                                                           @Query("productId") String productId);
 
+    @POST("manageorder/updateorderproduct")
+    Call<ResultInfo> orderProductUpdate(@Body OrderProductUpdateSend info);
+
     @POST("c1order/updateorderproduct")
-    Call<ResultInfo> c1OrderProductUpdate(@Body C1OrderProductUpdateSend info);
+    Call<ResultInfo> c1OrderProductUpdate(@Body OrderProductUpdateSend info);
 
     @POST("stafforder/show")
     Call<YourOrderShowResult> staffOrderShow(@Body StaffOrderShowSend info);

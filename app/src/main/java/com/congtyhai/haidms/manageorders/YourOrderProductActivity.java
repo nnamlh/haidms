@@ -40,6 +40,16 @@ public class YourOrderProductActivity extends BaseActivity {
     EditText ePhone;
     @BindView(R.id.eaddress)
     EditText eAddress;
+
+    @BindView(R.id.emoney)
+    EditText eMoney;
+
+    @BindView(R.id.edatecreate)
+    EditText eDateCreate;
+
+    @BindView(R.id.edatesuggest)
+    EditText eDateSuggest;
+
     @BindView(R.id.list)
     ListView listView;
 
@@ -69,6 +79,12 @@ public class YourOrderProductActivity extends BaseActivity {
         eAddress.setText(info.getAddress());
 
         ePhone.setText(info.getPhone());
+
+        eMoney.setText(info.getMoney());
+
+        eDateCreate.setText(info.getDate());
+
+        eDateSuggest.setText(info.getDateSuggest());
 
         orderProducts = new ArrayList<>();
         eSender.setText(info.getSenderName() + " - " + info.getSenderCode());

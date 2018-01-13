@@ -1,10 +1,10 @@
 package com.congtyhai.model.api.order;
 
 /**
- * Created by HAI on 11/1/2017.
+ * Created by HAI on 1/14/2018.
  */
 
-public class C1OrderProductUpdateSend {
+public class OrderProductUpdateSend {
     private String user;
     private String token;
     private String orderId ;
@@ -12,8 +12,6 @@ public class C1OrderProductUpdateSend {
     private String productId ;
 
     private int quantity ;
-
-    private String notes ;
 
     public String getUser() {
         return user;
@@ -55,11 +53,4 @@ public class C1OrderProductUpdateSend {
         this.quantity = quantity;
     }
 
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
 }

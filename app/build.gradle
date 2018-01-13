@@ -8,8 +8,8 @@ android {
         applicationId "com.congtyhai.haidms"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 23
-        versionName "2.1.2"
+        versionCode 24
+        versionName "2.1.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -34,6 +34,7 @@ dependencies {
     compile 'me.dm7.barcodescanner:zbar:1.9'
     compile 'com.jakewharton:butterknife:8.8.0'
     compile 'com.synnapps:carouselview:0.1.4'
+    compile 'com.karumi:dexter:4.2.0'
     compile 'com.github.bumptech.glide:glide:4.0.0'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.google.firebase:firebase-messaging:11.0.0'

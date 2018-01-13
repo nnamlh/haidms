@@ -16,10 +16,9 @@ import android.widget.ListView;
 import com.congtyhai.adapter.C1OrderProductHistoryAdapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
-import com.congtyhai.haidms.order.ShowOrderActivity;
 import com.congtyhai.model.api.ResultInfo;
-import com.congtyhai.model.api.order.C1OrderProductUpdateSend;
 import com.congtyhai.model.api.order.OrderProductHistory;
+import com.congtyhai.model.api.order.OrderProductUpdateSend;
 import com.congtyhai.util.HAIRes;
 
 import java.util.ArrayList;
@@ -45,16 +44,16 @@ public class C1OrderProductHistoryActivity extends BaseActivity {
 
     C1OrderProductHistoryAdapter adapter;
 
-    boolean isUpdate = false;
 
-    int quantityBox;
 
-    C1OrderProductUpdateSend infoSend;
+
+    OrderProductUpdateSend infoSend;
 
     int quantityOrder;
+    boolean isUpdate = false;
 
     int quantityFinish;
-
+    int quantityBox;
     String unit;
 
     @BindView(R.id.ename)
@@ -72,7 +71,7 @@ public class C1OrderProductHistoryActivity extends BaseActivity {
 
         ButterKnife.bind(this);
 
-        infoSend = new C1OrderProductUpdateSend();
+        infoSend = new OrderProductUpdateSend();
         Intent intent = getIntent();
 
         orderId = intent.getStringExtra("orderId");
@@ -158,8 +157,7 @@ public class C1OrderProductHistoryActivity extends BaseActivity {
         final EditText eCan = (EditText) viewDialog.findViewById(R.id.ecan);
        // eCan.setText("" + countCan);
         final EditText eBox = (EditText) viewDialog.findViewById(R.id.ebox);
-      //  eBox.setText("" + countBox);
-        final  EditText eNotes = (EditText) viewDialog.findViewById(R.id.enotes) ;
+
 
         eCan.addTextChangedListener(new TextWatcher() {
             @Override
@@ -221,8 +219,6 @@ public class C1OrderProductHistoryActivity extends BaseActivity {
 
                         int sum = box + quantityBox*can;
                         infoSend.setQuantity(sum);
-
-                        infoSend.setNotes(eNotes.getText().toString());
 
                         makeUpdate();
 

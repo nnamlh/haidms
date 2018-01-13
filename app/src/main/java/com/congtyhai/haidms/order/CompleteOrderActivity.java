@@ -63,6 +63,9 @@ public class CompleteOrderActivity extends BaseActivity {
         adapter.addFragment(order, "ĐẶT HÀNG");
 
         CompleteOrderPromotionFragment promotion = new CompleteOrderPromotionFragment();
+        //
+        promotion.setData(result.getEvents());
+
         adapter.addFragment(promotion, "KHUYẾN MÃI");
         viewPager.setAdapter(adapter);
     }

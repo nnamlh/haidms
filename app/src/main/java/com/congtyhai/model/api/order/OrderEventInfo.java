@@ -19,14 +19,17 @@ public class OrderEventInfo {
     @SerializedName("point")
     private String point ;
 
+    @SerializedName("hasPoint")
+    private String hasPoint;
+
     @SerializedName("time")
     private String time ;
 
-    @SerializedName("notes")
-    private String notes ;
+    @SerializedName("describe")
+    private String describe ;
 
-    @SerializedName("gifts")
-    private List<OrderEventGift> gifts ;
+    @SerializedName("gift")
+    private OrderEventGift gift ;
 
     public String getId() {
         return id;
@@ -60,19 +63,27 @@ public class OrderEventInfo {
         this.time = time;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getHasPoint() {
+        return hasPoint;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setHasPoint(String hasPoint) {
+        this.hasPoint = hasPoint;
     }
 
-    public List<OrderEventGift> getGifts() {
-        return gifts;
+    public String getDescribe() {
+        return describe;
     }
 
-    public void setGifts(List<OrderEventGift> gifts) {
-        this.gifts = gifts;
+    public void setDescribe(String describe) {
+        this.describe = describe;
+    }
+
+    public OrderEventGift getGift() {
+        return gift;
+    }
+
+    public void setGift(OrderEventGift gift) {
+        this.gift = gift;
     }
 }

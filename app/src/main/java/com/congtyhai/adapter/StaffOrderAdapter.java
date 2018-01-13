@@ -48,7 +48,7 @@ public class StaffOrderAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.staff_order_item, null );
         }
 
-        TextView code, agency, count, date, datecreate, status,sender;
+        TextView code, agency, count, date, datecreate, status,sender, money;
         code = (TextView) view.findViewById(R.id.code);
         agency = (TextView) view.findViewById(R.id.agency);
         count = (TextView) view.findViewById(R.id.productcount);
@@ -56,6 +56,7 @@ public class StaffOrderAdapter extends BaseAdapter {
         datecreate = (TextView) view.findViewById(R.id.createdate);
         status = (TextView)view.findViewById(R.id.estatus);
         sender = (TextView) view.findViewById(R.id.sender);
+        money = (TextView) view.findViewById(R.id.money);
 
         YourOrderInfo info = staffOrderInfos.get(position);
 
@@ -65,7 +66,7 @@ public class StaffOrderAdapter extends BaseAdapter {
         date.setText("Ngày đề nghị giao: " + info.getDateSuggest());
         datecreate.setText("Ngày đặt hàng: " + info.getDate());
         sender.setText("Nơi bán: " + info.getSenderName() + " - " + info.getSenderCode());
-
+        money.setText("Tổng tiền: " + info.getMoney());
 
         status.setText(info.getStatus());
 
