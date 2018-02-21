@@ -17,6 +17,14 @@
         <item>E</item>
         <item>F</item>
     </string-array>
+
+    <string-array name="debt_time">
+        <item>10</item>
+        <item>30</item>
+        <item>45</item>
+        <item>60</item>
+    </string-array>
+
     <string name="title_activity_staff_calendar">Lịch công tác</string>
     <string name="title_activity_create_calendar">Tạo kế hoạch</string>
     <string name="title_activity_check_in">Thăm khách hàng</string>
@@ -57,5 +65,6 @@
     <string name="title_activity_your_order_product_history">Chi tiết giao hàng
     </string>
     <string name="title_activity_kpi">KPI nhân viên</string>
+    <string name="title_activity_choose_sale">Chọn nơi lấy hàng</string>
 
 </resources>

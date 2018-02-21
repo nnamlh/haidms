@@ -55,9 +55,11 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
         holder.price.setText("Giá bán lẽ: " + HAIRes.getInstance().formatMoneyToText(productCodeInfo.getPrice()));
         holder.pricebox.setText("Giá thùng: " + HAIRes.getInstance().formatMoneyToText(productCodeInfo.getPrice() * productCodeInfo.getQuantity()));
 
+        /*
         Glide.with(activity).load(productCodeInfo.getImage())
                 .thumbnail(0.5f)
                 .into(holder.image);
+                */
 
         holder.btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override

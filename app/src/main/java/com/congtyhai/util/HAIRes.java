@@ -1,6 +1,8 @@
 package com.congtyhai.util;
 
+import com.congtyhai.model.api.AgencyC2C1;
 import com.congtyhai.model.api.AgencyInfo;
+import com.congtyhai.model.api.C2C1Info;
 import com.congtyhai.model.api.CalendarDayCreate;
 import com.congtyhai.model.api.CalendarStatus;
 import com.congtyhai.model.api.EventProduct;
@@ -8,7 +10,6 @@ import com.congtyhai.model.api.GeneralInfo;
 import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.model.api.ProductOrder;
 import com.congtyhai.model.api.ResultEventInfo;
-import com.congtyhai.model.api.order.C1OrderInfo;
 import com.congtyhai.model.api.order.OrderProductResult;
 import com.congtyhai.model.api.order.YourOrderInfo;
 import com.congtyhai.model.app.C2Info;
@@ -52,7 +53,7 @@ public class HAIRes {
     public final String KEY_INTENT_YEAR = "yearselect";
     public final String KEY_SCREEN_KEY_SCAN = "ScreenKey";
     public final String KEY_INTENT_ACTION = "actionrequest";
-    public String CurrentAgency ;
+  //  public String CurrentAgency ;
     private CalendarDayCreate calendarDayCreate;
   //  private List<CalendarStatus> calendarStatuses;
 
@@ -110,19 +111,8 @@ public class HAIRes {
         return this.calendarStatuses;
     }
 
-   // public CalendarCreateSend calendarCreateSend = new CalendarCreateSend();
     public AgencyInfo currentAgencySelect = new AgencyInfo();
     public final double LIMIT_DISTANCE = 1000;
-
-    /*
-    public String[] GetListStatusName() {
-        String[] statusTemp = new String[calendarStatuses.size()];
-        for(int i=0; i< calendarStatuses.size(); i++) {
-            statusTemp[i] = calendarStatuses.get(i).name;
-        }
-
-        return statusTemp;
-    }*/
 
     public int findPostitionStatus(String status) {
         for(int i=0; i< calendarStatuses.size(); i++) {
@@ -134,21 +124,9 @@ public class HAIRes {
         return 0;
     }
 
-    /*
-    public String findStatusName(String status) {
-        for(int i=0; i< calendarStatuses.size(); i++) {
-            if (status.equals(calendarStatuses.get(i).id)){
-                return calendarStatuses.get(i).name;
-            }
-        }
 
-        return "";
-    }
-*/
     // status
     public final String CALENDAR_CSKH = "CSKH";
-  //  public final String CALENDAR_OTHER = "OTHER";
-
 
     // product
     public String PRODUCT_IMPORT = "NK";
@@ -379,7 +357,7 @@ public class HAIRes {
 
 
     // order
-    public C1OrderInfo C1OrderInfo;
+    public AgencyC2C1 salePlace;
 
     public YourOrderInfo yourOrderInfo;
 

@@ -17,11 +17,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.congtyhai.haidms.Agency.C2OfC1Activity;
-import com.congtyhai.haidms.Agency.ShowAgencyActivity;
 import com.congtyhai.haidms.Event.EventActivity;
 import com.congtyhai.haidms.Util.NotificationActivity;
-import com.congtyhai.haidms.calendar.StaffCalendarActivity;
-import com.congtyhai.haidms.manageorders.C1OrderActivity;
 import com.congtyhai.haidms.manageorders.YourOrdersActivity;
 import com.congtyhai.haidms.product.ProductTaskActivity;
 import com.congtyhai.haidms.showinfo.CheckStaffActivity;
@@ -30,7 +27,6 @@ import com.congtyhai.haidms.showinfo.ShowProductActivity;
 import com.congtyhai.model.Realm.DTopicFirebase;
 import com.congtyhai.model.api.MainAgencyInfoResult;
 import com.congtyhai.model.api.MainInfoSend;
-import com.congtyhai.model.api.order.C2OrderShowSend;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.util.RealmController;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -229,7 +225,7 @@ public class MainAgencyActivity extends BaseActivity
         } else if (id == R.id.nav_order){
             String type = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TYPE, "");
             if ("CI".equals(type)){
-                commons.startActivity(MainAgencyActivity.this, C1OrderActivity.class);
+               // commons.startActivity(MainAgencyActivity.this, C1OrderActivity.class);
             } else if ("CII".equals(type)) {
                 commons.startActivity(MainAgencyActivity.this, YourOrdersActivity.class);
 
@@ -242,8 +238,6 @@ public class MainAgencyActivity extends BaseActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
 
 
     @Override

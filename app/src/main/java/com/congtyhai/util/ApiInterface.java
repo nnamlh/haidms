@@ -43,8 +43,6 @@ import com.congtyhai.model.api.StaffHelpRequest;
 import com.congtyhai.model.api.TrackingResukt;
 import com.congtyhai.model.api.UpdateProductInfo;
 import com.congtyhai.model.api.checkin.CheckInOutPlanSend;
-import com.congtyhai.model.api.order.C1OrderShowResult;
-import com.congtyhai.model.api.order.C1OrderShowSend;
 import com.congtyhai.model.api.order.C2OrderShowSend;
 import com.congtyhai.model.api.order.OrderCompleteSend;
 import com.congtyhai.model.api.order.OrderConfirmResult;
@@ -240,10 +238,11 @@ public interface ApiInterface {
     @POST("order/staffcomplete")
     Call<ResultInfo> orderComplete(@Body OrderCompleteSend info);
 
+    @GET("order/getsaleplaces")
+    Call<List<AgencyC2C1>> orderGetSalePlaces(@Query("id") String id, @Query("user") String user);
+
 
     ///
-    @POST("c1order/show")
-    Call<C1OrderShowResult> c1OrderShow(@Body C1OrderShowSend info);
 
     @GET("c1order/getproduct")
     Call<List<OrderProductResult>> c1OrderProduct( @Query("user") String user,

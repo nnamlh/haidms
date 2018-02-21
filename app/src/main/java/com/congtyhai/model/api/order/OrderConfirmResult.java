@@ -35,8 +35,7 @@ public class OrderConfirmResult {
     private String phone ;
     @SerializedName("address")
     private String address ;
-    @SerializedName("c1")
-    private List<AgencyC2C1> c1;
+
 
     public String getId() {
         return id;
@@ -126,11 +125,4 @@ public class OrderConfirmResult {
         this.address = address;
     }
 
-    public List<AgencyC2C1> getC1() {
-        return c1;
-    }
-
-    public void setC1(List<AgencyC2C1> c1) {
-        this.c1 = c1;
-    }
 }

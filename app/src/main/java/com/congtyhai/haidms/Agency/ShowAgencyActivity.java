@@ -23,6 +23,7 @@ import com.congtyhai.adapter.AgencyAdapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.MainActivity;
 import com.congtyhai.haidms.R;
+import com.congtyhai.haidms.order.ChooseSaleActivity;
 import com.congtyhai.haidms.showinfo.ShowProductActivity;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.app.C2Info;
@@ -99,14 +100,14 @@ public class ShowAgencyActivity extends BaseActivity {
                     finish();
                 } else if ("createorder".equals(codeRequest)) {
                     HAIRes.getInstance().inOder = 1;
-                    HAIRes.getInstance().CurrentAgency = info.getCode();
+                   // HAIRes.getInstance().CurrentAgency = info.getCode();
                     C2Info c2Info = new C2Info();
                     c2Info.setCode(info.getCode());
                     c2Info.setDeputy(info.getDeputy());
                     c2Info.setStore(info.getName());
                     HAIRes.getInstance().c2Select = c2Info;
 
-                    commons.startActivity(ShowAgencyActivity.this, ShowProductActivity.class);
+                    commons.startActivity(ShowAgencyActivity.this, ChooseSaleActivity.class);
                     finish();
                 } else if("chooseagency".equals(codeRequest)){
                     commons.showAlertCancel(ShowAgencyActivity.this, "Chọn đại lý", "Bạn chọn đại lý: " + info.getName() + "-" + info.getCode(), new DialogInterface.OnClickListener() {

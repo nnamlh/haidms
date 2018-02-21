@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.congtyhai.haidms.manageorders.C1OrderActivity">
+    tools:context="com.congtyhai.haidms.order.ChooseSaleActivity">
 
     <include layout="@layout/toolbar" />
 
-    <include layout="@layout/content_c1_order" />
+    <include layout="@layout/content_choose_sale" />
 
 
 </android.support.design.widget.CoordinatorLayout>

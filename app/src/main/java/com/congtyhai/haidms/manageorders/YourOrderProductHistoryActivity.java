@@ -11,7 +11,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
-import com.congtyhai.adapter.C1OrderProductHistoryAdapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.ResultInfo;
@@ -36,8 +35,6 @@ public class YourOrderProductHistoryActivity extends BaseActivity {
     NonScrollListView listView;
 
     List<OrderProductHistory> orderProductHistories;
-
-    C1OrderProductHistoryAdapter adapter;
 
     OrderProductResult orderProductResult;
 
@@ -87,9 +84,7 @@ public class YourOrderProductHistoryActivity extends BaseActivity {
 
 
         orderProductHistories = new ArrayList<>();
-        adapter = new C1OrderProductHistoryAdapter(this, orderProductHistories);
 
-        listView.setAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -195,7 +190,7 @@ public class YourOrderProductHistoryActivity extends BaseActivity {
             public void onResponse(Call<List<OrderProductHistory>> call, Response<List<OrderProductHistory>> response) {
                 if (response.body() != null) {
                     orderProductHistories.addAll(response.body());
-                    adapter.notifyDataSetChanged();
+
                 }
                 hidepDialog();
             }

@@ -64,7 +64,7 @@ public class CheckInTaskActivity extends BaseActivity {
         agencyCode = intent.getStringExtra(HAIRes.getInstance().KEY_INTENT_AGENCY_CODE);
         distance = intent.getLongExtra(HAIRes.getInstance().KEY_INTENT_TEMP, 0);
 
-        HAIRes.getInstance().CurrentAgency = agencyCode;
+      //  HAIRes.getInstance().CurrentAgency = agencyCode;
 
         //
         getSupportActionBar().setTitle("Ghé thăm khách hàng: " + agencyCode);

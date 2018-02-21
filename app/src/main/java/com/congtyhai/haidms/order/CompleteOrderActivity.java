@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Spinner;
 
 import com.congtyhai.adapter.HelpViewPagerAdapter;
@@ -34,7 +36,11 @@ public class CompleteOrderActivity extends BaseActivity {
     TabLayout tabLayout;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
+    HelpViewPagerAdapter adapter;
 
+    CompleteOrderFragment order;
+
+    CompleteOrderPromotionFragment promotion;
 
 
     @Override
@@ -56,13 +62,13 @@ public class CompleteOrderActivity extends BaseActivity {
     }
 
     private void setupViewPager(ViewPager viewPager, OrderConfirmResult result) {
-        HelpViewPagerAdapter adapter = new HelpViewPagerAdapter(getSupportFragmentManager());
+         adapter = new HelpViewPagerAdapter(getSupportFragmentManager());
 
-        CompleteOrderFragment order = new CompleteOrderFragment();
-        order.setData(CompleteOrderActivity.this, result.getDeputy(), result.getStore(), result.getAgencyCode(),result.getPhone(), result.getAddress(), result.getPayType(), result.getShipType(), result.getC1());
+        order = new CompleteOrderFragment();
+        order.setData(CompleteOrderActivity.this, result.getDeputy(), result.getStore(), result.getAgencyCode(),result.getPhone(), result.getAddress(), result.getPayType(), result.getShipType());
         adapter.addFragment(order, "ĐẶT HÀNG");
 
-        CompleteOrderPromotionFragment promotion = new CompleteOrderPromotionFragment();
+        promotion = new CompleteOrderPromotionFragment();
         //
         promotion.setData(result.getEvents());
 
@@ -70,6 +76,15 @@ public class CompleteOrderActivity extends BaseActivity {
         viewPager.setAdapter(adapter);
     }
 
+    public void hidePromote(boolean isHide) {
+        if (!isHide) {
+            adapter.removeFragment(1);
+            adapter.notifyDataSetChanged();
+        } else{
+            adapter.addFragment(promotion, "KHUYẾN MÃI");
+            adapter.notifyDataSetChanged();
+        }
+    }
 
     private void makeRequest() {
         showpDialog();
@@ -84,7 +99,6 @@ public class CompleteOrderActivity extends BaseActivity {
 
         for(ProductOrder productOrder: HAIRes.getInstance().getProductOrder()){
             OrderProductSend orderProductSend = new OrderProductSend();
-            //orderProductSend.setC1(productOrder.getC1Code());
             orderProductSend.setCode(productOrder.getCode());
             orderProductSend.setQuantity(productOrder.getQuantity());
             info.getProduct().add(orderProductSend);

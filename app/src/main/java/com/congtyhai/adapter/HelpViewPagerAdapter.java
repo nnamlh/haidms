@@ -34,6 +34,11 @@ public class HelpViewPagerAdapter extends FragmentPagerAdapter {
         mFragmentTitleList.add(title);
     }
 
+    public void removeFragment(int idx) {
+        mFragmentList.remove(idx);
+        mFragmentTitleList.remove(idx);
+    }
+
     @Override
     public CharSequence getPageTitle(int position) {
         return mFragmentTitleList.get(position);
