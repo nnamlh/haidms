@@ -235,10 +235,10 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-       if(isSetting) {
-           checkAndRequestPermissions();
-           isSetting = false;
-       }
+        if(isSetting) {
+            checkAndRequestPermissions();
+            isSetting = false;
+        }
     }
 
 }

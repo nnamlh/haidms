@@ -58,7 +58,7 @@ public class CheckInTaskActivity extends BaseActivity {
         setContentView(R.layout.activity_check_in_task);
         createToolbar();
         ButterKnife.bind(this);
-        createLocation();
+
         Intent intent = getIntent();
         HAIRes.getInstance().clearProductOrder();
         agencyCode = intent.getStringExtra(HAIRes.getInstance().KEY_INTENT_AGENCY_CODE);
@@ -122,8 +122,8 @@ public class CheckInTaskActivity extends BaseActivity {
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
         CheckInSend checkInSend = new CheckInSend();
-        checkInSend.setLng(gps.getLongitude());
-        checkInSend.setLat(gps.getLatitude());
+        checkInSend.setLng(getLng());
+        checkInSend.setLat(getLat());
         checkInSend.setUser(user);
         checkInSend.setToken(token);
         checkInSend.setAgency(agencyCode);

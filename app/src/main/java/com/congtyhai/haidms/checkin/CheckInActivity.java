@@ -59,8 +59,6 @@ public class CheckInActivity extends BaseActivity {
         agencyInfos = new ArrayList<>();
         makeRequest();
 
-        createLocation();
-
     }
 
     private void makeRequest() {
@@ -151,8 +149,8 @@ public class CheckInActivity extends BaseActivity {
         info.setToken(token);
         info.setUser(user);
 
-        info.setLat(getCurrentLocation().getLatitude());
-        info.setLng(getCurrentLocation().getLongitude());
+        info.setLat(getLat());
+        info.setLng(getLng());
 
         Call<ResultInfo> call = apiInterface().checkInOutPlan(info);
         call.enqueue(new Callback<ResultInfo>() {
@@ -242,8 +240,8 @@ public class CheckInActivity extends BaseActivity {
 
     public List<CheckInAgencyInfo> getListCheckInPlan() {
         List<CheckInAgencyInfo> checkInAgencyInfos = new ArrayList<>();
-        double lat = getCurrentLocation().getLatitude();
-        double lng = getCurrentLocation().getLongitude();
+        double lat =getLat();
+        double lng = getLng();
         for (AgencyCheckinInfo item : checkInLists) {
             CheckInAgencyInfo checkInAgencyInfo = new CheckInAgencyInfo();
             checkInAgencyInfo.setDeputy(item.getDeputy());
@@ -263,8 +261,8 @@ public class CheckInActivity extends BaseActivity {
 
     public List<CheckInAgencyInfo> getListCheckOutPlan(String search) {
         List<CheckInAgencyInfo> checkInAgencyInfos = new ArrayList<>();
-        double lat = getCurrentLocation().getLatitude();
-        double lng = getCurrentLocation().getLongitude();
+        double lat = getLat();
+        double lng = getLng();
         for (AgencyInfo item : agencyInfos) {
 
            if((item.getCode().contains(search) || item.getName().contains(search)) && !checkInPlan(item.getCode())) {

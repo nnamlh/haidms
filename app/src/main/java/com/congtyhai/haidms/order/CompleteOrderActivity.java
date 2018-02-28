@@ -22,7 +22,6 @@ import com.congtyhai.view.CompleteOrderFragment;
 import com.congtyhai.view.CompleteOrderPromotionFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,9 +48,6 @@ public class CompleteOrderActivity extends BaseActivity {
         setContentView(R.layout.activity_complete_order);
         createToolbar();
         ButterKnife.bind(this);
-
-        createLocation();
-
         makeRequest();
 
 
@@ -125,7 +121,7 @@ public class CompleteOrderActivity extends BaseActivity {
     }
 
     //
-    public  void makeUpdate( String address, String phone, String note, String shipType, String payType, String timeSuggest, String c1) {
+    public  void makeUpdate( String address, String phone, String note, String shipType, String payType, String timeSuggest, String c1, int debtTime) {
         showpDialog();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
@@ -137,8 +133,10 @@ public class CompleteOrderActivity extends BaseActivity {
             OrderProductSend orderProductSend = new OrderProductSend();
             orderProductSend.setCode(productOrder.getCode());
             orderProductSend.setQuantity(productOrder.getQuantity());
+            orderProductSend.setHasBill(productOrder.getHasBill());
             info.getProduct().add(orderProductSend);
         }
+
         info.setUser(user);
         info.setToken(token);
         info.setCode(HAIRes.getInstance().c2Select.getCode());
@@ -150,6 +148,7 @@ public class CompleteOrderActivity extends BaseActivity {
         info.setTimeSuggest(timeSuggest);
         info.setC1(c1);
         info.setInCheckIn(HAIRes.getInstance().CREATE_ORDER_TYPE);
+        info.setDebtTime(debtTime);
 
         Call<ResultInfo> call = apiInterface().orderComplete(info);
         call.enqueue(new Callback<ResultInfo>() {

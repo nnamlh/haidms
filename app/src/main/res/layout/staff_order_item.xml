@@ -35,51 +35,80 @@
         android:layout_marginTop="5dp"
         android:textColor="#000000" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textColor="#000000"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_marginTop="5dp"
-        android:id="@+id/productcount"
-        android:text="Số sản phẩm: 2" />
-
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textColor="#000000"
-        android:layout_marginTop="5dp"
-        android:id="@+id/money"
-        android:text="Tổng tiền: " />
+        android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textColor="#000000"
-        android:id="@+id/createdate"
-        android:layout_marginTop="5dp"
-        android:text="Ngày tạo: 21/2/2013" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:textColor="#000000"
+            android:id="@+id/productcount"
+            android:text="Số sản phẩm: 2" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textColor="#000000"
-        android:id="@+id/expectdate"
-        android:layout_marginTop="5dp"
-        android:text="Đề nghị giao: 21/2/2013" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:textColor="#C62828"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/money"
+            android:text="Tổng tiền: " />
 
+    </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:textColor="#000000"
-        android:id="@+id/estatus"
-        android:textStyle="italic"
-        android:layout_marginTop="5dp"
-        android:text="Đang liên hệ" />
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_marginTop="5dp"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal">
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:fontFamily="sans-serif-light"
+           android:textColor="#000000"
+           android:id="@+id/createdate"
+           android:text="Ngày tạo: 21/2/2013" />
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:fontFamily="sans-serif-light"
+           android:layout_marginLeft="20dp"
+           android:textColor="#2196F3"
+           android:id="@+id/expectdate"
+           android:text="Đề nghị giao: 21/2/2013" />
+
+   </LinearLayout>
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="5dp"
+       android:orientation="horizontal">
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:fontFamily="sans-serif-light"
+           android:textColor="#000000"
+           android:id="@+id/estatus"
+           android:textStyle="italic"
+           android:text="Đang liên hệ" />
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:fontFamily="sans-serif-light"
+           android:textColor="#000000"
+           android:id="@+id/deliverystatus"
+           android:textStyle="bold"
+           android:layout_marginLeft="20dp"
+           android:text="Chua giao" />
+
+   </LinearLayout>
 
 </LinearLayout>

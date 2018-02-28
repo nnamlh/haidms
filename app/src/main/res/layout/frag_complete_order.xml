@@ -20,22 +20,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/btncontinue"
+        android:padding="10dp"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="10dp">
-
-            <CheckBox
-                android:id="@+id/check_has_bill"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="-7dp"
-                android:checked="true"
-                android:text="Có phiếu" />
+            android:paddingTop="10dp"
+            android:paddingBottom="50dp">
 
             <TextView
                 android:layout_width="wrap_content"

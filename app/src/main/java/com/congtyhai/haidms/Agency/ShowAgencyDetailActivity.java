@@ -112,7 +112,7 @@ public class ShowAgencyDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_show_agency_detail);
         createToolbar();
         ButterKnife.bind(this);
-        createLocation();
+
         eCode.setText(HAIRes.getInstance().currentAgencySelect.getCode());
         eSotre.setText(HAIRes.getInstance().currentAgencySelect.getName());
         eDeputy.setText(HAIRes.getInstance().currentAgencySelect.getDeputy());
@@ -245,8 +245,8 @@ public class ShowAgencyDetailActivity extends BaseActivity {
         info.setTaxCode(eTax.getText().toString());
 
         if (isUpdateLocation) {
-            info.setLat(getCurrentLocation().getLatitude());
-            info.setLng(getCurrentLocation().getLongitude());
+            info.setLat(getLat());
+            info.setLng(getLng());
         } else {
             info.setLat(0);
             info.setLng(0);

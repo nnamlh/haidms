@@ -29,6 +29,15 @@ public class YourOrderInfo {
     @SerializedName("status")
     private String status;
 
+    @SerializedName("statusCode")
+    private String statusCode;
+
+    @SerializedName("deliveryStatus")
+    private String deliveryStatus;
+
+    @SerializedName("deliveryStatusCode")
+    private String deliveryStatusCode;
+
     @SerializedName("senderCode")
     private String senderCode;
 
@@ -40,6 +49,13 @@ public class YourOrderInfo {
 
     @SerializedName("countProduct")
     private int countProduct;
+
+    @SerializedName("payInfo")
+    private String payInfo;
+    @SerializedName("shipInfo")
+    private String shipInfo;
+    @SerializedName("hasBill")
+    private int hasBill;
 
     public String getCode() {
         return code;
@@ -151,5 +167,53 @@ public class YourOrderInfo {
 
     public void setCountProduct(int countProduct) {
         this.countProduct = countProduct;
+    }
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public String getDeliveryStatus() {
+        return deliveryStatus;
+    }
+
+    public void setDeliveryStatus(String deliveryStatus) {
+        this.deliveryStatus = deliveryStatus;
+    }
+
+    public String getDeliveryStatusCode() {
+        return deliveryStatusCode;
+    }
+
+    public void setDeliveryStatusCode(String deliveryStatusCode) {
+        this.deliveryStatusCode = deliveryStatusCode;
+    }
+
+    public String getPayInfo() {
+        return payInfo;
+    }
+
+    public void setPayInfo(String payInfo) {
+        this.payInfo = payInfo;
+    }
+
+    public String getShipInfo() {
+        return shipInfo;
+    }
+
+    public void setShipInfo(String shipInfo) {
+        this.shipInfo = shipInfo;
+    }
+
+    public int getHasBill() {
+        return hasBill;
+    }
+
+    public void setHasBill(int hasBill) {
+        this.hasBill = hasBill;
     }
 }

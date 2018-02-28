@@ -88,10 +88,6 @@ public class CompleteOrderFragment extends Fragment implements DatePickerDialog.
     @BindView(R.id.sdebttime)
     Spinner sDebtTime;
 
-    @BindView(R.id.check_has_bill)
-    CheckBox ckHasBill;
-
-
     String name, store, phone, code, address, shipCode = "", payCode = "";
 
     DatePickerDialog datePickerDialog;
@@ -201,7 +197,19 @@ public class CompleteOrderFragment extends Fragment implements DatePickerDialog.
             @Override
             public void onClick(View view) {
                 if (checkUpdate()) {
-                    activity.makeUpdate(eAddress.getText().toString(), ePhone.getText().toString(), eNote.getText().toString(), shipCode, payCode, eDate.getText().toString(), HAIRes.getInstance().salePlace.getCode());
+
+                    int debtTime = 0;
+
+                    if (payCode.equals("debt")){
+                        try {
+                            debtTime = Integer.parseInt(sDebtTime.getSelectedItem().toString());
+                        } catch (Exception e) {
+                            debtTime = 0;
+                        }
+                    }
+
+                    activity.makeUpdate(eAddress.getText().toString(), ePhone.getText().toString(), eNote.getText().toString(), shipCode, payCode,
+                            eDate.getText().toString(), HAIRes.getInstance().salePlace.getCode(), debtTime);
                 } else {
                     Toast.makeText(activity, "Điền đủ thông tin", Toast.LENGTH_LONG).show();
                 }
@@ -213,14 +221,6 @@ public class CompleteOrderFragment extends Fragment implements DatePickerDialog.
             price += order.getPrice() * order.getQuantity();
         }
         priceTotal.setText(HAIRes.getInstance().formatMoneyToText(price));
-
-
-        ckHasBill.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-               activity.hidePromote(b);
-            }
-        });
 
         return view;
 

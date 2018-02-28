@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
@@ -48,10 +50,6 @@ public class ProductOrderAdapter  extends RecyclerView.Adapter<ProductOrderAdapt
 
         final ProductOrder order = productOrders.get(position);
 
-        Glide.with(activity).load(order.getImage())
-                .thumbnail(0.5f)
-                .into(holder.image);
-
         holder.name.setText(order.getName());
         holder.group.setText(order.getGroup());
         holder.detail.setText(getOrderDetailText(order.getQuantityBox(), order.getQuantity(), order.getUnit()));
@@ -82,14 +80,22 @@ public class ProductOrderAdapter  extends RecyclerView.Adapter<ProductOrderAdapt
             }
         });
 
-        holder.image.setOnClickListener(new View.OnClickListener() {
+
+        holder.chkBill.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(activity, ShowProductDetailActivity.class);
-                intent.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, order.getCode());
-                activity.startActivity(intent);
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    order.setHasBill(1);
+                } else {
+                    order.setHasBill(0);
+                }
             }
         });
+
+        if (order.getHasBill() == 1)
+            holder.chkBill.setChecked(true);
+        else
+            holder.chkBill.setChecked(false);
 
       //  holder.c1Name.setText("NƠI BÁN: " + order.getC1Name() + " - " + order.getC1Code());
 
@@ -124,18 +130,19 @@ public class ProductOrderAdapter  extends RecyclerView.Adapter<ProductOrderAdapt
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name, group, detail, price;
-        public ImageView image, imgDelete, imgEdit;
+        public ImageView  imgDelete, imgEdit;
+        public CheckBox chkBill;
 
         public MyViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.name);
             group = (TextView) view.findViewById(R.id.group);
             detail = (TextView) view.findViewById(R.id.detail);
-            image = (ImageView) view.findViewById(R.id.image);
             imgDelete = (ImageView) view.findViewById(R.id.imgdelete);
             price = (TextView) view.findViewById(R.id.price);
             imgEdit  = (ImageView) view.findViewById(R.id.imgedit);
           //  c1Name = (TextView) view.findViewById(R.id.c1name);
+            chkBill = (CheckBox) view.findViewById(R.id.check_has_bill);
         }
     }
 }

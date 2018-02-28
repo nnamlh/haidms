@@ -25,7 +25,6 @@ import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.AgencyUpdateLocationSend;
 import com.congtyhai.model.api.ResultInfo;
-import com.congtyhai.model.app.HaiLocation;
 import com.congtyhai.util.HAIRes;
 import com.frosquivel.magicalcamera.MagicalCamera;
 import com.frosquivel.magicalcamera.MagicalPermissions;
@@ -76,8 +75,6 @@ public class AgencyUpdateLocationActivity extends BaseActivity implements OnMapR
 
     @BindView(R.id.ecountry)
     EditText eCountry;
-    double lat;
-    double lng;
 
     String agencyId;
 
@@ -104,13 +101,10 @@ public class AgencyUpdateLocationActivity extends BaseActivity implements OnMapR
         setContentView(R.layout.activity_agency_update_location);
         createToolbar();
         ButterKnife.bind(this);
-        createLocation();
 
         Intent intent = getIntent();
         agencyId = intent.getStringExtra(HAIRes.getInstance().KEY_INTENT_AGENCY_CODE);
 
-        lat = getCurrentLocation().getLatitude();
-        lng = getCurrentLocation().getLongitude();
         new ReadDataTask().execute();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -204,8 +198,8 @@ public class AgencyUpdateLocationActivity extends BaseActivity implements OnMapR
         mMap = googleMap;
         mMap.setMinZoomPreference(7.0f);
         mMap.setMaxZoomPreference(16.0f);
-        HaiLocation location = getCurrentLocation();
-        LatLng me = new LatLng(location.getLatitude(), location.getLongitude());
+
+        LatLng me = new LatLng(getLat(), getLng());
         mMap.addMarker(new MarkerOptions().position(me).title("ME").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(me));
     }
@@ -218,8 +212,8 @@ public class AgencyUpdateLocationActivity extends BaseActivity implements OnMapR
             final List<Address> addresses;
 
             try {
-                addresses = geocoder.getFromLocation(lat,
-                        lng, 1);
+                addresses = geocoder.getFromLocation(getLat(),
+                        getLng(), 1);
 
             } catch (IOException e) {
                 return null;
@@ -260,8 +254,8 @@ public class AgencyUpdateLocationActivity extends BaseActivity implements OnMapR
 
         AgencyUpdateLocationSend info = new AgencyUpdateLocationSend();
         info.setId(agencyId);
-        info.setLat(lat);
-        info.setLng(lng);
+        info.setLat(getLat());
+        info.setLng(getLng());
         info.setAddress(eAddress.getText().toString());
         info.setProvince(eProvince.getText().toString());
         info.setDistrict(eDistrict.getText().toString());

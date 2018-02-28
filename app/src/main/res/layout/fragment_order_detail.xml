@@ -8,7 +8,7 @@
     android:paddingRight="5dp"
     android:background="#fff"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.congtyhai.haidms.manageorders.YourOrderProductActivity"
+    tools:context="com.congtyhai.view.order.OrderDetailFragment"
     tools:showIn="@layout/activity_your_order_product">
 
     <LinearLayout
@@ -199,27 +199,7 @@
             android:fontFamily="sans-serif-light"
             android:inputType="textNoSuggestions"/>
 
-        <CheckBox
-            android:id="@+id/ckhasbill"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="-7dp"
-            android:checked="true"
-            android:enabled="false"
-            android:text="Có phiếu" />
         <!-- ten -->
-
-        <com.congtyhai.view.NonScrollListView
-            android:id="@+id/list"
-            android:layout_marginTop="30dp"
-            android:layout_width="match_parent"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/input_text"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical" />
-
-
 
     </LinearLayout>
 

@@ -44,6 +44,8 @@ import com.congtyhai.model.api.TrackingResukt;
 import com.congtyhai.model.api.UpdateProductInfo;
 import com.congtyhai.model.api.checkin.CheckInOutPlanSend;
 import com.congtyhai.model.api.order.C2OrderShowSend;
+import com.congtyhai.model.api.order.CompleteDeliveryResult;
+import com.congtyhai.model.api.order.CompleteDeliverySend;
 import com.congtyhai.model.api.order.OrderCompleteSend;
 import com.congtyhai.model.api.order.OrderConfirmResult;
 import com.congtyhai.model.api.order.OrderConfirmSend;
@@ -51,6 +53,7 @@ import com.congtyhai.model.api.order.OrderProductHistory;
 import com.congtyhai.model.api.order.OrderProductResult;
 import com.congtyhai.model.api.order.OrderProductUpdateSend;
 import com.congtyhai.model.api.order.StaffOrderShowSend;
+import com.congtyhai.model.api.order.UpdateDeliveryResult;
 import com.congtyhai.model.api.order.YourOrderShowResult;
 
 import java.util.List;
@@ -270,5 +273,14 @@ public interface ApiInterface {
 
     @POST("manageorder/showorderc2")
     Call<YourOrderShowResult> c2OrderShow(@Body C2OrderShowSend info);
+
+    @POST("manageorder/completedelivery")
+    Call<CompleteDeliveryResult> completDelivery(@Body CompleteDeliverySend info);
+
+    @GET("manageorder/updatedelivery")
+    Call<UpdateDeliveryResult> updateDelivery(
+            @Query("user") String user,
+            @Query("token") String token,
+            @Query("quantity") int quantity, @Query("productId") String productId, @Query("orderId") String orderId);
 
 }

@@ -120,7 +120,7 @@ public class DecorImageActivity extends BaseActivity implements DatePickerDialog
         int showDay = calendar.get(Calendar.DATE);
 
         makeRequest(showDay, showMonth, showYear);
-        createLocation();
+
         createCamera();
 
     }
@@ -289,11 +289,11 @@ public class DecorImageActivity extends BaseActivity implements DatePickerDialog
 
         RequestBody lat =
                 RequestBody.create(
-                        MediaType.parse("text/plain"), String.valueOf(getCurrentLocation().getLatitude()));
+                        MediaType.parse("text/plain"), String.valueOf(getLat()));
 
         RequestBody lng =
                 RequestBody.create(
-                        MediaType.parse("text/plain"), String.valueOf(getCurrentLocation().getLongitude()));
+                        MediaType.parse("text/plain"), String.valueOf(getLng()));
 
 
         Call<ResultInfo> call = apiInterfaceUpload().uploadImage(body, user, token, extension, agency, group, lat, lng);

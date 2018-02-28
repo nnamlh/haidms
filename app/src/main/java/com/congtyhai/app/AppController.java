@@ -34,6 +34,6 @@ public class AppController extends Application {
 
 
     public ApplicationComponent getApplicationComponent() {
-        return  applicationComponent;
-    }
+    return  applicationComponent;
+}
 }

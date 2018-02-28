@@ -16,6 +16,7 @@ public class ProductOrder {
     private String name;
     private String c1Code;
     private String c1Name;
+    private int hasBill;
 
     public String getCode() {
         return code;
@@ -103,5 +104,13 @@ public class ProductOrder {
 
     public void setC1Name(String c1Name) {
         this.c1Name = c1Name;
+    }
+
+    public int getHasBill() {
+        return hasBill;
+    }
+
+    public void setHasBill(int hasBill) {
+        this.hasBill = hasBill;
     }
 }

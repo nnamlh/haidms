@@ -15,7 +15,6 @@ import com.congtyhai.adapter.BranchAdapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.BranchInfoResult;
-import com.congtyhai.model.app.HaiLocation;
 import com.congtyhai.util.ItemRowClick;
 import com.congtyhai.view.DividerItemDecoration;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -74,7 +73,6 @@ public class ShowBranchActivity extends BaseActivity implements OnMapReadyCallba
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        createLocation();
 
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -121,8 +119,7 @@ public class ShowBranchActivity extends BaseActivity implements OnMapReadyCallba
         mMap = googleMap;
         mMap.setMinZoomPreference(7.0f);
         mMap.setMaxZoomPreference(16.0f);
-        HaiLocation location = getCurrentLocation();
-        LatLng me = new LatLng(location.getLatitude(), location.getLongitude());
+        LatLng me = new LatLng(getLat(), getLng());
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
             @Override
             public View getInfoWindow(Marker marker) {
@@ -142,7 +139,7 @@ public class ShowBranchActivity extends BaseActivity implements OnMapReadyCallba
 
                 TextView distance = (TextView) v.findViewById(R.id.txtdistance);
 
-                double d = commons.distance(getCurrentLocation().getLatitude(), getCurrentLocation().getLongitude(), marker.getPosition().latitude, marker.getPosition().longitude);
+                double d = commons.distance(getLat(), getLng(), marker.getPosition().latitude, marker.getPosition().longitude);
                 distance.setText(d + " m");
                 return v;
             }

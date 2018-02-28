@@ -41,7 +41,7 @@ public class ShowOrderActivity extends BaseActivity {
 
         agencyCode = HAIRes.getInstance().c2Select.getCode();
 
-        getSupportActionBar().setTitle("Đơn hàng của: " + HAIRes.getInstance().c2Select.getStore());
+        getSupportActionBar().setTitle("Đơn hàng của " + HAIRes.getInstance().c2Select.getStore());
 
         adapter = new ProductOrderAdapter(this);
         recyclerView.setHasFixedSize(true);

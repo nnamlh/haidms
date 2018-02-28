@@ -67,4 +67,7 @@
     <string name="title_activity_kpi">KPI nhân viên</string>
     <string name="title_activity_choose_sale">Chọn nơi lấy hàng</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

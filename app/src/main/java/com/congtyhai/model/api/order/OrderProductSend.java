@@ -9,6 +9,8 @@ public class OrderProductSend {
 
     private int quantity ;
 
+    private int hasBill;
+
 //    private String c1 ;
 
     public String getCode() {
@@ -27,4 +29,11 @@ public class OrderProductSend {
         this.quantity = quantity;
     }
 
+    public int getHasBill() {
+        return hasBill;
+    }
+
+    public void setHasBill(int hasBill) {
+        this.hasBill = hasBill;
+    }
 }

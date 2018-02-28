@@ -7,14 +7,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +29,6 @@ import com.congtyhai.model.api.ResultInfo;
 import com.congtyhai.model.api.ResultUpdate;
 import com.congtyhai.model.api.StaffHelpRequest;
 import com.congtyhai.model.api.UpdateProductInfo;
-import com.congtyhai.model.app.HaiLocation;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.util.RealmController;
 import com.google.gson.Gson;
@@ -296,8 +293,7 @@ public class ProductManageActivity extends BaseActivity {
         showpDialog();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
-        HaiLocation location = getCurrentLocation();
-        StaffHelpRequest info = new StaffHelpRequest(user,token, HAIRes.getInstance().toProductArrays(), location.getLatitude(), location.getLongitude(), txtAgency.getText().toString(), near);
+        StaffHelpRequest info = new StaffHelpRequest(user,token, HAIRes.getInstance().toProductArrays(),getLat(), getLng(), txtAgency.getText().toString(), near);
 
         Call<ResultUpdate> call = apiInterface().updateAgencyimport(info);
 
@@ -443,8 +439,8 @@ public class ProductManageActivity extends BaseActivity {
         showpDialog();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
-        HaiLocation location = getCurrentLocation();
-        CheckLocationRequest info = new CheckLocationRequest(user, token, txtAgency.getText().toString(), location.getLatitude(), location.getLongitude());
+
+        CheckLocationRequest info = new CheckLocationRequest(user, token, txtAgency.getText().toString(), getLat(), getLng());
 
         Call<ResultInfo> call = apiInterface().checkLocationDistance(info);
 
@@ -507,13 +503,13 @@ public class ProductManageActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                         if (status.equals(HAIRes.getInstance().PRODUCT_HELP_SCAN)) {
-                            if (checkLocation()) {
+
                                 if (TextUtils.isEmpty(txtAgency.getText().toString())) {
                                     Toast.makeText(ProductManageActivity.this, "Nhập mã đại lý", Toast.LENGTH_LONG).show();
                                 } else {
                                     sendCheckDistance();
                                 }
-                            }
+
                         } else {
                             sendInfo();
                         }

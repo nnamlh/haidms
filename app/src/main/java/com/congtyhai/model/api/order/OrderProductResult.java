@@ -28,6 +28,9 @@ public class OrderProductResult {
     @SerializedName("quantityBox")
     private int quantityBox ;
 
+    @SerializedName("hasBill")
+    private int hasBill;
+
     public double getPrice() {
         return price;
     }
@@ -100,4 +103,11 @@ public class OrderProductResult {
         this.quantity = quantity;
     }
 
+    public int getHasBill() {
+        return hasBill;
+    }
+
+    public void setHasBill(int hasBill) {
+        this.hasBill = hasBill;
+    }
 }

@@ -34,7 +34,6 @@ import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.MainInfoResult;
 import com.congtyhai.model.api.MainInfoSend;
 import com.congtyhai.model.app.CheckInFunctionInfo;
-import com.congtyhai.model.app.HaiLocation;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.util.RealmController;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -52,7 +51,6 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 import retrofit2.Call;
@@ -63,8 +61,7 @@ public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
     private GoogleMap mMap;
-    BottomSheetDialog mBottomSheetDialog;
-    List<CheckInFunctionInfo> checkInFunctionInfos;
+
     NavigationView navigationView;
 
     TextView txtName;
@@ -84,7 +81,6 @@ public class MainActivity extends BaseActivity
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        createLocation();
 
         makeRequest();
     }
@@ -217,8 +213,7 @@ public class MainActivity extends BaseActivity
         mMap = googleMap;
         mMap.setMinZoomPreference(7.0f);
         mMap.setMaxZoomPreference(20.0f);
-        HaiLocation location = getCurrentLocation();
-        LatLng me = new LatLng(location.getLatitude(), location.getLongitude());
+        LatLng me = new LatLng(getLat(), getLng());
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
             @Override
             public View getInfoWindow(Marker marker) {
@@ -238,7 +233,7 @@ public class MainActivity extends BaseActivity
 
                 TextView distance = (TextView) v.findViewById(R.id.txtdistance);
 
-                double d = commons.distance(getCurrentLocation().getLatitude(), getCurrentLocation().getLongitude(), marker.getPosition().latitude, marker.getPosition().longitude);
+                double d = commons.distance(getLat(), getLng(), marker.getPosition().latitude, marker.getPosition().longitude);
 
 
                 distance.setText(HAIRes.getInstance().getConvertMesterDistance(d));

@@ -13,6 +13,7 @@ import com.congtyhai.model.api.ResultEventInfo;
 import com.congtyhai.model.api.order.OrderProductResult;
 import com.congtyhai.model.api.order.YourOrderInfo;
 import com.congtyhai.model.app.C2Info;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,8 +40,8 @@ public class HAIRes {
     public final int NOTIFICATION_ID = 100;
     public final String SHARED_PREF = "ah_firebase";
 
-  //  public final String KEY_USER = "userlogin";
-  ///  public final String KEY_TOKEN = "tokenlogin";
+    //  public final String KEY_USER = "userlogin";
+    ///  public final String KEY_TOKEN = "tokenlogin";
     public final String KEY_INTENT_USER = "username";
     public final String KEY_INTENT_PHONE = "phonenumber";
     public final String KEY_INTENT_CREATE_CALENDAR = "createcalendar";
@@ -53,12 +54,12 @@ public class HAIRes {
     public final String KEY_INTENT_YEAR = "yearselect";
     public final String KEY_SCREEN_KEY_SCAN = "ScreenKey";
     public final String KEY_INTENT_ACTION = "actionrequest";
-  //  public String CurrentAgency ;
+    //  public String CurrentAgency ;
     private CalendarDayCreate calendarDayCreate;
-  //  private List<CalendarStatus> calendarStatuses;
+    //  private List<CalendarStatus> calendarStatuses;
 
-   // public final String baseUrl = "http://192.168.2.170:802/api/";
-   // public final String baseUrlUpload = "http://192.168.2.170:801/";
+    //public final String baseUrl = "http://192.168.2.170:802/api/";
+    //public final String baseUrlUpload = "http://192.168.2.170:801/";
     public final String baseUrl = "http://dmsapi.nongduochai.vn/api/";
     public final String baseUrlUpload = "http://dms.nongduochai.vn/";
 
@@ -70,15 +71,16 @@ public class HAIRes {
         }
         return instance;
     }
+
     public final String PHONE_CALL_CENTER = "1800577768";
     // code menu check in
     //public final int CHECKIN_CHECK = 1;
-  //  public final int CHECKIN_PICTURE = 2;
-   // public final int CHECKIN_ORDER = 3;
+    //  public final int CHECKIN_PICTURE = 2;
+    // public final int CHECKIN_ORDER = 3;
     //public final int CHECKIN_PRODUCT = 4;
 
     // code menu bottom calendar
-   // public final int CALENDAR_CREATE = 1;
+    // public final int CALENDAR_CREATE = 1;
     public final int CALENDAR_MODIFY = 2;
 
     // save file path
@@ -92,7 +94,7 @@ public class HAIRes {
 
     public final String PREF_KEY_USER = "HAIUSER";
     public final String PREF_KEY_TOKEN = "HAITOKEN";
-    public final String PREF_KEY_TYPE= "HAITYPE";
+    public final String PREF_KEY_TYPE = "HAITYPE";
 
     public final String PREF_KEY_UPDATE_DAILY = "updatedatadaily";
     public final String PREF_KEY_FIREBASE = "regFBId";
@@ -102,6 +104,7 @@ public class HAIRes {
     public C2Info c2Select;
 
     private List<CalendarStatus> calendarStatuses = new ArrayList<>();
+
     public void addListCalendarStatus(List<CalendarStatus> statuses) {
         calendarStatuses.clear();
         calendarStatuses.addAll(statuses);
@@ -115,9 +118,9 @@ public class HAIRes {
     public final double LIMIT_DISTANCE = 1000;
 
     public int findPostitionStatus(String status) {
-        for(int i=0; i< calendarStatuses.size(); i++) {
-            if (status.equals(calendarStatuses.get(i).id)){
-                return  i;
+        for (int i = 0; i < calendarStatuses.size(); i++) {
+            if (status.equals(calendarStatuses.get(i).id)) {
+                return i;
             }
         }
 
@@ -131,14 +134,16 @@ public class HAIRes {
     // product
     public String PRODUCT_IMPORT = "NK";
     public String PRODUCT_EXPORT = "XK";
-    public String PRODUCT_TRANSPORT= "TRANSPORT";
+    public String PRODUCT_TRANSPORT = "TRANSPORT";
     public String PRODUCT_HELP_SCAN = "HELPSCAN";
     public List<String> LIST_PRODUCT;
+
     public void resetListProduct() {
         LIST_PRODUCT = new ArrayList<>();
     }
 
     private HashMap<String, String> productCodeMap = new HashMap<>();
+
     public void clearProductCodeMap() {
         productCodeMap.clear();
     }
@@ -146,6 +151,7 @@ public class HAIRes {
     public void addProductCodeMap(ProductCodeInfo info) {
         productCodeMap.put(info.getBarcode(), info.getName());
     }
+
     public void addListProduct(String item) {
         if (LIST_PRODUCT == null) {
             LIST_PRODUCT = new ArrayList<>();
@@ -177,7 +183,8 @@ public class HAIRes {
 
         return arrays;
     }
-    public String  findProductNameByCode(String code) {
+
+    public String findProductNameByCode(String code) {
 
         if (productCodeMap.containsKey(code)) {
             return productCodeMap.get(code);
@@ -223,37 +230,37 @@ public class HAIRes {
 
     public boolean checkExistProductOrder(String code) {
         if (productOrders != null) {
-            for(ProductOrder order: productOrders) {
+            for (ProductOrder order : productOrders) {
                 if (code.equals(order.getCode())) {
                     return true;
                 }
             }
         }
 
-        return  false;
+        return false;
     }
 
     public ProductOrder getProductOrder(String code) {
         if (productOrders != null) {
-            for(ProductOrder order: productOrders) {
+            for (ProductOrder order : productOrders) {
                 if (code.equals(order.getCode())) {
                     return order;
                 }
             }
         }
 
-        return  null;
+        return null;
     }
 
     public int getProductOrderIndex(String code) {
         if (productOrders != null) {
-            for(int i = 0; i< productOrders.size(); i++) {
+            for (int i = 0; i < productOrders.size(); i++) {
                 if (code.equals(productOrders.get(i).getCode())) {
                     return i;
                 }
             }
         }
-        return  0;
+        return 0;
     }
 
     public String formatMoneyToText(double value) {
@@ -266,7 +273,7 @@ public class HAIRes {
             }
         }
 
-        return  moneyString + " VND";
+        return moneyString + " VND";
     }
 
     public CalendarDayCreate getCalendarDayCreate() {
@@ -279,6 +286,7 @@ public class HAIRes {
 
     // event
     private List<ResultEventInfo> resultEventInfos;
+
     public List<ResultEventInfo> getResultEventInfos() {
         if (resultEventInfos == null) {
             resultEventInfos = new ArrayList<>();
@@ -303,6 +311,7 @@ public class HAIRes {
 
     // procduct event
     private List<EventProduct> PRODUCTEVENT;
+
     public void addListProductEvent(EventProduct eventProduct) {
         if (PRODUCTEVENT == null) {
             PRODUCTEVENT = new ArrayList<>();
@@ -325,8 +334,10 @@ public class HAIRes {
         }
         PRODUCTEVENT.clear();
     }
+
     //
     private List<String> EVENTCODES = new ArrayList<>();
+
     public List<String> getEVENTCODES() {
         return this.EVENTCODES;
     }
@@ -347,6 +358,7 @@ public class HAIRes {
 
     //
     private List<GeneralInfo> eventCodeResult;
+
     public List<GeneralInfo> getEventCodeResult() {
         return eventCodeResult;
     }
@@ -367,7 +379,7 @@ public class HAIRes {
 
     public String getOrderQuantityDetailText(int box, int quantity, String unit) {
         int countCan = quantity / box;
-        int countBox = quantity - countCan*box;
+        int countBox = quantity - countCan * box;
 
         if (countCan == 0) {
             return countBox + " " + unit;
@@ -381,11 +393,11 @@ public class HAIRes {
 
     }
 
-    public String getConvertMesterDistance (double value) {
+    public String getConvertMesterDistance(double value) {
         if (value < 1000) {
-            return  Math.round(value) + " m";
+            return Math.round(value) + " m";
         }
 
-        return  Math.round(value / 1000) + " km";
+        return Math.round(value / 1000) + " km";
     }
 }

@@ -33,6 +33,8 @@ public class OrderCompleteSend {
 
     private String c1;
 
+    private int debtTime;
+
     public String getUser() {
         return user;
     }
@@ -135,5 +137,14 @@ public class OrderCompleteSend {
 
     public void setC1(String c1) {
         this.c1 = c1;
+    }
+
+
+    public int getDebtTime() {
+        return debtTime;
+    }
+
+    public void setDebtTime(int debtTime) {
+        this.debtTime = debtTime;
     }
 }

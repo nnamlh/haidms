@@ -1,6 +1,7 @@
 package com.congtyhai.adapter;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ public class StaffOrderAdapter extends BaseAdapter {
 
     List<YourOrderInfo> staffOrderInfos;
     LayoutInflater inflater;
+
+    Activity activity;
 
     public StaffOrderAdapter(List<YourOrderInfo> staffOrderInfos, Activity activity) {
         this.staffOrderInfos = staffOrderInfos;
@@ -44,29 +47,44 @@ public class StaffOrderAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
 
-        if(view == null) {
-            view = inflater.inflate(R.layout.staff_order_item, null );
+        if (view == null) {
+            view = inflater.inflate(R.layout.staff_order_item, null);
         }
 
-        TextView code, agency, count, date, datecreate, status,sender, money;
+        TextView code, agency, count, date, datecreate, status, sender, money, deliveryStatus;
         code = (TextView) view.findViewById(R.id.code);
         agency = (TextView) view.findViewById(R.id.agency);
         count = (TextView) view.findViewById(R.id.productcount);
         date = (TextView) view.findViewById(R.id.expectdate);
         datecreate = (TextView) view.findViewById(R.id.createdate);
-        status = (TextView)view.findViewById(R.id.estatus);
+        status = (TextView) view.findViewById(R.id.estatus);
         sender = (TextView) view.findViewById(R.id.sender);
         money = (TextView) view.findViewById(R.id.money);
+
+        deliveryStatus = (TextView) view.findViewById(R.id.deliverystatus);
 
         YourOrderInfo info = staffOrderInfos.get(position);
 
         code.setText("Mã hàng: " + info.getCode());
         agency.setText(info.getC2Name() + " (" + info.getC2Code() + ") ");
         count.setText(info.getProductCount() + " sản phẩm");
-        date.setText("Ngày đề nghị giao: " + info.getDateSuggest());
-        datecreate.setText("Ngày đặt hàng: " + info.getDate());
+        date.setText("Đề nghị giao: " + info.getDateSuggest());
+        datecreate.setText("Ngày đặt: " + info.getDate());
         sender.setText("Nơi bán: " + info.getSenderName() + " - " + info.getSenderCode());
         money.setText("Tổng tiền: " + info.getMoney());
+
+        deliveryStatus.setText(info.getDeliveryStatus());
+        if ("incomplete".equals(info.getDeliveryStatusCode())) {
+            deliveryStatus.setTextColor(Color.parseColor("#D50000"));
+        } else if ("complete".equals(info.getDeliveryStatusCode())) {
+            deliveryStatus.setTextColor(Color.parseColor("#76FF03"));
+
+        } else if ("less".equals(info.getDeliveryStatusCode())) {
+            deliveryStatus.setTextColor(Color.parseColor("#FFC107"));
+
+        } else if ("more".equals(info.getDeliveryStatusCode())) {
+            deliveryStatus.setTextColor(Color.parseColor("#01579B"));
+        }
 
         status.setText(info.getStatus());
 

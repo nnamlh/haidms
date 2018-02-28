@@ -133,10 +133,9 @@ public class AddAgencyActivity extends BaseActivity {
         setContentView(R.layout.activity_add_agency);
         createToolbar();
         ButterKnife.bind(this);
-        createLocation();
+
         createCamera();
-        lat = getCurrentLocation().getLatitude();
-        lng = getCurrentLocation().getLongitude();
+
         new ReadDataTask().execute();
 
         imgAddress.setOnClickListener(new View.OnClickListener() {

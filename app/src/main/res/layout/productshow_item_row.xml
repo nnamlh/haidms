@@ -6,15 +6,6 @@
     android:paddingBottom="10dp"
     android:paddingLeft="20dp">
 
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:src="@mipmap/ic_logo" />
 
     <TextView
         android:id="@+id/name"
@@ -32,9 +23,8 @@
         android:id="@+id/group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/name"
-        android:layout_marginTop="3dp"
-        android:layout_toRightOf="@id/image"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/name"
         android:fontFamily="sans-serif-light"
         android:text="Nhóm: thuốc sâu"
         android:textColor="#000000"
@@ -68,12 +58,13 @@
         android:id="@+id/pricebox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/price"
+        android:layout_below="@id/quantity"
         android:layout_marginTop="3dp"
-        android:layout_toRightOf="@id/image"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/price"
         android:fontFamily="sans-serif-light"
         android:text="Giá thùng: 100 Giói/thùng"
-        android:textColor="#000000"
+        android:textColor="#EF5350"
         android:textSize="14dp" />
 
     <Button

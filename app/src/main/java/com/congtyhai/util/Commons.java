@@ -211,7 +211,7 @@ public final class Commons {
 
     public double distance(double lat1, double lon1, double lat2, double lon2) {
 
-/*
+    /*
         double earthRadius = 6371000; //meters
         double dLat = Math.toRadians(lat2-lat1);
         double dLng = Math.toRadians(lon2-lon1);
