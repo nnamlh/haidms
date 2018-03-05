@@ -136,10 +136,6 @@
             android:label="@string/title_activity_product_scan"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".MainAgencyActivity"
-            android:label="@string/title_activity_main_agency"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".Util.NotificationActivity"
             android:label="@string/title_activity_notification"
             android:theme="@style/AppTheme.NoActionBar">
@@ -228,10 +224,6 @@
             android:label="@string/title_activity_agency_update_location"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".manageorders.YourOrdersActivity"
-            android:label="@string/title_activity_your_orders"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".Agency.C2OfC1Activity"
             android:label="@string/title_activity_c2_of_c1"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -254,6 +246,10 @@
         <activity
             android:name=".order.ChooseSaleActivity"
             android:label="@string/title_activity_choose_sale"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".manageorders.FilterActivity"
+            android:label="@string/title_activity_filter"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

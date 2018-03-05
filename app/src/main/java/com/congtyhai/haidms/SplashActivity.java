@@ -39,7 +39,6 @@ import retrofit2.Response;
 
 public class SplashActivity extends BaseActivity {
 
-
     @BindView(R.id.image)
     ImageView imgLogo;
     boolean isSetting = false;
@@ -152,10 +151,6 @@ public class SplashActivity extends BaseActivity {
                             String type = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TYPE, "");
                             if ("STAFF".equals(type)) {
                                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                                startActivity(intent);
-
-                            } else {
-                                Intent intent = new Intent(SplashActivity.this, MainAgencyActivity.class);
                                 startActivity(intent);
                             }
                             finish();

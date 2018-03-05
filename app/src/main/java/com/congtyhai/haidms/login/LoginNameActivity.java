@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import com.congtyhai.haidms.R;
 import com.congtyhai.model.api.CheckUserLoginResult;
 import com.congtyhai.util.HAIRes;
@@ -61,11 +63,13 @@ public class LoginNameActivity extends LoginActivity {
                         startActivity(intent);
                         finish();
                     } else if (response.body().getId().equals("2")) {
+                        /*
                         Intent intent = commons.createIntent(LoginNameActivity.this, LoginCodeActivity.class);
                         intent.putExtra(HAIRes.getInstance().KEY_INTENT_USER, user);
                         intent.putExtra(HAIRes.getInstance().KEY_INTENT_PHONE, response.body().getPhone());
                         startActivity(intent);
-                        finish();
+                        finish();*/
+                        commons.makeToast(LoginNameActivity.this, "Không dành cho khách hàng").show();
                     } else if (response.body().getId().equals("3")) {
                         //
                         loginSuccess(user, response.body().getToken(), response.body().getType());

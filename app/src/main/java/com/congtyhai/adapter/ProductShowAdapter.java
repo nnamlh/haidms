@@ -3,11 +3,20 @@ package com.congtyhai.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,7 +56,7 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final ProductCodeInfo productCodeInfo = productCodeInfos.get(position);
         holder.name.setText(productCodeInfo.getName());
         holder.group.setText(productCodeInfo.getGroupName());
@@ -60,15 +69,6 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
                 .thumbnail(0.5f)
                 .into(holder.image);
                 */
-
-        holder.btnDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(activity, ShowProductDetailActivity.class);
-                intent.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, productCodeInfo.getId());
-                activity.startActivity(intent);
-            }
-        });
 
 
         if(inOder == 1) {
@@ -99,13 +99,7 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
                 final int orderPosition =   HAIRes.getInstance().getProductOrderIndex(productCodeInfo.getId());
                 holder.imgDelete.setVisibility(View.VISIBLE);
                 holder.btnOrder.setVisibility(View.GONE);
-                holder.detail.setVisibility(View.VISIBLE);
-                holder.detail.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        activity.changeQuantity(order.getQuantity(),order.getQuantityBox(), orderPosition);
-                    }
-                });
+                holder.lInput.setVisibility(View.VISIBLE);
                 holder.imgDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -114,12 +108,91 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
                         activity.resetCountOder();
                     }
                 });
-                holder.detail.setText(HAIRes.getInstance().getOrderQuantityDetailText(order.getQuantityBox(), order.getQuantity(), order.getUnit()));
+
+                //
+                holder.eBox.setText(HAIRes.getInstance().getOrderQuantityBox(order.getQuantityBox(), order.getQuantity()) + "");
+                holder.eCan.setText(HAIRes.getInstance().getOrderQuantityCan(order.getQuantityBox(), order.getQuantity()) + "");
+
+                if (order.getHasBill() == 1) {
+                    holder.chkBill.setChecked(true);
+                } else{
+                    holder.chkBill.setChecked(false);
+                }
+                holder.chkBill.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b)
+                            order.setHasBill(1);
+                        else
+                            order.setHasBill(0);
+                    }
+                });
+
+                holder.eCan.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        if(TextUtils.isEmpty(charSequence)){
+
+                        } else {
+                            order.setQuantity(HAIRes.getInstance().calQuantity(order.getQuantityBox(),
+                                    Integer.parseInt(holder.eCan.getText().toString()),Integer.parseInt(holder.eBox.getText().toString())));
+                        }
+
+
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                    }
+                });
+
+                holder.eBox.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        if(TextUtils.isEmpty(charSequence)){
+                        } else{
+                            order.setQuantity(HAIRes.getInstance().calQuantity(order.getQuantityBox(),
+                                    Integer.parseInt(holder.eCan.getText().toString()),Integer.parseInt(holder.eBox.getText().toString())));
+                        }
+
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                    }
+                });
+
+
+
             } else {
                 holder.imgDelete.setVisibility(View.GONE);
                 holder.btnOrder.setVisibility(View.VISIBLE);
-                holder.detail.setVisibility(View.GONE);
+                holder.lInput.setVisibility(View.GONE);
             }
+        }else {
+            holder.btnDetail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(activity, ShowProductDetailActivity.class);
+                    intent.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, productCodeInfo.getId());
+                    activity.startActivity(intent);
+                }
+            });
         }
     }
 
@@ -132,7 +205,13 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
         public TextView name, group, quantity, price, pricebox;
 
         public ImageView image, imgDelete;
-        public Button btnOrder, btnDetail, detail;
+        public Button btnOrder, btnDetail;
+
+        public LinearLayout lInput;
+
+        public CheckBox chkBill;
+
+        public EditText eCan, eBox;
 
         public MyViewHolder(View view) {
             super(view);
@@ -144,13 +223,19 @@ public class ProductShowAdapter extends RecyclerView.Adapter<ProductShowAdapter.
             image = (ImageView) view.findViewById(R.id.image);
             btnOrder = (Button) view.findViewById(R.id.btnorder);
             btnDetail = (Button) view.findViewById(R.id.btndetail);
-            detail = (Button) view.findViewById(R.id.detail);
             imgDelete = (ImageView) view.findViewById(R.id.imgdelete);
+            lInput = (LinearLayout) view.findViewById(R.id.linputquantity);
             if (inOder == 1) {
                 btnOrder.setVisibility(View.VISIBLE);
+                btnDetail.setVisibility(View.GONE);
             } else {
                 btnOrder.setVisibility(View.GONE);
+                btnDetail.setVisibility(View.VISIBLE);
             }
+            chkBill = (CheckBox) view.findViewById(R.id.check_has_bill);
+
+            eBox = (EditText) view.findViewById(R.id.ebox);
+            eCan = (EditText)view.findViewById(R.id.ecan);
         }
     }
 }

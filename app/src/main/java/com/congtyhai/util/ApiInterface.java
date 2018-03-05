@@ -43,7 +43,6 @@ import com.congtyhai.model.api.StaffHelpRequest;
 import com.congtyhai.model.api.TrackingResukt;
 import com.congtyhai.model.api.UpdateProductInfo;
 import com.congtyhai.model.api.checkin.CheckInOutPlanSend;
-import com.congtyhai.model.api.order.C2OrderShowSend;
 import com.congtyhai.model.api.order.CompleteDeliveryResult;
 import com.congtyhai.model.api.order.CompleteDeliverySend;
 import com.congtyhai.model.api.order.OrderCompleteSend;
@@ -271,8 +270,6 @@ public interface ApiInterface {
     @POST("stafforder/show")
     Call<YourOrderShowResult> staffOrderShow(@Body StaffOrderShowSend info);
 
-    @POST("manageorder/showorderc2")
-    Call<YourOrderShowResult> c2OrderShow(@Body C2OrderShowSend info);
 
     @POST("manageorder/completedelivery")
     Call<CompleteDeliveryResult> completDelivery(@Body CompleteDeliverySend info);

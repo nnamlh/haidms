@@ -40,15 +40,56 @@
         android:textSize="14dp"
         android:textStyle="bold" />
 
-    <CheckBox
-        android:id="@+id/check_has_bill"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="-7dp"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linputquantity"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/price"
-        android:checked="true"
-        android:text="Có phiếu" />
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/check_has_bill"
+            android:layout_marginLeft="-7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/price"
+            android:checked="true"
+            android:text="Có phiếu" />
+
+
+        <EditText
+            android:id="@+id/ecan"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/input_text"
+            android:gravity="center"
+            android:inputType="number"
+            android:textSize="11dp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text=" thùng"
+            android:textColor="#000000"
+            android:textSize="14dp" />
+
+
+        <EditText
+            android:id="@+id/ebox"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/input_text"
+            android:gravity="center"
+            android:inputType="number"
+            android:textSize="11dp" />
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imgdelete"
@@ -59,30 +100,6 @@
         android:layout_below="@id/price"
         android:layout_marginRight="10dp"
         android:src="@mipmap/ic_delete" />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/name"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/price"
-        android:fontFamily="sans-serif-light"
-        android:text="1 thùng 3 chai"
-        android:id="@+id/detail"
-        android:textColor="#000000"
-        android:textSize="14dp" />
-
-    <ImageView
-        android:id="@+id/imgedit"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_below="@id/name"
-        android:layout_toRightOf="@id/detail"
-        android:layout_marginLeft="20dp"
-        android:src="@mipmap/ic_edit" />
 
 
 </RelativeLayout>

@@ -3,12 +3,17 @@ package com.congtyhai.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.congtyhai.haidms.R;
@@ -46,13 +51,12 @@ public class ProductOrderAdapter  extends RecyclerView.Adapter<ProductOrderAdapt
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         final ProductOrder order = productOrders.get(position);
 
         holder.name.setText(order.getName());
         holder.group.setText(order.getGroup());
-        holder.detail.setText(getOrderDetailText(order.getQuantityBox(), order.getQuantity(), order.getUnit()));
         double price = order.getPrice() * order.getQuantity();
 
         holder.price.setText(HAIRes.getInstance().formatMoneyToText(price));
@@ -66,19 +70,6 @@ public class ProductOrderAdapter  extends RecyclerView.Adapter<ProductOrderAdapt
             }
         });
 
-        holder.detail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.changeQuantity(order.getQuantity(), order.getQuantityBox(), position);
-            }
-        });
-
-        holder.imgEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.changeQuantity(order.getQuantity(), order.getQuantityBox(), position);
-            }
-        });
 
 
         holder.chkBill.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -97,31 +88,61 @@ public class ProductOrderAdapter  extends RecyclerView.Adapter<ProductOrderAdapt
         else
             holder.chkBill.setChecked(false);
 
-      //  holder.c1Name.setText("NƠI BÁN: " + order.getC1Name() + " - " + order.getC1Code());
-
-       /* holder.c1Name.setOnClickListener(new View.OnClickListener() {
+        holder.eBox.setText(HAIRes.getInstance().getOrderQuantityBox(order.getQuantityBox(), order.getQuantity()) + "");
+        holder.eCan.setText(HAIRes.getInstance().getOrderQuantityCan(order.getQuantityBox(), order.getQuantity()) + "");
+        holder.eCan.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                activity.changeC1(position);
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             }
-        });*/
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if(TextUtils.isEmpty(charSequence)){
+
+                } else {
+                    order.setQuantity(HAIRes.getInstance().calQuantity(order.getQuantityBox(),
+                            Integer.parseInt(holder.eCan.getText().toString()),Integer.parseInt(holder.eBox.getText().toString())));
+                }
+
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        holder.eBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(TextUtils.isEmpty(charSequence)){
+
+                } else{
+                    order.setQuantity(HAIRes.getInstance().calQuantity(order.getQuantityBox(),
+                            Integer.parseInt(holder.eCan.getText().toString()),Integer.parseInt(holder.eBox.getText().toString())));
+                }
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
     }
 
-    private String getOrderDetailText(int box, int quantity, String unit) {
-        int countCan = quantity / box;
-        int countBox = quantity - countCan*box;
-
-        if (countCan == 0) {
-            return countBox + " " + unit;
-        }
-
-        if (countBox == 0) {
-            return countCan + " thùng";
-        }
-
-        return countCan + " thùng " + countBox + " " + unit;
-
-    }
 
     @Override
     public int getItemCount() {
@@ -129,20 +150,20 @@ public class ProductOrderAdapter  extends RecyclerView.Adapter<ProductOrderAdapt
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, group, detail, price;
-        public ImageView  imgDelete, imgEdit;
+        public TextView name, group, price;
+        public ImageView  imgDelete;
         public CheckBox chkBill;
+        public EditText eCan, eBox;
 
         public MyViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.name);
             group = (TextView) view.findViewById(R.id.group);
-            detail = (TextView) view.findViewById(R.id.detail);
             imgDelete = (ImageView) view.findViewById(R.id.imgdelete);
             price = (TextView) view.findViewById(R.id.price);
-            imgEdit  = (ImageView) view.findViewById(R.id.imgedit);
-          //  c1Name = (TextView) view.findViewById(R.id.c1name);
             chkBill = (CheckBox) view.findViewById(R.id.check_has_bill);
+            eCan = (EditText) view.findViewById(R.id.ecan);
+            eBox = (EditText) view.findViewById(R.id.ebox);
         }
     }
 }

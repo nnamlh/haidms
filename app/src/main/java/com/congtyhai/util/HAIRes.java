@@ -393,6 +393,27 @@ public class HAIRes {
 
     }
 
+    public int getOrderQuantityBox(int box, int quantity) {
+        int countCan = quantity / box;
+        int countBox = quantity - countCan * box;
+
+        return countBox;
+
+    }
+
+    public int getOrderQuantityCan(int box, int quantity) {
+        int countCan = quantity / box;
+        return countCan;
+
+    }
+
+    public int calQuantity(int boxNumber, int can, int box) {
+
+        return box + boxNumber*can;
+    }
+
+
+
     public String getConvertMesterDistance(double value) {
         if (value < 1000) {
             return Math.round(value) + " m";

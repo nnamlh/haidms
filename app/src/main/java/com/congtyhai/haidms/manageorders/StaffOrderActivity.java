@@ -54,6 +54,8 @@ public class StaffOrderActivity extends BaseActivity {
 
     StaffOrderAdapter mAdapter;
 
+    final int FILTER_ACTION =11;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -206,7 +208,7 @@ public class StaffOrderActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_load, menu);
+        inflater.inflate(R.menu.menu_filter, menu);
 
         return true;
     }
@@ -215,8 +217,9 @@ public class StaffOrderActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.load_data:
-                builderSingle.show();
+            case R.id.filter_action:
+                Intent intent = commons.createIntent(StaffOrderActivity.this, FilterActivity.class);
+                startActivityForResult(intent, FILTER_ACTION);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
