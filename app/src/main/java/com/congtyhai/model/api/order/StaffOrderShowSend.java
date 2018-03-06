@@ -7,7 +7,43 @@ package com.congtyhai.model.api.order;
 public class StaffOrderShowSend {
     private String user;
     private String token;
-    private String c2Code ;
+    private String c1Code ;
+    private String fdate;
+    private String tdate;
+    private String place;
+    private String status;
+
+    public String getC1Code() {
+        return c1Code;
+    }
+
+    public void setC1Code(String c1Code) {
+        this.c1Code = c1Code;
+    }
+
+    public String getFdate() {
+        return fdate;
+    }
+
+    public void setFdate(String fdate) {
+        this.fdate = fdate;
+    }
+
+    public String getTdate() {
+        return tdate;
+    }
+
+    public void setTdate(String tdate) {
+        this.tdate = tdate;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
 
     private int page;
 
@@ -27,19 +63,19 @@ public class StaffOrderShowSend {
         this.token = token;
     }
 
-    public String getC2Code() {
-        return c2Code;
-    }
-
-    public void setC2Code(String c2Code) {
-        this.c2Code = c2Code;
-    }
-
     public int getPage() {
         return page;
     }
 
     public void setPage(int page) {
         this.page = page;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

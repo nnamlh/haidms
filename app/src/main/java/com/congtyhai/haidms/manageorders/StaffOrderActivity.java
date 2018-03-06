@@ -25,6 +25,8 @@ import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.LoadMoreListView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -55,6 +57,12 @@ public class StaffOrderActivity extends BaseActivity {
     StaffOrderAdapter mAdapter;
 
     final int FILTER_ACTION =11;
+
+    String fDate = "";
+    String tDate = "";
+    String c1Code = "";
+    String status = "";
+    String place = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +107,17 @@ public class StaffOrderActivity extends BaseActivity {
 
             }
         });
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        int showMonth = calendar.get(Calendar.MONTH) + 1;
+        int showYear = calendar.get(Calendar.YEAR);
+
+        int days = countDayInMonth(showYear, showMonth);
+
+        tDate = "01/" + showMonth + "/" + showYear;
+        fDate = days + "/" + showMonth + "/" + showYear;
 
         makeRequest();
     }
@@ -110,9 +129,14 @@ public class StaffOrderActivity extends BaseActivity {
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
 
+
         StaffOrderShowSend info = new StaffOrderShowSend();
         info.setPage(page);
-        info.setC2Code(c2Choose);
+        info.setC1Code(c1Code);
+        info.setFdate(fDate);
+        info.setTdate(tDate);
+        info.setPlace(place);
+        info.setStatus(status);
         info.setToken(token);
         info.setUser(user);
 
@@ -182,17 +206,19 @@ public class StaffOrderActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == GET_C2_CODE) {
+        if (requestCode == FILTER_ACTION) {
             if (resultCode == Activity.RESULT_OK) {
-                String code = data.getStringExtra("code");
-              //  String name = data.getStringExtra("name");
-                Log.i("agencyc2", code);
-                if(!c2Choose.equals(code)) {
-                    c2Choose = code;
-                    page = 1;
-                    staffOrderInfos.clear();
-                    makeRequest();
-                }
+
+                c1Code = data.getStringExtra("c1Code");
+                status = data.getStringExtra("status");
+                place = data.getStringExtra("place");
+                fDate =data.getStringExtra("fDate");
+                tDate =data.getStringExtra("tDate");
+                page = 1;
+                staffOrderInfos.clear();
+                mAdapter.notifyDataSetChanged();
+                makeRequest();
+
             }
             if (resultCode == Activity.RESULT_CANCELED) {
 

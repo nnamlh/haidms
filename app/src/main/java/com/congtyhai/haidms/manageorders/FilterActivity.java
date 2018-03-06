@@ -2,21 +2,27 @@ package com.congtyhai.haidms.manageorders;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.congtyhai.haidms.Agency.AddAgencyActivity;
+import com.congtyhai.haidms.Agency.FindAgencyC1Activity;
 import com.congtyhai.haidms.BaseActivity;
+import com.congtyhai.haidms.MainActivity;
 import com.congtyhai.haidms.R;
 
 import java.util.Calendar;
@@ -37,7 +43,7 @@ public class FilterActivity extends BaseActivity  implements DatePickerDialog.On
     Spinner eStatus;
 
     @BindView(R.id.agency)
-    EditText agency;
+    TextView agency;
 
     DatePickerDialog datePickerDialog;
 
@@ -54,6 +60,11 @@ public class FilterActivity extends BaseActivity  implements DatePickerDialog.On
     String[] placeName = {"Tất cả","Cấp 1", "Chi nhánh"};
 
     String[] placeCode = {"", "C1", "B"};
+
+    final int C1_CODE = 2;
+
+    @BindView(R.id.coordinatorLayout)
+    CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +110,50 @@ public class FilterActivity extends BaseActivity  implements DatePickerDialog.On
         // attaching data adapter to spinner
         eStatus.setAdapter(dataAdapter);
 
+
+        ArrayAdapter<String> dataPlace = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, placeName);
+        dataPlace.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ePlace.setAdapter(dataPlace);
+
+        ePlace.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int idx, long l) {
+                String placeId  = placeCode[idx];
+                agency.setText("");
+                if(placeId.equals("C1")){
+                    agency.setVisibility(View.VISIBLE);
+                } else {
+                    agency.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        agency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(FilterActivity.this, FindAgencyC1Activity.class);
+                startActivityForResult(i, C1_CODE);
+            }
+        });
+
+        agency.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                commons.showAlertCancel(FilterActivity.this, "Thông báo", "Xóa C1 đã chọn", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        agency.setText("");
+                    }
+                });
+                return false;
+            }
+        });
+
     }
 
     private void createDateDialog() {
@@ -119,13 +174,27 @@ public class FilterActivity extends BaseActivity  implements DatePickerDialog.On
         }
     }
 
-    public void filterClick() {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == C1_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getStringExtra("result");
+                agency.setText(result);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+
+            }
+        }
+    }
+
+    public void filterClick(View view) {
         if (TextUtils.isEmpty(fDate.getText().toString()) || TextUtils.isEmpty(tDate.getText().toString())){
             commons.makeToast(FilterActivity.this, "Chọn đủ thông tin").show();
             return;
         }
 
         int idx = eStatus.getSelectedItemPosition();
+        int placeIdx = ePlace.getSelectedItemPosition();
 
         if(idx != -1 && idx < arrSttCode.length) {
             Intent intent = getIntent();
@@ -133,7 +202,9 @@ public class FilterActivity extends BaseActivity  implements DatePickerDialog.On
             intent.putExtra("fDate", fDate.getText().toString());
             intent.putExtra("tDate", tDate.getText().toString());
             intent.putExtra("status", arrSttCode[idx]);
-            intent.putExtra("agency", agency.getText().toString());
+            intent.putExtra("c1Code", agency.getText().toString());
+            intent.putExtra("place", placeCode[placeIdx]);
+
             setResult(Activity.RESULT_OK,intent);
             finish();
 

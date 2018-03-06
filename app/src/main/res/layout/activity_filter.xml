@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/coordinatorLayout"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="com.congtyhai.haidms.manageorders.FilterActivity">
@@ -73,7 +74,7 @@
             android:background="@drawable/input_text"
             android:textColor="#000" />
 
-        <EditText
+        <TextView
             android:id="@+id/agency"
             android:layout_width="match_parent"
             android:layout_height="40dp"
