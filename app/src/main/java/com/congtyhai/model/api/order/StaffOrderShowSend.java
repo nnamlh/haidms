@@ -12,6 +12,9 @@ public class StaffOrderShowSend {
     private String tdate;
     private String place;
     private String status;
+    private String processId;
+
+
 
     public String getC1Code() {
         return c1Code;
@@ -77,5 +80,13 @@ public class StaffOrderShowSend {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getProcessId() {
+        return processId;
+    }
+
+    public void setProcessId(String processId) {
+        this.processId = processId;
     }
 }

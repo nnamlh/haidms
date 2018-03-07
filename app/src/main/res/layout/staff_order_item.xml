@@ -111,4 +111,14 @@
 
    </LinearLayout>
 
+    <TextView
+        android:id="@+id/incheckin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:text=""
+        android:layout_marginTop="5dp"
+        android:textColor="#00C853" />
+
+
 </LinearLayout>

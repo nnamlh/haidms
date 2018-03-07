@@ -57,6 +57,9 @@ public class YourOrderInfo {
     @SerializedName("hasBill")
     private int hasBill;
 
+    @SerializedName("inCheckin")
+    private int inCheckin;
+
     public String getCode() {
         return code;
     }
@@ -215,5 +218,13 @@ public class YourOrderInfo {
 
     public void setHasBill(int hasBill) {
         this.hasBill = hasBill;
+    }
+
+    public int getInCheckin() {
+        return inCheckin;
+    }
+
+    public void setInCheckin(int inCheckin) {
+        this.inCheckin = inCheckin;
     }
 }

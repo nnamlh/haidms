@@ -43,7 +43,7 @@ public class FilterActivity extends BaseActivity  implements DatePickerDialog.On
     Spinner eStatus;
 
     @BindView(R.id.agency)
-    TextView agency;
+    EditText agency;
 
     DatePickerDialog datePickerDialog;
 
@@ -51,6 +51,9 @@ public class FilterActivity extends BaseActivity  implements DatePickerDialog.On
 
     @BindView(R.id.place)
     Spinner ePlace;
+
+    @BindView(R.id.process)
+    Spinner eProcess;
 
     String[] arrStt = {"Tất cả","Chưa giao", "Giao đủ", "Giao ít hơn", "Giao nhiều hơn"};
 
@@ -60,6 +63,10 @@ public class FilterActivity extends BaseActivity  implements DatePickerDialog.On
     String[] placeName = {"Tất cả","Cấp 1", "Chi nhánh"};
 
     String[] placeCode = {"", "C1", "B"};
+
+    String[] processName = {"Đang xử lý", "Hoàn thành", "Hủy"};
+
+    String[] processId = {"process", "finish", "cancel"};
 
     final int C1_CODE = 2;
 
@@ -133,27 +140,15 @@ public class FilterActivity extends BaseActivity  implements DatePickerDialog.On
             }
         });
 
-        agency.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(FilterActivity.this, FindAgencyC1Activity.class);
-                startActivityForResult(i, C1_CODE);
-            }
-        });
 
-        agency.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                commons.showAlertCancel(FilterActivity.this, "Thông báo", "Xóa C1 đã chọn", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        agency.setText("");
-                    }
-                });
-                return false;
-            }
-        });
+        ArrayAdapter<String> dataProcess = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, processName);
+        dataProcess.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        eProcess.setAdapter(dataProcess);
+    }
 
+    public void findAgencyClick(View view) {
+        Intent i = new Intent(FilterActivity.this, FindAgencyC1Activity.class);
+        startActivityForResult(i, C1_CODE);
     }
 
     private void createDateDialog() {
@@ -195,6 +190,7 @@ public class FilterActivity extends BaseActivity  implements DatePickerDialog.On
 
         int idx = eStatus.getSelectedItemPosition();
         int placeIdx = ePlace.getSelectedItemPosition();
+        int idxProces = eProcess.getSelectedItemPosition();
 
         if(idx != -1 && idx < arrSttCode.length) {
             Intent intent = getIntent();
@@ -204,7 +200,7 @@ public class FilterActivity extends BaseActivity  implements DatePickerDialog.On
             intent.putExtra("status", arrSttCode[idx]);
             intent.putExtra("c1Code", agency.getText().toString());
             intent.putExtra("place", placeCode[placeIdx]);
-
+            intent.putExtra("process", processId[idx]);
             setResult(Activity.RESULT_OK,intent);
             finish();
 

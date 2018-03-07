@@ -10,8 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.congtyhai.adapter.TaskAdapter;
+import com.congtyhai.haidms.Agency.ShowAgencyActivity;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
+import com.congtyhai.haidms.manageorders.StaffOrderActivity;
+import com.congtyhai.haidms.order.ChooseSaleActivity;
 import com.congtyhai.haidms.product.ProductManageActivity;
 import com.congtyhai.haidms.showinfo.ShowProductActivity;
 import com.congtyhai.model.api.CheckInSend;
@@ -104,7 +107,7 @@ public class CheckInTaskActivity extends BaseActivity {
                 } else if (taskInfo.getCode().equals("ordertask")) {
                     HAIRes.getInstance().inOder = 1;
                     HAIRes.getInstance().CREATE_ORDER_TYPE = 1;
-                    commons.startActivity(CheckInTaskActivity.this, ShowProductActivity.class);
+                    commons.startActivity(CheckInTaskActivity.this, ChooseSaleActivity.class);
                 } else if (taskInfo.getCode().equals("barcode")) {
                     Intent intentHelp = commons.createIntent(CheckInTaskActivity.this, ProductManageActivity.class);
                     intentHelp.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, agencyCode);

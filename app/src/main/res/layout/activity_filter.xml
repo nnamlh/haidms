@@ -74,15 +74,50 @@
             android:background="@drawable/input_text"
             android:textColor="#000" />
 
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_marginTop="10dp"
+          android:background="@drawable/input_text"
+          android:layout_height="40dp">
+
+          <ImageView
+              android:id="@+id/btnfindagency"
+              android:layout_width="35dp"
+              android:layout_height="35dp"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:onClick="findAgencyClick"
+              android:src="@mipmap/findagency" />
+
+          <EditText
+              android:id="@+id/agency"
+              android:layout_width="match_parent"
+              android:layout_height="40dp"
+              android:fontFamily="sans-serif-light"
+              android:maxLines="1"
+              android:paddingLeft="5dp"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="5dp"
+              android:inputType="textCapCharacters"
+              android:layout_toLeftOf="@id/btnfindagency"
+              android:textColor="#000"
+              android:background="#fff"/>
+      </RelativeLayout>
+
         <TextView
-            android:id="@+id/agency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:text="Trạng thái đơn hàng"
+            android:textSize="12dp" />
+
+        <Spinner
+            android:id="@+id/process"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:fontFamily="sans-serif-light"
-            android:maxLines="1"
-            android:layout_marginTop="10dp"
             android:paddingLeft="5dp"
-            android:gravity="center_vertical"
             android:background="@drawable/input_text"
             android:textColor="#000" />
 
@@ -91,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textStyle="bold"
-            android:text="Trạng thái"
+            android:text="Trạng thái giao"
             android:textSize="12dp" />
 
         <Spinner

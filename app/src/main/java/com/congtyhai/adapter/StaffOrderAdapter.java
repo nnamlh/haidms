@@ -51,7 +51,7 @@ public class StaffOrderAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.staff_order_item, null);
         }
 
-        TextView code, agency, count, date, datecreate, status, sender, money, deliveryStatus;
+        TextView code, agency, count, date, datecreate, status, sender, money, deliveryStatus,inCheckin;
         code = (TextView) view.findViewById(R.id.code);
         agency = (TextView) view.findViewById(R.id.agency);
         count = (TextView) view.findViewById(R.id.productcount);
@@ -60,6 +60,8 @@ public class StaffOrderAdapter extends BaseAdapter {
         status = (TextView) view.findViewById(R.id.estatus);
         sender = (TextView) view.findViewById(R.id.sender);
         money = (TextView) view.findViewById(R.id.money);
+
+        inCheckin = (TextView) view.findViewById(R.id.incheckin);
 
         deliveryStatus = (TextView) view.findViewById(R.id.deliverystatus);
 
@@ -84,6 +86,12 @@ public class StaffOrderAdapter extends BaseAdapter {
 
         } else if ("more".equals(info.getDeliveryStatusCode())) {
             deliveryStatus.setTextColor(Color.parseColor("#01579B"));
+        }
+
+        if(info.getInCheckin() == 1) {
+            inCheckin.setText("Tạo trong checkin");
+        } else {
+            inCheckin.setText("Tạo ngoài checkin");
         }
 
         status.setText(info.getStatus());

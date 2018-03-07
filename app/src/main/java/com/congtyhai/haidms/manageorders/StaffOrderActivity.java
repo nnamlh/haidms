@@ -63,6 +63,7 @@ public class StaffOrderActivity extends BaseActivity {
     String c1Code = "";
     String status = "";
     String place = "";
+    String process = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +140,7 @@ public class StaffOrderActivity extends BaseActivity {
         info.setStatus(status);
         info.setToken(token);
         info.setUser(user);
+        info.setProcessId(process);
 
         Call<YourOrderShowResult> call = apiInterface().staffOrderShow(info);
 
@@ -214,6 +216,7 @@ public class StaffOrderActivity extends BaseActivity {
                 place = data.getStringExtra("place");
                 fDate =data.getStringExtra("fDate");
                 tDate =data.getStringExtra("tDate");
+                process = data.getStringExtra("process");
                 page = 1;
                 staffOrderInfos.clear();
                 mAdapter.notifyDataSetChanged();
