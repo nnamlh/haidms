@@ -104,6 +104,7 @@ public class ProductOrderAdapter  extends RecyclerView.Adapter<ProductOrderAdapt
                 } else {
                     order.setQuantity(HAIRes.getInstance().calQuantity(order.getQuantityBox(),
                             Integer.parseInt(holder.eCan.getText().toString()),Integer.parseInt(holder.eBox.getText().toString())));
+                    activity.resetMoneyAll();
                 }
 
 
