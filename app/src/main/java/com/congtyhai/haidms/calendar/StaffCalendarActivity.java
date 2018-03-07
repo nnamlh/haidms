@@ -67,9 +67,6 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
     @BindView(R.id.txttitle)
     TextView txtTitle;
 
-   // @BindView(R.id.enotes)
-  //  EditText eNotes;
-
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 

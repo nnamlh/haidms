@@ -59,8 +59,6 @@ public class CompleteOrderFragment extends Fragment implements DatePickerDialog.
     int payTypeIdStart = 1000;
     int shipTypeIdStaft = 2000;
 
-    @BindView(R.id.name)
-    TextView eName;
 
     @BindView(R.id.store)
     TextView eStore;
@@ -122,9 +120,7 @@ public class CompleteOrderFragment extends Fragment implements DatePickerDialog.
         if (shipType == null)
             shipType = new ArrayList<>();
 
-        eName.setText(name + " - " + code);
-
-        eStore.setText(store);
+        eStore.setText(store+ " - " + code);
 
         ePhone.setText(phone);
 
@@ -234,7 +230,7 @@ public class CompleteOrderFragment extends Fragment implements DatePickerDialog.
     }
 
     private boolean checkUpdate() {
-        if (TextUtils.isEmpty(eAddress.getText().toString()) || TextUtils.isEmpty(ePhone.getText().toString()) || TextUtils.isEmpty(eNote.getText().toString()) || TextUtils.isEmpty(eDate.getText().toString())) {
+        if (TextUtils.isEmpty(eAddress.getText().toString()) || TextUtils.isEmpty(ePhone.getText().toString()) || TextUtils.isEmpty(eDate.getText().toString())) {
             return false;
         }
 

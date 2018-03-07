@@ -168,7 +168,7 @@ public class BaseActivity extends AppCompatActivity {
     /**
      * Represents a geographical location.
      */
-    private Location mCurrentLocation;
+   // private Location mCurrentLocation;
     private Boolean mRequestingLocationUpdates;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -241,8 +241,8 @@ public class BaseActivity extends AppCompatActivity {
             public void onLocationResult(LocationResult locationResult) {
                 super.onLocationResult(locationResult);
 
-                mCurrentLocation = locationResult.getLastLocation();
-                Log.d("Location", mCurrentLocation.getLatitude() + " - " + mCurrentLocation.getLongitude());
+                HAIRes.getInstance().mCurrentLocation = locationResult.getLastLocation();
+               // Log.d("Location", mCurrentLocation.getLatitude() + " - " + mCurrentLocation.getLongitude());
                     }
         };
     }
@@ -278,7 +278,7 @@ public class BaseActivity extends AppCompatActivity {
             if (savedInstanceState.keySet().contains(KEY_LOCATION)) {
                 // Since KEY_LOCATION was found in the Bundle, we can be sure that mCurrentLocation
                 // is not null.
-                mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+                HAIRes.getInstance().mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             }
         }
     }
@@ -309,15 +309,15 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected double getLat(){
-        if (mCurrentLocation != null)
-            return  mCurrentLocation.getLatitude();
+        if (HAIRes.getInstance().mCurrentLocation != null)
+            return  HAIRes.getInstance().mCurrentLocation.getLatitude();
 
         return 0;
     }
 
     protected double getLng() {
-        if(mCurrentLocation != null)
-            return mCurrentLocation.getLongitude();
+        if(HAIRes.getInstance().mCurrentLocation != null)
+            return HAIRes.getInstance().mCurrentLocation.getLongitude();
         return 0;
     }
 
@@ -697,7 +697,7 @@ public class BaseActivity extends AppCompatActivity {
      */
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putBoolean(KEY_REQUESTING_LOCATION_UPDATES, mRequestingLocationUpdates);
-        savedInstanceState.putParcelable(KEY_LOCATION, mCurrentLocation);
+        savedInstanceState.putParcelable(KEY_LOCATION, HAIRes.getInstance().mCurrentLocation);
         super.onSaveInstanceState(savedInstanceState);
     }
 

@@ -12,6 +12,7 @@ import android.view.View;
 import com.congtyhai.adapter.TaskAdapter;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
+import com.congtyhai.haidms.product.ProductManageActivity;
 import com.congtyhai.haidms.showinfo.ShowProductActivity;
 import com.congtyhai.model.api.CheckInSend;
 import com.congtyhai.model.api.CheckInTaskResult;
@@ -84,6 +85,7 @@ public class CheckInTaskActivity extends BaseActivity {
         mapCodeImage.put("checkremaintask", R.mipmap.ic_remain_task);
         mapCodeImage.put("collecttask", R.mipmap.ic_collect_task);
         mapCodeImage.put("endtask", R.mipmap.ic_checkin_task);
+        mapCodeImage.put("barcode", R.mipmap.ic_product_satffhelp);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -103,6 +105,11 @@ public class CheckInTaskActivity extends BaseActivity {
                     HAIRes.getInstance().inOder = 1;
                     HAIRes.getInstance().CREATE_ORDER_TYPE = 1;
                     commons.startActivity(CheckInTaskActivity.this, ShowProductActivity.class);
+                } else if (taskInfo.getCode().equals("barcode")) {
+                    Intent intentHelp = commons.createIntent(CheckInTaskActivity.this, ProductManageActivity.class);
+                    intentHelp.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, agencyCode);
+                    intentHelp.putExtra("STATUS", HAIRes.getInstance().PRODUCT_HELP_SCAN);
+                    startActivity(intentHelp);
                 }
             }
 

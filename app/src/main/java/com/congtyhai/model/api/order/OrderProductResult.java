@@ -31,6 +31,9 @@ public class OrderProductResult {
     @SerializedName("hasBill")
     private int hasBill;
 
+    @SerializedName("productType")
+    private String productType;
+
     public double getPrice() {
         return price;
     }
@@ -109,5 +112,13 @@ public class OrderProductResult {
 
     public void setHasBill(int hasBill) {
         this.hasBill = hasBill;
+    }
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
     }
 }

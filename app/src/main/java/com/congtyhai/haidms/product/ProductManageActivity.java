@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,6 +75,7 @@ public class ProductManageActivity extends BaseActivity {
 
     @BindView(R.id.layout_agency)
     View lAgency;
+
     @BindView(R.id.edit_agency)
     EditText txtAgency;
 
@@ -82,6 +84,9 @@ public class ProductManageActivity extends BaseActivity {
     String companyCode = "89352433";
 
     List<ProductCodeInfo> productCodeInfos;
+
+    @BindView(R.id.btnfindagency)
+    ImageView findAgency;
 
 
     int CHOOSE_AGENCY = 1000;
@@ -104,7 +109,10 @@ public class ProductManageActivity extends BaseActivity {
             lReceiver.setVisibility(View.VISIBLE);
         } else if (status.equals(HAIRes.getInstance().PRODUCT_HELP_SCAN)) {
             title = "Nhập giúp";
+            findAgency.setVisibility(View.GONE);
             lAgency.setVisibility(View.VISIBLE);
+            String agencyCode = intent.getStringExtra(HAIRes.getInstance().KEY_INTENT_TEMP);
+            txtAgency.setText(agencyCode);
         } else if (status.equals(HAIRes.getInstance().PRODUCT_TRANSPORT)) {
             title = "Điều kho";
             lReceiver.setVisibility(View.VISIBLE);
@@ -434,6 +442,7 @@ public class ProductManageActivity extends BaseActivity {
         txtCount.setText("TỔNG SỐ LƯỢNG : " + products.size());
     }
 
+    /*
     private void sendCheckDistance() {
 
         showpDialog();
@@ -493,7 +502,7 @@ public class ProductManageActivity extends BaseActivity {
             }
         });
     }
-
+*/
     private void showAlertUpdate() {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(ProductManageActivity.this);
 
@@ -507,7 +516,8 @@ public class ProductManageActivity extends BaseActivity {
                                 if (TextUtils.isEmpty(txtAgency.getText().toString())) {
                                     Toast.makeText(ProductManageActivity.this, "Nhập mã đại lý", Toast.LENGTH_LONG).show();
                                 } else {
-                                    sendCheckDistance();
+                                    //sendCheckDistance();
+                                    sendStaffHelp(1);
                                 }
 
                         } else {

@@ -19,6 +19,10 @@ public class OrderDetailFragment extends Fragment {
 
     @BindView(R.id.estatus)
     EditText eStatus;
+
+    @BindView(R.id.edstatus)
+    EditText eDStatus;
+
     @BindView(R.id.estore)
     EditText eStore;
     @BindView(R.id.ephone)
@@ -61,7 +65,7 @@ udpate();
     public void udpate() {
         info = HAIRes.getInstance().yourOrderInfo;
 
-        eStatus.setText(info.getDeliveryStatus().toUpperCase());
+        eStatus.setText(info.getStatus().toUpperCase());
 
         eStore.setText(info.getC2Name() + " ( " + info.getC2Code() + " )");
 
@@ -78,6 +82,8 @@ udpate();
         eShip.setText(info.getShipInfo());
 
         ePay.setText(info.getPayInfo());
+
+        eDStatus.setText(info.getDeliveryStatus().toUpperCase());
 
         eSender.setText(info.getSenderName() + " - " + info.getSenderCode());
     }

@@ -1,5 +1,7 @@
 package com.congtyhai.util;
 
+import android.location.Location;
+
 import com.congtyhai.model.api.AgencyC2C1;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.C2C1Info;
@@ -29,6 +31,8 @@ public class HAIRes {
     public final String ANNOUNCEMENT_DISCONNECT_NETWORK = "Mất kết nối";
 
     public int inOder = 0;
+
+    public Location mCurrentLocation;
 
 
     // broadcast receiver intent filters

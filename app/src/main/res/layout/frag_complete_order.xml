@@ -69,31 +69,12 @@
                 android:background="@drawable/input_text"
                 android:textSize="14dp"  />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Khách hàng"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"
-                android:textSize="12dp" />
-
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:fontFamily="sans-serif-light"
-                android:text="Le Hoai Nam"
-                android:paddingLeft="5dp"
-                android:textColor="#000000"
-                android:gravity="center_vertical"
-                android:background="@drawable/input_text"
-                android:textSize="14dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Cửa hàng"
+                android:text="Đại lý cấp 2"
                 android:textStyle="bold"
                 android:textSize="12dp" />
 
@@ -237,8 +218,6 @@
                 android:fontFamily="sans-serif-light"
                 android:inputType="textNoSuggestions"
                 android:textColor="@color/cardview_dark_background" />
-
-
         </LinearLayout>
     </ScrollView>
 

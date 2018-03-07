@@ -75,6 +75,7 @@ public class ShowProductActivity extends BaseActivity {
         groupName = new ArrayList<>();
         productCodeInfosTemp = new ArrayList<>();
         productCodeInfos = new ArrayList<>();
+        HAIRes.getInstance().clearProductOrder();
         mAdapter = new ProductShowAdapter(productCodeInfos, this);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());

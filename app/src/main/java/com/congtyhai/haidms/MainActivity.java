@@ -211,7 +211,7 @@ public class MainActivity extends BaseActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMinZoomPreference(7.0f);
+        mMap.setMinZoomPreference(3.0f);
         mMap.setMaxZoomPreference(20.0f);
         LatLng me = new LatLng(getLat(), getLng());
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {

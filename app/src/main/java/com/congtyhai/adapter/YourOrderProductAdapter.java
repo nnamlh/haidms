@@ -65,6 +65,14 @@ public class YourOrderProductAdapter extends RecyclerView.Adapter<YourOrderProdu
         else
             holder.hasBill.setText("không phiếu");
 
+        if("warehouse".equals(info.getProductType())) {
+            holder.ptype.setText("Loại hàng: hàng gửi kho");
+        } else if ("new".equals(info.getProductType())) {
+            holder.ptype.setText("Loại hàng: hàng xuất mới");
+        } else{
+            holder.ptype.setText("Loại hàng: chưa xác định");
+        }
+
         if (info.getQuantityFinish() == 0) {
             holder.status.setText("chưa giao");
             holder.status.setTextColor(Color.parseColor("#D50000"));
@@ -108,6 +116,7 @@ public class YourOrderProductAdapter extends RecyclerView.Adapter<YourOrderProdu
                 int quantityBox = Integer.parseInt(holder.eBox.getText().toString());
 
                 int quantity = quantityBox + info.getQuantityBox()*quantityCan;
+
                 fragment.sendDelivery(quantity, position);
             }
         });
@@ -120,7 +129,7 @@ public class YourOrderProductAdapter extends RecyclerView.Adapter<YourOrderProdu
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, quantity, finish, money, status, hasBill;
+        public TextView name, quantity, finish, money, status, hasBill, ptype;
         public EditText eCan, eBox;
         public Button btnSend, btnFinish;
 
@@ -137,71 +146,12 @@ public class YourOrderProductAdapter extends RecyclerView.Adapter<YourOrderProdu
 
             btnSend = (Button) view.findViewById(R.id.btnsend);
             btnFinish = (Button) view.findViewById(R.id.btnfinish);
+
+            ptype = (TextView) view.findViewById(R.id.etype);
         }
     }
 
 
-
-    /*
-
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-
-        if (view == null)
-            view = inflater.inflate(R.layout.your_order_product_item, null);
-
-        TextView txtName = (TextView) view.findViewById(R.id.ename);
-
-        TextView txtQuantity = (TextView) view.findViewById(R.id.equantity);
-
-        TextView txtFinish = (TextView) view.findViewById(R.id.equantityfinish);
-
-        TextView txtPrice = (TextView) view.findViewById(R.id.price);
-
-
-        TextView txtMoney = (TextView) view.findViewById(R.id.money);
-
-        TextView txtStatus = (TextView) view.findViewById(R.id.status);
-
-        TextView txtBox = (TextView) view.findViewById(R.id.box);
-
-
-        //TextView txtC1 = (TextView) view.findViewById(R.id.ec1);
-
-        OrderProductResult info = orderProductResults.get(i);
-
-        txtName.setText(info.getProductName());
-
-        txtQuantity.setText("SL đặt: " + getOrderDetailText(info.getQuantityBox(), info.getQuantity(), info.getUnit()));
-
-        txtFinish.setText("Đã giao: " + getOrderDetailText(info.getQuantityBox(), info.getQuantityFinish(), info.getUnit()));
-
-        txtPrice.setText("Đơn giá: " + HAIRes.getInstance().formatMoneyToText(info.getPerPrice()) + "/" + info.getUnit());
-
-        txtMoney.setText("Tổng tiền: " + HAIRes.getInstance().formatMoneyToText(info.getPrice()));
-
-        txtBox.setText("Quy cách: " + info.getQuantityBox() + " " + info.getUnit() + "/ 1 thùng");
-
-        if (info.getQuantityFinish() == 0) {
-            txtStatus.setText("Chưa giao");
-            txtStatus.setTextColor(Color.parseColor("#D50000"));
-        } else if (info.getQuantity() == info.getQuantityFinish()) {
-            txtStatus.setText("Giao đủ");
-            txtStatus.setTextColor(Color.parseColor("#76FF03"));
-        } else if (info.getQuantity() > info.getQuantityFinish()) {
-            txtStatus.setText("Giao một phần");
-            txtStatus.setTextColor(Color.parseColor("#FFC107"));
-        } else if (info.getQuantity() < info.getQuantityFinish()) {
-            txtStatus.setText("Giao hơn");
-            txtStatus.setTextColor(Color.parseColor("#01579B"));
-        }
-
-        //  txtC1.setText("Nơi bán: " + info.getC1Store() + " ( " + info.getC1Code() + " )");
-
-
-        return view;
-    }
-*/
     private String getOrderDetailText(int box, int quantity, String unit) {
         int countCan = quantity / box;
         int countBox = quantity - countCan * box;

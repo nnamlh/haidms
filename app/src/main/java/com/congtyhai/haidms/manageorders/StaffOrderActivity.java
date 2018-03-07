@@ -116,8 +116,8 @@ public class StaffOrderActivity extends BaseActivity {
 
         int days = countDayInMonth(showYear, showMonth);
 
-        tDate = "01/" + showMonth + "/" + showYear;
-        fDate = days + "/" + showMonth + "/" + showYear;
+        fDate = "01/" + showMonth + "/" + showYear;
+        tDate  = days + "/" + showMonth + "/" + showYear;
 
         makeRequest();
     }

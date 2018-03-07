@@ -1,5 +1,6 @@
 package com.congtyhai.haidms.manageorders;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -90,37 +91,42 @@ public class YourOrderProductActivity extends BaseActivity {
 
     }
 
-    public void updateDelivery(final int position, final int quantity, OrderProductResult orderProduct) {
+    public void updateDelivery(final int position, final int quantity, final OrderProductResult orderProduct) {
 
-        showpDialog();
-
-        String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
-        String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
-
-        Call<UpdateDeliveryResult> call = apiInterface().updateDelivery(user, token, quantity, orderProduct.getProductId(), orderProduct.getOrderId());
-
-        call.enqueue(new Callback<UpdateDeliveryResult>() {
+        commons.showAlertCancel(YourOrderProductActivity.this, "Thông báo", "Cập nhật giao hàng", new DialogInterface.OnClickListener() {
             @Override
-            public void onResponse(Call<UpdateDeliveryResult> call, Response<UpdateDeliveryResult> response) {
-                if(response.body() != null) {
-                    HAIRes.getInstance().yourOrderInfo.setDeliveryStatusCode(response.body().getDeliveryStatusCode());
-                    HAIRes.getInstance().yourOrderInfo.setDeliveryStatus(response.body().getDeliveryStatus());
+            public void onClick(DialogInterface dialogInterface, int i) {
+                showpDialog();
 
-                    orderDetailView.udpate();
+                String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
+                String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
 
-                    orderProductView.refeshUpdate(position, quantity);
+                Call<UpdateDeliveryResult> call = apiInterface().updateDelivery(user, token, quantity, orderProduct.getProductId(), orderProduct.getOrderId());
 
-                }
+                call.enqueue(new Callback<UpdateDeliveryResult>() {
+                    @Override
+                    public void onResponse(Call<UpdateDeliveryResult> call, Response<UpdateDeliveryResult> response) {
+                        if(response.body() != null) {
+                            HAIRes.getInstance().yourOrderInfo.setDeliveryStatusCode(response.body().getDeliveryStatusCode());
+                            HAIRes.getInstance().yourOrderInfo.setDeliveryStatus(response.body().getDeliveryStatus());
 
-                hidepDialog();
-            }
+                            orderDetailView.udpate();
 
-            @Override
-            public void onFailure(Call<UpdateDeliveryResult> call, Throwable t) {
-                hidepDialog();
-                commons.showToastDisconnect(YourOrderProductActivity.this);
+                            orderProductView.refeshUpdate(position, quantity);
+
+                        }
+
+                        hidepDialog();
+                    }
+
+                    @Override
+                    public void onFailure(Call<UpdateDeliveryResult> call, Throwable t) {
+                        hidepDialog();
+                        commons.showToastDisconnect(YourOrderProductActivity.this);
+                    }
+                });
+
             }
         });
-
     }
 }
