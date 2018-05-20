@@ -120,6 +120,7 @@ public class MainActivity extends BaseActivity
                             });
                         }
                         setListMainFunction(response.body().getFunction());
+                        /*
                         if (needUpdate == 1) {
                             saveListAgency(response.body().getAgencies());
                             saveListProduct(response.body().getProducts());
@@ -127,7 +128,7 @@ public class MainActivity extends BaseActivity
                             updateDaily();
                         }
                         saveListAgencyC1(response.body().getAgencyc1());
-
+                        */
                     }
 
                     initList();
@@ -170,10 +171,6 @@ public class MainActivity extends BaseActivity
                     case "checkstaff":
                         MenuItem checkStaffItem = menu.findItem(R.id.nav_checkstaff);
                         checkStaffItem.setVisible(true);
-                        break;
-                    case "product":
-                        MenuItem productManage = menu.findItem(R.id.nav_product_manage);
-                        productManage.setVisible(true);
                         break;
                     case "event":
                         MenuItem event = menu.findItem(R.id.nav_promotion);
@@ -306,12 +303,7 @@ public class MainActivity extends BaseActivity
             commons.startActivity(MainActivity.this, ShowAgencyActivity.class);
         } else if (id == R.id.nav_staffcalendar) {
             commons.startActivity(MainActivity.this, StaffCalendarActivity.class);
-        } else if (id == R.id.nav_product) {
-            HAIRes.getInstance().inOder = 0;
-            commons.startActivity(MainActivity.this, ShowProductActivity.class);
-            //  showProductIntent.putExtra(HAIRes.getInstance().KEY_INTENT_ORDER, 0);
-            // startActivity(showProductIntent);
-        } else if (id == R.id.nav_product_manage) {
+        }  else if (id == R.id.nav_product_manage) {
             commons.startActivity(MainActivity.this, ProductTaskActivity.class);
         } else if (id == R.id.nav_logout) {
             commons.showAlertCancel(MainActivity.this, "Cảnh báo", "Đăng xuất với tài khoản hiện tại", new DialogInterface.OnClickListener() {
@@ -333,8 +325,6 @@ public class MainActivity extends BaseActivity
             commons.startActivity(MainActivity.this, ShowBranchActivity.class);
         } else if (id == R.id.nav_order) {
             commons.startActivity(MainActivity.this, StaffOrderActivity.class);
-        } else if (id == R.id.nav_kpi) {
-            commons.startActivity(MainActivity.this, KPIActivity.class);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

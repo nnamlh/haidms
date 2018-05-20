@@ -71,7 +71,7 @@ public class CalendarModifyActivity extends BaseActivity {
     int days;
     int groupSelect = -1;
     boolean isUpdate = false;
-    HashMap<Integer, List<CalendarAgencyInfo>> calendarAgencyMap;
+    HashMap<String, List<CalendarAgencyInfo>> calendarAgencyMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,7 +218,7 @@ public class CalendarModifyActivity extends BaseActivity {
         protected void onPostExecute(List<AgencyInfo> result) {
             groups.add(new CommonItemInfo("Tất cả ", "-1"));
             for (AgencyInfo info : result) {
-                CalendarAgencyInfo calendarAgencyInfo = new CalendarAgencyInfo(info.getDeputy(), info.getCode(), info.getName(), 0);
+                CalendarAgencyInfo calendarAgencyInfo = new CalendarAgencyInfo(info.getDeputy(), info.getCode(), info.getName(), 0, info.getType());
                 calendarAgencyInfo.setDayChoose(new ArrayList<Integer>());
                 calendarAgencyInfo.setGroup(info.getGroup() + "");
                 calendarAgencyInfo.setRank(info.getRank());
@@ -240,7 +240,7 @@ public class CalendarModifyActivity extends BaseActivity {
 
         agencyInfos.clear();
         if (groupSelect == -1) {
-            for (Map.Entry<Integer, List<CalendarAgencyInfo>> entry : calendarAgencyMap.entrySet()) {
+            for (Map.Entry<String, List<CalendarAgencyInfo>> entry : calendarAgencyMap.entrySet()) {
                 List<CalendarAgencyInfo> values = entry.getValue();
                 agencyInfos.addAll(values);
             }

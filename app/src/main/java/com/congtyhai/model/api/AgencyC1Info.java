@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class AgencyC1Info {
+
     @SerializedName("code")
     private String code;
     @SerializedName("name")

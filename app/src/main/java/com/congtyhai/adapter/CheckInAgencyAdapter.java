@@ -33,9 +33,16 @@ public class CheckInAgencyAdapter  extends RecyclerView.Adapter<CheckInAgencyAda
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         CheckInAgencyInfo info = checkInAgencyInfos.get(position);
-        holder.name.setText(info.getName() + " - " + info.getCode());
+        holder.name.setText(info.getName());
 
         if(info.getIsShowType() == 1) {
+
+            if("CI".equals(info.getAgencyType())){
+                holder.code.setText( info.getCode() + " - Đại lý cấp 1");
+            }else {
+                holder.code.setText( info.getCode() + " - Đại lý cấp 2");
+            }
+
             holder.plan.setVisibility(View.VISIBLE);
             holder.type.setVisibility(View.VISIBLE);
             holder.type.setText(info.getCheckInName());
@@ -64,7 +71,7 @@ public class CheckInAgencyAdapter  extends RecyclerView.Adapter<CheckInAgencyAda
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, type, plan, distance;
+        public TextView name, type, plan, distance, code;
         public ImageView imgLocation;
         public MyViewHolder(View view) {
             super(view);
@@ -73,6 +80,7 @@ public class CheckInAgencyAdapter  extends RecyclerView.Adapter<CheckInAgencyAda
             plan = (TextView) view.findViewById(R.id.txtinplan);
             distance = (TextView) view.findViewById(R.id.txtdistance);
             imgLocation =(ImageView) view.findViewById(R.id.imglocation);
+            code = (TextView) view.findViewById(R.id.txtcode);
         }
     }
 

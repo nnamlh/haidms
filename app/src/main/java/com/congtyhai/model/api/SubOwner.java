@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by HAI on 10/16/2017.
  */
 
-public class AgencyC2C1 {
+public class SubOwner {
 
     @SerializedName("code")
     private String code ;

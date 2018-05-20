@@ -2,7 +2,6 @@ package com.congtyhai.model.api;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.security.PrivateKey;
 import java.util.List;
 
 /**
@@ -37,7 +36,7 @@ public class AgencyInfo {
     private String rank;
 
     @SerializedName("group")
-    private int group;
+    private String group;
 
     @SerializedName("deputy")
     private String deputy;
@@ -65,8 +64,8 @@ public class AgencyInfo {
     @SerializedName("haibranch")
     private String haibranch;
 
-    @SerializedName("c1")
-    private List<AgencyC2C1> c1;
+    @SerializedName("subOwner")
+    private List<SubOwner> subOwner;
 
     public String getTaxCode() {
         return taxCode;
@@ -116,11 +115,11 @@ public class AgencyInfo {
         this.rank = rank;
     }
 
-    public int getGroup() {
+    public String getGroup() {
         return group;
     }
 
-    public void setGroup(int group) {
+    public void setGroup(String group) {
         this.group = group;
     }
 
@@ -212,19 +211,19 @@ public class AgencyInfo {
         this.country = country;
     }
 
-    public List<AgencyC2C1> getC1() {
-        return c1;
-    }
-
-    public void setC1(List<AgencyC2C1> c1) {
-        this.c1 = c1;
-    }
-
     public String getHaibranch() {
         return haibranch;
     }
 
     public void setHaibranch(String haibranch) {
         this.haibranch = haibranch;
+    }
+
+    public List<SubOwner> getSubOwner() {
+        return subOwner;
+    }
+
+    public void setSubOwner(List<SubOwner> subOwner) {
+        this.subOwner = subOwner;
     }
 }

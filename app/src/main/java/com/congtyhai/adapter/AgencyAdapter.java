@@ -35,12 +35,12 @@ public class AgencyAdapter extends RecyclerView.Adapter<AgencyAdapter.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         AgencyInfo agency = agencyList.get(position);
-        holder.store.setText(agency.getName() + " - " + agency.getCode());
-        holder.deputy.setText(agency.getDeputy() );
+        holder.store.setText(agency.getName());
+        holder.type.setText( (agency.getType().equals("CII")?"Đại lý cấp 2":"Đại lý cấp 1" ) + " - " + agency.getCode());
         holder.address.setText(agency.getAddress() + " ," + agency.getDistrict() + " ," + agency.getProvince());
         holder.phone.setText(agency.getPhone());
         holder.group.setText("Thuộc cụm: " + agency.getGroup());
-        holder.rank.setText("Hạng: " + agency.getRank());
+        holder.rank.setText(agency.getRank() == null?"":("Hạng: " + agency.getRank()));
         if (agency.getLat() == 0 || agency.getLng() == 0) {
             holder.location.setText("Chưa có tọa độ");
             holder.location.setVisibility(View.VISIBLE);
@@ -57,13 +57,13 @@ public class AgencyAdapter extends RecyclerView.Adapter<AgencyAdapter.MyViewHold
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView store, deputy, address, phone, group, rank, location;
+        public TextView store, type, address, phone, group, rank, location;
         public ImageView imgLocation;
 
         public MyViewHolder(View view) {
             super(view);
             store = (TextView) view.findViewById(R.id.store);
-            deputy = (TextView) view.findViewById(R.id.deputy);
+            type = (TextView) view.findViewById(R.id.type);
             address = (TextView) view.findViewById(R.id.address);
             phone = (TextView) view.findViewById(R.id.phone);
             group = (TextView) view.findViewById(R.id.group);

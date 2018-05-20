@@ -27,7 +27,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/main_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppThemeMain.NoActionBar" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">

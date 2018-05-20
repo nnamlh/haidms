@@ -16,6 +16,7 @@ public class CalendarAgencyInfo {
     private List<Integer> dayChoose;
     private String rank;
     private String group;
+    private  String type;
 
     public String getDeputy() {
         return deputy;
@@ -49,11 +50,12 @@ public class CalendarAgencyInfo {
         this.check = check;
     }
 
-    public CalendarAgencyInfo(String deputy, String code, String name, int check) {
+    public CalendarAgencyInfo(String deputy, String code, String name, int check, String type) {
         this.deputy = deputy;
         this.code = code;
         this.name = name;
         this.check = check;
+        this.type = type;
     }
 
     public List<Integer> getDayChoose() {
@@ -96,5 +98,13 @@ public class CalendarAgencyInfo {
 
     public void setGroup(String group) {
         this.group = group;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

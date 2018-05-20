@@ -252,6 +252,7 @@ public class CheckInActivity extends BaseActivity {
             checkInAgencyInfo.setIsShowType(1);
             checkInAgencyInfo.setC1(item.getC1());
             checkInAgencyInfo.setInPlan(item.getInPlan());
+            checkInAgencyInfo.setAgencyType(item.getAgencyType());
             double distabce = commons.distance(lat, lng, item.getLat(), item.getLng());
             checkInAgencyInfo.setDistance(distabce);
             checkInAgencyInfos.add(checkInAgencyInfo);
@@ -271,6 +272,7 @@ public class CheckInActivity extends BaseActivity {
                checkInAgencyInfo.setCode(item.getCode());
                checkInAgencyInfo.setName(item.getName());
                checkInAgencyInfo.setIsShowType(0);
+               checkInAgencyInfo.setAgencyType(item.getType());
                double distabce = commons.distance(lat, lng, item.getLat(), item.getLng());
                checkInAgencyInfo.setDistance(distabce);
                checkInAgencyInfos.add(checkInAgencyInfo);

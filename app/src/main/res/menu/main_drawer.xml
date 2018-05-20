@@ -8,11 +8,6 @@
             android:visible="true"
             android:title="Danh sách khách hàng" />
         <item
-            android:id="@+id/nav_product"
-            android:icon="@mipmap/ic_product"
-            android:visible="true"
-            android:title="Danh sách sản phẩm" />
-        <item
             android:id="@+id/nav_staffcalendar"
             android:icon="@mipmap/ic_calendar"
             android:visible="true"
@@ -37,11 +32,7 @@
             android:icon="@mipmap/ic_promotion"
             android:visible="false"
             android:title="Khuyến mãi" />
-        <item
-            android:id="@+id/nav_kpi"
-            android:icon="@mipmap/ic_kpi"
-            android:visible="true"
-            android:title="KPI" />
+
     </group>
 
     <item android:title="Hổ trợ">

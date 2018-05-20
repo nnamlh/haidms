@@ -62,7 +62,7 @@ public class CreateCalendarActivity extends BaseActivity {
     @BindView(R.id.txtcus)
     TextView txtcus;
 
-    HashMap<Integer, List<CalendarAgencyInfo>> calendarAgencyMap;
+    HashMap<String, List<CalendarAgencyInfo>> calendarAgencyMap;
 
     CalendarAgencyAdapter mAdapter;
 
@@ -71,12 +71,12 @@ public class CreateCalendarActivity extends BaseActivity {
     HashMap<Integer, CalendarDayCreate> calendarDayMap;
 
     // danh sach nhom chon hien tai
-    HashMap<Integer, Integer> dayGroupAgencyChooseMap;
+    HashMap<Integer, String> dayGroupAgencyChooseMap;
 
     List<CalendarAgencyInfo> agencyInfos;
 
     int daySelect = 1;
-    int groupSelect = -1;
+    String groupSelect = "-1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +124,7 @@ public class CreateCalendarActivity extends BaseActivity {
                 }
                 mAdapter.notifyDataSetChanged();
 
-                for (Map.Entry<Integer, List<CalendarAgencyInfo>> entry : calendarAgencyMap.entrySet()) {
+                for (Map.Entry<String, List<CalendarAgencyInfo>> entry : calendarAgencyMap.entrySet()) {
                     List<CalendarAgencyInfo> values = entry.getValue();
                     for (int i = 0; i < values.size(); i++) {
                         if (info.getCode().equals(values.get(i).getCode())) {
@@ -194,7 +194,7 @@ public class CreateCalendarActivity extends BaseActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 CommonItemInfo commonItemInfo = groups.get(i);
-                groupSelect = Integer.parseInt(commonItemInfo.getCode());
+                groupSelect = commonItemInfo.getCode();
 
                 if (dayGroupAgencyChooseMap.containsKey(daySelect)) {
                     dayGroupAgencyChooseMap.remove(daySelect);
@@ -235,7 +235,7 @@ public class CreateCalendarActivity extends BaseActivity {
         protected void onPostExecute(List<AgencyInfo> result) {
             groups.add(new CommonItemInfo("Tất cả ", "-1"));
             for (AgencyInfo info : result) {
-                CalendarAgencyInfo calendarAgencyInfo = new CalendarAgencyInfo(info.getDeputy(), info.getCode(), info.getName(), 0);
+                CalendarAgencyInfo calendarAgencyInfo = new CalendarAgencyInfo(info.getDeputy(), info.getCode(), info.getName(), 0, info.getType());
                 calendarAgencyInfo.setDayChoose(new ArrayList<Integer>());
                 calendarAgencyInfo.setGroup(info.getGroup() + "");
                 calendarAgencyInfo.setRank(info.getRank());
@@ -361,7 +361,7 @@ public class CreateCalendarActivity extends BaseActivity {
             calendarDayMap.put(i, calendarDayCreate);
 
             // set tat ca group hien thi tat ca
-            dayGroupAgencyChooseMap.put(i, -1);
+            dayGroupAgencyChooseMap.put(i, "-1");
 
         }
 
@@ -371,8 +371,8 @@ public class CreateCalendarActivity extends BaseActivity {
     private void refeshList() {
 
         agencyInfos.clear();
-        if (groupSelect == -1) {
-            for (Map.Entry<Integer, List<CalendarAgencyInfo>> entry : calendarAgencyMap.entrySet()) {
+        if (groupSelect.equals("-1")) {
+            for (Map.Entry<String, List<CalendarAgencyInfo>> entry : calendarAgencyMap.entrySet()) {
                 List<CalendarAgencyInfo> values = entry.getValue();
                 agencyInfos.addAll(values);
             }
@@ -422,7 +422,7 @@ public class CreateCalendarActivity extends BaseActivity {
     private boolean checkPolicy() {
 
         // kiem tra moi khach hang phai duoc tham it nhat 1 lan
-        for (Map.Entry<Integer, List<CalendarAgencyInfo>> entry : calendarAgencyMap.entrySet()) {
+        for (Map.Entry<String, List<CalendarAgencyInfo>> entry : calendarAgencyMap.entrySet()) {
             List<CalendarAgencyInfo> values = entry.getValue();
             for (CalendarAgencyInfo info : values) {
                 if (info.getDayChoose().size() == 0) {

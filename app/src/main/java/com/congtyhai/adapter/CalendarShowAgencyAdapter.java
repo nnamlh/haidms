@@ -42,7 +42,8 @@ public class CalendarShowAgencyAdapter  extends   RecyclerView.Adapter<CalendarS
        if(TextUtils.isEmpty(agency.getCode())) {
            holder.name.setText("KHÔNG THĂM KHÁCH HÀNG");
        } else {
-           holder.name.setText(agency.getName() + " - " + agency.getCode());
+           holder.name.setText(agency.getName());
+           holder.code.setText(agency.getCode());
        }
 
         holder.calendar.setText(agency.getCtypename());
@@ -67,7 +68,7 @@ public class CalendarShowAgencyAdapter  extends   RecyclerView.Adapter<CalendarS
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView calendar, name, status;
+        public TextView calendar, name, status, code;
         public ImageView imgCheck;
 
         public MyViewHolder(View view) {
@@ -76,7 +77,7 @@ public class CalendarShowAgencyAdapter  extends   RecyclerView.Adapter<CalendarS
             name = (TextView) view.findViewById(R.id.name);
             status = (TextView) view.findViewById(R.id.status);
             imgCheck = (ImageView) view.findViewById(R.id.imgcheck);
-
+            code = (TextView) view.findViewById(R.id.code);
         }
     }
 }

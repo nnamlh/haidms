@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/txttitle"
             android:fontFamily="sans-serif-light"
-            android:text="Kế hoạch: 08/2017 (Đã xác nhận)"
+            android:text="Chưa có kế hoạch"
             android:textColor="#000000"
             android:textSize="18dp" />
 
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/txtstatus"
         android:fontFamily="sans-serif-light"
-        android:text="CSKH: 2 ngay"
+        android:text=""
         android:layout_marginTop="10dp"
         android:textColor="#000000"
         android:textSize="16dp" />

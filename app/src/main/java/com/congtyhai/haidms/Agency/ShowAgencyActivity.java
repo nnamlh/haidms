@@ -30,9 +30,11 @@ import com.congtyhai.model.app.C2Info;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.DividerItemDecoration;
 import com.congtyhai.view.RecyclerTouchListener;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -41,8 +43,8 @@ import retrofit2.Response;
 
 public class ShowAgencyActivity extends BaseActivity {
 
-    private List<AgencyInfo> agencyList ;
-    private List<AgencyInfo> agencyListTemp ;
+    private List<AgencyInfo> agencyList;
+    private List<AgencyInfo> agencyListTemp;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private AgencyAdapter mAdapter;
@@ -50,7 +52,7 @@ public class ShowAgencyActivity extends BaseActivity {
     int SHOW_DETAIL_AGENCY = 1;
 
     AlertDialog.Builder builderSingle;
-    private List<Integer> groups;
+    private List<String> groups;
 
     String codeRequest = "";
 
@@ -71,7 +73,7 @@ public class ShowAgencyActivity extends BaseActivity {
             }
         });
 
-        if(codeRequest != null) {
+        if (codeRequest != null) {
             fab.setVisibility(View.GONE);
         } else {
             fab.setVisibility(View.VISIBLE);
@@ -91,36 +93,36 @@ public class ShowAgencyActivity extends BaseActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, final int position) {
-                final AgencyInfo info =  agencyList.get(position);
+                final AgencyInfo info = agencyList.get(position);
                 HAIRes.getInstance().currentAgencySelect = agencyList.get(position);
                 if ("stafforder".equals(codeRequest)) {
                     Intent intentResult = getIntent();
                     intentResult.putExtra("code", agencyList.get(position).getCode());
-                    setResult(Activity.RESULT_OK,intentResult);
+                    setResult(Activity.RESULT_OK, intentResult);
                     finish();
                 } else if ("createorder".equals(codeRequest)) {
                     HAIRes.getInstance().inOder = 1;
-                   // HAIRes.getInstance().CurrentAgency = info.getCode();
+                    // HAIRes.getInstance().CurrentAgency = info.getCode();
                     C2Info c2Info = new C2Info();
                     c2Info.setCode(info.getCode());
                     c2Info.setDeputy(info.getDeputy());
                     c2Info.setStore(info.getName());
                     HAIRes.getInstance().c2Select = c2Info;
-
                     commons.startActivity(ShowAgencyActivity.this, ChooseSaleActivity.class);
                     finish();
-                } else if("chooseagency".equals(codeRequest)){
+                    //
+
+                } else if ("chooseagency".equals(codeRequest)) {
                     commons.showAlertCancel(ShowAgencyActivity.this, "Chọn đại lý", "Bạn chọn đại lý: " + info.getName() + "-" + info.getCode(), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Intent intentResult = getIntent();
                             intentResult.putExtra("code", info.getCode());
-                            setResult(Activity.RESULT_OK,intentResult);
+                            setResult(Activity.RESULT_OK, intentResult);
                             finish();
                         }
                     });
-                }
-                else {
+                } else {
                     Intent intent = commons.createIntent(ShowAgencyActivity.this, ShowAgencyDetailActivity.class);
                     startActivityForResult(intent, SHOW_DETAIL_AGENCY);
                 }
@@ -135,16 +137,16 @@ public class ShowAgencyActivity extends BaseActivity {
         }));
 
 
-       new ReadDataTask().execute();
-
+        new ReadDataTask().execute();
 
 
     }
+
     private void createDialogGroup() {
         builderSingle = new AlertDialog.Builder(ShowAgencyActivity.this);
         builderSingle.setIcon(R.mipmap.ic_logo);
         builderSingle.setTitle("Chọn cụm:");
-        final ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<Integer>(ShowAgencyActivity.this, android.R.layout.select_dialog_singlechoice, groups);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ShowAgencyActivity.this, android.R.layout.select_dialog_singlechoice, groups);
         builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -157,9 +159,9 @@ public class ShowAgencyActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 agencyList.clear();
-                int code = groups.get(which);
-                for(AgencyInfo info : agencyListTemp) {
-                    if(info.getGroup() == code) {
+                String code = groups.get(which);
+                for (AgencyInfo info : agencyListTemp) {
+                    if (info.getGroup().equals(code)) {
                         agencyList.add(info);
                     }
                 }
@@ -174,14 +176,14 @@ public class ShowAgencyActivity extends BaseActivity {
         showpDialog();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
-        Call<AgencyInfo[]> call = apiInterface().getAgencyC2(user, token);
+        Call<AgencyInfo[]> call = apiInterface().getAgency(user, token);
         call.enqueue(new Callback<AgencyInfo[]>() {
             @Override
             public void onResponse(Call<AgencyInfo[]> call, Response<AgencyInfo[]> response) {
-               if(response.body() != null) {
-                   saveListAgency(response.body());
-               }
-              hidepDialog();
+                if (response.body() != null) {
+                    saveListAgency(response.body());
+                }
+                hidepDialog();
                 new ReadDataTask().execute();
             }
 
@@ -218,7 +220,7 @@ public class ShowAgencyActivity extends BaseActivity {
             for (AgencyInfo info : result) {
                 agencyList.add(info);
                 agencyListTemp.add(info);
-                if(!groups.contains(info.getGroup())) {
+                if (!groups.contains(info.getGroup())) {
                     groups.add(info.getGroup());
                 }
             }
@@ -230,6 +232,7 @@ public class ShowAgencyActivity extends BaseActivity {
             hidepDialog();
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -266,7 +269,7 @@ public class ShowAgencyActivity extends BaseActivity {
                 return true;
             case R.id.filter_group:
                 builderSingle.show();
-                return  true;
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -282,11 +285,12 @@ public class ShowAgencyActivity extends BaseActivity {
             }
         }
     }
+
     private void handleSearch(String query) {
         agencyList.clear();
 
-        for(AgencyInfo info: agencyListTemp) {
-            if (info.getCode().contains(query) || info.getName().contains(query) || info.getDeputy().contains(query)){
+        for (AgencyInfo info : agencyListTemp) {
+            if (info.getCode().contains(query) || info.getName().contains(query) || info.getDeputy().contains(query)) {
                 agencyList.add(info);
             }
         }

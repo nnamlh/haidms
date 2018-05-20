@@ -1,6 +1,6 @@
 package com.congtyhai.model.app;
 
-import com.congtyhai.model.api.AgencyC2C1;
+import com.congtyhai.model.api.SubOwner;
 
 import java.util.List;
 
@@ -14,11 +14,12 @@ public class CheckInAgencyInfo {
     private String name;
     private String deputy;
     private double distance;
-    private List<AgencyC2C1> c1;
+    private List<SubOwner> c1;
     private String checkInType;
     private String checkInName;
     private int inPlan;
     private int isShowType;
+    private String agencyType;
 
     public String getCheckInType() {
         return checkInType;
@@ -88,11 +89,19 @@ public class CheckInAgencyInfo {
 
     }
 
-   public List<AgencyC2C1> getC1() {
+   public List<SubOwner> getC1() {
         return c1;
     }
 
-    public void setC1(List<AgencyC2C1> c1) {
+    public void setC1(List<SubOwner> c1) {
         this.c1 = c1;
+    }
+
+    public String getAgencyType() {
+        return agencyType;
+    }
+
+    public void setAgencyType(String agencyType) {
+        this.agencyType = agencyType;
     }
 }

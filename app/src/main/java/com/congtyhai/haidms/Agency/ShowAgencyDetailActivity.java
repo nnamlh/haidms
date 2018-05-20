@@ -16,10 +16,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
-import com.congtyhai.model.api.AgencyC2C1;
+import com.congtyhai.model.api.SubOwner;
 import com.congtyhai.model.api.AgencyModifySend;
 import com.congtyhai.model.api.ResultInfo;
 import com.congtyhai.util.HAIRes;
@@ -52,6 +54,9 @@ public class ShowAgencyDetailActivity extends BaseActivity {
 
     @BindView(R.id.ec1)
     EditText eC1;
+
+    @BindView(R.id.listc1)
+    LinearLayout lC1;
 
     @BindView(R.id.eidentitycard)
     EditText eIdentityCard;
@@ -102,6 +107,9 @@ public class ShowAgencyDetailActivity extends BaseActivity {
     @BindView(R.id.ec13)
     EditText eC13;
 
+    @BindView(R.id.title)
+    TextView txtTitle;
+
     boolean isUpdate = false;
 
     int SHOW_UPDATE_LOCATION = 1000;
@@ -129,6 +137,15 @@ public class ShowAgencyDetailActivity extends BaseActivity {
         eWard.setText(HAIRes.getInstance().currentAgencySelect.getWard());
         eCountry.setText(HAIRes.getInstance().currentAgencySelect.getCountry());
         eBranch.setText(HAIRes.getInstance().currentAgencySelect.getHaibranch());
+
+
+        if(HAIRes.getInstance().currentAgencySelect.getType().equals("CII")){
+            txtTitle.setText("Đại lý cấp 2");
+        } else {
+            txtTitle.setText("Đại lý cấp 1");
+            btnAdd.setVisibility(View.GONE);
+            // cap 1 ko cap nhat
+        }
 
         imgLoatiom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,20 +176,25 @@ public class ShowAgencyDetailActivity extends BaseActivity {
             }
         });
 
-        List<AgencyC2C1> c2C1s = HAIRes.getInstance().currentAgencySelect.getC1();
-        for(int i=0; i < c2C1s.size(); i++) {
-            switch (i) {
-                case 0:
-                    eC1.setText(c2C1s.get(i).getName() + " - " + c2C1s.get(i).getCode());
-                    break;
-                case 1:
-                    eC12.setText(c2C1s.get(i).getName() + " - " + c2C1s.get(i).getCode());
-                    break;
-                case 2:
-                    eC13.setText(c2C1s.get(i).getName() + " - " + c2C1s.get(i).getCode());
-                    break;
-            }
-        }
+      if(HAIRes.getInstance().currentAgencySelect.getType().equals("CII")) {
+          lC1.setVisibility(View.VISIBLE);
+          List<SubOwner> c2C1s = HAIRes.getInstance().currentAgencySelect.getSubOwner();
+          for(int i=0; i < c2C1s.size(); i++) {
+              switch (i) {
+                  case 0:
+                      eC1.setText(c2C1s.get(i).getName() + " - " + c2C1s.get(i).getCode());
+                      break;
+                  case 1:
+                      eC12.setText(c2C1s.get(i).getName() + " - " + c2C1s.get(i).getCode());
+                      break;
+                  case 2:
+                      eC13.setText(c2C1s.get(i).getName() + " - " + c2C1s.get(i).getCode());
+                      break;
+              }
+          }
+      } else {
+          lC1.setVisibility(View.GONE);
+      }
 
     }
 

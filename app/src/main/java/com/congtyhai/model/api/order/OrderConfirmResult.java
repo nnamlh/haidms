@@ -1,6 +1,5 @@
 package com.congtyhai.model.api.order;
 
-import com.congtyhai.model.api.AgencyC2C1;
 import com.congtyhai.model.api.TypeCommon;
 import com.google.gson.annotations.SerializedName;
 

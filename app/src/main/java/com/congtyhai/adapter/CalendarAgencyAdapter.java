@@ -40,7 +40,14 @@ public class CalendarAgencyAdapter  extends   RecyclerView.Adapter<CalendarAgenc
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         CalendarAgencyInfo agency = agencyInfos.get(position);
-        holder.deputy.setText(agency.getDeputy() + " - " + agency.getCode());
+      //  holder.deputy.setText(agency.getDeputy() + " - " + agency.getCode());
+
+        if(agency.getType().equals("CII")) {
+            holder.deputy.setText(agency.getCode() + " - Đại lý cấp 2");
+        } else {
+            holder.deputy.setText(agency.getCode() + " - Đại lý cấp 1");
+        }
+
         holder.name.setText(agency.getName());
         if(agency.getCheck() == 1) {
             holder.imgCheck.setVisibility(View.VISIBLE);

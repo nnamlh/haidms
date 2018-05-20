@@ -1,6 +1,6 @@
 package com.congtyhai.model.api.checkin;
 
-import com.congtyhai.model.api.AgencyC2C1;
+import com.congtyhai.model.api.SubOwner;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -27,8 +27,12 @@ public class AgencyCheckinInfo {
     private String ctype;
     @SerializedName("cname")
     private String cname;
+
+    @SerializedName("agencyType")
+    private String agencyType;
+
     @SerializedName("c1")
-    private List<AgencyC2C1> c1;
+    private List<SubOwner> c1;
     public String getDeputy() {
         return deputy;
     }
@@ -93,11 +97,19 @@ public class AgencyCheckinInfo {
         this.cname = cname;
     }
 
-    public List<AgencyC2C1> getC1() {
+    public List<SubOwner> getC1() {
         return c1;
     }
 
-    public void setC1(List<AgencyC2C1> c1) {
+    public void setC1(List<SubOwner> c1) {
         this.c1 = c1;
+    }
+
+    public String getAgencyType() {
+        return agencyType;
+    }
+
+    public void setAgencyType(String agencyType) {
+        this.agencyType = agencyType;
     }
 }

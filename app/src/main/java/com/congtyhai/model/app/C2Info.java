@@ -1,9 +1,5 @@
 package com.congtyhai.model.app;
 
-import com.congtyhai.model.api.AgencyC2C1;
-
-import java.util.List;
-
 /**
  * Created by HAI on 10/17/2017.
  */
@@ -16,7 +12,7 @@ public class C2Info {
 
     private String deputy;
 
- //   private List<AgencyC2C1> c1;
+ //   private List<SubOwner> c1;
 
     public String getCode() {
         return code;
@@ -44,31 +40,31 @@ public class C2Info {
 
     /*
 
-    public List<AgencyC2C1> getC1() {
+    public List<SubOwner> getC1() {
         return c1;
     }
 
-    public void setC1(List<AgencyC2C1> c1) {
+    public void setC1(List<SubOwner> c1) {
         this.c1 = c1;
     }
 
 
-    public AgencyC2C1 chooseC1() {
-        for (AgencyC2C1 item: c1) {
+    public SubOwner chooseC1() {
+        for (SubOwner item: c1) {
             if (item.getPriority() == 1)
                 return item;
         }
         if (c1.size() > 0)
             return c1.get(0);
 
-        return new AgencyC2C1();
+        return new SubOwner();
     }
 
-    public AgencyC2C1 findC1(int idx) {
+    public SubOwner findC1(int idx) {
         if(c1.size() > idx && idx >=0)
             return c1.get(idx);
 
-        return new AgencyC2C1();
+        return new SubOwner();
     }
     */
 }

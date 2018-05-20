@@ -2,9 +2,8 @@ package com.congtyhai.util;
 
 import android.location.Location;
 
-import com.congtyhai.model.api.AgencyC2C1;
+import com.congtyhai.model.api.SubOwner;
 import com.congtyhai.model.api.AgencyInfo;
-import com.congtyhai.model.api.C2C1Info;
 import com.congtyhai.model.api.CalendarDayCreate;
 import com.congtyhai.model.api.CalendarStatus;
 import com.congtyhai.model.api.EventProduct;
@@ -62,9 +61,9 @@ public class HAIRes {
     private CalendarDayCreate calendarDayCreate;
     //  private List<CalendarStatus> calendarStatuses;
 
-    //public final String baseUrl = "http://192.168.2.170:802/api/";
-    //public final String baseUrlUpload = "http://192.168.2.170:801/";
-    public final String baseUrl = "http://dmsapi.nongduochai.vn/api/";
+    public final String baseUrl = "http://testdmsapi.nongduochai.vn/api/";
+  //  public final String baseUrlUpload = "http://192.168.2.170:801/";
+   // public final String baseUrl = "http://dmsapi.nongduochai.vn/api/";
     public final String baseUrlUpload = "http://dms.nongduochai.vn/";
 
     private static HAIRes instance = null;
@@ -373,7 +372,7 @@ public class HAIRes {
 
 
     // order
-    public AgencyC2C1 salePlace;
+    public SubOwner salePlace;
 
     public YourOrderInfo yourOrderInfo;
 

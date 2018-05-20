@@ -1,7 +1,7 @@
 package com.congtyhai.util;
 
 import com.congtyhai.model.api.AgencyC1Info;
-import com.congtyhai.model.api.AgencyC2C1;
+import com.congtyhai.model.api.SubOwner;
 import com.congtyhai.model.api.AgencyCreateSend;
 import com.congtyhai.model.api.AgencyInfo;
 import com.congtyhai.model.api.AgencyModifySend;
@@ -104,8 +104,8 @@ public interface ApiInterface {
     Call<ResultInfo> checkInOutPlan(@Body CheckInOutPlanSend info);
 
     // agency
-    @GET("agency/getagencyc2")
-    Call<AgencyInfo[]> getAgencyC2(
+    @GET("agency/getagency")
+    Call<AgencyInfo[]> getAgency(
             @Query("user") String user,
             @Query("token") String token);
 
@@ -121,7 +121,7 @@ public interface ApiInterface {
     Call<ResultInfo> modifyAgencyC2(@Body AgencyModifySend info);
 
     @GET("agency/getc1c2")
-    Call<List<AgencyC2C1>> getAgencyC2C1(@Query("code") String code);
+    Call<List<SubOwner>> getAgencyC2C1(@Query("code") String code);
 
     // c1
     @GET("agency/getagencyc1")
@@ -241,7 +241,7 @@ public interface ApiInterface {
     Call<ResultInfo> orderComplete(@Body OrderCompleteSend info);
 
     @GET("order/getsaleplaces")
-    Call<List<AgencyC2C1>> orderGetSalePlaces(@Query("id") String id, @Query("user") String user);
+    Call<List<SubOwner>> orderGetSalePlaces(@Query("id") String id, @Query("user") String user);
 
 
     ///

@@ -8,7 +8,7 @@ import com.congtyhai.adapter.OrderShowC1Adaper;
 import com.congtyhai.haidms.BaseActivity;
 import com.congtyhai.haidms.R;
 import com.congtyhai.haidms.showinfo.ShowProductActivity;
-import com.congtyhai.model.api.AgencyC2C1;
+import com.congtyhai.model.api.SubOwner;
 import com.congtyhai.util.HAIRes;
 import java.util.List;
 import butterknife.BindView;
@@ -22,7 +22,7 @@ public class ChooseSaleActivity extends BaseActivity {
     @BindView(R.id.sc1choose)
     Spinner sC1Choose;
     OrderShowC1Adaper mC1Adapter;
-    List<AgencyC2C1> c2C1s;
+    List<SubOwner> c2C1s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +45,10 @@ public class ChooseSaleActivity extends BaseActivity {
     private void makeRequest() {
         showpDialog();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
-        Call<List<AgencyC2C1>> call = apiInterface().orderGetSalePlaces(HAIRes.getInstance().c2Select.getCode(), user);
-        call.enqueue(new Callback<List<AgencyC2C1>>() {
+        Call<List<SubOwner>> call = apiInterface().orderGetSalePlaces(HAIRes.getInstance().c2Select.getCode(), user);
+        call.enqueue(new Callback<List<SubOwner>>() {
             @Override
-            public void onResponse(Call<List<AgencyC2C1>> call, Response<List<AgencyC2C1>> response) {
+            public void onResponse(Call<List<SubOwner>> call, Response<List<SubOwner>> response) {
 
                 if(response.body() != null) {
 
@@ -65,7 +65,7 @@ public class ChooseSaleActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailure(Call<List<AgencyC2C1>> call, Throwable t) {
+            public void onFailure(Call<List<SubOwner>> call, Throwable t) {
                 commons.showToastDisconnect(ChooseSaleActivity.this);
                 hidepDialog();
             }

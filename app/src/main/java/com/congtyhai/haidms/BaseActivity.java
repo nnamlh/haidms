@@ -373,7 +373,6 @@ public class BaseActivity extends AppCompatActivity {
         } catch (Exception e) {
 
         }
-
     }
 
     protected void saveListC2OfC1(C2C1Info[] agencies) {
