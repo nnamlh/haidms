@@ -61,9 +61,9 @@ public class HAIRes {
     private CalendarDayCreate calendarDayCreate;
     //  private List<CalendarStatus> calendarStatuses;
 
-    public final String baseUrl = "http://testdmsapi.nongduochai.vn/api/";
+  //  public final String baseUrl = "http://testdmsapi.nongduochai.vn/api/";
   //  public final String baseUrlUpload = "http://192.168.2.170:801/";
-   // public final String baseUrl = "http://dmsapi.nongduochai.vn/api/";
+    public final String baseUrl = "http://dmsapi.nongduochai.vn/api/";
     public final String baseUrlUpload = "http://dms.nongduochai.vn/";
 
     private static HAIRes instance = null;

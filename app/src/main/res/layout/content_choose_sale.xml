@@ -7,7 +7,7 @@
     android:padding="16dp"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.congtyhai.haidms.order.ChooseSaleActivity"
+    tools:context="com.congtyhai.dms.order.ChooseSaleActivity"
     tools:showIn="@layout/activity_choose_sale">
 
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.congtyhai.haidms.order.ChooseSaleActivity">
+    tools:context="com.congtyhai.dms.order.ChooseSaleActivity">
 
     <include layout="@layout/toolbar" />
 

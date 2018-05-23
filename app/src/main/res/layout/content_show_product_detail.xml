@@ -6,7 +6,7 @@
     android:background="#fff"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.congtyhai.haidms.showinfo.ShowProductDetailActivity"
+    tools:context="com.congtyhai.dms.showinfo.ShowProductDetailActivity"
     tools:showIn="@layout/activity_show_product_detail">
 
     <LinearLayout

@@ -20,11 +20,11 @@ import android.widget.Toast;
 
 import com.congtyhai.adapter.CalendarStatusAdapter;
 import com.congtyhai.adapter.CheckInAgencyAdapter;
-import com.congtyhai.haidms.Agency.ShowAgencyActivity;
-import com.congtyhai.haidms.Agency.ShowAgencyDetailActivity;
-import com.congtyhai.haidms.R;
-import com.congtyhai.haidms.calendar.CreateCalendarActivity;
-import com.congtyhai.haidms.checkin.CheckInActivity;
+import com.congtyhai.dms.Agency.ShowAgencyActivity;
+import com.congtyhai.dms.Agency.ShowAgencyDetailActivity;
+import com.congtyhai.dms.R;
+import com.congtyhai.dms.calendar.CreateCalendarActivity;
+import com.congtyhai.dms.checkin.CheckInActivity;
 import com.congtyhai.model.api.CalendarStatus;
 import com.congtyhai.model.app.CheckInAgencyInfo;
 import com.congtyhai.util.HAIRes;

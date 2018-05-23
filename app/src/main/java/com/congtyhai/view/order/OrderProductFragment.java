@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.congtyhai.adapter.YourOrderProductAdapter;
-import com.congtyhai.haidms.R;
-import com.congtyhai.haidms.manageorders.YourOrderProductActivity;
+import com.congtyhai.dms.R;
+import com.congtyhai.dms.manageorders.YourOrderProductActivity;
 import com.congtyhai.model.api.order.OrderProductResult;
 import com.congtyhai.model.api.order.YourOrderShowResult;
 import com.congtyhai.view.DividerItemDecoration;

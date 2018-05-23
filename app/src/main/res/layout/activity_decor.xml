@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.congtyhai.haidms.checkin.DecorActivity">
+    tools:context="com.congtyhai.dms.checkin.DecorActivity">
 
     <include layout="@layout/toolbar" />
 

@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import com.congtyhai.haidms.R;
+import com.congtyhai.dms.R;
 import com.congtyhai.model.api.NotificationInfo;
 
 import java.util.List;

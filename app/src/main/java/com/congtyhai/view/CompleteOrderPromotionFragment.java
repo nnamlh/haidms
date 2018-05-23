@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.congtyhai.adapter.OrderEventInfoAdapter;
-import com.congtyhai.haidms.R;
+import com.congtyhai.dms.R;
 import com.congtyhai.model.api.order.OrderEventInfo;
 import com.congtyhai.model.app.OrderEventInfoItem;
 

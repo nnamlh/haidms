@@ -15,7 +15,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
-import com.congtyhai.haidms.R;
+import com.congtyhai.dms.R;
 import java.util.List;
 
 /**

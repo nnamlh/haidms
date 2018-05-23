@@ -14,8 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.congtyhai.haidms.R;
-import com.congtyhai.haidms.manageorders.YourOrderProductActivity;
+import com.congtyhai.dms.R;
+import com.congtyhai.dms.manageorders.YourOrderProductActivity;
 import com.congtyhai.model.api.order.OrderProductResult;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.view.order.OrderProductFragment;

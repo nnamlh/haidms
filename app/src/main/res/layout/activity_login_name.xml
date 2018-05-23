@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="30dp"
     android:background="@color/colorPrimaryDark"
-    tools:context="com.congtyhai.haidms.login.LoginNameActivity">
+    tools:context="com.congtyhai.dms.login.LoginNameActivity">
 
 
 

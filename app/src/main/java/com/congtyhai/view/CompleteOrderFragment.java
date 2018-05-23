@@ -18,8 +18,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.congtyhai.haidms.R;
-import com.congtyhai.haidms.order.CompleteOrderActivity;
+import com.congtyhai.dms.R;
+import com.congtyhai.dms.order.CompleteOrderActivity;
 import com.congtyhai.model.api.ProductOrder;
 import com.congtyhai.model.api.TypeCommon;
 import com.congtyhai.util.HAIRes;

@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-import com.congtyhai.haidms.R;
+import com.congtyhai.dms.R;
 
 
 public class LoadMoreListView extends ListView implements OnScrollListener {

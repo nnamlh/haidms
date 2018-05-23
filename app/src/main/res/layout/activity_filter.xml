@@ -6,7 +6,7 @@
     android:id="@+id/coordinatorLayout"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.congtyhai.haidms.manageorders.FilterActivity">
+    tools:context="com.congtyhai.dms.manageorders.FilterActivity">
 
     <include layout="@layout/toolbar" />
 

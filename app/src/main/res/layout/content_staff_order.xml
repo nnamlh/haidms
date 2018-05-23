@@ -7,7 +7,7 @@
     android:padding="5dp"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.congtyhai.haidms.manageorders.StaffOrderActivity"
+    tools:context="com.congtyhai.dms.manageorders.StaffOrderActivity"
     tools:showIn="@layout/activity_staff_order">
 
     <com.congtyhai.view.LoadMoreListView

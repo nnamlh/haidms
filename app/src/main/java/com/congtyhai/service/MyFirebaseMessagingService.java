@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import com.congtyhai.haidms.Util.NotificationActivity;
+import com.congtyhai.dms.Util.NotificationActivity;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.util.NotificationUtils;
 import com.google.firebase.messaging.FirebaseMessagingService;

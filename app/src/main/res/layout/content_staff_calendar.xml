@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="10dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.congtyhai.haidms.calendar.StaffCalendarActivity"
+    tools:context="com.congtyhai.dms.calendar.StaffCalendarActivity"
     tools:showIn="@layout/activity_staff_calendar">
 
     <LinearLayout

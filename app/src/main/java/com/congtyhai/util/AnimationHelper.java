@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import com.congtyhai.haidms.R;
+import com.congtyhai.dms.R;
 
 /**
  * Created by HAI on 8/11/2017.

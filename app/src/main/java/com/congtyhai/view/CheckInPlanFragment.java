@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.congtyhai.adapter.CheckInAgencyAdapter;
-import com.congtyhai.haidms.R;
-import com.congtyhai.haidms.checkin.CheckInActivity;
+import com.congtyhai.dms.R;
+import com.congtyhai.dms.checkin.CheckInActivity;
 import com.congtyhai.model.app.CheckInAgencyInfo;
 import com.congtyhai.util.HAIRes;
 import com.congtyhai.util.HaiActionInterface;

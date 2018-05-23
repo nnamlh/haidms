@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.congtyhai.haidms.R;
+import com.congtyhai.dms.R;
 import com.congtyhai.model.app.CalendarAgencyInfo;
 import com.congtyhai.view.CircularTextView;
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.congtyhai.haidms.Event.SendCodeResultActivity">
+    tools:context="com.congtyhai.dms.Event.SendCodeResultActivity">
 
     <include layout="@layout/toolbar" />
     <include layout="@layout/content_send_code_result" />

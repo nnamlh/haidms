@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.congtyhai.haidms.product.ProductTaskActivity"
+    tools:context="com.congtyhai.dms.product.ProductTaskActivity"
     tools:showIn="@layout/activity_product_task">
 
     <android.support.v7.widget.RecyclerView

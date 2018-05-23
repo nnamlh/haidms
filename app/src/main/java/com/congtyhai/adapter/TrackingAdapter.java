@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.congtyhai.haidms.R;
+import com.congtyhai.dms.R;
 import com.congtyhai.model.api.TrackingInfo;
 
 import java.util.List;

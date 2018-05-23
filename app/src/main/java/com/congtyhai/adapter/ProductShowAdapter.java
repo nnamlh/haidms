@@ -21,9 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.congtyhai.haidms.R;
-import com.congtyhai.haidms.showinfo.ShowProductActivity;
-import com.congtyhai.haidms.showinfo.ShowProductDetailActivity;
+import com.congtyhai.dms.R;
+import com.congtyhai.dms.showinfo.ShowProductActivity;
+import com.congtyhai.dms.showinfo.ShowProductDetailActivity;
 import com.congtyhai.model.api.ProductCodeInfo;
 import com.congtyhai.model.api.ProductOrder;
 import com.congtyhai.util.HAIRes;

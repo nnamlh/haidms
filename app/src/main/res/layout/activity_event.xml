@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.congtyhai.haidms.Event.EventActivity">
+    tools:context="com.congtyhai.dms.Event.EventActivity">
 
     <include layout="@layout/toolbar" />
 

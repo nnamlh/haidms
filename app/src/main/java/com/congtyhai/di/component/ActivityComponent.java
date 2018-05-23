@@ -5,7 +5,7 @@ import android.content.Context;
 import com.congtyhai.di.module.ActivityModule;
 import com.congtyhai.di.scope.ActivityContext;
 import com.congtyhai.di.scope.ActivityScope;
-import com.congtyhai.haidms.BaseActivity;
+import com.congtyhai.dms.BaseActivity;
 
 import dagger.Component;
 

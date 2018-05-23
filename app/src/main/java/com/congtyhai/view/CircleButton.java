@@ -10,7 +10,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 
-import com.congtyhai.haidms.R;
+import com.congtyhai.dms.R;
 
 
 public class CircleButton extends AppCompatImageView {

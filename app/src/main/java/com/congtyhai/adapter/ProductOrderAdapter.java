@@ -16,9 +16,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
-import com.congtyhai.haidms.R;
-import com.congtyhai.haidms.order.ShowOrderActivity;
-import com.congtyhai.haidms.showinfo.ShowProductDetailActivity;
+import com.congtyhai.dms.R;
+import com.congtyhai.dms.order.ShowOrderActivity;
+import com.congtyhai.dms.showinfo.ShowProductDetailActivity;
 import com.congtyhai.model.api.ProductOrder;
 import com.congtyhai.util.HAIRes;
 

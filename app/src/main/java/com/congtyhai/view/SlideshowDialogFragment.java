@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.congtyhai.haidms.R;
+import com.congtyhai.dms.R;
 
 /**
  * Created by HAI on 9/9/2017.

@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.congtyhai.haidms.product.ProductManageActivity"
+    tools:context="com.congtyhai.dms.product.ProductManageActivity"
     tools:showIn="@layout/activity_product_manage">
 
 

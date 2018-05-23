@@ -16,7 +16,7 @@ import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Toast;
 
-import com.congtyhai.haidms.R;
+import com.congtyhai.dms.R;
 
 import java.io.BufferedReader;
 import java.io.File;

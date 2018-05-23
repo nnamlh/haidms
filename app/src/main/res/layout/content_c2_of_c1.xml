@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.congtyhai.haidms.Agency.C2OfC1Activity"
+    tools:context="com.congtyhai.dms.Agency.C2OfC1Activity"
     tools:showIn="@layout/activity_c2_of_c1">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"

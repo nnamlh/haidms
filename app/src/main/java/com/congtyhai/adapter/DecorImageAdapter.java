@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.congtyhai.haidms.R;
+import com.congtyhai.dms.R;
 import com.congtyhai.model.api.DecorImage;
 
 import java.util.List;
