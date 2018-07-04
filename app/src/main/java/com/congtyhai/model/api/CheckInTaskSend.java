@@ -10,6 +10,8 @@ public class CheckInTaskSend {
 
     private String code ;
 
+    private String checkInId;
+
     public String getUser() {
         return user;
     }
@@ -34,4 +36,11 @@ public class CheckInTaskSend {
         this.code = code;
     }
 
+    public String getCheckInId() {
+        return checkInId;
+    }
+
+    public void setCheckInId(String checkInId) {
+        this.checkInId = checkInId;
+    }
 }

@@ -50,6 +50,7 @@ public class HAIRes {
     public final String KEY_INTENT_CREATE_CALENDAR = "createcalendar";
     public final String KEY_INTENT_AGENCY_CODE = "agencycode";
     public final String KEY_INTENT_TEMP = "temp";
+    public final String KEY_INTENT_CHECKIN_ID = "checkinid";
     public final String KEY_INTENT_TEMP2 = "temp2";
     public final String KEY_INTENT_ORDER = "inorder";
     public final String KEY_INTENT_DAY = "dayselect";
@@ -61,10 +62,10 @@ public class HAIRes {
     private CalendarDayCreate calendarDayCreate;
     //  private List<CalendarStatus> calendarStatuses;
 
-  //  public final String baseUrl = "http://testdmsapi.nongduochai.vn/api/";
-  //  public final String baseUrlUpload = "http://192.168.2.170:801/";
-    public final String baseUrl = "http://dmsapi.nongduochai.vn/api/";
-    public final String baseUrlUpload = "http://dms.nongduochai.vn/";
+    public final String baseUrl = "http://testdmsapi.nongduochai.vn/api/";
+    public final String baseUrlUpload = "http://testdms.nongduochai.vn/";
+    //public final String baseUrl = "http://dmsapi.nongduochai.vn/api/";
+    //public final String baseUrlUpload = "http://dms.nongduochai.vn/";
 
     private static HAIRes instance = null;
 

@@ -92,7 +92,7 @@ public class BaseActivity extends AppCompatActivity {
     private android.support.v7.app.AlertDialog.Builder dNotification;
 
     @Inject
-    protected Retrofit retrofit;
+    public Retrofit retrofit;
 
     @Inject
     @RetrofitUploadInfo
@@ -100,10 +100,10 @@ public class BaseActivity extends AppCompatActivity {
 
 
     @Inject
-    protected Commons commons;
+    public Commons commons;
 
     @Inject
-    protected SharedPrefsHelper prefsHelper;
+    public SharedPrefsHelper prefsHelper;
 
     @Inject
     protected AnimationHelper animHelper;
@@ -308,32 +308,32 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    protected double getLat(){
+    public double getLat(){
         if (HAIRes.getInstance().mCurrentLocation != null)
             return  HAIRes.getInstance().mCurrentLocation.getLatitude();
 
         return 0;
     }
 
-    protected double getLng() {
+    public double getLng() {
         if(HAIRes.getInstance().mCurrentLocation != null)
             return HAIRes.getInstance().mCurrentLocation.getLongitude();
         return 0;
     }
 
     // dialog
-    protected void showpDialog() {
+    public void showpDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
     }
 
-    protected void hidepDialog() {
+    public void hidepDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
 
     // api
-    protected ApiInterface apiInterface() {
+    public ApiInterface apiInterface() {
         return retrofit.create(ApiInterface.class);
     }
 

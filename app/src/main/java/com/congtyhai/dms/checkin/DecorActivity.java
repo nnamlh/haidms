@@ -34,6 +34,8 @@ public class DecorActivity extends BaseActivity {
 
     String agencyCode;
 
+    String checkInID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,7 @@ public class DecorActivity extends BaseActivity {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         agencyCode = intent.getStringExtra(HAIRes.getInstance().KEY_INTENT_TEMP);
+        checkInID = intent.getStringExtra(HAIRes.getInstance().KEY_INTENT_CHECKIN_ID);
         getSupportActionBar().setTitle("Đang ghé thăm: " + agencyCode);
         decorFolders = new ArrayList<>();
         adapter = new DecorFolderAdapter(decorFolders);
@@ -58,6 +61,7 @@ public class DecorActivity extends BaseActivity {
                 DecorFolder folder = decorFolders.get(position);
                 Intent intentImage = commons.createIntent(DecorActivity.this, DecorImageActivity.class);
                 intentImage.putExtra(HAIRes.getInstance().KEY_INTENT_AGENCY_CODE, agencyCode);
+                intentImage.putExtra(HAIRes.getInstance().KEY_INTENT_CHECKIN_ID, checkInID);
                 intentImage.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, folder.getCode());
                 intentImage.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP2, folder.getName());
                 startActivity(intentImage);

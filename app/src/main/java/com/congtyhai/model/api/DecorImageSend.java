@@ -7,14 +7,7 @@ package com.congtyhai.model.api;
 public class DecorImageSend {
     private String user;
     private String token;
-
-    private int day ;
-
-    private int month ;
-
-    private int year ;
-
-    private String agency ;
+    private String checkInId;
 
     private String group ;
 
@@ -34,37 +27,6 @@ public class DecorImageSend {
         this.token = token;
     }
 
-    public int getDay() {
-        return day;
-    }
-
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public String getAgency() {
-        return agency;
-    }
-
-    public void setAgency(String agency) {
-        this.agency = agency;
-    }
 
     public String getGroup() {
         return group;
@@ -72,5 +34,13 @@ public class DecorImageSend {
 
     public void setGroup(String group) {
         this.group = group;
+    }
+
+    public String getCheckInId() {
+        return checkInId;
+    }
+
+    public void setCheckInId(String checkInId) {
+        this.checkInId = checkInId;
     }
 }

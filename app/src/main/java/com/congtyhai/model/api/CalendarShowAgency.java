@@ -23,7 +23,11 @@ public class CalendarShowAgency {
 
     @SerializedName("ctypename")
     private String ctypename;
+    @SerializedName("content")
+    private String content;
 
+    @SerializedName("address")
+    private String address;
 
     public String getDeputy() {
         return deputy;
@@ -79,5 +83,21 @@ public class CalendarShowAgency {
 
     public void setCtypename(String ctypename) {
         this.ctypename = ctypename;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

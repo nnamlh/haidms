@@ -20,6 +20,8 @@ public class CheckInAgencyInfo {
     private int inPlan;
     private int isShowType;
     private String agencyType;
+    private String content;
+    private String checkInId;
 
     public String getCheckInType() {
         return checkInType;
@@ -103,5 +105,21 @@ public class CheckInAgencyInfo {
 
     public void setAgencyType(String agencyType) {
         this.agencyType = agencyType;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getCheckInId() {
+        return checkInId;
+    }
+
+    public void setCheckInId(String checkInId) {
+        this.checkInId = checkInId;
     }
 }

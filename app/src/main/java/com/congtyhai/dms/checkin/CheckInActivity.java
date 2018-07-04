@@ -24,6 +24,7 @@ import com.congtyhai.model.api.checkin.CheckInOutPlanSend;
 import com.congtyhai.model.app.C2Info;
 import com.congtyhai.model.app.CheckInAgencyInfo;
 import com.congtyhai.util.HAIRes;
+import com.congtyhai.view.CheckInFlexibleFragment;
 import com.congtyhai.view.CheckInOtherFragment;
 import com.congtyhai.view.CheckInPlanFragment;
 
@@ -46,6 +47,8 @@ public class CheckInActivity extends BaseActivity {
     private List<CalendarStatus> statuses;
     int SHOW_TASK = 1;
 
+    boolean checkFlexible = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +64,7 @@ public class CheckInActivity extends BaseActivity {
 
     }
 
-    private void makeRequest() {
+    public void makeRequest() {
         showpDialog();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
@@ -92,6 +95,7 @@ public class CheckInActivity extends BaseActivity {
                     } else {
                         checkInLists = response.body().getCheckin();
                         //outPlans = response.body().getOutplan();
+                        checkFlexible = response.body().isCheckFlexible();
                         statuses = response.body().getStatus();
                         new ReadDataTask().execute();
                     }
@@ -186,12 +190,19 @@ public class CheckInActivity extends BaseActivity {
     }
 
     public void makeTask(final CheckInAgencyInfo info) {
-        commons.showAlertCancel(CheckInActivity.this, "Thông báo", "Bạn muốn ghé thăm khách hàng: " + info.getName() + " - " + info.getCode(), new DialogInterface.OnClickListener() {
+
+        String dailogTitle = "Bạn muốn ghé thăm khách hàng: " + info.getName() + " - " + info.getCode();
+
+        if ("KVL".equals(info.getCode()))
+            dailogTitle = "Bạn thực hiện CheckIn với nội dung: " + info.getContent();
+
+        commons.showAlertCancel(CheckInActivity.this, "Thông báo", dailogTitle, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = commons.createIntent(CheckInActivity.this, CheckInTaskActivity.class);
                 intent.putExtra(HAIRes.getInstance().KEY_INTENT_AGENCY_CODE, info.getCode());
                 intent.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, info.getDistance());
+                intent.putExtra(HAIRes.getInstance().KEY_INTENT_CHECKIN_ID,info.getCheckInId());
 
                 // save aency
                 C2Info c2Info = new C2Info();
@@ -255,7 +266,10 @@ public class CheckInActivity extends BaseActivity {
             checkInAgencyInfo.setAgencyType(item.getAgencyType());
             double distabce = commons.distance(lat, lng, item.getLat(), item.getLng());
             checkInAgencyInfo.setDistance(distabce);
+            checkInAgencyInfo.setContent(item.getContent());
+            checkInAgencyInfo.setCheckInId(item.getCheckInId());
             checkInAgencyInfos.add(checkInAgencyInfo);
+
         }
         return checkInAgencyInfos;
     }
@@ -302,6 +316,16 @@ public class CheckInActivity extends BaseActivity {
         CheckInOtherFragment otherFragment = new CheckInOtherFragment();
         otherFragment.setActivityCheckIn(CheckInActivity.this, statuses);
         adapter.addFragment(otherFragment, "NGOÀI KẾ HOẠCH");
+
+
+       if(checkFlexible) {
+           CheckInFlexibleFragment flexibleFragment = new CheckInFlexibleFragment();
+           flexibleFragment.setActivity(CheckInActivity.this);
+           adapter.addFragment(flexibleFragment, "KHÔNG CỐ ĐỊNH");
+           tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+       }
+
+
         viewPager.setAdapter(adapter);
     }
 

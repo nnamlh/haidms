@@ -27,6 +27,8 @@ public class CalendarShowResult {
     @SerializedName("items")
     private List<CalendarDayShow> items ;
 
+
+
     @SerializedName("typeDetail")
     private List<CalendarShowStatusDetail> statusDetails;
 
@@ -93,4 +95,5 @@ public class CalendarShowResult {
     public void setStatusDetails(List<CalendarShowStatusDetail> statusDetails) {
         this.statusDetails = statusDetails;
     }
+
 }

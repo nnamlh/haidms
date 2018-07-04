@@ -1,5 +1,7 @@
 package com.congtyhai.dms.checkin;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +9,12 @@ import android.os.CountDownTimer;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.congtyhai.adapter.TaskAdapter;
 import com.congtyhai.dms.Agency.ShowAgencyActivity;
@@ -52,6 +59,7 @@ public class CheckInTaskActivity extends BaseActivity {
 
     String agencyCode;
     long distance;
+    String checkInID;
 
     int timeRemain;
     Timer timer;
@@ -67,6 +75,7 @@ public class CheckInTaskActivity extends BaseActivity {
         HAIRes.getInstance().clearProductOrder();
         agencyCode = intent.getStringExtra(HAIRes.getInstance().KEY_INTENT_AGENCY_CODE);
         distance = intent.getLongExtra(HAIRes.getInstance().KEY_INTENT_TEMP, 0);
+        checkInID = intent.getStringExtra(HAIRes.getInstance().KEY_INTENT_CHECKIN_ID);
 
       //  HAIRes.getInstance().CurrentAgency = agencyCode;
 
@@ -94,15 +103,77 @@ public class CheckInTaskActivity extends BaseActivity {
             public void onClick(View view, int position) {
                 TaskInfo taskInfo = taskInfos.get(position);
                 if (taskInfo.getCode().equals("endtask")) {
-                    commons.showAlertCancel(CheckInTaskActivity.this, "Cảnh báo", "Hoàn thành ghé thăm", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            makeCheckIn();
-                        }
-                    });
+
+                    if ("KVL".equals(agencyCode)) {
+                        commons.showAlertCancel(CheckInTaskActivity.this, "Hoàn thành ghé thăm", "Bạn kết thúc công việc này ?", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                makeCheckIn("KVL", "Hoàn thành ghé thăm không cố định");
+                            }
+                        });
+                    } else {
+                        View checkOutView = getLayoutInflater().inflate(R.layout.content_dialog_check_out, null);
+                        final RadioGroup dialogRadioGroup = (RadioGroup)checkOutView.findViewById(R.id.custom_choice);
+
+                        final EditText dialogOtherText = (EditText)checkOutView.findViewById(R.id.edit);
+
+                        AlertDialog.Builder builderDialog = new AlertDialog.Builder(CheckInTaskActivity.this);
+
+                        builderDialog.setTitle("Hoàn thành ghé thăm");
+                        builderDialog.setIcon(R.mipmap.ic_logo);
+                        builderDialog.setCancelable(false);
+
+                        builderDialog.setView(checkOutView);
+
+                        builderDialog.setNegativeButton("Thôi", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+
+                        builderDialog.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //  makeCheckIn();
+                                int chooseId = dialogRadioGroup.getCheckedRadioButtonId();
+                                String notes = "";
+                                String noteCode = "";
+                                if (chooseId == R.id.radio_button_yes) {
+                                    notes = "Có Beam";
+                                    noteCode = "hasbeam";
+                                } else if (chooseId == R.id.radio_button_no){
+                                    notes = "Không Beam";
+                                    noteCode = "nobeam";
+                                } else if (chooseId == R.id.radio_button_custom) {
+
+                                    if (TextUtils.isEmpty(dialogOtherText.getText().toString())) {
+                                        commons.makeToast(CheckInTaskActivity.this, "Nhập ghi chú").show();
+                                    } else {
+                                        notes = dialogOtherText.getText().toString();
+                                        noteCode = "other";
+                                    }
+
+                                }
+
+                                if (!TextUtils.isEmpty(noteCode)) {
+                                    makeCheckIn(noteCode, notes);
+                                }
+
+                            }
+                        });
+
+                        Dialog dialogCheckOut = builderDialog.create();
+
+                        dialogCheckOut.show();
+
+                    }
+
+
                 } else if (taskInfo.getCode().equals("decortask")) {
                     Intent intentDecor = commons.createIntent(CheckInTaskActivity.this, DecorActivity.class);
                     intentDecor.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, agencyCode);
+                    intentDecor.putExtra(HAIRes.getInstance().KEY_INTENT_CHECKIN_ID, checkInID);
                     startActivity(intentDecor);
                 } else if (taskInfo.getCode().equals("ordertask")) {
                     HAIRes.getInstance().inOder = 1;
@@ -127,7 +198,7 @@ public class CheckInTaskActivity extends BaseActivity {
 
     }
 
-    private void makeCheckIn() {
+    private void makeCheckIn(String noteCode, String notes) {
         showpDialog();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
         String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
@@ -138,6 +209,8 @@ public class CheckInTaskActivity extends BaseActivity {
         checkInSend.setToken(token);
         checkInSend.setAgency(agencyCode);
         checkInSend.setDistance(distance);
+        checkInSend.setNoteCode(noteCode);
+        checkInSend.setNotes(notes);
 
         Call<ResultInfo> call = apiInterface().checkIn(checkInSend);
         call.enqueue(new Callback<ResultInfo>() {
@@ -210,6 +283,7 @@ public class CheckInTaskActivity extends BaseActivity {
         info.setUser(user);
         info.setToken(token);
         info.setCode(code);
+        info.setCheckInId(checkInID);
         Call<CheckInTaskResult> call = apiInterface().checkInTask(info);
         call.enqueue(new Callback<CheckInTaskResult>() {
             @Override

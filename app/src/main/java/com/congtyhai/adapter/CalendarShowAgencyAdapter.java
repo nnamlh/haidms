@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.congtyhai.dms.R;
 import com.congtyhai.model.api.CalendarShowAgency;
 import com.congtyhai.view.CircularTextView;
@@ -19,7 +20,7 @@ import java.util.List;
  * Created by HAI on 8/25/2017.
  */
 
-public class CalendarShowAgencyAdapter  extends   RecyclerView.Adapter<CalendarShowAgencyAdapter.MyViewHolder>{
+public class CalendarShowAgencyAdapter extends RecyclerView.Adapter<CalendarShowAgencyAdapter.MyViewHolder> {
 
 
     List<CalendarShowAgency> calendarShowAgencies;
@@ -39,15 +40,22 @@ public class CalendarShowAgencyAdapter  extends   RecyclerView.Adapter<CalendarS
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         CalendarShowAgency agency = calendarShowAgencies.get(position);
-       if(TextUtils.isEmpty(agency.getCode())) {
-           holder.name.setText("KHÔNG THĂM KHÁCH HÀNG");
-       } else {
-           holder.name.setText(agency.getName());
-           holder.code.setText(agency.getCode());
-       }
+        if (TextUtils.isEmpty(agency.getCode())) {
+            holder.name.setText("KHÔNG THĂM KHÁCH HÀNG");
+            holder.code.setText("");
+        } else if ("KVL".equals(agency.getCode())) {
+            holder.name.setText(agency.getAddress());
+            holder.code.setText(agency.getContent());
+        } else {
+            holder.name.setText(agency.getName());
+            if ("CI".equals(agency.getCtype()))
+                holder.code.setText(agency.getCode() + " - cấp 1");
+            else
+                holder.code.setText(agency.getCode() + " - cấp 2");
+        }
 
         holder.calendar.setText(agency.getCtypename());
-        if(agency.getPerform() == 1) {
+        if (agency.getPerform() == 1) {
             holder.imgCheck.setVisibility(View.VISIBLE);
         } else {
             holder.imgCheck.setVisibility(View.GONE);

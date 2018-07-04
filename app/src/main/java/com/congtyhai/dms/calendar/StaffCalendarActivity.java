@@ -89,6 +89,11 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
 
     int REFESH_CALENDAR = 1000;
 
+
+    int max = 0;
+
+    boolean requireCheck = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -236,6 +241,8 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
                    }
 
                    HAIRes.getInstance().addListCalendarStatus(response.body().getStatus());
+                   max = response.body().getMax();
+                   requireCheck = response.body().isRequireCheck();
 
                    adapterBottom.notifyDataSetChanged();
                    mBottomSheetDialog.show();
@@ -347,7 +354,9 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
                             for(CalendarDayShow calendar: response.body().getItems()) {
                                 calendarDayShowHashMap.put(calendar.getDay(), calendar);
 
-                                if(calendar.getStatus().equals("HOLIDAY")) {
+                                if (TextUtils.isEmpty(calendar.getStatus())) {
+                                    timeline.getTimelineView().addMapDateTextColor(calendar.getDay(), ContextCompat.getColor(StaffCalendarActivity.this, R.color.mti_color_nochoice) );
+                                } else if(calendar.getStatus().equals("HOLIDAY")) {
                                     timeline.getTimelineView().addMapDateTextColor(calendar.getDay(), ContextCompat.getColor(StaffCalendarActivity.this, R.color.mti_bg_lbl_date_selected_color_red) );
                                 } else if (calendar.getStatus().equals("CSKH")) {
                                     timeline.getTimelineView().addMapDateTextColor(calendar.getDay(), ContextCompat.getColor(StaffCalendarActivity.this, R.color.mti_lbl_date));
@@ -452,6 +461,8 @@ public class StaffCalendarActivity extends BaseActivity implements AdapterView.O
         } else {
             Intent intent = commons.createIntent(StaffCalendarActivity.this, CreateCalendarActivity.class);
             intent.putExtra(HAIRes.getInstance().KEY_INTENT_CREATE_CALENDAR, info.getCodeStr());
+            intent.putExtra("MaxChoose", max);
+            intent.putExtra("checkRequire", requireCheck);
             startActivity(intent);
         }
 

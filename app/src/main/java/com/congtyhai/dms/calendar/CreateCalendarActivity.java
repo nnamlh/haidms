@@ -78,12 +78,23 @@ public class CreateCalendarActivity extends BaseActivity {
     int daySelect = 1;
     String groupSelect = "-1";
 
+    int maxChoose = 0;
+
+    boolean requireCheck = true;
+
+    String statusNotChoice = "NoChoice";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_calendar);
         createToolbar();
         ButterKnife.bind(this);
+        Intent intent = getIntent();
+
+        maxChoose = intent.getIntExtra("MaxChoose", 60);
+
+        requireCheck = intent.getBooleanExtra("checkRequire", true);
 
         calendarDayMap = new HashMap<>();
         calendarAgencyMap = new HashMap<>();
@@ -94,6 +105,7 @@ public class CreateCalendarActivity extends BaseActivity {
         createTimeLine();
         // lisst status
         createListStatus();
+
 
 
         recyclerView.setHasFixedSize(true);
@@ -108,6 +120,9 @@ public class CreateCalendarActivity extends BaseActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
+
+
+
                 // check group la group nao
                 CalendarAgencyInfo info = agencyInfos.get(position);
                 boolean isCheck = true;
@@ -156,9 +171,27 @@ public class CreateCalendarActivity extends BaseActivity {
     }
 
     private void createListStatus() {
+
+        if (!requireCheck){
+            CalendarStatus nochoice = new CalendarStatus();
+            nochoice.setId(statusNotChoice);
+            nochoice.setName("Không chọn");
+            nochoice.setCompel(0);
+            nochoice.setNumber(0);
+            nochoice.settGroup("1");
+            nochoice.setNotes("");
+            HAIRes.getInstance().getCalendarStatuses().add(0, nochoice);
+        }
+
+
         CalendarStatusAdapter adapter = new CalendarStatusAdapter(this, HAIRes.getInstance().getCalendarStatuses());
         eStatus.setAdapter(adapter);
-        eStatus.setSelection(HAIRes.getInstance().findPostitionStatus(HAIRes.getInstance().CALENDAR_CSKH));
+
+        if(requireCheck) {
+            eStatus.setSelection(HAIRes.getInstance().findPostitionStatus(HAIRes.getInstance().CALENDAR_CSKH));
+        } else {
+            eStatus.setSelection(HAIRes.getInstance().findPostitionStatus(statusNotChoice));
+        }
 
         eStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -170,7 +203,12 @@ public class CreateCalendarActivity extends BaseActivity {
                     timeline.getTimelineView().addMapDateTextColor(daySelect, ContextCompat.getColor(CreateCalendarActivity.this, R.color.mti_bg_lbl_date_selected_color_red) );
                 } else if (code.equals("CSKH")) {
                     timeline.getTimelineView().addMapDateTextColor(daySelect, ContextCompat.getColor(CreateCalendarActivity.this, R.color.mti_lbl_date));
-                } else {
+                } else if (code.equals("TVBD")) {
+                    timeline.getTimelineView().addMapDateTextColor(daySelect, ContextCompat.getColor(CreateCalendarActivity.this, R.color.mti_color_blue));
+                } else if (code.equals(statusNotChoice)) {
+                    timeline.getTimelineView().addMapDateTextColor(daySelect, ContextCompat.getColor(CreateCalendarActivity.this, R.color.mti_color_nochoice) );
+                }
+                else {
                     timeline.getTimelineView().addMapDateTextColor(daySelect, ContextCompat.getColor(CreateCalendarActivity.this, R.color.mti_bg_lbl_date_selected_color_yellow));
                 }
 
@@ -324,14 +362,13 @@ public class CreateCalendarActivity extends BaseActivity {
         timeline.setLastVisibleDate(year, getCalendarMonth(month), days);
         timeline.getMonthView().setVisibility(View.GONE);
 
-        /*
-        timeline.setDateLabelAdapter(new MonthView.DateLabelAdapter() {
-            @Override
-            public CharSequence getLabel(Calendar calendar, int index) {
-                return Integer.toString(calendar.get(Calendar.MONTH) + 1) + "/" + (calendar.get(Calendar.YEAR) % 2000);
+        if(!requireCheck) {
+            // chuyen qua mau nochoice
+            for (int i = 1; i <= days; i++) {
+                timeline.getTimelineView().addMapDateTextColor(i, ContextCompat.getColor(CreateCalendarActivity.this, R.color.mti_color_nochoice) );
             }
-        });
-*/
+        }
+
 
         timeline.setOnDateSelectedListener(new DatePickerTimeline.OnDateSelectedListener() {
             @Override
@@ -358,6 +395,11 @@ public class CreateCalendarActivity extends BaseActivity {
             calendarDayCreate.setDay(i);
             calendarDayCreate.setNotes("");
             calendarDayCreate.setStatus(HAIRes.getInstance().CALENDAR_CSKH);
+
+            if (!requireCheck){
+                calendarDayCreate.setStatus(statusNotChoice);
+            }
+
             calendarDayMap.put(i, calendarDayCreate);
 
             // set tat ca group hien thi tat ca
@@ -421,22 +463,74 @@ public class CreateCalendarActivity extends BaseActivity {
 
     private boolean checkPolicy() {
 
-        // kiem tra moi khach hang phai duoc tham it nhat 1 lan
+        if (!requireCheck) {
+            // check phai choose loai di thăm ít nhất 1 lần
+
+            int countCheckDay = 0;
+
+            for (Map.Entry<Integer, CalendarDayCreate> entry : calendarDayMap.entrySet()) {
+
+                CalendarDayCreate dayCreate = entry.getValue();
+
+                if (!dayCreate.getStatus().equals(statusNotChoice)) {
+                    countCheckDay++;
+                }
+
+            }
+
+            if (countCheckDay == 0)
+            {
+                commons.showAlertInfo(CreateCalendarActivity.this, "Cảnh báo", "Phải chọn ít nhất một ngày để lên kế hoạch", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                return false;
+            }
+
+            return  true;
+
+        }
+
+
+        int countChoose = 0;
+        boolean chooseEnough = false;
+        // check so luong khach hang da chon
         for (Map.Entry<String, List<CalendarAgencyInfo>> entry : calendarAgencyMap.entrySet()) {
             List<CalendarAgencyInfo> values = entry.getValue();
             for (CalendarAgencyInfo info : values) {
-                if (info.getDayChoose().size() == 0) {
-                    commons.showAlertInfo(CreateCalendarActivity.this, "Cảnh báo", "Khách hàng : " + info.getDeputy() + " ( " + info.getCode() + " - Cụm " + info.getGroup() + ") chưa được thăm lần nào trong tháng", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    });
-                    return false;
+                if (info.getDayChoose().size() != 0 && info.getType().equals("CII")) {
+                    countChoose++;
                 }
             }
         }
 
+        if (calendarAgencyMap.size() > maxChoose){
+            if (countChoose < maxChoose) {
+                chooseEnough = false;
+            }else {
+                chooseEnough = true;
+            }
+        }
+
+        if (!chooseEnough) {
+            // kiem tra moi khach hang phai duoc tham it nhat 1 lan
+            for (Map.Entry<String, List<CalendarAgencyInfo>> entry : calendarAgencyMap.entrySet()) {
+                List<CalendarAgencyInfo> values = entry.getValue();
+                for (CalendarAgencyInfo info : values) {
+                    if (info.getDayChoose().size() == 0 && info.getType().equals("CII")) {
+                        commons.showAlertInfo(CreateCalendarActivity.this, "Cảnh báo", "Khách hàng : " + info.getDeputy() + " ( " + info.getCode() + " - Cụm " + info.getGroup() + ") chưa được thăm lần nào trong tháng", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                        return false;
+                    }
+                }
+            }
+        }
         // cac khach hang co lich cskh thi phai dc tham
         for (Map.Entry<Integer, CalendarDayCreate> entry : calendarDayMap.entrySet()) {
             //  String key = entry.getKey().toString();

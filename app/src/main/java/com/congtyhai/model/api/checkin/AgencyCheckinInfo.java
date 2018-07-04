@@ -31,6 +31,12 @@ public class AgencyCheckinInfo {
     @SerializedName("agencyType")
     private String agencyType;
 
+    @SerializedName("content")
+    private String content;
+
+    @SerializedName("checkInId")
+    private  String checkInId;
+
     @SerializedName("c1")
     private List<SubOwner> c1;
     public String getDeputy() {
@@ -111,5 +117,21 @@ public class AgencyCheckinInfo {
 
     public void setAgencyType(String agencyType) {
         this.agencyType = agencyType;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getCheckInId() {
+        return checkInId;
+    }
+
+    public void setCheckInId(String checkInId) {
+        this.checkInId = checkInId;
     }
 }

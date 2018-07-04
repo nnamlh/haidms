@@ -42,6 +42,7 @@ import com.congtyhai.model.api.ResultUpdate;
 import com.congtyhai.model.api.StaffHelpRequest;
 import com.congtyhai.model.api.TrackingResukt;
 import com.congtyhai.model.api.UpdateProductInfo;
+import com.congtyhai.model.api.checkin.CheckInFlexibleSend;
 import com.congtyhai.model.api.checkin.CheckInOutPlanSend;
 import com.congtyhai.model.api.order.CompleteDeliveryResult;
 import com.congtyhai.model.api.order.CompleteDeliverySend;
@@ -103,6 +104,9 @@ public interface ApiInterface {
     @POST("checkin/checkinoutplan")
     Call<ResultInfo> checkInOutPlan(@Body CheckInOutPlanSend info);
 
+    @POST("checkin/checkinflexible")
+    Call<ResultInfo> checkInFlexible(@Body CheckInFlexibleSend info);
+
     // agency
     @GET("agency/getagency")
     Call<AgencyInfo[]> getAgency(
@@ -157,7 +161,7 @@ public interface ApiInterface {
 
     @Multipart
     @POST("upload/decor")
-    Call<ResultInfo> uploadImage(@Part MultipartBody.Part file, @Part("user") RequestBody user, @Part("token") RequestBody token, @Part("extension") RequestBody extension, @Part("agency") RequestBody agency,@Part("group") RequestBody group, @Part("lat") RequestBody lat, @Part("lng") RequestBody lng);
+    Call<ResultInfo> uploadImage(@Part MultipartBody.Part file, @Part("user") RequestBody user, @Part("token") RequestBody token, @Part("extension") RequestBody extension, @Part("checkInId") RequestBody checkInId,@Part("group") RequestBody group);
 
     // agecy
     @Multipart

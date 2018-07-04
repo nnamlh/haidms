@@ -21,6 +21,9 @@ public class CheckInGetPlanResult {
     @SerializedName("status")
     private List<CalendarStatus> status;
 
+    @SerializedName("checkFlexible")
+    private boolean checkFlexible;
+
     public String getId() {
         return id;
     }
@@ -51,5 +54,13 @@ public class CheckInGetPlanResult {
 
     public void setCheckin(List<AgencyCheckinInfo> checkin) {
         this.checkin = checkin;
+    }
+
+    public boolean isCheckFlexible() {
+        return checkFlexible;
+    }
+
+    public void setCheckFlexible(boolean checkFlexible) {
+        this.checkFlexible = checkFlexible;
     }
 }

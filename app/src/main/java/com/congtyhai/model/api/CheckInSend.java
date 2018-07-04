@@ -16,6 +16,10 @@ public class CheckInSend {
 
     private double distance;
 
+    private String notes;
+
+    private String noteCode;
+
 
     public String getUser() {
         return user;
@@ -63,5 +67,21 @@ public class CheckInSend {
 
     public void setAgency(String agency) {
         this.agency = agency;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getNoteCode() {
+        return noteCode;
+    }
+
+    public void setNoteCode(String noteCode) {
+        this.noteCode = noteCode;
     }
 }

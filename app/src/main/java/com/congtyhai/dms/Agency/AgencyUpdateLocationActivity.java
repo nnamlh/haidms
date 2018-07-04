@@ -294,7 +294,7 @@ public class AgencyUpdateLocationActivity extends BaseActivity implements OnMapR
 
             @Override
             public void onFailure(Call<ResultInfo> call, Throwable t) {
-
+                hidepDialog();
             }
         });
 

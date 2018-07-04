@@ -1,6 +1,7 @@
 package com.congtyhai.adapter;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,10 +56,17 @@ public class CalendarStatusAdapter extends BaseAdapter {
 
         TextView note = (TextView) view.findViewById(R.id.notes);
 
+        TextView cross = (TextView) view.findViewById(R.id.crosstext);
+
         CalendarStatus status = calendarStatuses.get(i);
 
         name.setText(status.getName());
         note.setText(status.getNotes());
+
+        if (TextUtils.isEmpty(status.getNotes()))
+            cross.setVisibility(View.GONE);
+        else
+            cross.setVisibility(View.VISIBLE);
 
         return view;
     }

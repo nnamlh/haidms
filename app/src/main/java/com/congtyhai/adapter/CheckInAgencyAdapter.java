@@ -34,15 +34,17 @@ public class CheckInAgencyAdapter  extends RecyclerView.Adapter<CheckInAgencyAda
     public void onBindViewHolder(MyViewHolder holder, int position) {
         CheckInAgencyInfo info = checkInAgencyInfos.get(position);
         holder.name.setText(info.getName());
-
+        holder.name.setVisibility(View.VISIBLE);
+        if("CI".equals(info.getAgencyType())){
+            holder.code.setText( info.getCode() + " - Đại lý cấp 1");
+        } else if ("KVL".equals(info.getAgencyType())) {
+            holder.code.setText( info.getContent());
+            holder.name.setVisibility(View.GONE);
+        }
+        else {
+            holder.code.setText( info.getCode() + " - Đại lý cấp 2");
+        }
         if(info.getIsShowType() == 1) {
-
-            if("CI".equals(info.getAgencyType())){
-                holder.code.setText( info.getCode() + " - Đại lý cấp 1");
-            }else {
-                holder.code.setText( info.getCode() + " - Đại lý cấp 2");
-            }
-
             holder.plan.setVisibility(View.VISIBLE);
             holder.type.setVisibility(View.VISIBLE);
             holder.type.setText(info.getCheckInName());

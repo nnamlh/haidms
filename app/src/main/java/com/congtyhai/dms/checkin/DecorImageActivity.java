@@ -57,6 +57,7 @@ public class DecorImageActivity extends BaseActivity implements DatePickerDialog
     String agencyCode;
     String groupCode;
     String groupName;
+    String checkInID;
     DatePickerDialog datePickerDialog;
 
     String[] permissions = new String[] {
@@ -77,6 +78,7 @@ public class DecorImageActivity extends BaseActivity implements DatePickerDialog
         agencyCode = intent.getStringExtra(HAIRes.getInstance().KEY_INTENT_AGENCY_CODE);
         groupCode = intent.getStringExtra(HAIRes.getInstance().KEY_INTENT_TEMP);
         groupName = intent.getStringExtra(HAIRes.getInstance().KEY_INTENT_TEMP2);
+        checkInID = intent.getStringExtra(HAIRes.getInstance().KEY_INTENT_CHECKIN_ID);
         getSupportActionBar().setTitle("Ảnh " + groupName + " của " + agencyCode);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -171,10 +173,7 @@ public class DecorImageActivity extends BaseActivity implements DatePickerDialog
         DecorImageSend info = new DecorImageSend();
         info.setToken(token);
         info.setUser(user);
-        info.setYear(year);
-        info.setDay(day);
-        info.setMonth(month);
-        info.setAgency(agencyCode);
+        info.setCheckInId(checkInID);
         info.setGroup(groupCode);
 
         Call<List<DecorImage>> call = apiInterface().getDecorImages(info);
@@ -279,24 +278,17 @@ public class DecorImageActivity extends BaseActivity implements DatePickerDialog
                 RequestBody.create(
                         MediaType.parse("text/plain"), ".jpg");
 
-        RequestBody agency =
+        RequestBody checkInIdSend =
                 RequestBody.create(
-                        MediaType.parse("text/plain"), agencyCode);
+                        MediaType.parse("text/plain"), checkInID);
 
         RequestBody group =
                 RequestBody.create(
                         MediaType.parse("text/plain"), groupCode);
 
-        RequestBody lat =
-                RequestBody.create(
-                        MediaType.parse("text/plain"), String.valueOf(getLat()));
-
-        RequestBody lng =
-                RequestBody.create(
-                        MediaType.parse("text/plain"), String.valueOf(getLng()));
 
 
-        Call<ResultInfo> call = apiInterfaceUpload().uploadImage(body, user, token, extension, agency, group, lat, lng);
+        Call<ResultInfo> call = apiInterfaceUpload().uploadImage(body, user, token, extension, checkInIdSend, group);
 
         call.enqueue(new Callback<ResultInfo>() {
             @Override
