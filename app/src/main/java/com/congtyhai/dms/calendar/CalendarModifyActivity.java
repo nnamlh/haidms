@@ -157,7 +157,7 @@ public class CalendarModifyActivity extends BaseActivity {
         eStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String code = HAIRes.getInstance().getCalendarStatuses().get(i).id;
+                String code = HAIRes.getInstance().getCalendarStatuses().get(i).getId();
                 calendarDayCreate.setStatus(code);
             }
 

@@ -2,6 +2,8 @@ package com.congtyhai.model.api;
 
 import com.google.gson.annotations.SerializedName;
 
+import retrofit2.http.PUT;
+
 /**
  * Created by HAI on 9/4/2017.
  */
@@ -9,22 +11,25 @@ import com.google.gson.annotations.SerializedName;
 public class CalendarStatus {
 
     @SerializedName("Id")
-    public String id;
+    private String id;
 
     @SerializedName("Name")
-    public String name;
+    private String name;
 
     @SerializedName("Compel")
-    public int compel;
+    private int compel;
 
     @SerializedName("Number")
-    public int number;
+    private int number;
 
     @SerializedName("TGroup")
-    public String tGroup;
+    private String tGroup;
 
     @SerializedName("Notes")
-    public String notes;
+    private String notes;
+
+    @SerializedName("GroupType")
+    private String GroupType;
 
     public String getNotes() {
         return notes;
@@ -72,5 +77,13 @@ public class CalendarStatus {
 
     public void settGroup(String tGroup) {
         this.tGroup = tGroup;
+    }
+
+    public String getGroupType() {
+        return GroupType;
+    }
+
+    public void setGroupType(String groupType) {
+        GroupType = groupType;
     }
 }

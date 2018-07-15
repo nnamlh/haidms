@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
    android:layout_width="match_parent"
-    android:padding="16dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
     android:layout_height="wrap_content">
 
 
@@ -14,6 +15,7 @@
         android:layout_alignParentTop="true"
         android:textStyle="bold"
         android:id="@+id/txtcode"
+        android:textAllCaps="true"
         android:text="Mã cấp 1"
         android:textSize="16dp" />
 
@@ -25,6 +27,7 @@
         android:layout_marginTop="5dp"
         android:layout_below="@id/txtcode"
         android:id="@+id/txtname"
+        android:textAllCaps="true"
         android:text="Mã cấp 1"
         android:textSize="16dp" />
 
@@ -61,6 +64,7 @@
         android:layout_below="@id/txtinplan"
         android:id="@+id/txtdistance"
         android:layout_marginTop="5dp"
+        android:visibility="gone"
         android:text="300 m"
         android:textSize="14dp" />
 

@@ -123,7 +123,7 @@ public class HAIRes {
 
     public int findPostitionStatus(String status) {
         for (int i = 0; i < calendarStatuses.size(); i++) {
-            if (status.equals(calendarStatuses.get(i).id)) {
+            if (status.equals(calendarStatuses.get(i).getId())) {
                 return i;
             }
         }

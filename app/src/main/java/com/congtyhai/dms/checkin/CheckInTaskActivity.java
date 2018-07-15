@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -64,6 +65,8 @@ public class CheckInTaskActivity extends BaseActivity {
     int timeRemain;
     Timer timer;
 
+    int flexible = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,71 +107,7 @@ public class CheckInTaskActivity extends BaseActivity {
                 TaskInfo taskInfo = taskInfos.get(position);
                 if (taskInfo.getCode().equals("endtask")) {
 
-                    if ("KVL".equals(agencyCode)) {
-                        commons.showAlertCancel(CheckInTaskActivity.this, "Hoàn thành ghé thăm", "Bạn kết thúc công việc này ?", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                makeCheckIn("KVL", "Hoàn thành ghé thăm không cố định");
-                            }
-                        });
-                    } else {
-                        View checkOutView = getLayoutInflater().inflate(R.layout.content_dialog_check_out, null);
-                        final RadioGroup dialogRadioGroup = (RadioGroup)checkOutView.findViewById(R.id.custom_choice);
-
-                        final EditText dialogOtherText = (EditText)checkOutView.findViewById(R.id.edit);
-
-                        AlertDialog.Builder builderDialog = new AlertDialog.Builder(CheckInTaskActivity.this);
-
-                        builderDialog.setTitle("Hoàn thành ghé thăm");
-                        builderDialog.setIcon(R.mipmap.ic_logo);
-                        builderDialog.setCancelable(false);
-
-                        builderDialog.setView(checkOutView);
-
-                        builderDialog.setNegativeButton("Thôi", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        });
-
-                        builderDialog.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //  makeCheckIn();
-                                int chooseId = dialogRadioGroup.getCheckedRadioButtonId();
-                                String notes = "";
-                                String noteCode = "";
-                                if (chooseId == R.id.radio_button_yes) {
-                                    notes = "Có Beam";
-                                    noteCode = "hasbeam";
-                                } else if (chooseId == R.id.radio_button_no){
-                                    notes = "Không Beam";
-                                    noteCode = "nobeam";
-                                } else if (chooseId == R.id.radio_button_custom) {
-
-                                    if (TextUtils.isEmpty(dialogOtherText.getText().toString())) {
-                                        commons.makeToast(CheckInTaskActivity.this, "Nhập ghi chú").show();
-                                    } else {
-                                        notes = dialogOtherText.getText().toString();
-                                        noteCode = "other";
-                                    }
-
-                                }
-
-                                if (!TextUtils.isEmpty(noteCode)) {
-                                    makeCheckIn(noteCode, notes);
-                                }
-
-                            }
-                        });
-
-                        Dialog dialogCheckOut = builderDialog.create();
-
-                        dialogCheckOut.show();
-
-                    }
-
+                   checkOut();
 
                 } else if (taskInfo.getCode().equals("decortask")) {
                     Intent intentDecor = commons.createIntent(CheckInTaskActivity.this, DecorActivity.class);
@@ -196,6 +135,87 @@ public class CheckInTaskActivity extends BaseActivity {
 
         makeRequest(agencyCode);
 
+    }
+
+    private void checkOut() {
+
+
+        View checkOutView = getLayoutInflater().inflate(R.layout.content_dialog_check_out, null);
+        RadioButton radioButtonYes = (RadioButton) checkOutView.findViewById(R.id.radio_button_yes);
+        RadioButton radioButtonNo = (RadioButton) checkOutView.findViewById(R.id.radio_button_no);
+
+        if (flexible == 1) {
+            radioButtonNo.setText("Chụp hình");
+            radioButtonYes.setText("Ghé thăm");
+        } else {
+            radioButtonNo.setText("Không Beam");
+            radioButtonYes.setText("Có Beam");
+        }
+
+
+        final RadioGroup dialogRadioGroup = (RadioGroup)checkOutView.findViewById(R.id.custom_choice);
+
+        final EditText dialogOtherText = (EditText)checkOutView.findViewById(R.id.edit);
+
+        AlertDialog.Builder builderDialog = new AlertDialog.Builder(CheckInTaskActivity.this);
+
+        builderDialog.setTitle("Hoàn thành ghé thăm");
+        builderDialog.setIcon(R.mipmap.ic_logo);
+        builderDialog.setCancelable(false);
+
+        builderDialog.setView(checkOutView);
+
+        builderDialog.setNegativeButton("Thôi", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builderDialog.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //  makeCheckIn();
+                int chooseId = dialogRadioGroup.getCheckedRadioButtonId();
+                String notes = "";
+                String noteCode = "";
+                if (chooseId == R.id.radio_button_yes) {
+                   if (flexible == 1) {
+                       notes = "Ghé thăm";
+                       noteCode = "checkin";
+                   } else {
+                       notes = "Có Beam";
+                       noteCode = "hasbeam";
+                   }
+                } else if (chooseId == R.id.radio_button_no){
+                   if(flexible == 1){
+                       notes = "Chụp hình";
+                       noteCode = "capture";
+                   } else {
+                       notes = "Không Beam";
+                       noteCode = "nobeam";
+                   }
+                } else if (chooseId == R.id.radio_button_custom) {
+
+                    if (TextUtils.isEmpty(dialogOtherText.getText().toString())) {
+                        commons.makeToast(CheckInTaskActivity.this, "Nhập ghi chú").show();
+                    } else {
+                        notes = dialogOtherText.getText().toString();
+                        noteCode = "other";
+                    }
+
+                }
+
+                if (!TextUtils.isEmpty(noteCode)) {
+                    makeCheckIn(noteCode, notes);
+                }
+
+            }
+        });
+
+        Dialog dialogCheckOut = builderDialog.create();
+
+        dialogCheckOut.show();
     }
 
     private void makeCheckIn(String noteCode, String notes) {
@@ -290,6 +310,8 @@ public class CheckInTaskActivity extends BaseActivity {
             public void onResponse(Call<CheckInTaskResult> call, Response<CheckInTaskResult> response) {
 
                 if (response.body() != null) {
+
+                    flexible = response.body().getFlexible();
 
                     for (TaskInfoResult task : response.body().getTasks()) {
                         TaskInfo taskInfo = new TaskInfo();

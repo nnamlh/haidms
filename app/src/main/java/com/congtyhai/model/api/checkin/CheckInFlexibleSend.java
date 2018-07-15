@@ -4,21 +4,23 @@ import com.congtyhai.model.api.SendInfo;
 
 public class CheckInFlexibleSend extends SendInfo{
 
-    public double lat ;
+    private double lat ;
 
-    public double lng ;
+    private double lng ;
 
-    public String country;
+    private String country;
 
-    public String province ;
+    private String province ;
 
-    public String district ;
+    private String district ;
 
-    public String ward;
+    private String ward;
 
-    public String content ;
+    private String content ;
 
-    public String address ;
+    private String address ;
+
+    private String typeId;
 
     public double getLat() {
         return lat;
@@ -82,5 +84,13 @@ public class CheckInFlexibleSend extends SendInfo{
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 }

@@ -14,10 +14,15 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+
+import com.congtyhai.adapter.CalendarStatusAdapter;
 import com.congtyhai.dms.R;
 import com.congtyhai.dms.checkin.CheckInActivity;
+import com.congtyhai.model.api.CalendarStatus;
 import com.congtyhai.model.api.ResultInfo;
 import com.congtyhai.model.api.checkin.CheckInFlexibleSend;
 import com.congtyhai.util.HAIRes;
@@ -56,16 +61,18 @@ public class CheckInFlexibleFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
 
     CheckInActivity activity;
-
+    List<CalendarStatus> calendarStatuses;
     Address addressInfo;
-
+    Spinner eStatus;
     public CheckInFlexibleFragment() {
 
     }
 
-    public void setActivity(CheckInActivity activity) {
+    public void setActivity(CheckInActivity activity, List<CalendarStatus> statuses) {
         this.activity = activity;
+        this.calendarStatuses = statuses;
     }
+
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -75,13 +82,15 @@ public class CheckInFlexibleFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-
+        eStatus = (Spinner) view.findViewById(R.id.estatus);
+        createListStatus();
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
                 if(check()) {
+                    CalendarStatus status = calendarStatuses.get(eStatus.getSelectedItemPosition());
                     activity.showpDialog();
                     String muser = activity.prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
                     String mtoken = activity.prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
@@ -98,7 +107,7 @@ public class CheckInFlexibleFragment extends Fragment {
                     info.setProvince(addressInfo.getAdminArea());
                     info.setDistrict(addressInfo.getSubAdminArea());
                     info.setWard(addressInfo.getLocality());
-
+                    info.setTypeId(status.getId());
 
                     Call<ResultInfo> call = activity.apiInterface().checkInFlexible(info);
 
@@ -150,8 +159,39 @@ public class CheckInFlexibleFragment extends Fragment {
         new ReadDataTask().execute();
         return view;
     }
+    private int findPositionSatatus(String status) {
+        for (int i = 0; i < calendarStatuses.size(); i++) {
+            if(calendarStatuses.get(i).getId().equals(status)) {
+                return i;
+            }
+        }
+
+        return  -1;
+    }
+    private void createListStatus() {
+        CalendarStatusAdapter adapter = new CalendarStatusAdapter(getActivity(), calendarStatuses);
+        eStatus.setAdapter(adapter);
 
 
+        eStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        int idx = findPositionSatatus("CSKH");
+
+        if (idx != -1) {
+            eStatus.setSelection(idx);
+        }
+    }
     private boolean check() {
         if(TextUtils.isEmpty(eContent.getText().toString()))
         {

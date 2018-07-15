@@ -47,6 +47,9 @@ public class CheckInActivity extends BaseActivity {
     private List<CalendarStatus> statuses;
     int SHOW_TASK = 1;
 
+    private String title;
+    private String notes;
+
     boolean checkFlexible = false;
 
     @Override
@@ -67,7 +70,7 @@ public class CheckInActivity extends BaseActivity {
     public void makeRequest() {
         showpDialog();
         String user = prefsHelper.get(HAIRes.getInstance().PREF_KEY_USER, "");
-        String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
+        final String token = prefsHelper.get(HAIRes.getInstance().PREF_KEY_TOKEN, "");
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -97,6 +100,8 @@ public class CheckInActivity extends BaseActivity {
                         //outPlans = response.body().getOutplan();
                         checkFlexible = response.body().isCheckFlexible();
                         statuses = response.body().getStatus();
+                        notes = response.body().getNotes();
+                        title = response.body().getTitle();
                         new ReadDataTask().execute();
                     }
                 }
@@ -126,21 +131,21 @@ public class CheckInActivity extends BaseActivity {
     }
 
     public void createOutPlan(final String code, final String cType, String cName) {
-       if (TextUtils.isEmpty(code)) {
-           commons.showAlertCancel(CheckInActivity.this, "Thông báo", "Bạn đang thêm lịch ngoài kế hoạch nhưng không ghé thăm khách hàng: " + cName , new DialogInterface.OnClickListener() {
-               @Override
-               public void onClick(DialogInterface dialogInterface, int i) {
+        if (TextUtils.isEmpty(code)) {
+            commons.showAlertCancel(CheckInActivity.this, "Thông báo", "Bạn đang thêm lịch ngoài kế hoạch nhưng không ghé thăm khách hàng: " + cName, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
                     sendOutPlan(code, cType);
-               }
-           });
-       } else {
-           commons.showAlertCancel(CheckInActivity.this, "Thông báo", "Bạn đang thêm lịch ngoài kế hoạch : " + cName + ", cho khách hàng: " + code, new DialogInterface.OnClickListener() {
-               @Override
-               public void onClick(DialogInterface dialogInterface, int i) {
-                   sendOutPlan(code, cType);
-               }
-           });
-       }
+                }
+            });
+        } else {
+            commons.showAlertCancel(CheckInActivity.this, "Thông báo", "Bạn đang thêm lịch ngoài kế hoạch : " + cName + ", cho khách hàng: " + code, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    sendOutPlan(code, cType);
+                }
+            });
+        }
     }
 
     private void sendOutPlan(String code, String cType) {
@@ -202,14 +207,14 @@ public class CheckInActivity extends BaseActivity {
                 Intent intent = commons.createIntent(CheckInActivity.this, CheckInTaskActivity.class);
                 intent.putExtra(HAIRes.getInstance().KEY_INTENT_AGENCY_CODE, info.getCode());
                 intent.putExtra(HAIRes.getInstance().KEY_INTENT_TEMP, info.getDistance());
-                intent.putExtra(HAIRes.getInstance().KEY_INTENT_CHECKIN_ID,info.getCheckInId());
+                intent.putExtra(HAIRes.getInstance().KEY_INTENT_CHECKIN_ID, info.getCheckInId());
 
                 // save aency
                 C2Info c2Info = new C2Info();
                 c2Info.setCode(info.getCode());
                 c2Info.setDeputy(info.getDeputy());
                 c2Info.setStore(info.getName());
-               // c2Info.setC1(info.getC1());
+                // c2Info.setC1(info.getC1());
 
                 HAIRes.getInstance().c2Select = c2Info;
 
@@ -251,7 +256,7 @@ public class CheckInActivity extends BaseActivity {
 
     public List<CheckInAgencyInfo> getListCheckInPlan() {
         List<CheckInAgencyInfo> checkInAgencyInfos = new ArrayList<>();
-        double lat =getLat();
+        double lat = getLat();
         double lng = getLng();
         for (AgencyCheckinInfo item : checkInLists) {
             CheckInAgencyInfo checkInAgencyInfo = new CheckInAgencyInfo();
@@ -280,54 +285,73 @@ public class CheckInActivity extends BaseActivity {
         double lng = getLng();
         for (AgencyInfo item : agencyInfos) {
 
-           if((item.getCode().contains(search) || item.getName().contains(search)) && !checkInPlan(item.getCode())) {
-               CheckInAgencyInfo checkInAgencyInfo = new CheckInAgencyInfo();
-               checkInAgencyInfo.setDeputy(item.getDeputy());
-               checkInAgencyInfo.setCode(item.getCode());
-               checkInAgencyInfo.setName(item.getName());
-               checkInAgencyInfo.setIsShowType(0);
-               checkInAgencyInfo.setAgencyType(item.getType());
-               double distabce = commons.distance(lat, lng, item.getLat(), item.getLng());
-               checkInAgencyInfo.setDistance(distabce);
-               checkInAgencyInfos.add(checkInAgencyInfo);
-           }
+            if ((item.getCode().contains(search) || item.getName().contains(search)) && !checkInPlan(item.getCode())) {
+                CheckInAgencyInfo checkInAgencyInfo = new CheckInAgencyInfo();
+                checkInAgencyInfo.setDeputy(item.getDeputy());
+                checkInAgencyInfo.setCode(item.getCode());
+                checkInAgencyInfo.setName(item.getName());
+                checkInAgencyInfo.setIsShowType(0);
+                checkInAgencyInfo.setAgencyType(item.getType());
+                double distabce = commons.distance(lat, lng, item.getLat(), item.getLng());
+                checkInAgencyInfo.setDistance(distabce);
+                checkInAgencyInfos.add(checkInAgencyInfo);
+            }
         }
         return checkInAgencyInfos;
     }
 
     private boolean checkInPlan(String code) {
-        for(AgencyCheckinInfo item : checkInLists) {
-            if(item.getCode().equals(code)) {
-                return  true;
+        for (AgencyCheckinInfo item : checkInLists) {
+            if (item.getCode().equals(code)) {
+                return true;
             }
         }
 
-        return  false;
+        return false;
     }
 
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         CheckInPlanFragment inPlanFragment = new CheckInPlanFragment();
-        inPlanFragment.setActivityCheckIn(CheckInActivity.this);
-        adapter.addFragment(inPlanFragment, "DANH SÁCH GHÉ THĂM");
+        inPlanFragment.setActivityCheckIn(CheckInActivity.this, title, notes);
+        adapter.addFragment(inPlanFragment, "LỊCH CHĂM SÓC");
 
+
+        List<CalendarStatus> statusesTemp = new ArrayList<>();
+        if (checkFlexible) {
+            for (CalendarStatus item : statuses) {
+                if (item.getGroupType().equals("C2"))
+                    statusesTemp.add(item);
+            }
+        } else {
+            statusesTemp.addAll(statuses);
+        }
 
         CheckInOtherFragment otherFragment = new CheckInOtherFragment();
-        otherFragment.setActivityCheckIn(CheckInActivity.this, statuses);
+        otherFragment.setActivityCheckIn(CheckInActivity.this, statusesTemp);
         adapter.addFragment(otherFragment, "NGOÀI KẾ HOẠCH");
 
 
-       if(checkFlexible) {
-           CheckInFlexibleFragment flexibleFragment = new CheckInFlexibleFragment();
-           flexibleFragment.setActivity(CheckInActivity.this);
-           adapter.addFragment(flexibleFragment, "KHÔNG CỐ ĐỊNH");
-           tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-       }
+        if (checkFlexible) {
+            statusesTemp = new ArrayList<>();
+
+            for (CalendarStatus item : statuses) {
+                if (item.getGroupType().equals("FLEXIBLE"))
+                    statusesTemp.add(item);
+            }
+
+
+            CheckInFlexibleFragment flexibleFragment = new CheckInFlexibleFragment();
+            flexibleFragment.setActivity(CheckInActivity.this, statusesTemp);
+            adapter.addFragment(flexibleFragment, "KHÔNG CỐ ĐỊNH");
+            tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        }
 
 
         viewPager.setAdapter(adapter);
     }
+
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

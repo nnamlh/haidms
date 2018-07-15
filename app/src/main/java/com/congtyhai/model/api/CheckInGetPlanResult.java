@@ -1,5 +1,7 @@
 package com.congtyhai.model.api;
 
+import android.print.PageRange;
+
 import com.congtyhai.model.api.checkin.AgencyCheckinInfo;
 import com.google.gson.annotations.SerializedName;
 
@@ -23,6 +25,12 @@ public class CheckInGetPlanResult {
 
     @SerializedName("checkFlexible")
     private boolean checkFlexible;
+
+    @SerializedName("notes")
+    private String notes;
+
+    @SerializedName("title")
+    private String title;
 
     public String getId() {
         return id;
@@ -62,5 +70,21 @@ public class CheckInGetPlanResult {
 
     public void setCheckFlexible(boolean checkFlexible) {
         this.checkFlexible = checkFlexible;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

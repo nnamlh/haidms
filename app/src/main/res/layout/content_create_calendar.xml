@@ -27,6 +27,18 @@
         android:fontFamily="sans-serif-light"
         android:textColor="@color/cardview_dark_background" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/input_text"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/cardview_dark_background"
+        android:id="@+id/enotes"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:hint="nhập ghi chú"/>
+
     <TextView
         android:id="@+id/txtcus"
         android:layout_width="wrap_content"

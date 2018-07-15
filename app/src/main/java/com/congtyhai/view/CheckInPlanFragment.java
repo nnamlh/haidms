@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.congtyhai.adapter.CheckInAgencyAdapter;
@@ -21,6 +23,9 @@ import com.congtyhai.util.HaiActionInterface;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class CheckInPlanFragment extends Fragment {
 
     RecyclerView recyclerView;
@@ -30,8 +35,21 @@ public class CheckInPlanFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     private CheckInActivity activity;
 
-    public void setActivityCheckIn(CheckInActivity activity) {
+    @BindView(R.id.txtstatus)
+    TextView txtStatus;
+
+    @BindView(R.id.enotes)
+    TextView eNotes;
+
+    private String  notes;
+    private String status;
+
+
+    public void setActivityCheckIn(CheckInActivity activity, String status, String notes) {
         this.activity = activity;
+
+       this.notes = notes;
+       this.status = status;
     }
 
     @Override
@@ -39,6 +57,8 @@ public class CheckInPlanFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_check_in_plan, container, false);
+
+        ButterKnife.bind(this, view);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
@@ -69,6 +89,9 @@ public class CheckInPlanFragment extends Fragment {
         }));
 
         refeshList();
+
+        eNotes.setText(notes);
+        txtStatus.setText(status);
 
         swipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {

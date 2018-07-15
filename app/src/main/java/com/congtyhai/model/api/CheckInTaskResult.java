@@ -27,6 +27,9 @@ public class CheckInTaskResult {
     @SerializedName("inPlan")
     private int inPlan;
 
+    @SerializedName("flexible")
+    private int flexible;
+
     public String getId() {
         return id;
     }
@@ -89,5 +92,13 @@ public class CheckInTaskResult {
 
     public void setInPlan(int inPlan) {
         this.inPlan = inPlan;
+    }
+
+    public int getFlexible() {
+        return flexible;
+    }
+
+    public void setFlexible(int flexible) {
+        this.flexible = flexible;
     }
 }

@@ -1,5 +1,7 @@
 package com.congtyhai.dms.calendar;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -8,11 +10,15 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import com.congtyhai.adapter.CalendarAgencyAdapter;
@@ -62,6 +68,9 @@ public class CreateCalendarActivity extends BaseActivity {
     @BindView(R.id.txtcus)
     TextView txtcus;
 
+    @BindView(R.id.enotes)
+    EditText eNoets;
+
     HashMap<String, List<CalendarAgencyInfo>> calendarAgencyMap;
 
     CalendarAgencyAdapter mAdapter;
@@ -74,7 +83,7 @@ public class CreateCalendarActivity extends BaseActivity {
     HashMap<Integer, String> dayGroupAgencyChooseMap;
 
     List<CalendarAgencyInfo> agencyInfos;
-
+    List<CalendarAgencyInfo> agencyInfosTemp;
     int daySelect = 1;
     String groupSelect = "-1";
 
@@ -82,7 +91,7 @@ public class CreateCalendarActivity extends BaseActivity {
 
     boolean requireCheck = true;
 
-    String statusNotChoice = "NoChoice";
+  //  String statusNotChoice = "NoChoice";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +109,7 @@ public class CreateCalendarActivity extends BaseActivity {
         calendarAgencyMap = new HashMap<>();
         dayGroupAgencyChooseMap = new HashMap<>();
         agencyInfos = new ArrayList<>();
+        agencyInfosTemp = new ArrayList<>();
         groups = new ArrayList<>();
 
         createTimeLine();
@@ -139,6 +149,9 @@ public class CreateCalendarActivity extends BaseActivity {
                 }
                 mAdapter.notifyDataSetChanged();
 
+                agencyInfosTemp.clear();
+                agencyInfosTemp.addAll(agencyInfos);
+
                 for (Map.Entry<String, List<CalendarAgencyInfo>> entry : calendarAgencyMap.entrySet()) {
                     List<CalendarAgencyInfo> values = entry.getValue();
                     for (int i = 0; i < values.size(); i++) {
@@ -153,6 +166,7 @@ public class CreateCalendarActivity extends BaseActivity {
                 }
 
 
+
             }
 
             @Override
@@ -160,6 +174,24 @@ public class CreateCalendarActivity extends BaseActivity {
 
             }
         }));
+
+
+        eNoets.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                calendarDayMap.get(daySelect).setNotes(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         new ReadDataTask().execute();
 
@@ -172,31 +204,20 @@ public class CreateCalendarActivity extends BaseActivity {
 
     private void createListStatus() {
 
-        if (!requireCheck){
-            CalendarStatus nochoice = new CalendarStatus();
-            nochoice.setId(statusNotChoice);
-            nochoice.setName("Không chọn");
-            nochoice.setCompel(0);
-            nochoice.setNumber(0);
-            nochoice.settGroup("1");
-            nochoice.setNotes("");
-            HAIRes.getInstance().getCalendarStatuses().add(0, nochoice);
-        }
-
-
         CalendarStatusAdapter adapter = new CalendarStatusAdapter(this, HAIRes.getInstance().getCalendarStatuses());
         eStatus.setAdapter(adapter);
 
-        if(requireCheck) {
-            eStatus.setSelection(HAIRes.getInstance().findPostitionStatus(HAIRes.getInstance().CALENDAR_CSKH));
+        if (!requireCheck) {
+            eStatus.setSelection(HAIRes.getInstance().findPostitionStatus("HOLIDAY"));
         } else {
-            eStatus.setSelection(HAIRes.getInstance().findPostitionStatus(statusNotChoice));
+            eStatus.setSelection(HAIRes.getInstance().findPostitionStatus(HAIRes.getInstance().CALENDAR_CSKH));
         }
+
 
         eStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String code = HAIRes.getInstance().getCalendarStatuses().get(i).id;
+                String code = HAIRes.getInstance().getCalendarStatuses().get(i).getId();
                 calendarDayMap.get(daySelect).setStatus(code);
 
                 if(code.equals("HOLIDAY")) {
@@ -205,10 +226,7 @@ public class CreateCalendarActivity extends BaseActivity {
                     timeline.getTimelineView().addMapDateTextColor(daySelect, ContextCompat.getColor(CreateCalendarActivity.this, R.color.mti_lbl_date));
                 } else if (code.equals("TVBD")) {
                     timeline.getTimelineView().addMapDateTextColor(daySelect, ContextCompat.getColor(CreateCalendarActivity.this, R.color.mti_color_blue));
-                } else if (code.equals(statusNotChoice)) {
-                    timeline.getTimelineView().addMapDateTextColor(daySelect, ContextCompat.getColor(CreateCalendarActivity.this, R.color.mti_color_nochoice) );
-                }
-                else {
+                } else {
                     timeline.getTimelineView().addMapDateTextColor(daySelect, ContextCompat.getColor(CreateCalendarActivity.this, R.color.mti_bg_lbl_date_selected_color_yellow));
                 }
 
@@ -225,6 +243,14 @@ public class CreateCalendarActivity extends BaseActivity {
 
 
     private void createListGroup() {
+        if (!requireCheck) {
+            groups.clear();
+            groups.add(new CommonItemInfo("Check in C2", "-1"));
+            groups.add(new CommonItemInfo("Check in không cố định", "kvl"));
+            calendarAgencyMap.put("kvl", new ArrayList<CalendarAgencyInfo>());
+        }
+
+
         CommonItemAdapter commonItemAdapter = new CommonItemAdapter(CreateCalendarActivity.this, groups);
         eGroups.setAdapter(commonItemAdapter);
         eGroups.setSelection(findPostionGroup());
@@ -362,24 +388,17 @@ public class CreateCalendarActivity extends BaseActivity {
         timeline.setLastVisibleDate(year, getCalendarMonth(month), days);
         timeline.getMonthView().setVisibility(View.GONE);
 
-        if(!requireCheck) {
-            // chuyen qua mau nochoice
-            for (int i = 1; i <= days; i++) {
-                timeline.getTimelineView().addMapDateTextColor(i, ContextCompat.getColor(CreateCalendarActivity.this, R.color.mti_color_nochoice) );
-            }
-        }
-
-
         timeline.setOnDateSelectedListener(new DatePickerTimeline.OnDateSelectedListener() {
             @Override
             public void onDateSelected(int year, int month, int day, int index) {
                 daySelect = day;
                 groupSelect = dayGroupAgencyChooseMap.get(daySelect);
-                String statusCode = HAIRes.getInstance().getCalendarStatuses().get(eStatus.getSelectedItemPosition()).id;
+                String statusCode = HAIRes.getInstance().getCalendarStatuses().get(eStatus.getSelectedItemPosition()).getId();
                 if (!calendarDayMap.get(daySelect).getStatus().equals(statusCode)) {
                     eStatus.setSelection(HAIRes.getInstance().findPostitionStatus(calendarDayMap.get(daySelect).getStatus()));
                 }
                 eGroups.setSelection(findPostionGroup());
+                eNoets.setText(calendarDayMap.get(daySelect).getNotes());
                 refeshList();
             }
         });
@@ -394,11 +413,19 @@ public class CreateCalendarActivity extends BaseActivity {
             calendarDayCreate.setAgencies(new ArrayList<String>());
             calendarDayCreate.setDay(i);
             calendarDayCreate.setNotes("");
-            calendarDayCreate.setStatus(HAIRes.getInstance().CALENDAR_CSKH);
+            if(requireCheck) {
+                calendarDayCreate.setStatus(HAIRes.getInstance().CALENDAR_CSKH);
+                timeline.getTimelineView().addMapDateTextColor(i, ContextCompat.getColor(CreateCalendarActivity.this, R.color.mti_lbl_date) );
 
-            if (!requireCheck){
-                calendarDayCreate.setStatus(statusNotChoice);
             }
+            else
+            {
+                timeline.getTimelineView().addMapDateTextColor(i, ContextCompat.getColor(CreateCalendarActivity.this, R.color.mti_bg_lbl_date_selected_color_red) );
+                calendarDayCreate.setStatus("HOLIDAY");
+            }
+
+
+
 
             calendarDayMap.put(i, calendarDayCreate);
 
@@ -413,6 +440,7 @@ public class CreateCalendarActivity extends BaseActivity {
     private void refeshList() {
 
         agencyInfos.clear();
+
         if (groupSelect.equals("-1")) {
             for (Map.Entry<String, List<CalendarAgencyInfo>> entry : calendarAgencyMap.entrySet()) {
                 List<CalendarAgencyInfo> values = entry.getValue();
@@ -434,6 +462,10 @@ public class CreateCalendarActivity extends BaseActivity {
         }
 
         mAdapter.notifyDataSetChanged();
+
+
+        agencyInfosTemp.clear();
+        agencyInfosTemp.addAll(agencyInfos);
 
         setStatusName();
 
@@ -458,39 +490,43 @@ public class CreateCalendarActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_create_calendar, menu);
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.find_action).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                handleSearch(newText);
+                return false;
+            }
+        });
         return true;
+    }
+    private void handleSearch(String query) {
+        agencyInfos.clear();
+        for(CalendarAgencyInfo info: agencyInfosTemp) {
+
+            if (info.getCode().contains(query) || info.getName().contains(query))
+                agencyInfos.add(info);
+        }
+
+        mAdapter.notifyDataSetChanged();
     }
 
     private boolean checkPolicy() {
 
         if (!requireCheck) {
-            // check phai choose loai di thăm ít nhất 1 lần
-
-            int countCheckDay = 0;
-
-            for (Map.Entry<Integer, CalendarDayCreate> entry : calendarDayMap.entrySet()) {
-
-                CalendarDayCreate dayCreate = entry.getValue();
-
-                if (!dayCreate.getStatus().equals(statusNotChoice)) {
-                    countCheckDay++;
-                }
-
-            }
-
-            if (countCheckDay == 0)
-            {
-                commons.showAlertInfo(CreateCalendarActivity.this, "Cảnh báo", "Phải chọn ít nhất một ngày để lên kế hoạch", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
-                return false;
-            }
-
-            return  true;
-
+            return true;
         }
 
 
